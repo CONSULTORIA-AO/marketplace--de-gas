@@ -45,7 +45,7 @@ export function HomePage() {
     <div className="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
     <div className="layout-container flex h-full grow flex-col">
 
-    <header className="sticky top-0 z-50 bg-card-light/80 dark:bg-card-dark/80 backdrop-blur-sm border-b border-border-light dark:border-border-dark">
+    <header className="sticky top-0 z-50 bg-card-light/80 dark:bg-card-dark/80 backdrop-blur-sm border-b border-border-light dark:border-border-dark border border-slate-100 dark:border-slate-800">
     <div className="container mx-auto px-4">
     <div className="flex h-16 items-center justify-between">
     <div className="flex items-center gap-4">
@@ -54,14 +54,14 @@ export function HomePage() {
     </div>
     <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
     <Link className="hover:text-primary" to="/">Início</Link>
-    <Link className="hover:text-primary" to="/offers">Ofertas</Link>
-    <Link className="hover:text-primary" to="/about">Sobre Nós</Link>
+    <Link className="hover:text-primary" to="#offers">Ofertas</Link>
+    <Link className="hover:text-primary" to="#about">Sobre Nós</Link>
     </nav>
     <div className="flex items-center gap-2">
     <Button onClick={() => navigate('/login')} className="hidden sm:flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary/20 text-primary dark:bg-primary/30 dark:text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/30 dark:hover:bg-primary/40">
     <span className="truncate">Entrar</span>
     </Button>
-    <Button onClick={() => navigate('/cadastro')} className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-secondary hover:bg-secondary/90 text-white text-sm font-bold leading-normal tracking-[0.015em]">
+    <Button onClick={() => navigate('/cadastro')} className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-secondary hover:bg-[]/90 text-white text-sm font-bold leading-normal tracking-[0.015em]">
     <span className="truncate">Cadastre-se</span>
     </Button>
     <Button className="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark hover:bg-gray-200 dark:hover:bg-gray-700">
@@ -84,17 +84,17 @@ export function HomePage() {
       Encontre, compare e compre gás de forma rápida e segura.
       </h2>
     </div>
-    <div className="mt-8 w-full max-w-2xl">
+    <div className="mt-8 w-full max-w-2xl ">
     <Label className="flex flex-col h-14 w-full">
-      <div className="flex w-full flex-1 items-stretch rounded-xl h-full shadow-lg">
-        <div className="text-gray-500 flex bg-card-light items-center justify-center pl-4 rounded-l-xl border-y border-l border-border-light">
+      <div className="flex w-full flex-1 items-stretch rounded-xl h-full shadow-lg border border-slate-100 dark:border-slate-800">
+        <div className="text-gray-500 flex bg-card-light items-center justify-center pl-4 rounded-l-xl border-y border-l border-border-light border border-slate-100 dark:border-slate-800">
           <span className="material-symbols-outlined">search</span>
         </div>
         <Input 
           type='text'
-          className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden text-text-light focus:outline-0 focus:ring-2 focus:ring-primary h-full placeholder:text-gray-500 px-4 border-y border-border-light bg-card-light text-base" placeholder="Buscar por produto ou fornecedor" value=""/>
-    <div className="flex items-center justify-center rounded-r-xl border-y border-r border-border-light bg-card-light pr-2">
-    <Button className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-5 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90">
+          className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden text-text-light focus:outline-0 focus:ring-2 focus:ring-primary h-full placeholder:text-gray-500 px-4 border-y border-border-light bg-card-light text-base border-slate-100 dark:border-slate-800" placeholder="Buscar por produto ou fornecedor" value=""/>
+    <div className="flex items-center justify-center rounded-r-xl border-y border-r border-border-light bg-card-light pr-2 border border-slate-100 dark:border-slate-800">
+    <Button className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-5 bg-[#137fec] text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#137fec]/90 ">
     <span className="truncate">Buscar</span>
     </Button>
     </div>

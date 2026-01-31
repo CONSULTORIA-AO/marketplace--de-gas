@@ -6,7 +6,7 @@ export function Footer() {
 
   return (
     <footer 
-      className="bg-card-light dark:bg-card-dark border-t border-border-light dark:border-border-dark mt-16">
+      className="bg-card-light dark:bg-card-dark border-t border-border-light dark:border-border-dark mt-16 border border-slate-100 dark:border-slate-800">
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
