@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Search, ShoppingCart } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,7 +9,6 @@ import { useCartStore } from '@/store/cartstore';
 import { useToast } from '@/components/ui/use-toast';
 import { api } from '@/lib/axios';
 import type { GasProduct } from '@/types/index';
-import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Label } from '@/components/ui/label';
 
@@ -17,6 +16,7 @@ export function HomePage() {
   const [searchTerm, setSearchTerm] = useState('');
   const addItem = useCartStore((state) => state.addItem);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const { data: products, isLoading } = useQuery({
     queryKey: ['products'],
@@ -58,10 +58,10 @@ export function HomePage() {
     <Link className="hover:text-primary" to="/about">Sobre Nós</Link>
     </nav>
     <div className="flex items-center gap-2">
-    <Button className="hidden sm:flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary/20 text-primary dark:bg-primary/30 dark:text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/30 dark:hover:bg-primary/40">
+    <Button onClick={() => navigate('/login')} className="hidden sm:flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary/20 text-primary dark:bg-primary/30 dark:text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/30 dark:hover:bg-primary/40">
     <span className="truncate">Entrar</span>
     </Button>
-    <Button className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-secondary hover:bg-secondary/90 text-white text-sm font-bold leading-normal tracking-[0.015em]">
+    <Button onClick={() => navigate('/cadastro')} className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-secondary hover:bg-secondary/90 text-white text-sm font-bold leading-normal tracking-[0.015em]">
     <span className="truncate">Cadastre-se</span>
     </Button>
     <Button className="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark hover:bg-gray-200 dark:hover:bg-gray-700">

@@ -8,6 +8,7 @@ import VerificationCodeStep from "@/components/passwordRecovery/VerificationCode
 import NewPasswordStep from "@/components/passwordRecovery/NewPasswordStep";
 import SuccessStep from "@/components/passwordRecovery/SuccessStep";
 import { toast } from "sonner";
+import { Link } from "react-router-dom";
 
 const steps = ["Método", "Contato", "Código", "Senha", "Sucesso"];
 
@@ -149,9 +150,9 @@ const PasswordRecoveryFlow = () => {
           className="text-center text-xs sm:text-sm text-muted-foreground mt-6"
         >
           Lembrou sua senha?{" "}
-          <button className="text-primary hover:underline font-medium">
+          <Link to="/login" className="text-primary hover:underline font-medium">
             Fazer login
-          </button>
+          </Link>
         </motion.p>
       </motion.div>
     </div>
