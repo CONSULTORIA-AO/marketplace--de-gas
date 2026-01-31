@@ -7,7 +7,7 @@ import { CreditCard, MapPin, Clock, CheckCircle } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Label } from '@/components/ui/Label';
+import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
 import { checkoutSchema, type CheckoutFormData } from '@/lib/validations';
 import { useCartStore } from '@/store/cartstore';

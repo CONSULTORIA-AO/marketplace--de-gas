@@ -55,7 +55,7 @@ export function LoginPage() {
   return (
     <main className="bg-background-light min-h-screen flex flex-col font-display text-text-main">
       <header 
-        className="flex items-center justify-between whitespace-nowrap border-b border-border-light px-10 py-4 bg-white">
+        className="flex items-center justify-between whitespace-nowrap border-b border-border-light px-10 py-4 bg-white border border-slate-100 dark:border-slate-800">
         <div className="flex items-center gap-4 text-primary">
           <div className="size-8">
             <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
@@ -71,12 +71,12 @@ export function LoginPage() {
         </div>
         <div className="flex flex-1 justify-end gap-8">
           <div className="flex items-center gap-9">
-            <Link className="text-text-main text-sm font-medium leading-normal hover:text-primary transition-colors" to="#">Início</Link>
-            <Link className="text-text-main text-sm font-medium leading-normal hover:text-primary transition-colors" to="#">Preços</Link>
-            <Link className="text-text-main text-sm font-medium leading-normal hover:text-primary transition-colors" to="#">Suporte</Link>
+            <Link className="text-slate-800 text-sm font-medium leading-normal hover:text-slate-900 transition-colors" to="/">Início</Link>
+            <Link className="text-text-main text-sm font-medium leading-normal hover:text-primary transition-colors" to="/">Preços</Link>
           </div>
           <Button 
-            className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-6 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-all shadow-sm">
+            onClick={() => navigate('/cadastro')}
+            className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-6 bg-[#137fec] text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#137fec]/90 transition-all shadow-sm">
             <span className="truncate">Criar uma conta</span>
           </Button>
         </div>
@@ -107,19 +107,19 @@ export function LoginPage() {
         </div>
         <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-background-light">
           <div 
-            className="w-full max-w-[480px] space-y-8 bg-white p-10 rounded-2xl shadow-sm border border-border-light">
+            className="w-full max-w-[480px] space-y-8 bg-white p-10 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-800">
           <div className="text-center lg:text-left">
-            <h2 className="text-text-main text-3xl font-bold tracking-tight mb-2">Bem-vindo de volta!</h2>
-            <p className="text-text-muted text-base">Acesse sua conta para pedir seu gás de forma rápida.</p>
+            <h2 className="text-slate-900 dark:text-white text-3xl font-bold tracking-tight mb-2">Bem-vindo de volta!</h2>
+            <p className="text-slate-500 dark:text-slate-400 text-base">Acesse sua conta para pedir seu gás de forma rápida.</p>
         </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="flex flex-col gap-2">
-            <Label htmlFor="email" className="text-text-main text-sm font-semibold leading-normal">E-mail</Label>
+            <Label htmlFor="email" className="text-slate-700 dark:text-slate-300 text-sm font-semibold leading-normal">E-mail</Label>
             <Input
               id="email"
               {...register('email')}
-            className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-text-main focus:outline-0 focus:ring-1 border border-border-light bg-white focus:border-primary h-14 placeholder:text-text-muted/60 p-[15px] text-base font-normal leading-normal transition-all" placeholder="seu@email.com" type="email"/>
+            className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-slate-900 dark:text-white focus:outline-0 focus:ring-1 border border-slate-200 dark:border-slate-700 bg-white focus:border-primary h-14 placeholder:text-slate-500/60 p-[15px] text-base font-normal leading-normal transition-all" placeholder="seu@email.com" type="email"/>
             {errors.email && (
                 <p className="text-sm text-destructive">{errors.email.message}</p>
               )}
@@ -127,19 +127,19 @@ export function LoginPage() {
           <div className="flex flex-col gap-2 relative">
             <div className="flex justify-between items-center">
               <Label htmlFor="password" 
-                className="text-text-main text-sm font-semibold leading-normal">Senha</Label>
-              <a className="text-primary text-sm font-semibold hover:underline" href="#">Esqueceu a senha?</a>
+                className="text-slate-700 dark:text-slate-300 text-sm font-semibold leading-normal">Senha</Label>
+              <Link className="text-primary text-sm font-semibold hover:underline" to="/recuperar-senha">Esqueceu a senha?</Link>
           </div>
           <div className="relative">
             <Input
               id="password"
               {...register('password')}
-              className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-text-main focus:outline-0 focus:ring-1 border border-border-light bg-white focus:border-primary h-14 placeholder:text-text-muted/60 p-[15px] text-base font-normal leading-normal transition-all" placeholder="••••••••" type="password"/>
+              className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-slate-900 dark:text-white focus:outline-0 focus:ring-1 border border-slate-200 dark:border-slate-700 bg-white focus:border-primary h-14 placeholder:text-slate-500/60 p-[15px] text-base font-normal leading-normal transition-all" placeholder="••••••••" type="password"/>
                 {errors.password && (
                   <p className="text-sm text-destructive">{errors.password.message}</p>
                 )}
               <Button 
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted  hover:text-text-main transition-colors">
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 transition-colors">
                 <span className="material-symbols-outlined">visibility</span>
               </Button>
             </div>
@@ -155,7 +155,7 @@ export function LoginPage() {
           <Button 
             type="submit" 
             disabled={loginMutation.isPending}
-            className="w-full h-14 bg-primary text-white text-base font-bold rounded-xl hover:bg-primary/90 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 group">
+            className="w-full h-14 bg-[#137fec] text-white text-base font-bold rounded-xl hover:bg-[#137fec]/90 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 group">
             {loginMutation.isPending ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
