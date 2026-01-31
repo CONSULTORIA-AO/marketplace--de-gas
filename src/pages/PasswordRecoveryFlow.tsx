@@ -32,7 +32,6 @@ const PasswordRecoveryFlow = () => {
 
   const handleVerify = (code: string) => {
     // Simulate verification
-    console.log("Verifying code:", code);
     setCurrentStep(4);
     toast.success("Código verificado com sucesso!");
   };
@@ -43,7 +42,6 @@ const PasswordRecoveryFlow = () => {
 
   const handlePasswordSubmit = (password: string) => {
     // Simulate password update
-    console.log("New password set");
     setCurrentStep(5);
   };
 

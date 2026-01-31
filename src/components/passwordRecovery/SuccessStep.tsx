@@ -1,12 +1,14 @@
 import { motion } from "framer-motion";
 import { CheckCircle2, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 interface SuccessStepProps {
   onComplete: () => void;
 }
 
 const SuccessStep = ({ onComplete }: SuccessStepProps) => {
+  const navigate = useNavigate()
   const containerVariants = {
     hidden: { opacity: 0, scale: 0.9 },
     visible: { opacity: 1, scale: 1 },
@@ -101,7 +103,10 @@ const SuccessStep = ({ onComplete }: SuccessStepProps) => {
         transition={{ delay: 0.6 }}
       >
         <Button
-          onClick={onComplete}
+          onClick={() => {
+            navigate('/login')
+            onComplete()
+          }}
           className="w-full h-12 sm:h-14 rounded-xl gradient-primary text-primary-foreground text-sm sm:text-base hover:opacity-90 transition-opacity"
         >
           Ir para Login

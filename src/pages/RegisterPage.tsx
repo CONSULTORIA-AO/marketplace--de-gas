@@ -62,13 +62,14 @@ export function RegisterPage() {
         </div>
         <div className="flex flex-1 justify-end gap-8">
           <div className="flex items-center gap-9">
-            <a className="text-slate-700 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Início</a>
-            <a className="text-slate-700 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Preços</a>
-            <a className="text-slate-700 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Sobre</a>
+            <Link className="text-slate-700 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" to="/">Início</Link>
+            <Link className="text-slate-700 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" to="/">Preços</Link>
           </div>
-          <button className="flex min-w-[84px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold tracking-tight hover:bg-primary/90 transition-all">
+          <Button 
+            onClick={() => navigate('/login')}
+            className="flex min-w-[84px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-[#137fec] text-white text-sm font-bold tracking-tight hover:bg-[#137fec]/90 transition-all">
             <span>Entrar</span>
-          </button>
+          </Button>
         </div>
       </header>
       <div className="flex-grow flex items-center justify-center py-12 px-4 md:px-10 lg:px-20">
@@ -196,19 +197,10 @@ export function RegisterPage() {
                   {/* Action Button */}
                   <Button 
                     type="submit" 
-                    disabled={registerMutation.isPending} className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2">
-                      {registerMutation.isPending ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Criando conta...
-                      </>
-                    ) : (
-                      <>
-                        Criar minha conta agora
-                        <span className="material-symbols-outlined">arrow_forward</span>
-                      </>
-                    )}
                     
+                    className="w-full h-14 bg-[#137fec] text-white text-base font-bold rounded-xl hover:bg-[#137fec]/90 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 group">
+                        Criar minha conta
+                      <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
                   </Button>
                   {/* Footer Link */}
                   <p className="text-center text-slate-600 dark:text-slate-400 text-sm mt-6">
