@@ -12,7 +12,7 @@ import { OrdersPage } from '@/pages/OrdersPage';
 import { ProfilePage } from '@/pages/ProfilePage';
 import { AddressesPage } from '@/pages/AddressPage';
 import PasswordRecoveryFlow from '@/pages/PasswordRecoveryFlow';
-import { ActivateAccountPage } from '@/pages/ActivateAccountPage';
+import { VerifyAccountPage } from '@/pages/VerifyAccountPage';
 import NotFound from "@/pages/NotFound"
 
 const NavLink = () => {
@@ -26,7 +26,7 @@ const NavLink = () => {
           
       <Route path="/produto/:id" element={<ProductDetailsPage />} />
       <Route path="/recuperar-senha" element={<PasswordRecoveryFlow />} /> 
-      <Route path="/ativar-conta/:token" element={<ActivateAccountPage />} /> 
+      <Route path="/ativar-conta/:token" element={<VerifyAccountPage />} /> 
           
        
       <Route
