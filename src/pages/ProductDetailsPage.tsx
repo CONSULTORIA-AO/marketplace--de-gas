@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
 
-export function ProductDetails(){
+export function ProductDetailsPage(){
     return(
         <div className="font-display">
         <div className="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">

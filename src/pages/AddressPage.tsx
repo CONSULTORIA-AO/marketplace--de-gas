@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
-export function AddressManagement() {
+export function AddressesPage() {
     return (                 
         <main 
             className="font-display bg-background-light dark:bg-background-dark text-text-light-primary dark:text-dark-primary">

@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { ProtectedRoute } from "@/routes/ProtectedRoute";
 
 // Pages
@@ -6,13 +6,14 @@ import { HomePage } from '@/pages/HomePage';
 import { LoginPage } from '@/pages/LoginPage';
 import { RegisterPage } from '@/pages/RegisterPage';
 import { CartPage } from '@/pages/CartPage';
-// import { ProductDetailPage } from '@/pages/ProductDetailPage';
-// import { CheckoutPage } from '@/pages/CheckoutPage';
-// import { OrdersPage } from '@/pages/OrdersPage';
-// import { ProfilePage } from '@/pages/ProfilePage';
-// import { AddressesPage } from '@/pages/AddressesPage';
-// import { ResetPasswordPage } from '@/pages/ResetPasswordPage';
-// import { ActivateAccountPage } from '@/pages/ActivateAccountPage';
+import { ProductDetailsPage } from '@/pages/ProductDetailsPage';
+import { CheckoutPage } from '@/pages/CheckoutPage';
+import { OrdersPage } from '@/pages/OrdersPage';
+import { ProfilePage } from '@/pages/ProfilePage';
+import { AddressesPage } from '@/pages/AddressPage';
+import PasswordRecoveryFlow from '@/pages/PasswordRecoveryFlow';
+import { ActivateAccountPage } from '@/pages/ActivateAccountPage';
+import NotFound from "@/pages/NotFound"
 
 const NavLink = () => {
   return (
@@ -23,12 +24,12 @@ const NavLink = () => {
       <Route path="/cadastro" element={<RegisterPage />} />
       <Route path="/carrinho" element={<CartPage />} />
           
-      {/* <Route path="/produto/:id" element={<ProductDetailPage />} /> */}
-      {/* <Route path="/recuperar-senha" element={<ResetPasswordPage />} /> */}
-      {/* <Route path="/ativar-conta/:token" element={<ActivateAccountPage />} /> */}
+      <Route path="/produto/:id" element={<ProductDetailsPage />} />
+      <Route path="/recuperar-senha" element={<PasswordRecoveryFlow />} /> 
+      <Route path="/ativar-conta/:token" element={<ActivateAccountPage />} /> 
           
-      {/* Rotas Protegidas */}
-      {/* <Route
+       
+      <Route
       path="/checkout"
         element={
           <ProtectedRoute>
@@ -59,10 +60,11 @@ const NavLink = () => {
           <AddressesPage />
           </ProtectedRoute>
         }
-      /> */}
+      />
 
-      {/* 404 */}
-      <Route path="*" element={<Navigate to="/" replace />} />
+      {/* 404 
+      <Route path="*" element={<Navigate to="/" replace />} />*/}
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
