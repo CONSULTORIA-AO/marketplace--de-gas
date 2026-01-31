@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
 
 @tailwind base;
 @tailwind components;
@@ -6,7 +8,7 @@
 
 @layer base {
   :root {
-    --background: 240 10% 4%;
+    --background: #f8fafc;
     --foreground: 0 0% 98%;
 
     --card: 240 10% 6%;
@@ -30,30 +32,26 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 240 10% 18%;
+    --border: #e2e8f0;
     --input: 240 10% 18%;
     --ring: 263 70% 58%;
 
     --radius: 0.75rem;
 
-    /* Custom colors */
-    --purple: 263 70% 58%;
-    --purple-light: 263 70% 68%;
-    --purple-dark: 263 70% 45%;
-    --pink: 330 81% 60%;
-    --pink-light: 330 81% 70%;
-    --pink-dark: 330 81% 50%;
-    
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(263 70% 58%) 0%, hsl(330 81% 60%) 100%);
-    --gradient-glow: linear-gradient(135deg, hsl(263 70% 58% / 0.5) 0%, hsl(330 81% 60% / 0.5) 100%);
-    --gradient-text: linear-gradient(90deg, hsl(263 70% 68%) 0%, hsl(330 81% 70%) 100%);
-    --gradient-border: linear-gradient(135deg, hsl(263 70% 58% / 0.3) 0%, hsl(330 81% 60% / 0.3) 100%);
-    
-    /* Shadows */
-    --shadow-glow: 0 0 40px hsl(263 70% 58% / 0.3);
-    --shadow-glow-pink: 0 0 40px hsl(330 81% 60% / 0.3);
-    --shadow-card: 0 4px 30px hsl(0 0% 0% / 0.4);
+    --primary: #137fec;
+    --background-light: #f8fafc;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --border-light: #e2e8f0;
+    ---background-dark: "#101922",
+    --card-light: "#ffffff",
+    --card-dark: "#1a242e",
+    --text-light-primary: "#111827",
+    --text-dark-primary: "#f3f4f6",
+    --text-light-secondary: "#6B7280",
+    --text-dark-secondary: "#9ca3af",
+    --danger: "#DC2626",
+   
   }
 
   .dark {
@@ -218,4 +216,37 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--pink));
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+.material-symbols-outlined.filled {
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24;
+}
+
+.form-input:focus {
+  border-color: #137fec !important;
+  box-shadow: 0 0 0 4px rgba(19, 127, 236, 0.1) !important;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+input:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(19, 127, 236, 0.2) !important;
+}
+
+.rating-star.filled {
+  color: #FFC107;
+  font-variation-settings: 'FILL' 1;
 }
