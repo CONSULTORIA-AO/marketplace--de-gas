@@ -2,11 +2,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useCartStore } from '@/store/cartstore';
 import { useAuthStore } from '@/store/authStrore';
 import { Header } from '@/components/layout/Header';
 import { Input } from '@/components/ui/input';
+
+import User from "@/assets/user.jpg"
 
 export function CartPage() {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export function CartPage() {
     }
     navigate('/checkout');
   };
-
+/*
   if (items.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -44,7 +45,7 @@ export function CartPage() {
       </div>
     );
   }
-
+*/
   return (
     <div className="font-display">
     <div className="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
@@ -58,8 +59,7 @@ export function CartPage() {
     </div>
     <div className="hidden md:flex items-center gap-8">
     <Link className="text-slate-600 dark:text-slate-300 text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary" to="/">Home</Link>
-    <Link className="text-slate-600 dark:text-slate-300 text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary" to="#">Produtos</Link>
-    <Link className="text-slate-600 dark:text-slate-300 text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary" to="#">Minha Conta</Link>
+    <Link className="text-slate-600 dark:text-slate-300 text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary" to="/produtos">Produtos</Link>
     <Link className="text-slate-600 dark:text-slate-300 text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary" to="#">Ajuda</Link>
     </div>
     </div>
@@ -67,7 +67,9 @@ export function CartPage() {
     <Button className="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
     <span className="material-symbols-outlined"> shopping_cart </span>
     </Button>
-    <div className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User profile picture" style={{backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuB6zgagMLAWTf-k00ooja9azi0JI8WTd8w-CbZALUR0XRcEju4HoVbLWkIaa_sdCxaRoRCZtiW_8C7xygq1Bt0c9d4bHL1ZL8G_uaKgVL3cccHayjpU5PFDUirhAAM7rMl453lbtNUjYtdHa9bAtpBigdLTWQN5_XIMyTx9rN2h0MN9fYo1QG2wo26IiVqP1X_eSIeq459_ehEI_Kvtv-UHFYWcMdDdJErbw9A0F-kaJez4AFL-jIvnXSWuDaWfE_tu9P0Dg5e9Ph4');"}}></div>
+    <div>
+      <img src={User} alt="User profile picture"className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User profile picture" />
+    </div>
     </div>
     </div>
     </header>
@@ -171,7 +173,8 @@ export function CartPage() {
     <Button className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-wide hover:bg-primary/90">
     <span className="truncate">Finalizar Compra</span>
     </Button>
-    <Button className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 text-primary text-base font-bold leading-normal tracking-wide hover:bg-primary/10">
+    <Button onClick={() => navigate("/checkout")}
+      className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 text-white text-base font-bold bg-[#137fec] leading-normal tracking-wide hover:bg-[#137fec]/90">
     <span className="truncate">Continuar Comprando</span>
     </Button>
     </div>

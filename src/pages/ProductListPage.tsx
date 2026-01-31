@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@radix-ui/react-select";
-import { Link } from "react-router-dom";
+import { Label } from "@/components/ui/label";
+import { Link , useNavigate } from "react-router-dom";
 
 export function ProductListPage(){
+    const navigate = useNavigate();
+
     return(
     <div className="bg-background-light dark:bg-background-dark font-display">
     <div className="relative flex min-h-screen w-full flex-col">
@@ -34,8 +36,9 @@ export function ProductListPage(){
     </div>
     <div className="flex items-center justify-end gap-4">
     <Link className="hidden text-sm font-medium text-slate-700 hover:text-primary dark:text-slate-300 dark:hover:text-primary sm:block" to="/login">Login</Link>
-    <Link className="hidden text-sm font-medium text-slate-700 hover:text-primary dark:text-slate-300 dark:hover:text-primary sm:block" to="/profile">Meu Perfil</Link>
-    <Button className="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-slate-200 text-slate-700 transition-colors hover:bg-slate-300 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700">
+    <Link className="hidden text-sm font-medium text-slate-700 hover:text-primary dark:text-slate-300 dark:hover:text-primary sm:block" to="/perfil">Meu Perfil</Link>
+    <Button onClick={() => navigate('/carrinho')}
+      className="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-slate-200 text-slate-700 transition-colors hover:bg-slate-300 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700">
     <span className="material-symbols-outlined">shopping_cart</span>
     </Button>
     </div>
@@ -136,7 +139,9 @@ export function ProductListPage(){
     </div>
 
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
-    <div className="group flex flex-col overflow-hidden rounded-xl bg-white shadow-sm transition-shadow duration-300 hover:shadow-lg dark:bg-slate-900">
+    
+    <div className="group flex flex-col overflow-hidden rounded-xl bg-white transition-shadow duration-300 hover:shadow-lg dark:bg-slate-900 shadow-xl">
+    <Link to="/produto/:id">
     <div className="relative">
     <div className="w-full bg-center bg-no-repeat aspect-video bg-cover" data-alt="Botijão de gás azul da SuperGás" style={{backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuB94YxhRMaztmJXaL8E_KxmpPzwiXbiFmt2eLXyYY1y2RgIei7zdK8m3Q5bzHEQDCJW8tI5Nw-kxR3A8ACsh6mxWn6kTcLRhjDF_ov7-m-BFoN0JjUAb9YyFLZ_iSLeLKON0bA3I_SSt2vA6VeAjczKFEOmFmboDjRzUV3zxBK6bvyBmsp333xvrRGsnHn0XSUW-_C9e0_uumO6Jdpxhu3aeRYEWF4tTzN0taRc1F7Co1sgzC49XFTKDQrKRsHgjvxVdSeRqCRseyQ");'}}></div>
     <div className="absolute bottom-3 right-3 flex items-center gap-1 rounded-full bg-black/50 px-2 py-1 text-xs font-bold text-white">
@@ -144,6 +149,7 @@ export function ProductListPage(){
     <span>4.8</span>
     </div>
     </div>
+    </Link>
     <div className="flex flex-1 flex-col p-4">
     <div className="flex-1">
     <p className="text-lg font-bold text-slate-800 dark:text-slate-100">SuperGás - GLP 13kg</p>
@@ -151,14 +157,17 @@ export function ProductListPage(){
     </div>
     <div className="mt-4 flex items-end justify-between">
     <p className="text-xl font-black text-slate-900 dark:text-white">R$ 95,00</p>
-    <Button className="flex h-9 cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg bg-primary px-4 text-sm font-bold text-white transition-opacity hover:opacity-90">
+    <Button 
+      className="flex h-9 cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg bg-primary px-4 text-sm font-bold text-white transition-opacity hover:opacity-90">
     <span className="material-symbols-outlined text-base">add_shopping_cart</span>
       Adicionar
     </Button>
     </div>
     </div>
     </div>
-    <div className="group flex flex-col overflow-hidden rounded-xl bg-white shadow-sm transition-shadow duration-300 hover:shadow-lg dark:bg-slate-900">
+    
+    <div className="group flex flex-col overflow-hidden rounded-xl bg-white shadow-xl transition-shadow duration-300 hover:shadow-lg dark:bg-slate-900">
+    <Link to="/produto/:id">
     <div className="relative">
     <div className="w-full bg-center bg-no-repeat aspect-video bg-cover" data-alt="Botijão de gás vermelho da Gás Rápido" style={{backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuAZ0k6wq6j_rPiTX6AF-_91M6R0X31LSjAp1j4GsXbpv_vLgfQd9PfbHCK_HtPmWfPQAFldbz41SYYMhhJnAGY3MuwHS-8fnzO4FqEEL44yLHfV6FOV4Ryalyn2TU8QG8E7K6M_rXYVPPweh9kcYYMVHYMqiJIHydJH03qQ7qEV4iJUNatCjNLi2fRG8pr4RpYybJaY6WhxvKjdpcB-DADCfmiYopbGx1RSPDMTLBhZRtYIELPOn1k6poiPHqJD1ylNDFNyoSq6kd0");'}}></div>
     <div className="absolute bottom-3 right-3 flex items-center gap-1 rounded-full bg-black/50 px-2 py-1 text-xs font-bold text-white">
@@ -166,6 +175,7 @@ export function ProductListPage(){
     <span>4.9</span>
     </div>
     </div>
+    </Link>
     <div className="flex flex-1 flex-col p-4">
     <div className="flex-1">
     <p className="text-lg font-bold text-slate-800 dark:text-slate-100">Gás Rápido - GLP 13kg</p>
@@ -173,6 +183,7 @@ export function ProductListPage(){
     </div>
     <div className="mt-4 flex items-end justify-between">
     <p className="text-xl font-black text-slate-900 dark:text-white">R$ 92,50</p>
+  
     <Button className="flex h-9 cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg bg-primary px-4 text-sm font-bold text-white transition-opacity hover:opacity-90">
     <span className="material-symbols-outlined text-base">add_shopping_cart</span>
       Adicionar
@@ -180,7 +191,9 @@ export function ProductListPage(){
     </div>
     </div>
     </div>
-    <div className="group flex flex-col overflow-hidden rounded-xl bg-white shadow-sm transition-shadow duration-300 hover:shadow-lg dark:bg-slate-900">
+    
+    <div className="group flex flex-col overflow-hidden rounded-xl bg-white shadow-xl transition-shadow duration-300 hover:shadow-lg dark:bg-slate-900">
+    <Link to="/produto/:id">
     <div className="relative">
     <div className="w-full bg-center bg-no-repeat aspect-video bg-cover" data-alt="Botijão de gás da Chama Azul" style={{backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBHLVkp_lDAfdTcx4-si75j9noDrV6S2spiU_bS-60S1t1ExxCJtL-QCUy6Qe4RZa8CAr5KI1Y3WNmw1rU2UKcoh8K_H2Dsjt4w8fR0zFgnSOw1iMFlKXT6jkwpFNCsJgVo8-3uqLH_r41q-MX0RN7zbmacCawF12ItHETpU-2w75KPpUGKfm-Yz6Fbpkp5mAxDcRuPVEvSCKkSD3b3dpBi5FoSWx0qnwpWUbxSNz0U4Rkxv6FkBzYANKqNlzcOjmIVrbYesCR8PD8");'}}></div>
     <div className="absolute bottom-3 right-3 flex items-center gap-1 rounded-full bg-black/50 px-2 py-1 text-xs font-bold text-white">
@@ -188,6 +201,7 @@ export function ProductListPage(){
     <span>4.5</span>
     </div>
     </div>
+    </Link>
     <div className="flex flex-1 flex-col p-4">
     <div className="flex-1">
     <p className="text-lg font-bold text-slate-800 dark:text-slate-100">Chama Azul - GLP 13kg</p>
@@ -202,7 +216,9 @@ export function ProductListPage(){
     </div>
     </div>
     </div>
-    <div className="group flex flex-col overflow-hidden rounded-xl bg-white shadow-sm transition-shadow duration-300 hover:shadow-lg dark:bg-slate-900">
+    
+    <div className="group flex flex-col overflow-hidden rounded-xl bg-white shadow-xl transition-shadow duration-300 hover:shadow-lg dark:bg-slate-900">
+    <Link to="/produto/:id">
     <div className="relative">
     <div className="w-full bg-center bg-no-repeat aspect-video bg-cover" data-alt="Instalação de gás natural" style={{backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuAnEIm0cUBvehUNpUFmPCrok-KcTNgp8doiGHOM3zMKGZhgf-wPm8Vp54itGyfFLjpSJtWtpehUa80hQEqQlRgIMuP-1cVqR2mdL204tK2XMvm-3aSSz8x7p4xUPVsEynfBC0EQHWqZV21GaIB0D_KeKUAKyCAbZlPLfoobbw21uZc0GFVDbYrn6mJe4qWCTHQh2HdjizXvZNuSu73Zf1fbd42dUJlbKAJGIJ77k5xRi9r_pHpZ6KtbZZ7A4F7ojgOAybrowQUMoPQ");'}}></div>
     <div className="absolute bottom-3 right-3 flex items-center gap-1 rounded-full bg-black/50 px-2 py-1 text-xs font-bold text-white">
@@ -210,6 +226,7 @@ export function ProductListPage(){
     <span>4.7</span>
     </div>
     </div>
+    </Link>
     <div className="flex flex-1 flex-col p-4">
     <div className="flex-1">
     <p className="text-lg font-bold text-slate-800 dark:text-slate-100">Gás Express - Gás Natural</p>
@@ -224,7 +241,8 @@ export function ProductListPage(){
     </div>
     </div>
     </div>
-    <div className="group flex flex-col overflow-hidden rounded-xl bg-white shadow-sm transition-shadow duration-300 hover:shadow-lg dark:bg-slate-900">
+    <div className="group flex flex-col overflow-hidden rounded-xl bg-white shadow-xl transition-shadow duration-300 hover:shadow-lg dark:bg-slate-900">
+    <Link to="/produto/:id">
     <div className="relative">
     <div className="w-full bg-center bg-no-repeat aspect-video bg-cover" data-alt="Botijão de gás branco da TopGás" style={{backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuAJetXR85XHHdZ4ryVmMeFGjfG-aQ0--idfSkVP4zcNVi1QoMESuyE-ZHjI8dlD8y1HWTmtfr8JPC0UE_LNJQlKtMMan1EG-rLvFqjQBy1rV4a_-hNRLpjVPi_P1I9tFn1kZu8UInNLQ272yQMtHj23lTrzGMC-0ZpY-MPLcZ-FVQXYAB_9Sd4k2UMF1leXS3BgPcTI372L4P_KT3A3KVyK_qWtXe446nJCNF3ARzg3_VcyiP7P9Tp_rqvkATk48mDgEQ8pBGSlB_Y");'}}></div>
     <div className="absolute bottom-3 right-3 flex items-center gap-1 rounded-full bg-black/50 px-2 py-1 text-xs font-bold text-white">
@@ -232,6 +250,7 @@ export function ProductListPage(){
     <span>4.6</span>
     </div>
     </div>
+    </Link>
     <div className="flex flex-1 flex-col p-4">
     <div className="flex-1">
     <p className="text-lg font-bold text-slate-800 dark:text-slate-100">TopGás - GLP 13kg</p>
@@ -246,7 +265,8 @@ export function ProductListPage(){
     </div>
     </div>
     </div>
-    <div className="group flex flex-col overflow-hidden rounded-xl bg-white shadow-sm transition-shadow duration-300 hover:shadow-lg dark:bg-slate-900">
+    <div className="group flex flex-col overflow-hidden rounded-xl bg-white shadow-xl transition-shadow duration-300 hover:shadow-lg dark:bg-slate-900">
+    <Link to="/produto/:id">
     <div className="relative">
     <div className="w-full bg-center bg-no-repeat aspect-video bg-cover" data-alt="Botijão industrial de gás de 45kg" style={{backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBodMRYaHOd7azys9B4oFd82xpiMz_DrT1gChL-kfQHkVB4RhtpRHng89DzSGM_R9JiT_enAVwlBRwLhXko_qA8q6BTQKy3u0_tIPec1aNY-h4mAx8VNXrJ8YXAKQnCsR02IG5d7RNbsRR6qgF_NIPbtWIxjgs0xbNp44tt1smcsDv1jT03ljcTmeIysREolcsYWDBKQMjZ48DgWN76nWE7MwBLORgFAlLZI1rLZrwfCODZmyzjr3OJFoDUhk2gelSCb6InA6ZwABA");'}}></div>
     <div className="absolute bottom-3 right-3 flex items-center gap-1 rounded-full bg-black/50 px-2 py-1 text-xs font-bold text-white">
@@ -254,6 +274,7 @@ export function ProductListPage(){
     <span>4.9</span>
     </div>
     </div>
+    </Link>
     <div className="flex flex-1 flex-col p-4">
     <div className="flex-1">
     <p className="text-lg font-bold text-slate-800 dark:text-slate-100">Distribuidora Veloz - GLP 45kg</p>

@@ -82,7 +82,7 @@ const ContactInputStep = ({ method, onSubmit, onBack }: ContactInputStepProps) =
               setContact(e.target.value);
               setError("");
             }}
-            className="h-12 sm:h-14 text-sm sm:text-base px-4 rounded-xl border-2 focus:border-primary focus:ring-primary"
+            className="h-12 sm:h-14 text-sm sm:text-base px-4 rounded-xl border focus:border-primary focus:ring-primary text-black"
           />
           {error && (
             <motion.p
@@ -98,16 +98,15 @@ const ContactInputStep = ({ method, onSubmit, onBack }: ContactInputStepProps) =
         <div className="flex gap-3">
           <Button
             type="button"
-            variant="outline"
             onClick={onBack}
-            className="flex-1 h-12 sm:h-14 rounded-xl text-sm sm:text-base"
+            className="flex-1 h-12 sm:h-14 rounded-xl text-sm sm:text-base bg-blue-500 hover:bg-blue-600 text-white"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Voltar
           </Button>
           <Button
             type="submit"
-            className="flex-1 h-12 sm:h-14 rounded-xl gradient-primary text-primary-foreground text-sm sm:text-base hover:opacity-90 transition-opacity"
+            className="flex-1 h-12 sm:h-14 rounded-xl gradient-primary text-primary-foreground text-sm sm:text-base hover:opacity-90 transition-opacity bg-green-500 hover:bg-green-600"
           >
             Enviar Código
           </Button>

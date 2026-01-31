@@ -82,12 +82,12 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
                 setPassword(e.target.value);
                 setError("");
               }}
-              className="h-12 sm:h-14 text-sm sm:text-base px-4 pr-12 rounded-xl border-2 focus:border-primary focus:ring-primary"
+              className="h-12 sm:h-14 text-black text-sm sm:text-base px-4 pr-12 rounded-xl border-2"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-black transition-colors"
             >
               {showPassword ? (
                 <EyeOff className="w-5 h-5" />
@@ -106,12 +106,12 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
                 setConfirmPassword(e.target.value);
                 setError("");
               }}
-              className="h-12 sm:h-14 text-sm sm:text-base px-4 pr-12 rounded-xl border-2 focus:border-primary focus:ring-primary"
+              className="h-12 sm:h-14 text-black text-sm sm:text-base px-4 pr-12 rounded-xl border-2 focus:border-gray-600 focus:ring-gray-600"
             />
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-black transition-colors"
             >
               {showConfirmPassword ? (
                 <EyeOff className="w-5 h-5" />
@@ -122,7 +122,7 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
           </div>
         </div>
 
-        <div className="bg-card rounded-xl p-4 border border-border">
+        <div className="bg-card bg-white text-gray-500 rounded-xl p-4 border border-border">
           <p className="text-xs sm:text-sm font-medium text-foreground mb-3">
             Requisitos da senha:
           </p>
@@ -165,9 +165,8 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
         <div className="flex gap-3">
           <Button
             type="button"
-            variant="outline"
             onClick={onBack}
-            className="flex-1 h-12 sm:h-14 rounded-xl text-sm sm:text-base"
+            className="flex-1 h-12 sm:h-14 rounded-xl text-sm sm:text-base bg-green-500 hover:bg-green-700 text-white"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Voltar
@@ -175,7 +174,7 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
           <Button
             type="submit"
             disabled={!allRequirementsMet || password !== confirmPassword}
-            className="flex-1 h-12 sm:h-14 rounded-xl gradient-primary text-primary-foreground text-sm sm:text-base hover:opacity-90 transition-opacity disabled:opacity-50"
+            className="flex-1 h-12 sm:h-14 rounded-xl gradient-primary text-primary-foreground text-sm sm:text-base hover:opacity-90 transition-opacity disabled:opacity-50 bg-blue-500 hover:bg-blue-700 text-white"
           >
             Redefinir Senha
           </Button>

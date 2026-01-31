@@ -16,7 +16,7 @@
     --popover: 240 10% 6%;
     --popover-foreground: 0 0% 98%;
   
-    --secondary: 330 81% 60%;
+    --secondary: #137fec;
 
     --muted: 240 10% 12%;
     --muted-foreground: 240 5% 65%;
@@ -38,7 +38,6 @@
     --text-main: #1e293b;
     --text-muted: #64748b;
     --border-light: #e2e8f0;
-    ---background-dark: "#101922",
     --card-light: "#ffffff",
     --card-dark: "#1a242e",
     --text-light-primary: "#111827",

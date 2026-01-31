@@ -62,7 +62,7 @@ export function OrdersPage() {
     <div className="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
     <div className="layout-container flex h-full grow flex-col">
    
-    <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-light dark:border-border-dark px-6 md:px-10 py-3 bg-surface-light dark:bg-surface-dark sticky top-0 z-50">
+    <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-light dark:border-border-dark px-6 md:px-10 py-3 bg-surface-light dark:bg-surface-dark sticky top-0 z-50 shadow-sm border border-slate-100 dark:border-slate-800">
     <div className="flex items-center gap-4 text-text-light dark:text-text-dark">
     <div className="size-6 text-primary">
     <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -102,19 +102,19 @@ export function OrdersPage() {
     </div>
    
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 py-4">
-    <div className="flex flex-col gap-2 rounded-xl p-6 border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark">
+    <div className="flex flex-col gap-2 rounded-xl p-6 border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-xl border-slate-100 dark:border-slate-800">
     <p className="text-text-muted-light dark:text-text-muted-dark text-sm font-medium leading-normal">Pedidos em Andamento</p>
     <p className="text-text-light dark:text-text-dark tracking-light text-3xl font-bold leading-tight">2</p>
     </div>
-    <div className="flex flex-col gap-2 rounded-xl p-6 border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark">
+    <div className="flex flex-col gap-2 rounded-xl p-6 border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-xl border-slate-100 dark:border-slate-800">
     <p className="text-text-muted-light dark:text-text-muted-dark text-sm font-medium leading-normal">Total de Pedidos</p>
     <p className="text-text-light dark:text-text-dark tracking-light text-3xl font-bold leading-tight">15</p>
     </div>
-    <div className="flex flex-col gap-2 rounded-xl p-6 border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark">
+    <div className="flex flex-col gap-2 rounded-xl p-6 border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-xl border-slate-100 dark:border-slate-800">
     <p className="text-text-muted-light dark:text-text-muted-dark text-sm font-medium leading-normal">Pedidos Entregues</p>
     <p className="text-text-light dark:text-text-dark tracking-light text-3xl font-bold leading-tight">12</p>
     </div>
-    <div className="flex flex-col gap-2 rounded-xl p-6 border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark">
+    <div className="flex flex-col gap-2 rounded-xl p-6 border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-xl border-slate-100 dark:border-slate-800">
     <p className="text-text-muted-light dark:text-text-muted-dark text-sm font-medium leading-normal">Cancelados</p>
     <p className="text-text-light dark:text-text-dark tracking-light text-3xl font-bold leading-tight">1</p>
     </div>
@@ -123,8 +123,8 @@ export function OrdersPage() {
     
     <div className="flex-grow w-full lg:w-3/5">
    
-    <div className="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark p-4">
-    <div className="flex flex-wrap items-center justify-between gap-4 pb-4">
+    <div className="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark p-4 shadow-xl border border-slate-100 dark:border-slate-800">
+    <div className="flex flex-wrap items-center justify-between gap-4 pb-4 ">
     <h2 className="text-text-light dark:text-text-dark text-xl font-bold leading-tight tracking-[-0.015em]">Histórico de Compras</h2>
     <div className="flex gap-2">
     <Button className="text-sm font-medium px-3 py-1.5 rounded-lg bg-primary/10 text-primary">Todos</Button>
@@ -200,7 +200,7 @@ export function OrdersPage() {
    
     <div className="flex-shrink-0 w-full lg:w-2/5">
     <div className="sticky top-24">
-    <div className="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark">
+    <div className="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-xl border-slate-100 dark:border-slate-800">
     <div className="p-4 border-b border-border-light dark:border-border-dark">
     <h3 className="text-lg font-bold">Detalhes do Pedido #34562</h3>
     <p className="text-sm text-text-muted-light dark:text-text-muted-dark">Status: <span className="text-blue-600 dark:text-blue-300 font-semibold">A Caminho</span></p>

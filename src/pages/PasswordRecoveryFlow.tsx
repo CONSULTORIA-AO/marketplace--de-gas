@@ -67,12 +67,12 @@ const PasswordRecoveryFlow = () => {
   };
 
   return (
-    <div className="min-h-screen w-full gradient-background flex items-center justify-center p-4 sm:p-6 md:p-8">
+    <div className="min-h-screen w-ful flex items-center justify-center p-4 sm:p-6 md:p-8">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-md"
+        className="w-full max-w-md rounded-lg border-border-light dark:border-border-dark border border-slate-100 dark:border-slate-900 shadow-xl"
       >
         {/* Logo/Header */}
         <motion.div
@@ -84,7 +84,7 @@ const PasswordRecoveryFlow = () => {
           <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-2xl gradient-primary shadow-glow mb-3">
             <KeyRound className="w-7 h-7 sm:w-8 sm:h-8 text-primary-foreground" />
           </div>
-          <h1 className="text-lg sm:text-xl font-semibold text-foreground">
+          <h1 className="text-lg sm:text-xl font-semibold text-black">
             Recuperação de Senha
           </h1>
         </motion.div>
@@ -94,7 +94,7 @@ const PasswordRecoveryFlow = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-card rounded-2xl sm:rounded-3xl shadow-xl p-5 sm:p-6 md:p-8 border border-border"
+          className="rounded-2xl sm:rounded-3xl shadow-xl p-5 sm:p-6 md:p-8 border border-border border-border-light text-white"
         >
           {currentStep < 5 && (
             <StepIndicator
@@ -148,7 +148,7 @@ const PasswordRecoveryFlow = () => {
           className="text-center text-xs sm:text-sm text-muted-foreground mt-6"
         >
           Lembrou sua senha?{" "}
-          <Link to="/login" className="text-primary hover:underline font-medium">
+          <Link to="/login" className="text-[#137fec] hover:underline font-medium">
             Fazer login
           </Link>
         </motion.p>

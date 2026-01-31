@@ -197,7 +197,6 @@ export function RegisterPage() {
                   {/* Action Button */}
                   <Button 
                     type="submit" 
-                    
                     className="w-full h-14 bg-[#137fec] text-white text-base font-bold rounded-xl hover:bg-[#137fec]/90 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 group">
                         Criar minha conta
                       <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>

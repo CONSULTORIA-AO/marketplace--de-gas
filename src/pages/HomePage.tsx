@@ -61,7 +61,7 @@ export function HomePage() {
     <Button onClick={() => navigate('/login')} className="hidden sm:flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary/20 text-primary dark:bg-primary/30 dark:text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/30 dark:hover:bg-primary/40">
     <span className="truncate">Entrar</span>
     </Button>
-    <Button onClick={() => navigate('/cadastro')} className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-secondary hover:bg-[]/90 text-white text-sm font-bold leading-normal tracking-[0.015em]">
+    <Button onClick={() => navigate('/cadastro')} className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#137fec] hover:bg-[#137fec]/90 text-white text-sm font-bold leading-normal tracking-[0.015em]">
     <span className="truncate">Cadastre-se</span>
     </Button>
     <Button className="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark hover:bg-gray-200 dark:hover:bg-gray-700">
@@ -114,7 +114,7 @@ export function HomePage() {
     <p className="text-lg font-bold">Botijão GLP 13kg</p>
     <p className="text-sm text-gray-500 dark:text-gray-400">Fornecedor A</p>
     <p className="text-sm text-gray-500 dark:text-gray-400 mt-1"><span className="line-through">De R$110,00</span> por</p>
-    <p className="text-2xl font-bold text-secondary">R$99,90</p>
+    <p className="text-2xl font-bold text-[#137fec]">R$99,90</p>
     </div>
     </div>
     <div className="flex flex-col gap-3 rounded-xl bg-card-light dark:bg-card-dark shadow-md overflow-hidden transition-transform hover:-translate-y-1">
@@ -123,7 +123,7 @@ export function HomePage() {
     <p className="text-lg font-bold">Botijão GLP 13kg</p>
     <p className="text-sm text-gray-500 dark:text-gray-400">Fornecedor B</p>
     <p className="text-sm text-gray-500 dark:text-gray-400 mt-1"><span className="line-through">De R$115,00</span> por</p>
-    <p className="text-2xl font-bold text-secondary">R$105,00</p>
+    <p className="text-2xl font-bold text-[#137fec]">R$105,00</p>
     </div>
     </div>
     <div className="flex flex-col gap-3 rounded-xl bg-card-light dark:bg-card-dark shadow-md overflow-hidden transition-transform hover:-translate-y-1">
@@ -132,7 +132,7 @@ export function HomePage() {
     <p className="text-lg font-bold">Cilindro GLP 45kg</p>
     <p className="text-sm text-gray-500 dark:text-gray-400">Fornecedor C</p>
     <p className="text-sm text-gray-500 dark:text-gray-400 mt-1"><span className="line-through">De R$450,00</span> por</p>
-    <p className="text-2xl font-bold text-secondary">R$425,00</p>
+    <p className="text-2xl font-bold text-[#137fec]">R$425,00</p>
     </div>
     </div>
     <div className="flex flex-col gap-3 rounded-xl bg-card-light dark:bg-card-dark shadow-md overflow-hidden transition-transform hover:-translate-y-1">
@@ -141,7 +141,7 @@ export function HomePage() {
     <p className="text-lg font-bold">Botijão GLP 13kg</p>
     <p className="text-sm text-gray-500 dark:text-gray-400">Fornecedor D</p>
     <p className="text-sm text-gray-500 dark:text-gray-400 mt-1"><span className="line-through">De R$112,00</span> por</p>
-    <p className="text-2xl font-bold text-secondary">R$102,50</p>
+    <p className="text-2xl font-bold text-[#137fec]">R$102,50</p>
     </div>
     </div>
     </div>
@@ -151,21 +151,21 @@ export function HomePage() {
     <h2 className="text-3xl font-bold leading-tight tracking-tight text-center mb-8">Navegue por Categoria</h2>
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
     <Link className="group flex flex-col items-center gap-4 p-6 bg-card-light dark:bg-card-dark rounded-xl shadow-md text-center hover:bg-primary/10 dark:hover:bg-primary/20" to="#">
-    <div className="flex items-center justify-center w-20 h-20 rounded-full bg-primary/20 group-hover:bg-primary text-primary group-hover:text-white transition-colors">
+    <div className="flex items-center justify-center w-20 h-20 rounded-full bg-primary/20 group-hover:bg-primary text-primary transition-colors">
     <span className="material-symbols-outlined text-4xl">propane_tank</span>
     </div>
     <p className="text-lg font-bold">Gás de Cozinha (GLP)</p>
     <p className="text-sm text-gray-500 dark:text-gray-400">O tradicional para residências e pequenos comércios.</p>
     </Link>
-    <Link className="group flex flex-col items-center gap-4 p-6 bg-card-light dark:bg-card-dark rounded-xl shadow-md text-center hover:bg-primary/10 dark:hover:bg-primary/20" to="#">
-    <div className="flex items-center justify-center w-20 h-20 rounded-full bg-primary/20 group-hover:bg-primary text-primary group-hover:text-white transition-colors">
+    <Link className="group flex flex-col items-center gap-4 p-6 bg-card-light dark:bg-card-dark rounded-xl shadow-md text-center  dark:hover:bg-primary/20" to="#">
+    <div className="flex items-center justify-center w-20 h-20 rounded-full bg-primary/20 group-hover:bg-primary text-primary  transition-colors">
     <span className="material-symbols-outlined text-4xl">gas_meter</span>
     </div>
     <p className="text-lg font-bold">Gás Natural (GN)</p>
     <p className="text-sm text-gray-500 dark:text-gray-400">Soluções para condomínios e indústrias com gás encanado.</p>
     </Link>
     <Link className="group flex flex-col items-center gap-4 p-6 bg-card-light dark:bg-card-dark rounded-xl shadow-md text-center hover:bg-primary/10 dark:hover:bg-primary/20" to="#">
-    <div className="flex items-center justify-center w-20 h-20 rounded-full bg-primary/20 group-hover:bg-primary text-primary group-hover:text-white transition-colors">
+    <div className="flex items-center justify-center w-20 h-20 rounded-full bg-primary/20 group-hover:bg-primary text-primary transition-colors">
     <span className="material-symbols-outlined text-4xl">factory</span>
     </div>
     <p className="text-lg font-bold">Cilindros Industriais</p>
@@ -178,28 +178,28 @@ export function HomePage() {
     <h2 className="text-3xl font-bold leading-tight tracking-tight text-center mb-8">Como Funciona</h2>
     <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
     <div className="flex flex-col items-center">
-    <div className="flex items-center justify-center w-20 h-20 mb-4 rounded-full bg-secondary/20 text-secondary">
+    <div className="flex items-center justify-center w-20 h-20 mb-4 rounded-full bg-[#137fec]/20 text-secondary">
     <span className="material-symbols-outlined text-4xl">search</span>
     </div>
     <h3 className="text-lg font-bold mb-2">1. Busque</h3>
     <p className="text-sm text-gray-500 dark:text-gray-400">Informe o produto que você precisa e sua localização.</p>
     </div>
     <div className="flex flex-col items-center">
-    <div className="flex items-center justify-center w-20 h-20 mb-4 rounded-full bg-secondary/20 text-secondary">
+    <div className="flex items-center justify-center w-20 h-20 mb-4 rounded-full bg-[#137fec]/20 text-secondary">
     <span className="material-symbols-outlined text-4xl">compare_arrows</span>
     </div>
     <h3 className="text-lg font-bold mb-2">2. Compare</h3>
     <p className="text-sm text-gray-500 dark:text-gray-400">Veja as ofertas dos melhores fornecedores da sua região.</p>
     </div>
     <div className="flex flex-col items-center">
-    <div className="flex items-center justify-center w-20 h-20 mb-4 rounded-full bg-secondary/20 text-secondary">
+    <div className="flex items-center justify-center w-20 h-20 mb-4 rounded-full bg-[#137fec]/20 text-secondary">
     <span className="material-symbols-outlined text-4xl">shopping_bag</span>
     </div>
     <h3 className="text-lg font-bold mb-2">3. Compre</h3>
     <p className="text-sm text-gray-500 dark:text-gray-400">Escolha a melhor opção e pague com segurança na plataforma.</p>
     </div>
     <div className="flex flex-col items-center">
-    <div className="flex items-center justify-center w-20 h-20 mb-4 rounded-full bg-secondary/20 text-secondary">
+    <div className="flex items-center justify-center w-20 h-20 mb-4 rounded-full bg-[#137fec]/20 text-secondary">
     <span className="material-symbols-outlined text-4xl">local_shipping</span>
     </div>
     <h3 className="text-lg font-bold mb-2">4. Receba</h3>

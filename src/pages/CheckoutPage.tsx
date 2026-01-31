@@ -102,7 +102,7 @@ export function CheckoutPage() {
     <h1 className="text-slate-900 text-3xl font-extrabold leading-tight tracking-tight mb-2">Onde você quer receber seu gás?</h1>
     <p className="text-slate-500 text-base">Preencha o endereço para localizarmos o revendedor mais próximo.</p>
     </div>
-    <div className="bg-white p-6 sm:p-10 rounded-xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07)] border border-border-gray">
+    <div className="bg-white p-6 sm:p-10 rounded-xl border border-border-gray ounded-2xl shadow-xl border-slate-100 dark:border-slate-800">
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
   
     <div className="sm:col-span-2">
@@ -151,19 +151,19 @@ export function CheckoutPage() {
     <div className="opacity-50 grayscale-[0.5]">
     <div className="mb-6 flex items-center gap-3">
     <div className="h-px flex-1 bg-border-gray"></div>
-    <span className="text-slate-400 text-sm font-bold uppercase tracking-widest">Próxima Etapa</span>
+    <span className="text-slate-900 text-sm font-bold uppercase tracking-widest">Próxima Etapa</span>
     <div className="h-px flex-1 bg-border-gray"></div>
     </div>
     <div className="bg-slate-50 border border-dashed border-slate-300 p-8 rounded-xl flex flex-col items-center justify-center text-center">
-    <span className="material-symbols-outlined text-4xl text-slate-300 mb-2">payments</span>
-    <h2 className="text-slate-400 font-bold text-lg">Pagamento</h2>
-    <p className="text-slate-400 text-sm">Disponível após confirmar o endereço</p>
+    <span className="material-symbols-outlined text-4xl text-slate-300 mb-2 text-blck">payments</span>
+    <h2 className="font-bold text-lg text-black">Pagamento</h2>
+    <p className="text-black text-sm">Disponível após confirmar o endereço</p>
     </div>
     </div>
     </main>
     <aside className="lg:col-span-1 mt-12 lg:mt-0">
     <div className="sticky top-8">
-    <div className="bg-white p-6 rounded-xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07)] border border-border-gray">
+    <div className="bg-white p-6 rounded-xl border-border-gray ounded-2xl shadow-xl border border-slate-100 dark:border-slate-800">
     <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
     <span className="material-symbols-outlined text-primary">shopping_basket</span>
       Resumo do Pedido
