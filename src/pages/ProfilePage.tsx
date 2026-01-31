@@ -1,0 +1,227 @@
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Link } from "react-router-dom";
+
+export function ProfilePage() {
+  return(
+        
+    <main className="bg-background-light text-slate-800 min-h-screen">
+    <header className="flex items-center justify-between whitespace-nowrap border-b border-border-color px-10 py-3 bg-white sticky top-0 z-50">
+    <div className="flex items-center gap-8">
+    <div className="flex items-center gap-4 text-primary">
+    <div className="size-8">
+    <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+    <path d="M42.1739 20.1739L27.8261 5.82609C29.1366 7.13663 28.3989 10.1876 26.2002 13.7654C24.8538 15.9564 22.9595 18.3449 20.6522 20.6522C18.3449 22.9595 15.9564 24.8538 13.7654 26.2002C10.1876 28.3989 7.13663 29.1366 5.82609 27.8261L20.1739 42.1739C21.4845 43.4845 24.5355 42.7467 28.1133 40.548C30.3042 39.2016 32.6927 37.3073 35 35C37.3073 32.6927 39.2016 30.3042 40.548 28.1133C42.7467 24.5355 43.4845 21.4845 42.1739 20.1739Z" fill="currentColor"></path>
+    </svg>
+    </div>
+    <h2 className="text-slate-900 text-lg font-bold leading-tight tracking-[-0.015em]">GasMarket</h2>
+    </div>
+    <div className="flex items-center gap-9">
+    <a className="text-slate-600 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Início</a>
+    <a className="text-slate-600 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Produtos</a>
+    <a className="text-slate-600 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Ofertas</a>
+    <a className="text-slate-600 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Suporte</a>
+    </div>
+    </div>
+    <div className="flex flex-1 justify-end gap-6 items-center">
+    <label className="flex flex-col min-w-40 h-10 max-w-64">
+    <div className="flex w-full flex-1 items-stretch rounded-lg h-full">
+    <div className="text-slate-400 flex border-none bg-slate-100 items-center justify-center pl-4 rounded-l-lg">
+    <span className="material-symbols-outlined">search</span>
+    </div>
+    <input className="form-input flex w-full min-w-0 flex-1 border-none bg-slate-100 text-slate-900 focus:ring-0 h-full placeholder:text-slate-400 px-4 rounded-r-lg text-base font-normal" placeholder="Buscar pedidos..."/>
+    </div>
+    </label>
+    <div className="flex gap-2">
+    <button className="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors">
+    <span className="material-symbols-outlined">notifications</span>
+    </button>
+    <button className="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors">
+    <span className="material-symbols-outlined">account_circle</span>
+    </button>
+    </div>
+    <div className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary" style={{backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuCLU1LK6E-cYBfg6DLHKsAd5xW3cdpeChDBJyFOvTGQrvYMN8OLzDo7j1wZJogET3PlKioZ3cf1VNWdRmqnC_dYB-FsYjMT_kK1byNwa8zgCoQfCvgO3UhUU1oKfUM6Babd4joJ5IKycEu93yB9Jl94Wy6RfG2vcdqGDp3ZINf1NIWcinJYgGrVq87kAiibyyKIRyXogEBpTdbLLVXB9iw3HapnGPkD_zf4L5ivvH6t8qoZ3VmwK_0laglFGPz0YZXll6wRIIphSg0");'}}></div>
+    </div>
+    </header>
+    <div className="flex max-w-[1440px] mx-auto px-10 py-8 gap-8">
+    <aside className="w-64 flex-shrink-0">
+    <div className="flex flex-col h-[calc(100vh-160px)] justify-between bg-white p-6 rounded-xl border border-border-color shadow-sm">
+    <div className="flex flex-col gap-6">
+    <div className="flex items-center gap-3 pb-4 border-b border-slate-50">
+    <div className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12 shadow-sm" style={{backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBjicGJhn0kFO_7ejkZiGIF2J5j_AfU1HmpVXdcUM8IRTruKizXfX_Z9BJie87L1NeYc1dlAANvvGlAAiuw9C97EoAlbN3h1sjbMSmevspwNcHAT5PPE8akyzmrdrIBiIK-wKuzqduo9ezop0ja4pUqfjuKvz60TFErNC9F6ZUVqVpXyuzsj_QTW294nUsmTvPB0wyA0hnff5TgabtWboZGauL4VTCJvpjTkRUS7m4xcDfi5B5BNfTxB1jqjQiBD30eJgk2Sv4Sek4");'}}></div>
+    <div className="flex flex-col">
+    <h1 className="text-slate-900 text-base font-bold leading-none">João Silva</h1>
+    <p className="text-primary text-xs font-semibold mt-1">Cliente VIP</p>
+    </div>
+    </div>
+    <nav className="flex flex-col gap-1">
+    <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary text-white shadow-md shadow-primary/10" to="#">
+    <span className="material-symbols-outlined">person</span>
+    <p className="text-sm font-semibold">Meu Perfil</p>
+    </Link>
+    <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-primary transition-all" to="#">
+    <span className="material-symbols-outlined">package_2</span>
+    <p className="text-sm font-medium">Meus Pedidos</p>
+    </Link>
+    <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-primary transition-all" to="#">
+    <span className="material-symbols-outlined">location_on</span>
+    <p className="text-sm font-medium">Endereços</p>
+    </Link>
+    <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-primary transition-all" to="#">
+    <span className="material-symbols-outlined">credit_card</span>
+    <p className="text-sm font-medium">Pagamentos</p>
+    </Link>
+    <Link className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-primary transition-all" to="#">
+    <span className="material-symbols-outlined">security</span>
+    <p className="text-sm font-medium">Segurança</p>
+    </Link>
+    </nav>
+    </div>
+    <Button className="flex w-full items-center justify-center gap-2 rounded-lg h-11 bg-slate-50 text-slate-600 text-sm font-bold hover:bg-red-50 hover:text-red-500 transition-all">
+    <span className="material-symbols-outlined text-[20px]">logout</span>
+    <span>Sair da conta</span>
+    </Button>
+    </div>
+    </aside>
+    <div className="flex-1 flex flex-col gap-6">
+    <div className="flex items-center gap-2">
+    <Link className="text-slate-400 text-sm font-medium hover:text-primary transition-colors" to="#">Home</Link>
+    <span className="material-symbols-outlined text-slate-400 text-sm">chevron_right</span>
+    <span className="text-slate-900 text-sm font-semibold">Meu Perfil</span>
+    </div>
+    <div className="flex flex-wrap justify-between items-end gap-3">
+    <div className="flex flex-col gap-1">
+    <h1 className="text-slate-900 text-3xl font-black leading-tight tracking-[-0.033em]">Meu Perfil</h1>
+    <p className="text-slate-500 text-base font-normal">Gerencie suas informações pessoais e configurações de segurança.</p>
+    </div>
+    </div>
+    <section className="bg-white border border-border-color p-8 rounded-xl shadow-sm">
+    <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+    <div className="flex items-center gap-8">
+    <div className="relative group">
+    <div className="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-28 w-28 ring-4 ring-slate-50 shadow-inner" style={{backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuCBcSJd-D4Cc5tbywWVmJ9AqfbmD1pemQmYZqNPacjhL351XxMNJHWIBbL8FfSmj4zbs-0pLJ4uouUUpwb2_2wPPulvFAtJaMT_-r0ydz5OEwOVoFqh-HMPdJthsUI4NJzYhx2cHZvdAIqr2LZGcACIYE52Ao0yhKOQ1ej6ok3wodcL0cEPeFCSZSqh3fD65jGc-Krc88fkJNdla3sIX3L4oi3PWYWFOfkSxm0bTRXZTpDQpfNlE5pQI3GrJ9D6Ia9eRXh_EG8GOhg");'}}></div>
+    <Button className="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2 shadow-lg hover:scale-105 transition-transform border-4 border-white">
+    <span className="material-symbols-outlined text-[20px]">photo_camera</span>
+    </Button>
+    </div>
+    <div className="flex flex-col justify-center">
+    <h2 className="text-slate-900 text-2xl font-bold leading-tight">João Silva</h2>
+    <div className="flex items-center gap-2 mt-2">
+    <span className="material-symbols-outlined text-slate-400 text-sm">mail</span>
+    <p className="text-slate-600 text-base">joao.silva@email.com</p>
+    </div>
+    <div className="flex items-center gap-2 mt-1">
+    <span className="material-symbols-outlined text-slate-400 text-sm">location_on</span>
+    <p className="text-slate-600 text-base">São Paulo, SP</p>
+    </div>
+    </div>
+    </div>
+    <div className="flex gap-3">
+    <Button className="flex items-center justify-center rounded-lg h-11 px-8 bg-primary text-white text-sm font-bold hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all">
+        Salvar Alterações
+    </Button>
+    </div>
+    </div>
+    </section>
+    <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <Link className="group bg-white border border-border-color p-6 rounded-xl hover:border-primary hover:shadow-md transition-all" to="#">
+    <div className="bg-blue-50 text-primary p-3 rounded-lg w-fit mb-4 group-hover:bg-primary group-hover:text-white transition-all">
+    <span className="material-symbols-outlined">location_home</span>
+    </div>
+    <h3 className="font-bold text-slate-900">Meus Endereços</h3>
+    <p className="text-xs text-slate-500 mt-1">2 endereços cadastrados</p>
+    </Link>
+    <Link className="group bg-white border border-border-color p-6 rounded-xl hover:border-primary hover:shadow-md transition-all" to="#">
+    <div className="bg-blue-50 text-primary p-3 rounded-lg w-fit mb-4 group-hover:bg-primary group-hover:text-white transition-all">
+    <span className="material-symbols-outlined">payments</span>
+    </div>
+    <h3 className="font-bold text-slate-900">Formas de Pagamento</h3>
+    <p className="text-xs text-slate-500 mt-1">Visa final 4242 • Principal</p>
+    </Link>
+    <Link className="group bg-white border border-border-color p-6 rounded-xl hover:border-primary hover:shadow-md transition-all" to="#">
+    <div className="bg-blue-50 text-primary p-3 rounded-lg w-fit mb-4 group-hover:bg-primary group-hover:text-white transition-all">
+    <span className="material-symbols-outlined">history</span>
+    </div>
+    <h3 className="font-bold text-slate-900">Histórico de Pedidos</h3>
+    <p className="text-xs text-slate-500 mt-1">Último pedido há 15 dias</p>
+    </Link>
+    </section>
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+    <div className="bg-white border border-border-color rounded-xl p-8 shadow-sm">
+    <div className="flex items-center gap-3 mb-8">
+    <div className="p-2 bg-blue-50 rounded-lg">
+    <span className="material-symbols-outlined text-primary">edit_note</span>
+    </div>
+    <h2 className="text-xl font-bold text-slate-900">Informações Pessoais</h2>
+    </div>
+    <div className="space-y-5">
+    <div className="grid grid-cols-1 gap-1.5">
+    <Label 
+        htmlFor="name"
+        className="text-sm font-semibold text-slate-600">Nome Completo</Label>
+    <Input className="w-full bg-slate-50 border-slate-200 rounded-lg text-slate-900 px-4 py-2.5 focus:border-primary focus:bg-white transition-all" type="text" value="João Silva de Oliveira"/>
+    </div>
+    <div className="grid grid-cols-1 gap-1.5">
+    <Label 
+        htmlFor="email"
+        className="text-sm font-semibold text-slate-600">E-mail</Label>
+    <Input className="w-full bg-slate-50 border-slate-200 rounded-lg text-slate-900 px-4 py-2.5 focus:border-primary focus:bg-white transition-all" type="email" value="joao.silva@email.com"/>
+    </div>
+    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 gap-1.5">
+    <Label 
+        htmlFor="tel"
+        className="text-sm font-semibold text-slate-600">Telefone</Label>
+    <Input 
+        className="w-full bg-slate-50 border-slate-200 rounded-lg text-slate-900 px-4 py-2.5 focus:border-primary focus:bg-white transition-all" type="tel" value="(11) 98765-4321"/>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div className="bg-white border border-border-color rounded-xl p-8 shadow-sm">
+    <div className="flex items-center gap-3 mb-8">
+    <div className="p-2 bg-blue-50 rounded-lg">
+    <span className="material-symbols-outlined text-primary">lock_reset</span>
+    </div>
+    <h2 className="text-xl font-bold text-slate-900">Segurança</h2>
+    </div>
+    <div className="space-y-5">
+    <div className="grid grid-cols-1 gap-1.5">
+    <Label htmlFor="current-password" className="text-sm font-semibold text-slate-600">Senha Atual</Label>
+    <div className="relative">
+    <Input className="w-full bg-slate-50 border-slate-200 rounded-lg text-slate-900 px-4 py-2.5 focus:border-primary focus:bg-white transition-all" placeholder="••••••••" type="password"/>
+    <span className="material-symbols-outlined absolute right-3 top-2.5 text-slate-400 cursor-pointer hover:text-primary transition-colors">visibility</span>
+    </div>
+    </div>
+    <div className="grid grid-cols-1 gap-1.5">
+    <Label 
+        htmlFor="password"
+        className="text-sm font-semibold text-slate-600">Nova Senha</Label>
+    <Input 
+        className="w-full bg-slate-50 border-slate-200 rounded-lg text-slate-900 px-4 py-2.5 focus:border-primary focus:bg-white transition-all" type="password"/>
+    </div>
+    <div className="grid grid-cols-1 gap-1.5">
+    <Label htmlFor="confirm-password" className="text-sm font-semibold text-slate-600">Confirmar Nova Senha</Label>
+    <Input className="w-full bg-slate-50 border-slate-200 rounded-lg text-slate-900 px-4 py-2.5 focus:border-primary focus:bg-white transition-all" type="password"/>
+    </div>
+    <Button className="w-full mt-2 h-11 border-2 border-primary text-primary hover:bg-primary hover:text-white rounded-lg text-sm font-bold transition-all">
+        Redefinir Senha
+    </Button>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div className="fixed bottom-10 right-10 bg-slate-900 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-4 border border-slate-700">
+        <div className="bg-green-500 text-white rounded-full size-8 flex items-center justify-center">
+            <span className="material-symbols-outlined text-[18px]">check</span>
+        </div>
+        <div>
+            <p className="text-sm font-bold">Perfil Atualizado!</p>
+            <p className="text-xs opacity-70">Suas alterações foram salvas com sucesso.</p>
+            </div>
+        </div>
+    </main>
+  )
+}
