@@ -37,7 +37,7 @@ export function LoginPage() {
         title: 'Login realizado!',
         description: `Bem-vindo de volta, ${data.user.name}!`,
       });
-      navigate('/');
+      navigate('/produtos');
     },
     onError: (error: any) => {
       toast({

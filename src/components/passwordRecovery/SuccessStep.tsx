@@ -77,8 +77,7 @@ const SuccessStep = ({ onComplete }: SuccessStepProps) => {
         style={{ backgroundColor: "hsl(var(--success) / 0.1)" }}
       >
         <CheckCircle2
-          className="w-12 h-12 sm:w-16 sm:h-16"
-          style={{ color: "hsl(var(--success))" }}
+          className="w-12 h-12 sm:w-16 sm:h-16 text-blue-500"
         />
       </motion.div>
 
@@ -88,10 +87,10 @@ const SuccessStep = ({ onComplete }: SuccessStepProps) => {
         transition={{ delay: 0.4 }}
         className="space-y-2"
       >
-        <h2 className="text-xl sm:text-2xl font-semibold text-foreground">
+        <h2 className="text-xl sm:text-2xl font-semibold text-blue-500">
           Senha Redefinida!
         </h2>
-        <p className="text-sm sm:text-base text-muted-foreground">
+        <p className="text-sm sm:text-base text-black">
           Sua senha foi alterada com sucesso. Agora você pode fazer login com
           sua nova senha.
         </p>
@@ -107,7 +106,7 @@ const SuccessStep = ({ onComplete }: SuccessStepProps) => {
             navigate('/login')
             onComplete()
           }}
-          className="w-full h-12 sm:h-14 rounded-xl gradient-primary text-primary-foreground text-sm sm:text-base hover:opacity-90 transition-opacity"
+          className="w-full h-12 sm:h-14 rounded-xl gradient-primary text-primary-foreground text-sm sm:text-base hover:opacity-90 transition-opacity bg-blue-500 hover:bg-blue-700 text-white"
         >
           Ir para Login
           <ArrowRight className="w-4 h-4 ml-2" />

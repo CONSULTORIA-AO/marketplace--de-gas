@@ -42,16 +42,16 @@ const RecoveryMethodStep = ({ onSelectMethod }: RecoveryMethodStepProps) => {
           onClick={() => onSelectMethod("email")}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="w-full p-4 sm:p-5 rounded-xl border-2 border-border bg-card hover:border-primary hover:shadow-glow transition-all duration-300 flex items-center gap-4"
+          className="w-full p-4 sm:p-5 rounded-xl border-2 border-border bg-card-[#137fec] bg-[#137fec] hover:border-primary text-white hover:shadow-glow transition-all duration-300 flex items-center gap-4 dark:border-border-dark border-slate-100 dark:border-slate-900 hover:text-white"
         >
-          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full gradient-primary flex items-center justify-center flex-shrink-0">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full gradient-primary flex items-center justify-center flex-shrink-0 bg-card bg-[#fff] text-[#137fec]">
             <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-primary-foreground" />
           </div>
           <div className="text-left">
             <h3 className="font-semibold text-foreground text-sm sm:text-base">
               E-mail
             </h3>
-            <p className="text-xs sm:text-sm text-muted-foreground">
+            <p className="text-xs sm:text-sm text-gray-50">
               Receba o código no seu endereço de e-mail
             </p>
           </div>
@@ -61,12 +61,12 @@ const RecoveryMethodStep = ({ onSelectMethod }: RecoveryMethodStepProps) => {
           onClick={() => onSelectMethod("sms")}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="w-full p-4 sm:p-5 rounded-xl border-2 border-border bg-card hover:border-primary hover:shadow-glow transition-all duration-300 flex items-center gap-4"
+          className="w-full p-4 sm:p-5 rounded-xl border-2 border-border hover:border-primary hover:shadow-glow transition-all duration-300 flex items-center gap-4 bg-card bg-blue-500 text-white"
         >
-          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full gradient-primary flex items-center justify-center flex-shrink-0">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full gradient-primary flex items-center justify-center flex-shrink-0 bg-card bg-[#fff] text-[#137fec]">
             <Smartphone className="w-5 h-5 sm:w-6 sm:h-6 text-primary-foreground" />
           </div>
-          <div className="text-left">
+          <div className="text-left text-white">
             <h3 className="font-semibold text-foreground text-sm sm:text-base">
               SMS
             </h3>

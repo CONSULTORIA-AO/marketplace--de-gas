@@ -135,7 +135,7 @@ const VerificationCodeStep = ({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * index }}
-              className="w-10 h-12 sm:w-12 sm:h-14 md:w-14 md:h-16 text-center text-lg sm:text-xl md:text-2xl font-semibold rounded-xl border-2 border-border bg-card focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+              className="w-10 h-12 sm:w-12 sm:h-14 md:w-14 md:h-16 text-center text-lg sm:text-xl md:text-2xl font-semibold rounded-xl border-2 border-border bg-card bg-white text-black border-blue-600 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
             />
           ))}
         </div>
@@ -172,7 +172,7 @@ const VerificationCodeStep = ({
         type="button"
         variant="outline"
         onClick={onBack}
-        className="w-full h-12 sm:h-14 rounded-xl text-sm sm:text-base"
+        className="w-full h-12 sm:h-14 rounded-xl text-sm sm:text-base border bg-blue-600 hover:bg-blue-700 text-white"
       >
         <ArrowLeft className="w-4 h-4 mr-2" />
         Voltar
