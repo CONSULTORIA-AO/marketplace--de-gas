@@ -15,6 +15,7 @@ import PasswordRecoveryFlow from '@/pages/PasswordRecoveryFlow';
 import { VerifyAccountPage } from '@/pages/VerifyAccountPage';
 import NotFound from "@/pages/NotFound";
 import { ProductListPage } from "@/pages/ProductListPage";
+import { ProductReviewPage } from "@/pages/PoductReviewPage";
 
 const NavLink = () => {
   return (
@@ -23,16 +24,39 @@ const NavLink = () => {
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/cadastro" element={<RegisterPage />} />
-      <Route path="/carrinho" element={<CartPage />} />
         
-      <Route path="/produtos" element={<ProductListPage />} />
-      <Route path="/produto/:id" element={<ProductDetailsPage />} />
+      
       <Route path="/recuperar-senha" element={<PasswordRecoveryFlow />} /> 
       <Route path="/ativar-conta/:token" element={<VerifyAccountPage />} /> 
-          
-       
+      
+
+
+      {/* Rotas Privadas */}
+      <Route path="/avaliacao" element={<ProductReviewPage />} /> 
+      <Route 
+        path="/carrinho" 
+        element={
+          <ProtectedRoute>
+            <CartPage />
+          </ProtectedRoute>
+        } />
+      <Route 
+        path="/produtos"
+        element={
+          <ProtectedRoute>
+            <ProductListPage />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/produto/:id" 
+          element={
+            <ProtectedRoute>
+              <ProductDetailsPage />
+            </ProtectedRoute>
+            } />
       <Route
-      path="/checkout"
+         path="/checkout"
         element={
           <ProtectedRoute>
           <CheckoutPage />
