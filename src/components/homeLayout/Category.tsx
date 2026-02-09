@@ -7,7 +7,7 @@ export function CategorySection(){
                 <div 
                     className="group flex flex-col items-center gap-4 p-6 bg-card-light dark:bg-card-dark rounded-xl shadow-xl text-center hover:bg-[#137fec]/10 dark:hover:bg-[#137fec]/20">
                     <div 
-                      className="flex items-center justify-center w-20 h-20 rounded-full bg-[#137fec]/20 group-hover:bg-[#137fec] text-[#137fec] transition-colors">
+                      className="flex items-center justify-center w-20 h-20 rounded-full bg-[#137fec]/20 group-hover:bg-[#137fec] text-[#137fec] group-hover:text-white transition-colors">
                         <span className="material-symbols-outlined text-4xl">propane_tank</span>
                       </div>
                       <p className="text-lg font-bold">Gás de Cozinha (GLP)</p>
@@ -17,7 +17,7 @@ export function CategorySection(){
                 <div 
                     className="group flex flex-col items-center gap-4 p-6 bg-card-light dark:bg-card-dark rounded-xl shadow-xl text-center  dark:hover:bg-[#137fec]/20">
                     <div 
-                        className="flex items-center justify-center w-20 h-20 rounded-full bg-[#137fec]/20 group-hover:bg-[#137fec] text-[#137fec]  transition-colors">
+                        className="flex items-center justify-center w-20 h-20 rounded-full bg-[#137fec]/20 group-hover:bg-[#137fec] text-[#137fec] group-hover:text-white transition-colors">
                         <span className="material-symbols-outlined text-4xl">gas_meter</span>
                     </div>
                     <p className="text-lg font-bold">Gás Natural (GN)</p>
@@ -27,7 +27,7 @@ export function CategorySection(){
                 <div 
                     className="group flex flex-col items-center gap-4 p-6 bg-card-light dark:bg-card-dark rounded-xl shadow-xl text-center hover:bg-[#137fec]/10 dark:hover:bg-[#137fec]/20">
                     <div 
-                    className="flex items-center justify-center w-20 h-20 rounded-full bg-[#137fec]/20 group-hover:bg-[#137fec] text-[#137fec] transition-colors">
+                    className="flex items-center justify-center w-20 h-20 rounded-full bg-[#137fec]/20 group-hover:bg-[#137fec] text-[#137fec] group-hover:text-white transition-colors">
                         <span className="material-symbols-outlined text-4xl">factory</span>
                     </div>
                     <p className="text-lg font-bold">Cilindros Industriais</p>
