@@ -7,7 +7,7 @@ export function Header(){
     const navigate = useNavigate()
 
      const navLinkClass = ({ isActive }: { isActive: boolean }) =>
-            `text-sm font-medium leading-normal text-slate-600  hover:text-[#137fec] transition-colors ${
+            `text-sm font-medium leading-normal hover:text-[#137fec] transition-colors ${
             isActive
             ? "text-[#137fec]" : "text-slate-600" 
         }`;
