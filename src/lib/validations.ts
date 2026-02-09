@@ -43,11 +43,6 @@ export const profileSchema = z.object({
   email: z.string().email('Email inválido'),
 });
 
-// Schema de avaliação
-export const reviewSchema = z.object({
-  rating: z.number().min(1, 'Selecione uma nota').max(5, 'Nota máxima é 5'),
-  comment: z.string().min(10, 'O comentário deve ter no mínimo 10 caracteres'),
-});
 
 // Schema de checkout
 export const checkoutSchema = z.object({
@@ -89,6 +84,21 @@ export const recoveryContactSchema = z.object({
         /^\+?[0-9]{9,15}$/.test(value.replace(/\s/g, '')), // telefone
       'Insira um e-mail ou telefone válido'
     ),
+});
+
+// Schema de avaliação
+export const reviewSchema = z.object({
+  productQuality: z
+    .number()
+    .min(1, 'Avalie a qualidade do produto')
+    .max(5),
+
+  serviceQuality: z
+    .number()
+    .min(1, 'Avalie o atendimento e entrega')
+    .max(5),
+
+  comment: z.string().max(500).optional(),
 });
 
 export type RecoveryContactFormData = z.infer<typeof recoveryContactSchema>;
