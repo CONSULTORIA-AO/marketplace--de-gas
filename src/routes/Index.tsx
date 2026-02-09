@@ -36,55 +36,55 @@ const NavLink = () => {
       <Route 
         path="/carrinho" 
         element={
-          <ProtectedRoute>
+          
             <CartPage />
-          </ProtectedRoute>
+          
         } />
       <Route 
         path="/produtos"
         element={
-          <ProtectedRoute>
-            <ProductListPage />
-          </ProtectedRoute>
+          
+          <ProductListPage />
+          
         } 
       />
       <Route 
         path="/produto/:id" 
           element={
-            <ProtectedRoute>
+            
               <ProductDetailsPage />
-            </ProtectedRoute>
+            
             } />
       <Route
          path="/checkout"
         element={
-          <ProtectedRoute>
+          
           <CheckoutPage />
-          </ProtectedRoute>
+          
         }
       />
       <Route
         path="/pedidos"
         element={
-          <ProtectedRoute>
+          
           <OrdersPage />
-          </ProtectedRoute>
+        
         }
       />
       <Route
         path="/perfil"
           element={
-            <ProtectedRoute>
+            
             <ProfilePage />
-            </ProtectedRoute>
+      
           }
       />
       <Route
         path="/enderecos"
         element={
-          <ProtectedRoute>
+        
           <AddressesPage />
-          </ProtectedRoute>
+          
         }
       />
 

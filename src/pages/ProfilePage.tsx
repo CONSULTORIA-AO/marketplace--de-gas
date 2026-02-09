@@ -2,45 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
+import { Header } from "@/components/Header"; 
 
 export function ProfilePage() {
   return(
         
     <main className="bg-background-light text-slate-800 min-h-screen">
-    <header className="flex items-center justify-between whitespace-nowrap border-b border-border-color px-10 py-3 bg-white sticky top-0 z-50 shadow-xl border border-slate-100 dark:border-slate-800">
-    <div className="flex items-center gap-8">
-    <div className="flex items-center gap-4 text-primary">
-    <div className="size-8">
-    <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-    <path d="M42.1739 20.1739L27.8261 5.82609C29.1366 7.13663 28.3989 10.1876 26.2002 13.7654C24.8538 15.9564 22.9595 18.3449 20.6522 20.6522C18.3449 22.9595 15.9564 24.8538 13.7654 26.2002C10.1876 28.3989 7.13663 29.1366 5.82609 27.8261L20.1739 42.1739C21.4845 43.4845 24.5355 42.7467 28.1133 40.548C30.3042 39.2016 32.6927 37.3073 35 35C37.3073 32.6927 39.2016 30.3042 40.548 28.1133C42.7467 24.5355 43.4845 21.4845 42.1739 20.1739Z" fill="currentColor"></path>
-    </svg>
-    </div>
-    <h2 className="text-slate-900 text-lg font-bold leading-tight tracking-[-0.015em]">GasMarket</h2>
-    </div>
-    <div className="flex items-center gap-9">
-    <Link className="text-slate-600 text-sm font-medium leading-normal hover:text-primary transition-colors" to="/produtos">Produtos</Link>
-    <Link className="text-slate-600 text-sm font-medium leading-normal hover:text-primary transition-colors" to="#">Suporte</Link>
-    </div>
-    </div>
-    <div className="flex flex-1 justify-end gap-6 items-center">
-    <label className="flex flex-col min-w-40 h-10 max-w-64">
-    <div className="flex w-full flex-1 items-stretch rounded-lg h-full">
-    <div className="text-slate-400 flex border-none bg-slate-100 items-center justify-center pl-4 rounded-l-lg">
-    <span className="material-symbols-outlined">search</span>
-    </div>
-    <input className="form-input flex w-full min-w-0 flex-1 border-none bg-slate-100 text-slate-900 focus:ring-0 h-full placeholder:text-slate-400 px-4 rounded-r-lg text-base font-normal" placeholder="Buscar pedidos..."/>
-    </div>
-    </label>
-    <div className="flex gap-2">
-    <button className="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors">
-    <span className="material-symbols-outlined">notifications</span>
-    </button>
-    <button className="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors">
-    <span className="material-symbols-outlined">account_circle</span>
-    </button>
-    </div>
-    </div>
-    </header>
+    <Header />
     <div className="flex max-w-[1440px] mx-auto px-10 py-8 gap-8">
     <aside className="w-64 flex-shrink-0">
     <div className="flex flex-col h-[calc(100vh-160px)] justify-between bg-white p-6 rounded-xl border border-gray-900/10 shadow-sm">

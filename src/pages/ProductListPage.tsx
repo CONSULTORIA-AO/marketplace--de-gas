@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link , useNavigate } from "react-router-dom";
+import { Header } from "@/components/Header";
 
 export function ProductListPage(){
     const navigate = useNavigate();
@@ -10,40 +11,7 @@ export function ProductListPage(){
     <div className="bg-background-light dark:bg-background-dark font-display">
     <div className="relative flex min-h-screen w-full flex-col">
 
-    <header className="sticky top-0 z-20 w-full border-b border-slate-200 bg-background-light/80 backdrop-blur-lg dark:border-slate-800 dark:bg-background-dark/80">
-    <div className="container mx-auto flex items-center justify-between whitespace-nowrap px-4 py-3 lg:px-8">
-    <div className="flex items-center gap-8">
-    <div className="flex items-center gap-3 text-slate-900 dark:text-white">
-    <div className="size-6 text-primary">
-    <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6 6H42L36 24L42 42H6L12 24L6 6Z" fill="currentColor"></path>
-    </svg>
-    </div>
-    <h2 className="text-xl font-bold">GásMarket</h2>
-    </div>
-    </div>
-    <div className="hidden w-full max-w-sm lg:block">
-    <Label className="flex flex-col">
-    <div className="relative flex w-full flex-1 items-stretch rounded-lg">
-    <div className="text-slate-500 dark:text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 transform">
-    <span className="material-symbols-outlined text-xl">search</span>
-    </div>
-    <Input 
-      type="text"
-      className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg bg-slate-200 py-2.5 pl-10 pr-4 text-slate-900 placeholder:text-slate-500 focus:outline-0 focus:ring-2 focus:ring-primary/50 dark:bg-slate-800 dark:text-white dark:placeholder:text-slate-400 border-none h-full text-base font-normal leading-normal" placeholder="Buscar por fornecedor ou tipo de gás..." value=""/>
-    </div>
-    </Label>
-    </div>
-    <div className="flex items-center justify-end gap-4">
-    <Link className="hidden text-sm font-medium text-slate-700 hover:text-primary dark:text-slate-300 dark:hover:text-primary sm:block" to="/login">Login</Link>
-    <Link className="hidden text-sm font-medium text-slate-700 hover:text-primary dark:text-slate-300 dark:hover:text-primary sm:block" to="/perfil">Meu Perfil</Link>
-    <Button onClick={() => navigate('/carrinho')}
-      className="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-slate-200 text-slate-700 transition-colors hover:bg-slate-300 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700">
-    <span className="material-symbols-outlined">shopping_cart</span>
-    </Button>
-    </div>
-    </div>
-    </header>
+    <Header />
     <main className="container mx-auto flex-grow px-4 py-8 lg:px-8">
     <div className="flex flex-col gap-8 lg:flex-row">
 

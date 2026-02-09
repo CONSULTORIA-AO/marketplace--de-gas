@@ -12,9 +12,10 @@ import { useToast } from '@/components/ui/use-toast';
 import { checkoutSchema, type CheckoutFormData } from '@/lib/validations';
 import { useCartStore } from '@/store/cartstore';
 import { api } from '@/lib/axios';
-import { Header } from '@/components/layout/Header';
+import { Header } from '@/components/Header';
 import type { Address, Order } from '@/types/index';
 import { Input } from '@/components/ui/input';
+
 
 export function CheckoutPage() {
   const navigate = useNavigate();
@@ -78,6 +79,7 @@ export function CheckoutPage() {
 
   return (
     <div className="font-display text-slate-700">
+      <Header />
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
     <div className="max-w-7xl mx-auto lg:grid lg:grid-cols-3 lg:gap-12">
     <main className="lg:col-span-2">

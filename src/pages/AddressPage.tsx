@@ -1,48 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
+import { Header } from "@/components/Header";
+
 export function AddressesPage() {
     return (                 
         <main 
             className="font-display bg-background-light dark:bg-background-dark text-text-light-primary dark:text-dark-primary">
             <div className="relative flex min-h-screen w-full flex-col">
-                <header 
-                    className="sticky top-0 z-10 w-full bg-card-light/80 dark:bg-card-dark/80 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800">
-                    <div className="container mx-auto px-4">
-                        <div className="flex h-16 items-center justify-between">
-                            <div className="flex items-center gap-4">
-                                <span   className="material-symbols-outlined text-primary text-3xl">local_fire_department</span>
-                                <h2 className="text-lg font-bold">GásMarket</h2>
-                            </div>
-                            <nav className="hidden md:flex items-center gap-8">
-                                <Link className="text-sm font-medium hover:text-primary" to="#">Início</Link>
-                                <Link className="text-sm font-medium hover:text-primary" to="#">Meus Pedidos</Link>
-                                <Link className="text-sm font-medium hover:text-primary" to="#">Ajuda</Link>
-                            </nav>
-                            <div className="flex items-center gap-3">
-                                <Button className="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-background-light dark:bg-background-dark hover:bg-primary/10">
-                                    <span className="material-symbols-outlined text-xl">notifications</span>
-                                </Button>
-                                <Button className="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-background-light dark:bg-background-dark hover:bg-primary/10">
-                                    <span className="material-symbols-outlined text-xl">shopping_cart</span>
-                                </Button>
-                                <div className="h-10 w-10 rounded-full bg-cover bg-center" data-alt="User avatar image" style={{backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuD78IyG3TWwE0E9fVhYmZ6dm4tnhwkcIPwGZ_WMZIBxvxAhTEwlyg6P-WOfYDI9SXw0OISUHJWaPqwnaAxPD_uxNTRdTVioTg5UnRUrxBkNXBYhJqnaEyMIqjTXE2Cp-GCERCtdvDA0jokvH58avWmX7wxtEfDG7ZwwErnRzD1HsV7E9vaEh3mKxzt70ooOaNaq-1AMGhuWudEWZHWV3_i4y7qrIp0_zyul_GosSIl1wpwT2YHvq4SCJR9PNuW2TxKgG5Zefvfm6Pw")'}}>
-                            </div>
-                        </div>
-                    </div>
-                 </div>
-            </header>
+                <Header />
             <div className="flex-grow container mx-auto px-4 py-8">
                 <div className="mx-auto max-w-4xl">
-
-                <div className="flex flex-wrap gap-2 mb-6">
-                    <Link 
-                        className="text-sm font-medium text-text-light-secondary dark:text-dark-secondary hover:text-primary" to="#">Painel
-                    </Link>
-                    <span 
-                        className="text-sm font-medium text-text-light-secondary dark:text-dark-secondary">/</span>
-                    <span className="text-sm font-medium text-text-light-primary dark:text-dark-primary">Meus Endereços</span>
-                </div>
 
                 <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
                     <div className="flex flex-col gap-2">
