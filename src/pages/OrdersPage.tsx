@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { Button } from '@/components/ui/button';
 import { api } from '@/lib/axios';
-import { Header } from '@/components/layout/Header';
+import { Header } from '@/components/Header';
 import type { Order, OrderStatus } from '@/types';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -61,32 +61,9 @@ export function OrdersPage() {
     <div className="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
     <div className="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
     <div className="layout-container flex h-full grow flex-col">
-   
-    <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-light dark:border-border-dark px-6 md:px-10 py-3 bg-surface-light dark:bg-surface-dark sticky top-0 z-50 shadow-sm border border-slate-100 dark:border-slate-800">
-    <div className="flex items-center gap-4 text-text-light dark:text-text-dark">
-    <div className="size-6 text-primary">
-    <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v2h-2v-2zm0 4h2v6h-2v-6z"></path>
-    </svg>
-    </div>
-    <h2 className="text-text-light dark:text-text-dark text-lg font-bold leading-tight tracking-[-0.015em]">Gás Rápido</h2>
-    </div>
-    <nav className="hidden lg:flex flex-1 justify-center gap-8">
-    <Link className="text-text-muted-light dark:text-text-muted-dark text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary" to="#">Dashboard</Link>
-    <Link className="text-primary dark:text-primary text-sm font-bold leading-normal" to="#">Meus Pedidos</Link>
-    <Link className="text-text-muted-light dark:text-text-muted-dark text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary" to="#">Novo Pedido</Link>
-    <Link className="text-text-muted-light dark:text-text-muted-dark text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary" to="#">Minha Conta</Link>
-    </nav>
-    <div className="flex items-center gap-2">
-    <Button className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 w-10 bg-background-light dark:bg-background-dark text-text-muted-light dark:text-text-muted-dark hover:bg-primary/10 hover:text-primary">
-    <span className="material-symbols-outlined text-xl">notifications</span>
-    </Button>
-    <Button className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 w-10 bg-background-light dark:bg-background-dark text-text-muted-light dark:text-text-muted-dark hover:bg-primary/10 hover:text-primary">
-    <span className="material-symbols-outlined text-xl">help</span>
-    </Button>
-    <div className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Avatar de usuário" style={{backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBcmK2u45Hm1jxO35YsrdFmpuoo4mir5_5xhKzAKT4Iw7We8jWTIeXXQDxiXUIWzG2n1IMeh_wBykPrAm8TBW28H3IaNaA81c10eVxeiaTaXNLSWPs9hWjJF6bFcCPM_p0xne7nY0jkJPRvHITifpcu6jWQVHZnbm2MFOIboa08DkgcwfY3uHt4JswZjOHHhiLeq8m37wPbL9rol2X4hzFK93DoPXIZ5EYGok9vofZXpzAcmsXnYZMqnwwIJrwX3Gh6UdSu1lszbZk");'}}></div>
-    </div>
-    </header>
+    
+    <Header />
+    
     <main className="px-4 sm:px-6 lg:px-10 flex flex-1 justify-center py-5">
     <div className="layout-content-container flex flex-col w-full max-w-7xl flex-1">
     

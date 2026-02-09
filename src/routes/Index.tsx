@@ -15,6 +15,7 @@ import PasswordRecoveryFlow from '@/pages/PasswordRecoveryFlow';
 import { VerifyAccountPage } from '@/pages/VerifyAccountPage';
 import NotFound from "@/pages/NotFound";
 import { ProductListPage } from "@/pages/ProductListPage";
+import { ProductReviewPage } from "@/pages/PoductReviewPage";
 
 const NavLink = () => {
   return (
@@ -23,44 +24,67 @@ const NavLink = () => {
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/cadastro" element={<RegisterPage />} />
-      <Route path="/carrinho" element={<CartPage />} />
         
-      <Route path="/produtos" element={<ProductListPage />} />
-      <Route path="/produto/:id" element={<ProductDetailsPage />} />
+      
       <Route path="/recuperar-senha" element={<PasswordRecoveryFlow />} /> 
       <Route path="/ativar-conta/:token" element={<VerifyAccountPage />} /> 
-          
-       
-      <Route
-      path="/checkout"
+      
+
+
+      {/* Rotas Privadas */}
+      <Route path="/avaliacao" element={<ProductReviewPage />} /> 
+      <Route 
+        path="/carrinho" 
         element={
-          <ProtectedRoute>
+          
+            <CartPage />
+          
+        } />
+      <Route 
+        path="/produtos"
+        element={
+          
+          <ProductListPage />
+          
+        } 
+      />
+      <Route 
+        path="/produto/:id" 
+          element={
+            
+              <ProductDetailsPage />
+            
+            } />
+      <Route
+         path="/checkout"
+        element={
+          
           <CheckoutPage />
-          </ProtectedRoute>
+          
         }
       />
       <Route
         path="/pedidos"
         element={
-          <ProtectedRoute>
+          
           <OrdersPage />
-          </ProtectedRoute>
+        
         }
       />
       <Route
         path="/perfil"
           element={
-            <ProtectedRoute>
+            
             <ProfilePage />
-            </ProtectedRoute>
+      
           }
       />
       <Route
         path="/enderecos"
         element={
-          <ProtectedRoute>
+        
           <AddressesPage />
-          </ProtectedRoute>
+          
         }
       />
 

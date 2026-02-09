@@ -4,10 +4,8 @@ import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/store/cartstore';
 import { useAuthStore } from '@/store/authStrore';
-import { Header } from '@/components/layout/Header';
+import { Header } from '@/components/Header';
 import { Input } from '@/components/ui/input';
-
-import User from "@/assets/user.jpg"
 
 export function CartPage() {
   const navigate = useNavigate();
@@ -50,29 +48,9 @@ export function CartPage() {
     <div className="font-display">
     <div className="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
     <div className="layout-container flex h-full grow flex-col">
-    <header className="flex w-full items-center justify-center border-b border-slate-200 bg-white dark:border-slate-800 dark:bg-background-dark/50 sticky top-0 z-10 backdrop-blur-sm">
-    <div className="flex w-full max-w-7xl items-center justify-between whitespace-nowrap px-4 py-3">
-    <div className="flex items-center gap-8">
-    <div className="flex items-center gap-2 text-slate-900 dark:text-slate-50">
-    <span className="material-symbols-outlined text-primary text-3xl"> local_fire_department </span>
-    <h2 className="text-xl font-bold tracking-tight">GásMarket</h2>
-    </div>
-    <div className="hidden md:flex items-center gap-8">
-    <Link className="text-slate-600 dark:text-slate-300 text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary" to="/">Home</Link>
-    <Link className="text-slate-600 dark:text-slate-300 text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary" to="/produtos">Produtos</Link>
-    <Link className="text-slate-600 dark:text-slate-300 text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary" to="#">Ajuda</Link>
-    </div>
-    </div>
-    <div className="flex items-center justify-end gap-4">
-    <Button className="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
-    <span className="material-symbols-outlined"> shopping_cart </span>
-    </Button>
-    <div>
-      <img src={User} alt="User profile picture"className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User profile picture" />
-    </div>
-    </div>
-    </div>
-    </header>
+
+    <Header />
+    
     <main className="flex w-full flex-1 justify-center px-4 py-8 md:py-12">
     <div className="flex w-full max-w-7xl flex-col gap-8">
     <div className="flex flex-wrap justify-between gap-3">

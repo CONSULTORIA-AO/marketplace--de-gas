@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
 import { registerSchema, type RegisterFormData } from '@/lib/validations';
 import { api } from '@/lib/axios';
-import { Loader2 } from 'lucide-react';
+import { AuthHeader } from "@/components/AuthHeader";
 
 export function RegisterPage() {
   const navigate = useNavigate();
@@ -51,38 +51,19 @@ export function RegisterPage() {
 
   return (
     <main className="flex-grow flex flex-col w-full">
-      <header className="flex items-center justify-between px-4 md:px-10 lg:px-20 py-6">
-        <div className="flex items-center gap-4 text-primary">
-          <div className="size-8">
-            <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-              <path d="M36.7273 44C33.9891 44 31.6043 39.8386 30.3636 33.69C29.123 39.8386 26.7382 44 24 44C21.2618 44 18.877 39.8386 17.6364 33.69C16.3957 39.8386 14.0109 44 11.2727 44C7.25611 44 4 35.0457 4 24C4 12.9543 7.25611 4 11.2727 4C14.0109 4 16.3957 8.16144 17.6364 14.31C18.877 8.16144 21.2618 4 24 4C26.7382 4 29.123 8.16144 30.3636 14.31C31.6043 8.16144 33.9891 4 36.7273 4C40.7439 4 44 12.9543 44 24C44 35.0457 40.7439 44 36.7273 44Z"></path>
-            </svg>
-          </div>
-          <h2 className="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight">Gás Marketplace</h2>
-        </div>
-        <div className="flex flex-1 justify-end gap-8">
-          <div className="flex items-center gap-9">
-            <Link className="text-slate-700 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" to="/">Início</Link>
-            <Link className="text-slate-700 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" to="/">Preços</Link>
-          </div>
-          <Button 
-            onClick={() => navigate('/login')}
-            className="flex min-w-[84px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-[#137fec] text-white text-sm font-bold tracking-tight hover:bg-[#137fec]/90 transition-all">
-            <span>Entrar</span>
-          </Button>
-        </div>
-      </header>
+      <AuthHeader />
+
       <div className="flex-grow flex items-center justify-center py-12 px-4 md:px-10 lg:px-20">
         <div className="max-w-[1200px] w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Side: Visual Content */}
           <div className="hidden lg:flex flex-col gap-8 pr-12">
             <div className="flex flex-col gap-4">
-              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold w-fit">
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#137fec]/10 text-[#137fec] text-sm font-semibold w-fit">
                 <span className="material-symbols-outlined text-sm">local_shipping</span>
                 Entrega em minutos
               </span>
               <h1 className="text-slate-900 dark:text-white text-5xl font-extrabold leading-[1.1] tracking-tight">
-                Seu gás na porta de casa <span className="text-primary">em poucos cliques</span>
+                Seu gás na porta de casa <span className="text-[#137fec]">em poucos cliques</span>
               </h1>
               <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed max-w-md">
                 Junte-se a milhares de clientes que já economizam tempo e dinheiro pedindo seu gás de cozinha pelo nosso marketplace.
@@ -90,11 +71,11 @@ export function RegisterPage() {
             </div>
         <div className="w-full relative">
           <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-slate-200 shadow-2xl relative group">
-            <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent z-10"></div>
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#137fec]/20 to-transparent z-10"></div>
             <img alt="Person holding a smartphone to order household services" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Person using a smartphone to order gas delivery" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAz07aZ4KegGZkZkh5zxro2Np29AetrXio42EU9o4iAte0Wcp1OVWoPF2tX46r3w4jdx0_JgNsFNXnDquxO_zVRyB72RlKQxzD2V-vOXKqCc7nFpMQq7wA1FHSsFVbd31l3S8pTmk_N7Tro-3NZDjNMz6WjsdArT835PwCslBZXSPqlVhZuiYA5Ufy0IP89ysIpl-RNgpxrwQmz7fS-a-lclFHvCXyhuJXf14P09KJMRXsmTgSrklXR-SBCl-XSBTsMqU2qNxQ3ciQ"/>
             <div className="absolute bottom-6 left-6 right-6 p-6 bg-white/90 dark:bg-background-dark/90 backdrop-blur-sm rounded-xl z-20 border border-white/20">
               <div className="flex items-center gap-4">
-                <div className="bg-primary p-3 rounded-full text-white">
+                <div className="bg-[#137fec] p-3 rounded-full text-white">
                   <span className="material-symbols-outlined">verified</span>
                 </div>
                 <div>
@@ -122,7 +103,7 @@ export function RegisterPage() {
                   <Input 
                    id="name"
                    {...register('name')}
-                    className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" placeholder="Como quer ser chamado?" type="text"/>
+                    className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#137fec] focus:border-transparent transition-all outline-none" placeholder="Como quer ser chamado?" type="text"/>
                     {errors.name && (
                   <p className="text-sm text-destructive">{errors.name.message}</p>
                 )}
@@ -137,7 +118,7 @@ export function RegisterPage() {
                       <Input 
                         id="email"
                         {...register('email')}
-                        className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" placeholder="seu@email.com" type="email"/>
+                        className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#137fec] focus:border-transparent transition-all outline-none" placeholder="seu@email.com" type="email"/>
                         {errors.email && (
                           <p className="text-sm text-destructive">{errors.email.message}</p>
                         )}
@@ -151,7 +132,7 @@ export function RegisterPage() {
                         <Input 
                           id="phone"
                           {...register('phone')}
-                          className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" placeholder="(00) 00000-0000" type="tel"/>
+                          className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#137fec] focus:border-transparent transition-all outline-none" placeholder="(00) 00000-0000" type="tel"/>
                           {errors.phone && (
                             <p className="text-sm text-destructive">{errors.phone.message}</p>
                           )}
@@ -168,7 +149,7 @@ export function RegisterPage() {
                           id="password"
                           type="password"
                           placeholder="••••••••"
-                          {...register('password')} className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none"/>
+                          {...register('password')} className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#137fec] focus:border-transparent transition-all outline-none"/>
                           {errors.password && (
                             <p className="text-sm text-destructive">{errors.password.message}</p>
                           )}
@@ -183,15 +164,15 @@ export function RegisterPage() {
                           id="confirmPassword"
                           type="password"
                           placeholder="••••••••"
-                          {...register('confirmPassword')} className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" />
+                          {...register('confirmPassword')} className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#137fec] focus:border-transparent transition-all outline-none" />
                       </div>
                     </div>
                   </div>
                   {/* Checkbox Terms */}
                   <div className="flex items-start gap-3 py-2">
-                    <input className="mt-1 w-5 h-5 rounded border-slate-300 text-primary focus:ring-primary" id="terms" type="checkbox"/>
+                    <input className="mt-1 w-5 h-5 rounded border-slate-300 text-[#137fec] focus:ring-[#137fec]" id="terms" type="checkbox"/>
                     <Label htmlFor="terms" className="text-sm text-slate-600 dark:text-slate-400 leading-tight">
-                      Eu li e concordo com os <a className="text-primary font-semibold hover:underline" href="#">Termos de Uso</a> e a <a className="text-primary font-semibold hover:underline" href="#">Política de Privacidade</a>.
+                      Eu li e concordo com os <a className="text-[#137fec] font-semibold hover:underline" href="#">Termos de Uso</a> e a <a className="text-[#137fec] font-semibold hover:underline" href="#">Política de Privacidade</a>.
                     </Label>
                   </div>
                   {/* Action Button */}
@@ -203,7 +184,7 @@ export function RegisterPage() {
                   </Button>
                   {/* Footer Link */}
                   <p className="text-center text-slate-600 dark:text-slate-400 text-sm mt-6">
-                    Já tem uma conta?{' '} <Link to="/login" className="text-primary    hover:underline font-medium">
+                    Já tem uma conta?{' '} <Link to="/login" className="text-[#137fec]    hover:underline font-medium">
                       Faça login
                     </Link>
                   </p>

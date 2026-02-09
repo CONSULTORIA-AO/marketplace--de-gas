@@ -6,7 +6,7 @@ export function Footer() {
 
   return (
     <footer 
-      className="bg-card-light dark:bg-card-dark border-t border-border-light dark:border-border-dark mt-16 border border-slate-100 dark:border-slate-800">
+      className="bg-card-light dark:bg-card-dark border-t border-border-light dark:border-border-dark mt-16 border border-slate-300 dark:border-slate-800">
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
@@ -41,7 +41,7 @@ export function Footer() {
           </div>
         </div>
       </div>
-      <div className="mt-8 border-t border-border-light dark:border-border-dark pt-8 text-center text-sm text-gray-500 dark:text-gray-400">
+      <div className="mt-8 border-t border-border-light border-slate-300 dark:border-border-dark pt-8 text-center text-sm text-gray-500 dark:text-gray-400">
       <p>© 2024 GásMarket. Todos os direitos reservados.</p>
       </div>
       </div>

@@ -12,6 +12,7 @@ import { loginSchema, type LoginFormData } from '@/lib/validations';
 import { useAuthStore } from '@/store/authStrore';
 import { api } from '@/lib/axios';
 import type { AuthResponse } from '@/types/index';
+import { AuthHeader } from "@/components/AuthHeader";
 
 export function LoginPage() {
   const navigate = useNavigate();
@@ -54,33 +55,7 @@ export function LoginPage() {
 
   return (
     <main className="bg-background-light min-h-screen flex flex-col font-display text-text-main">
-      <header 
-        className="flex items-center justify-between whitespace-nowrap border-b border-border-light px-10 py-4 bg-white border border-slate-100 dark:border-slate-800">
-        <div className="flex items-center gap-4 text-primary">
-          <div className="size-8">
-            <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-              <g clip-path="url(#clip0_6_543)">
-              <path d="M42.1739 20.1739L27.8261 5.82609C29.1366 7.13663 28.3989 10.1876 26.2002 13.7654C24.8538 15.9564 22.9595 18.3449 20.6522 20.6522C18.3449 22.9595 15.9564 24.8538 13.7654 26.2002C10.1876 28.3989 7.13663 29.1366 5.82609 27.8261L20.1739 42.1739C21.4845 43.4845 24.5355 42.7467 28.1133 40.548C30.3042 39.2016 32.6927 37.3073 35 35C37.3073 32.6927 39.2016 30.3042 40.548 28.1133C42.7467 24.5355 43.4845 21.4845 42.1739 20.1739Z" fill="currentColor"></path>
-              </g>
-              <defs>
-              <clipPath id="clip0_6_543"><rect fill="white" height="48" width="48"></rect></clipPath>
-              </defs>
-            </svg>
-          </div>
-          <h2 className="text-text-main text-xl font-bold leading-tight tracking-[-0.015em]">GasMarket</h2>
-        </div>
-        <div className="flex flex-1 justify-end gap-8">
-          <div className="flex items-center gap-9">
-            <Link className="text-slate-800 text-sm font-medium leading-normal hover:text-slate-900 transition-colors" to="/">Início</Link>
-            <Link className="text-text-main text-sm font-medium leading-normal hover:text-primary transition-colors" to="/">Preços</Link>
-          </div>
-          <Button 
-            onClick={() => navigate('/cadastro')}
-            className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-6 bg-[#137fec] text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#137fec]/90 transition-all shadow-sm">
-            <span className="truncate">Criar uma conta</span>
-          </Button>
-        </div>
-      </header>
+      <AuthHeader />
       <div 
         className="flex-1 flex overflow-hidden">
         <div 
@@ -119,7 +94,7 @@ export function LoginPage() {
             <Input
               id="email"
               {...register('email')}
-            className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-slate-900 dark:text-white focus:outline-0 focus:ring-1 border border-slate-200 dark:border-slate-700 bg-white focus:border-primary h-14 placeholder:text-slate-500/60 p-[15px] text-base font-normal leading-normal transition-all" placeholder="seu@email.com" type="email"/>
+            className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-slate-900 dark:text-white focus:outline-0 focus:ring-1 border border-slate-200 dark:border-slate-700 bg-white focus:border-[#137fec] h-14 placeholder:text-slate-500/60 p-[15px] text-base font-normal leading-normal transition-all" placeholder="seu@email.com" type="email"/>
             {errors.email && (
                 <p className="text-sm text-destructive">{errors.email.message}</p>
               )}
@@ -128,13 +103,13 @@ export function LoginPage() {
             <div className="flex justify-between items-center">
               <Label htmlFor="password" 
                 className="text-slate-700 dark:text-slate-300 text-sm font-semibold leading-normal">Senha</Label>
-              <Link className="text-primary text-sm font-semibold hover:underline" to="/recuperar-senha">Esqueceu a senha?</Link>
+              <Link className="text-[#137fec] text-sm font-semibold hover:underline" to="/recuperar-senha">Esqueceu a senha?</Link>
           </div>
           <div className="relative">
             <Input
               id="password"
               {...register('password')}
-              className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-slate-900 dark:text-white focus:outline-0 focus:ring-1 border border-slate-200 dark:border-slate-700 bg-white focus:border-primary h-14 placeholder:text-slate-500/60 p-[15px] text-base font-normal leading-normal transition-all" placeholder="••••••••" type="password"/>
+              className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-slate-900 dark:text-white focus:outline-0 focus:ring-1 border border-slate-200 dark:border-slate-700 bg-white focus:border-[#137fec] h-14 placeholder:text-slate-500/60 p-[15px] text-base font-normal leading-normal transition-all" placeholder="••••••••" type="password"/>
                 {errors.password && (
                   <p className="text-sm text-destructive">{errors.password.message}</p>
                 )}
@@ -143,14 +118,6 @@ export function LoginPage() {
                 <span className="material-symbols-outlined">visibility</span>
               </Button>
             </div>
-          </div>
-          <div className="flex justify-end">
-            <Link 
-              to="/recuperar-senha" 
-              className="text-sm text-primary hover:underline"
-            >
-              Esqueceu sua senha?
-            </Link>
           </div>
           <Button 
             type="submit" 
@@ -196,7 +163,7 @@ export function LoginPage() {
             </div>
             <p className="text-center text-text-muted text-sm pt-4">
               Não tem uma conta?{' '}
-              <Link to="/cadastro" className="ext-primary font-bold hover:underline ml-1">
+              <Link to="/cadastro" className="text-[#137fec] font-bold hover:underline ml-1">
                 Crie sua conta agora
               </Link>
               </p>

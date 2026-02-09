@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { KeyRound } from "lucide-react";
-import StepIndicator from "@/components/passwordRecovery/StepIndicator";
 import RecoveryMethodStep from "@/components/passwordRecovery/RecoveryMethodStep";
 import ContactInputStep from "@/components/passwordRecovery/ContactInputStep";
 import VerificationCodeStep from "@/components/passwordRecovery/VerificationCodeStep";
@@ -81,10 +80,10 @@ const PasswordRecoveryFlow = () => {
           transition={{ delay: 0.1 }}
           className="text-center mb-6 sm:mb-8"
         >
-          <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-2xl gradient-primary shadow-glow mb-3">
-            <KeyRound className="w-7 h-7 sm:w-8 sm:h-8 text-primary-foreground" />
+          <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-2xl gradient-[#137fec] shadow-glow mb-3">
+            <KeyRound className="w-7 h-7 sm:w-8 sm:h-8 text-[#137fec]" />
           </div>
-          <h1 className="text-lg sm:text-xl font-semibold text-black">
+          <h1 className="text-lg sm:text-xl font-semibold text-[#137fec]">
             Recuperação de Senha
           </h1>
         </motion.div>
@@ -94,15 +93,8 @@ const PasswordRecoveryFlow = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="rounded-2xl sm:rounded-3xl shadow-xl p-5 sm:p-6 md:p-8 border border-border border-border-light text-white"
+          className="rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-8 border border-border border-border-light text-white"
         >
-          {currentStep < 5 && (
-            <StepIndicator
-              currentStep={currentStep}
-              totalSteps={5}
-              steps={steps}
-            />
-          )}
 
           <AnimatePresence mode="wait">
             <motion.div

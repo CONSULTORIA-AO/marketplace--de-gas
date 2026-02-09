@@ -3,7 +3,7 @@ import { z } from 'zod';
 // Schema de login
 export const loginSchema = z.object({
   email: z.string().email('Email inválido'),
-  password: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres'),
+  password: z.string().min(8, 'A senha deve ter no mínimo 6 caracteres'),
 });
 
 // Schema de registro
@@ -43,11 +43,6 @@ export const profileSchema = z.object({
   email: z.string().email('Email inválido'),
 });
 
-// Schema de avaliação
-export const reviewSchema = z.object({
-  rating: z.number().min(1, 'Selecione uma nota').max(5, 'Nota máxima é 5'),
-  comment: z.string().min(10, 'O comentário deve ter no mínimo 10 caracteres'),
-});
 
 // Schema de checkout
 export const checkoutSchema = z.object({
@@ -60,6 +55,53 @@ export const checkoutSchema = z.object({
   }),
 });
 
+// Schema de password
+export const passwordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(8, 'A senha deve ter no mínimo 8 caracteres')
+      .regex(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/,
+        'A senha deve conter letra maiúscula, minúscula, número e caractere especial'
+      ),
+
+    confirmPassword: z.string()
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'As senhas não coincidem',
+    path: ['confirmPassword'],
+});
+
+
+export const recoveryContactSchema = z.object({
+  contact: z
+    .string()
+    .min(1, 'Campo obrigatório')
+    .refine(
+      (value) =>
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || // email
+        /^\+?[0-9]{9,15}$/.test(value.replace(/\s/g, '')), // telefone
+      'Insira um e-mail ou telefone válido'
+    ),
+});
+
+// Schema de avaliação
+export const reviewSchema = z.object({
+  productQuality: z
+    .number()
+    .min(1, 'Avalie a qualidade do produto')
+    .max(5),
+
+  serviceQuality: z
+    .number()
+    .min(1, 'Avalie o atendimento e entrega')
+    .max(5),
+
+  comment: z.string().max(500).optional(),
+});
+
+export type RecoveryContactFormData = z.infer<typeof recoveryContactSchema>;
 export type LoginFormData = z.infer<typeof loginSchema>;
 export type RegisterFormData = z.infer<typeof registerSchema>;
 export type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
@@ -67,3 +109,4 @@ export type AddressFormData = z.infer<typeof addressSchema>;
 export type ProfileFormData = z.infer<typeof profileSchema>;
 export type ReviewFormData = z.infer<typeof reviewSchema>;
 export type CheckoutFormData = z.infer<typeof checkoutSchema>;
+export type RecoveryPasswordSchema = z.infer<typeof passwordSchema>;
