@@ -3,6 +3,14 @@ import { Mail, Phone, ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { RecoveryPasswordSchema, passwordSchema } from "@/lib/validations";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  recoveryContactSchema,
+  type RecoveryContactFormData,
+} from '@/lib/validations';
+
 
 interface ContactInputStepProps {
   method: "email" | "sms";
@@ -11,32 +19,16 @@ interface ContactInputStepProps {
 }
 
 const ContactInputStep = ({ method, onSubmit, onBack }: ContactInputStepProps) => {
-  const [contact, setContact] = useState("");
-  const [error, setError] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RecoveryContactFormData>({
+    resolver: zodResolver(recoveryContactSchema),
+  });
 
-  const validateInput = () => {
-    if (method === "email") {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(contact)) {
-        setError("Por favor, insira um e-mail válido");
-        return false;
-      }
-    } else {
-      const phoneRegex = /^\+?[0-9]{9,15}$/;
-      if (!phoneRegex.test(contact.replace(/\s/g, ""))) {
-        setError("Por favor, insira um número de telefone válido");
-        return false;
-      }
-    }
-    setError("");
-    return true;
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (validateInput()) {
-      onSubmit(contact);
-    }
+  const submitHandler = (data: RecoveryContactFormData) => {
+    onSubmit(data.contact);
   };
 
   const containerVariants = {
@@ -72,25 +64,21 @@ const ContactInputStep = ({ method, onSubmit, onBack }: ContactInputStepProps) =
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit(submitHandler)} className="space-y-4">
         <div className="space-y-2">
           <Input
             type={method === "email" ? "email" : "tel"}
-            placeholder={method === "email" ? "seu@email.com" : "+55 11 99999-9999"}
-            value={contact}
-            onChange={(e) => {
-              setContact(e.target.value);
-              setError("");
-            }}
+            placeholder={method === "email" ? "seu@email.com" : "+244 943 558 106"}
+            {...register('contact')}
             className="h-12 sm:h-14 text-sm sm:text-base px-4 rounded-xl border focus:border-[#137fec] focus:ring-[#137fec] text-black"
           />
-          {error && (
+          {errors.contact && (
             <motion.p
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               className="text-destructive text-xs sm:text-sm"
             >
-              {error}
+              {errors.contact.message}
             </motion.p>
           )}
         </div>

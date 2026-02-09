@@ -95,7 +95,6 @@ const PasswordRecoveryFlow = () => {
           transition={{ delay: 0.2 }}
           className="rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-8 border border-border border-border-light text-white"
         >
-  
 
           <AnimatePresence mode="wait">
             <motion.div
