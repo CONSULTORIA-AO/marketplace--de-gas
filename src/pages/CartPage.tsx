@@ -1,6 +1,15 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
-
+import { 
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableCaption, 
+  TableFooter, 
+  TableHead, 
+  TableHeader, 
+  TableRow 
+} from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/store/cartstore';
 import { useAuthStore } from '@/store/authStrore';

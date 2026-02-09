@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Link, useNavigate } from "react-router-dom";
+import { Header } from "@/components/Header";
 
 export function ProductDetailsPage(){
     const navigate = useNavigate();
@@ -9,26 +10,7 @@ export function ProductDetailsPage(){
         <div className="font-display">
         <div className="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
         <header className="w-full bg-white border-b border-border-soft sticky top-0 z-50 border border-slate-100 dark:border-slate-800 shadow-sm">
-        <div className="container mx-auto px-8">
-        <div className="flex items-center justify-between whitespace-nowrap py-4">
-        <div className="flex items-center gap-10">
-        <div className="flex items-center gap-3 text-primary">
-        <span className="material-symbols-outlined text-4xl">local_fire_department</span>
-        <h2 className="text-2xl font-extrabold tracking-tight">Gás Rápido</h2>
-        </div>
-        </div>
-        <div className="flex items-center gap-6">
-        <Button onClick={() => navigate('/carrinho')}
-            className="flex min-w-[120px] cursor-pointer items-center justify-center rounded-xl h-12 px-6 bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
-        <span className="material-symbols-outlined mr-2 text-xl">shopping_cart</span>
-        <span className="truncate">Carrinho</span>
-        </Button>
-        <Link to="/perfil">
-        <div className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-11 ring-2 ring-border-soft cursor-pointer" data-alt="User avatar" style={{backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDVPjjCjJ4hwxeQlbmzGkvMxNoklffwnynHc0xrQUdOEXdN93wNy3Ko85uvYGhbtLbxQUwKt_iaQK5Q7R4TrcH_QqPeRuctRdhK8ngAThInK6POydgVTGTIhZ4ZXAMjzwJhiONAHnDMrYN2_wt7NhGQrg7xaN3L__77iO6DnN2wm_pzhgYYJm2GfRw2EUIrzErREU15utskDaQYVQtZ4TGlKxaqJnkGTzkQw85nkLhIuWDY5Xbl9Wyczoo56bEZA89fryTta8ttN2k');"}}></div>
-        </Link>
-        </div>
-        </div>
-        </div>
+            <Header />
         </header>
         <main className="flex-1">
         <div className="container mx-auto px-8 py-12">

@@ -1,65 +1,114 @@
 import { NavLink, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { Button } from "./ui/button";
+import { Menu, X } from "lucide-react";
 
-import User from "@/assets/user.jpg"
+import User from "@/assets/user.jpg";
 
-export function Header(){
-    const navigate = useNavigate()
+export function Header() {
+  const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
 
-     const navLinkClass = ({ isActive }: { isActive: boolean }) =>
-            `text-sm font-medium leading-normal hover:text-[#137fec] transition-colors ${
-            isActive
-            ? "text-[#137fec]" : "text-slate-600" 
-        }`;
-    
-    return(
-        <header 
-            className="flex items-center justify-between whitespace-nowrap border-b border-border-color px-10 py-3 bg-white sticky top-0 z-50 shadow-xl border border-slate-100 dark:border-slate-800">
-            <div className="flex items-center gap-8">
-                <div className="flex items-center gap-4 text-[#137fec]">
-                    <div className="size-8">
-                        <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M42.1739 20.1739L27.8261 5.82609C29.1366 7.13663 28.3989 10.1876 26.2002 13.7654C24.8538 15.9564 22.9595 18.3449 20.6522 20.6522C18.3449 22.9595 15.9564 24.8538 13.7654 26.2002C10.1876 28.3989 7.13663 29.1366 5.82609 27.8261L20.1739 42.1739C21.4845 43.4845 24.5355 42.7467 28.1133 40.548C30.3042 39.2016 32.6927 37.3073 35 35C37.3073 32.6927 39.2016 30.3042 40.548 28.1133C42.7467 24.5355 43.4845 21.4845 42.1739 20.1739Z" fill="currentColor"></path>
-                        </svg>
-                    </div>
-                    <h2 className="text-slate-900 text-lg font-bold leading-tight tracking-[-0.015em]">GasMarket</h2>
-                </div>
-                <nav className="flex items-center justify-center gap-9">
-                    <NavLink className={navLinkClass} to="/produtos">Produtos</NavLink>
+  const navLinkClass = ({ isActive }: { isActive: boolean }) =>
+    `text-sm font-medium transition-colors ${
+      isActive
+        ? "text-[#137fec]"
+        : "text-slate-600 hover:text-[#137fec]"
+    }`;
 
-                    <NavLink 
-                        className={navLinkClass}
-                        to="/pedidos">Meus Pedidos</NavLink>    
-
-                    <NavLink
-                        className={navLinkClass}
-                        to="/enderecos">Endereço</NavLink>
-
-                    <NavLink 
-                        className={navLinkClass}
-                        to="/checkout">Checkout</NavLink>
-
-                    <NavLink
-                        className={navLinkClass}
-                        to="/avaliacao">
-                        Avaliação
-                    </NavLink>
-                </nav>
-                
+  return (
+    <header className="sticky top-0 z-50 w-full bg-white border-b border-border-color shadow-xl border border-slate-100 dark:border-slate-800">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+        <div className="flex h-16 items-center justify-between">
+          
+          {/* Logo */}
+          <div className="flex items-center gap-3 text-[#137fec]">
+            <div className="size-8">
+              {/* svg */}
             </div>
-            <div className="flex">
-                <Button
-                    onClick={() => navigate("/carrinho")} 
-                    className="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-background-light dark:bg-background-dark hover:bg-primary/10">
-                    <span className="material-symbols-outlined text-xl">shopping_cart</span>
-                </Button>
-                <Button onClick={() => navigate("/perfil")}>
-                    <img src={User} alt="User profile picture" 
-                        className="bg-center hover:cursor-pointer bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User profile picture"
-                    />
-                </Button>
-            </div>
-            
-        </header>
-    )
+            <h2 className="text-lg font-bold text-slate-900">
+              GasMarket
+            </h2>
+          </div>
+
+          {/* Desktop Menu */}
+          <nav className="hidden md:flex items-center gap-8">
+            <NavLink to="/produtos" end={false} className={navLinkClass}>
+              Produtos
+            </NavLink>
+            <NavLink to="/pedidos" className={navLinkClass}>
+              Meus Pedidos
+            </NavLink>
+            <NavLink to="/enderecos" className={navLinkClass}>
+              Endereço
+            </NavLink>
+            <NavLink to="/checkout" className={navLinkClass}>
+              Checkout
+            </NavLink>
+            <NavLink to="/avaliacao" className={navLinkClass}>
+              Avaliação
+            </NavLink>
+          </nav>
+
+          {/* Actions */}
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate("/carrinho")}
+            >
+              <span className="material-symbols-outlined text-xl">
+                shopping_cart
+              </span>
+            </Button>
+
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate("/perfil")}
+            >
+              <img
+                src={User}
+                alt="User profile"
+                className="rounded-full size-9"
+              />
+            </Button>
+
+            {/* Mobile menu button */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden hover:bg-blue-600 hover:text-white"
+              onClick={() => setMenuOpen((prev) => !prev)}
+            >
+              {menuOpen ? <X /> : <Menu />}
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden border-t bg-white">
+          <nav className="flex flex-col gap-4 px-4 py-4">
+            <NavLink onClick={() => setMenuOpen(false)} to="/produtos" className={navLinkClass}>
+              Produtos
+            </NavLink>
+            <NavLink onClick={() => setMenuOpen(false)} to="/pedidos" className={navLinkClass}>
+              Meus Pedidos
+            </NavLink>
+            <NavLink onClick={() => setMenuOpen(false)} to="/enderecos" className={navLinkClass}>
+              Endereço
+            </NavLink>
+            <NavLink onClick={() => setMenuOpen(false)} to="/checkout" className={navLinkClass}>
+              Checkout
+            </NavLink>
+            <NavLink onClick={() => setMenuOpen(false)} to="/avaliacao" className={navLinkClass}>
+              Avaliação
+            </NavLink>
+          </nav>
+        </div>
+      )}
+    </header>
+  );
 }
