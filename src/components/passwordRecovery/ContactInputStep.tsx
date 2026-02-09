@@ -55,11 +55,11 @@ const ContactInputStep = ({ method, onSubmit, onBack }: ContactInputStepProps) =
       className="space-y-6"
     >
       <div className="text-center space-y-2">
-        <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full gradient-primary flex items-center justify-center mb-4">
+        <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full gradient-[#137fec] flex items-center justify-center mb-4">
           {method === "email" ? (
-            <Mail className="w-7 h-7 sm:w-9 sm:h-9 text-primary-foreground" />
+            <Mail className="w-7 h-7 sm:w-9 sm:h-9 text-[#137fec]" />
           ) : (
-            <Phone className="w-7 h-7 sm:w-9 sm:h-9 text-primary-foreground" />
+            <Phone className="w-7 h-7 sm:w-9 sm:h-9 text-[#137fec]" />
           )}
         </div>
         <h2 className="text-xl sm:text-2xl font-semibold text-foreground">
@@ -82,7 +82,7 @@ const ContactInputStep = ({ method, onSubmit, onBack }: ContactInputStepProps) =
               setContact(e.target.value);
               setError("");
             }}
-            className="h-12 sm:h-14 text-sm sm:text-base px-4 rounded-xl border focus:border-primary focus:ring-primary text-black"
+            className="h-12 sm:h-14 text-sm sm:text-base px-4 rounded-xl border focus:border-[#137fec] focus:ring-[#137fec] text-black"
           />
           {error && (
             <motion.p
@@ -106,7 +106,7 @@ const ContactInputStep = ({ method, onSubmit, onBack }: ContactInputStepProps) =
           </Button>
           <Button
             type="submit"
-            className="flex-1 h-12 sm:h-14 rounded-xl gradient-primary text-primary-foreground text-sm sm:text-base hover:opacity-90 transition-opacity bg-green-500 hover:bg-green-600"
+            className="flex-1 h-12 sm:h-14 rounded-xl gradient-[#137fec] text-[#137fec] text-sm sm:text-base hover:opacity-90 transition-opacity bg-green-500 hover:bg-green-600"
           >
             Enviar Código
           </Button>

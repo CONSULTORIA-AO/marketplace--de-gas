@@ -106,7 +106,7 @@ const SuccessStep = ({ onComplete }: SuccessStepProps) => {
             navigate('/login')
             onComplete()
           }}
-          className="w-full h-12 sm:h-14 rounded-xl gradient-primary text-primary-foreground text-sm sm:text-base hover:opacity-90 transition-opacity bg-blue-500 hover:bg-blue-700 text-white"
+          className="w-full h-12 sm:h-14 rounded-xl gradient-[#137fec] text-[#137fec]-foreground text-sm sm:text-base hover:opacity-90 transition-opacity bg-blue-500 hover:bg-blue-700 text-white"
         >
           Ir para Login
           <ArrowRight className="w-4 h-4 ml-2" />

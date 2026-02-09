@@ -59,7 +59,7 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-          className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full gradient-primary flex items-center justify-center mb-4"
+          className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full gradient-[#137fec] flex items-center justify-center mb-4"
         >
           <span className="text-2xl sm:text-3xl">🔒</span>
         </motion.div>
@@ -174,7 +174,7 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
           <Button
             type="submit"
             disabled={!allRequirementsMet || password !== confirmPassword}
-            className="flex-1 h-12 sm:h-14 rounded-xl gradient-primary text-primary-foreground text-sm sm:text-base hover:opacity-90 transition-opacity disabled:opacity-50 bg-blue-500 hover:bg-blue-700 text-white"
+            className="flex-1 h-12 sm:h-14 rounded-xl gradient-[#137fec] text-[#137fec]-foreground text-sm sm:text-base hover:opacity-90 transition-opacity disabled:opacity-50 bg-blue-500 hover:bg-blue-700 text-white"
           >
             Redefinir Senha
           </Button>
