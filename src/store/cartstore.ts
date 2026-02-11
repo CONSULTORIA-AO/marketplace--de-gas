@@ -1,5 +1,7 @@
 import { create } from 'zustand';
 import { CartItem, GasProduct } from '@/types/index';
+import { mockCartItems } from "@/data/gas-products";
+
 
 interface CartState {
   items: CartItem[];
@@ -14,7 +16,16 @@ interface CartState {
 export const useCartStore = create<CartState>((set, get) => {
   // Carregar carrinho do localStorage
   const storedCart = localStorage.getItem('cart');
-  const initialCart = storedCart ? JSON.parse(storedCart) : [];
+  //const initialCart = storedCart ? JSON.parse(storedCart) : mockCartItems;
+
+  let initialCart: CartItem[] = [];
+
+  if (storedCart) {
+    const parsed = JSON.parse(storedCart);
+    initialCart = parsed.length > 0 ? parsed : mockCartItems;
+  } else {
+    initialCart = mockCartItems;
+  }
 
   return {
     items: initialCart,
