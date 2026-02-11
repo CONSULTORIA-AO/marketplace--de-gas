@@ -2,7 +2,6 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Menu, X } from "lucide-react";
-
 import User from "@/assets/user.jpg";
 
 export function Header() {
@@ -56,6 +55,7 @@ export function Header() {
               variant="ghost"
               size="icon"
               onClick={() => navigate("/carrinho")}
+              className="hover:bg-blue-600"
             >
               <span className="material-symbols-outlined text-xl">
                 shopping_cart
@@ -65,6 +65,7 @@ export function Header() {
             <Button
               variant="ghost"
               size="icon"
+              className="hover:bg-transparent"
               onClick={() => navigate("/perfil")}
             >
               <img
