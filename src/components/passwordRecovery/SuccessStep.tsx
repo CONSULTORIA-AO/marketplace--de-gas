@@ -1,14 +1,14 @@
-import { motion } from "framer-motion";
-import { CheckCircle2, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import { motion } from 'framer-motion';
+import { CheckCircle2, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 interface SuccessStepProps {
   onComplete: () => void;
 }
 
 const SuccessStep = ({ onComplete }: SuccessStepProps) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const containerVariants = {
     hidden: { opacity: 0, scale: 0.9 },
     visible: { opacity: 1, scale: 1 },
@@ -20,7 +20,7 @@ const SuccessStep = ({ onComplete }: SuccessStepProps) => {
       scale: 1,
       rotate: 0,
       transition: {
-        type: "spring" as const,
+        type: 'spring' as const,
         stiffness: 200,
         damping: 15,
         delay: 0.2,
@@ -29,10 +29,10 @@ const SuccessStep = ({ onComplete }: SuccessStepProps) => {
   };
 
   const confettiColors = [
-    "hsl(var(--primary))",
-    "hsl(var(--success))",
-    "hsl(217, 91%, 70%)",
-    "hsl(142, 76%, 50%)",
+    'hsl(var(--primary))',
+    'hsl(var(--success))',
+    'hsl(217, 91%, 70%)',
+    'hsl(142, 76%, 50%)',
   ];
 
   return (
@@ -62,7 +62,7 @@ const SuccessStep = ({ onComplete }: SuccessStepProps) => {
           transition={{
             duration: 2,
             delay: 0.3 + Math.random() * 0.5,
-            ease: "easeOut",
+            ease: 'easeOut',
           }}
           className="absolute top-0 left-1/2 w-2 h-2 rounded-full"
           style={{
@@ -74,11 +74,9 @@ const SuccessStep = ({ onComplete }: SuccessStepProps) => {
       <motion.div
         variants={checkVariants}
         className="w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-full flex items-center justify-center"
-        style={{ backgroundColor: "hsl(var(--success) / 0.1)" }}
+        style={{ backgroundColor: 'hsl(var(--success) / 0.1)' }}
       >
-        <CheckCircle2
-          className="w-12 h-12 sm:w-16 sm:h-16 text-blue-500"
-        />
+        <CheckCircle2 className="w-12 h-12 sm:w-16 sm:h-16 text-blue-500" />
       </motion.div>
 
       <motion.div
@@ -103,8 +101,8 @@ const SuccessStep = ({ onComplete }: SuccessStepProps) => {
       >
         <Button
           onClick={() => {
-            navigate('/login')
-            onComplete()
+            navigate('/login');
+            onComplete();
           }}
           className="w-full h-12 sm:h-14 rounded-xl gradient-[#137fec] text-[#137fec]-foreground text-sm sm:text-base hover:opacity-90 transition-opacity bg-blue-500 hover:bg-blue-700 text-white"
         >

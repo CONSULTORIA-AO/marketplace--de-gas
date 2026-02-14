@@ -1,18 +1,18 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-import { Input } from "@/components/ui/input";
+import { Input } from '@/components/ui/input';
 import {
   Table,
   TableBody,
   TableHead,
   TableHeader,
   TableRow,
-  TableCell
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { useCartStore } from "@/store/cartstore";
-import { api } from "@/lib/axios";
+  TableCell,
+} from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
+import { useCartStore } from '@/store/cartstore';
+import { api } from '@/lib/axios';
 
 type Product = {
   id: number;
@@ -23,11 +23,11 @@ type Product = {
 };
 
 export function ProductsTables() {
-    const { items, updateQuantity, removeItem  } = useCartStore();
+  const { items, updateQuantity, removeItem } = useCartStore();
 
   async function handleIncrease(productId: string, currentQty: number) {
     updateQuantity(productId, currentQty + 1);
-    await api.post("/api/cart/update", {
+    await api.post('/api/cart/update', {
       productId,
       quantity: currentQty + 1,
     });
@@ -35,7 +35,7 @@ export function ProductsTables() {
 
   async function handleDecrease(productId: string, currentQty: number) {
     updateQuantity(productId, currentQty - 1);
-    await api.post("/api/cart/update", {
+    await api.post('/api/cart/update', {
       productId,
       quantity: currentQty - 1,
     });
@@ -84,9 +84,7 @@ export function ProductsTables() {
                         src={item.product.imageUrl}
                         className="h-16 w-16 rounded-lg object-cover"
                       />
-                      <div className="font-medium">
-                         {item.product.name}
-                      </div>
+                      <div className="font-medium">{item.product.name}</div>
                     </div>
                   </TableCell>
 
@@ -131,9 +129,7 @@ export function ProductsTables() {
                       onClick={() => handleRemove(item.productId)}
                       className="text-red-600 hover:text-red-800"
                     >
-                      <span className="material-symbols-outlined">
-                        delete
-                      </span>
+                      <span className="material-symbols-outlined">delete</span>
                     </Button>
                   </TableCell>
                 </motion.tr>

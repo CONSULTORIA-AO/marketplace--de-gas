@@ -7,17 +7,19 @@ export const loginSchema = z.object({
 });
 
 // Schema de registro
-export const registerSchema = z.object({
-  name: z.string().min(3, 'O nome deve ter no mínimo 3 caracteres'),
-  email: z.string().email('Email inválido'),
-  password: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres'),
-  confirmPassword: z.string(),
-  phone: z.string().min(10, 'Telefone inválido'),
-  cpf: z.string().min(11, 'CPF inválido'),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: 'As senhas não coincidem',
-  path: ['confirmPassword'],
-});
+export const registerSchema = z
+  .object({
+    name: z.string().min(3, 'O nome deve ter no mínimo 3 caracteres'),
+    email: z.string().email('Email inválido'),
+    password: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres'),
+    confirmPassword: z.string(),
+    phone: z.string().min(10, 'Telefone inválido'),
+    cpf: z.string().min(11, 'CPF inválido'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'As senhas não coincidem',
+    path: ['confirmPassword'],
+  });
 
 // Schema de recuperação de senha
 export const resetPasswordSchema = z.object({
@@ -43,7 +45,6 @@ export const profileSchema = z.object({
   email: z.string().email('Email inválido'),
 });
 
-
 // Schema de checkout
 export const checkoutSchema = z.object({
   addressId: z.string().min(1, 'Selecione um endereço'),
@@ -66,13 +67,12 @@ export const passwordSchema = z
         'A senha deve conter letra maiúscula, minúscula, número e caractere especial'
       ),
 
-    confirmPassword: z.string()
+    confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'As senhas não coincidem',
     path: ['confirmPassword'],
-});
-
+  });
 
 export const recoveryContactSchema = z.object({
   contact: z
@@ -88,15 +88,9 @@ export const recoveryContactSchema = z.object({
 
 // Schema de avaliação
 export const reviewSchema = z.object({
-  productQuality: z
-    .number()
-    .min(1, 'Avalie a qualidade do produto')
-    .max(5),
+  productQuality: z.number().min(1, 'Avalie a qualidade do produto').max(5),
 
-  serviceQuality: z
-    .number()
-    .min(1, 'Avalie o atendimento e entrega')
-    .max(5),
+  serviceQuality: z.number().min(1, 'Avalie o atendimento e entrega').max(5),
 
   comment: z.string().max(500).optional(),
 });

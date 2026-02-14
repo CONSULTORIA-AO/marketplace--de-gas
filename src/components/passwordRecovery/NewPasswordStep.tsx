@@ -1,8 +1,8 @@
-import { motion } from "framer-motion";
-import { Eye, EyeOff, ArrowLeft, Check, X } from "lucide-react";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { motion } from 'framer-motion';
+import { Eye, EyeOff, ArrowLeft, Check, X } from 'lucide-react';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 interface NewPasswordStepProps {
   onSubmit: (password: string) => void;
@@ -10,18 +10,21 @@ interface NewPasswordStepProps {
 }
 
 const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const requirements = [
-    { label: "Mínimo 8 caracteres", valid: password.length >= 8 },
-    { label: "Uma letra maiúscula", valid: /[A-Z]/.test(password) },
-    { label: "Uma letra minúscula", valid: /[a-z]/.test(password) },
-    { label: "Um número", valid: /[0-9]/.test(password) },
-    { label: "Um caractere especial", valid: /[!@#$%^&*(),.?":{}|<>]/.test(password) },
+    { label: 'Mínimo 8 caracteres', valid: password.length >= 8 },
+    { label: 'Uma letra maiúscula', valid: /[A-Z]/.test(password) },
+    { label: 'Uma letra minúscula', valid: /[a-z]/.test(password) },
+    { label: 'Um número', valid: /[0-9]/.test(password) },
+    {
+      label: 'Um caractere especial',
+      valid: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+    },
   ];
 
   const allRequirementsMet = requirements.every((req) => req.valid);
@@ -29,11 +32,11 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!allRequirementsMet) {
-      setError("A senha não atende a todos os requisitos");
+      setError('A senha não atende a todos os requisitos');
       return;
     }
     if (password !== confirmPassword) {
-      setError("As senhas não coincidem");
+      setError('As senhas não coincidem');
       return;
     }
     onSubmit(password);
@@ -58,7 +61,7 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
         <motion.div
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
-          transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+          transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
           className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full gradient-[#137fec] flex items-center justify-center mb-4"
         >
           <span className="text-2xl sm:text-3xl">🔒</span>
@@ -75,12 +78,12 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
         <div className="space-y-3">
           <div className="relative">
             <Input
-              type={showPassword ? "text" : "password"}
+              type={showPassword ? 'text' : 'password'}
               placeholder="Nova senha"
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
-                setError("");
+                setError('');
               }}
               className="h-12 sm:h-14 text-black text-sm sm:text-base px-4 pr-12 rounded-xl border-2"
             />
@@ -99,12 +102,12 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
 
           <div className="relative">
             <Input
-              type={showConfirmPassword ? "text" : "password"}
+              type={showConfirmPassword ? 'text' : 'password'}
               placeholder="Confirmar senha"
               value={confirmPassword}
               onChange={(e) => {
                 setConfirmPassword(e.target.value);
-                setError("");
+                setError('');
               }}
               className="h-12 sm:h-14 text-black text-sm sm:text-base px-4 pr-12 rounded-xl border-2 focus:border-gray-600 focus:ring-gray-600"
             />
@@ -142,7 +145,7 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
                 )}
                 <span
                   className={`text-xs sm:text-sm ${
-                    req.valid ? "text-success" : "text-muted-foreground"
+                    req.valid ? 'text-success' : 'text-muted-foreground'
                   }`}
                 >
                   {req.label}

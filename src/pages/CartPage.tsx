@@ -17,7 +17,7 @@ export function CartPage() {
     }
     navigate('/checkout');
   };
-/*
+  /*
   if (items.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -44,38 +44,38 @@ export function CartPage() {
 */
   return (
     <div className="font-display">
-    <div className="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
-    <div className="layout-container flex h-full grow flex-col">
+      <div className="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
+        <div className="layout-container flex h-full grow flex-col">
+          <Header />
+          <main className="flex w-full flex-1 justify-center px-4 py-8 md:py-12">
+            <div className="flex w-full max-w-7xl flex-col gap-8">
+              <div className="flex flex-wrap justify-between gap-3">
+                <div className="flex min-w-72 flex-col gap-2">
+                  <p className="text-slate-900 dark:text-slate-50 text-4xl font-black leading-tight tracking-[-0.033em]">
+                    Meu Carrinho
+                  </p>
+                  <p className="text-slate-500 dark:text-slate-400 text-base font-normal leading-normal">
+                    Revise seus itens antes de finalizar Link compra.
+                  </p>
+                </div>
+              </div>
 
-    <Header />
-    
-    <main className="flex w-full flex-1 justify-center px-4 py-8 md:py-12">
-        <div className="flex w-full max-w-7xl flex-col gap-8">
-          <div className="flex flex-wrap justify-between gap-3">
-            <div className="flex min-w-72 flex-col gap-2">
-              <p className="text-slate-900 dark:text-slate-50 text-4xl font-black leading-tight tracking-[-0.033em]">Meu Carrinho</p>
-              <p className="text-slate-500 dark:text-slate-400 text-base font-normal leading-normal">Revise seus itens antes de finalizar Link compra.</p>
+              <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+                <div className="lg:col-span-2">
+                  <div className="flex flex-col gap-4">
+                    <ProductsTables />
+                  </div>
+                </div>
+                <div className="lg:col-span-1">
+                  <div className="sticky top-24">
+                    <OrderSummary />
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-          
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-            <div className="lg:col-span-2">
-             <div className="flex flex-col gap-4">
-
-              <ProductsTables />
-            </div>
-          </div>
-          <div className="lg:col-span-1">
-            <div className="sticky top-24">
-
-              <OrderSummary />
-            </div>
-          </div>
+          </main>
         </div>
       </div>
-    </main>
-    </div>
-    </div>
     </div>
   );
 }

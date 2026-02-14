@@ -1,4 +1,4 @@
-import { CartItem } from "@/types";
+import { CartItem } from '@/types';
 
 interface Props {
   item: CartItem;
@@ -16,9 +16,7 @@ export function CheckoutSummaryItem({ item }: Props) {
       </div>
 
       <div className="flex-1">
-        <p className="font-bold text-slate-800 text-sm">
-          {item.product.name}
-        </p>
+        <p className="font-bold text-slate-800 text-sm">{item.product.name}</p>
         <p className="text-xs text-slate-500 font-medium">
           Quantidade: {item.quantity}
         </p>

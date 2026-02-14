@@ -1,8 +1,8 @@
-import { NavLink, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { Button } from "./ui/button";
-import { Menu, X } from "lucide-react";
-import User from "@/assets/user.jpg";
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Button } from './ui/button';
+import { Menu, X } from 'lucide-react';
+import User from '@/assets/user.jpg';
 
 export function Header() {
   const navigate = useNavigate();
@@ -10,24 +10,17 @@ export function Header() {
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     `text-sm font-medium transition-colors ${
-      isActive
-        ? "text-[#137fec]"
-        : "text-slate-600 hover:text-[#137fec]"
+      isActive ? 'text-[#137fec]' : 'text-slate-600 hover:text-[#137fec]'
     }`;
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white border-b border-border-color shadow-xl border border-slate-100 dark:border-slate-800">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
         <div className="flex h-16 items-center justify-between">
-          
           {/* Logo */}
           <div className="flex items-center gap-3 text-[#137fec]">
-            <div className="size-8">
-              {/* svg */}
-            </div>
-            <h2 className="text-lg font-bold text-slate-900">
-              GasMarket
-            </h2>
+            <div className="size-8">{/* svg */}</div>
+            <h2 className="text-lg font-bold text-slate-900">GasMarket</h2>
           </div>
 
           {/* Desktop Menu */}
@@ -54,7 +47,7 @@ export function Header() {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => navigate("/carrinho")}
+              onClick={() => navigate('/carrinho')}
               className="hover:bg-blue-600"
             >
               <span className="material-symbols-outlined text-xl">
@@ -66,7 +59,7 @@ export function Header() {
               variant="ghost"
               size="icon"
               className="hover:bg-transparent"
-              onClick={() => navigate("/perfil")}
+              onClick={() => navigate('/perfil')}
             >
               <img
                 src={User}
@@ -92,19 +85,39 @@ export function Header() {
       {menuOpen && (
         <div className="md:hidden border-t bg-white">
           <nav className="flex flex-col gap-4 px-4 py-4">
-            <NavLink onClick={() => setMenuOpen(false)} to="/produtos" className={navLinkClass}>
+            <NavLink
+              onClick={() => setMenuOpen(false)}
+              to="/produtos"
+              className={navLinkClass}
+            >
               Produtos
             </NavLink>
-            <NavLink onClick={() => setMenuOpen(false)} to="/pedidos" className={navLinkClass}>
+            <NavLink
+              onClick={() => setMenuOpen(false)}
+              to="/pedidos"
+              className={navLinkClass}
+            >
               Meus Pedidos
             </NavLink>
-            <NavLink onClick={() => setMenuOpen(false)} to="/enderecos" className={navLinkClass}>
+            <NavLink
+              onClick={() => setMenuOpen(false)}
+              to="/enderecos"
+              className={navLinkClass}
+            >
               Endereço
             </NavLink>
-            <NavLink onClick={() => setMenuOpen(false)} to="/checkout" className={navLinkClass}>
+            <NavLink
+              onClick={() => setMenuOpen(false)}
+              to="/checkout"
+              className={navLinkClass}
+            >
               Checkout
             </NavLink>
-            <NavLink onClick={() => setMenuOpen(false)} to="/avaliacao" className={navLinkClass}>
+            <NavLink
+              onClick={() => setMenuOpen(false)}
+              to="/avaliacao"
+              className={navLinkClass}
+            >
               Avaliação
             </NavLink>
           </nav>
