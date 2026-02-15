@@ -1,43 +1,107 @@
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Link } from 'react-router-dom';
+import { user } from '@/data/user';
+import { FormsProfile } from './FormsProfile';
+import { useToast } from '@/components/ui/use-toast';
+import React, { useRef, useState } from 'react';
+import axios from 'axios';
+import { Input } from '../ui/input';
 
 export function UserInformation() {
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [preview, setPreview] = useState<string>(user.photo);
+  const [uploading, setUploading] = useState(false);
+  const { toast } = useToast();
+
+  function handleOpenFilePicker() {
+    fileInputRef.current?.click();
+  }
+
+  async function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+
+    if (!file) return;
+
+    // Validação simples
+    if (!file.type.startsWith('image/')) {
+      toast({ description: 'Selecione apenas imagens' });
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast({ description: 'Imagem muito grande (máx 5MB)' });
+      return;
+    }
+
+    // Preview imediato
+    const imageUrl = URL.createObjectURL(file);
+    setPreview(imageUrl);
+
+    try {
+      setUploading(true);
+
+      const formData = new FormData();
+      formData.append('photo', file);
+
+      await axios.put('/api/user/photo', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          // Authorization: `Bearer ${token}` se necessário
+        },
+      });
+
+      toast({ description: 'Foto atualizada com sucesso 📸' });
+    } catch (error) {
+      toast({ description: 'Erro ao enviar foto' });
+      setPreview(user.photo); // volta para original
+    } finally {
+      setUploading(false);
+    }
+  }
   return (
     <div>
       <section className="bg-white border border-border-color p-8 rounded-xl shadow-sm border-gray-900/10">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 ">
           <div className="flex items-center gap-8 ">
             <div className="relative group">
-              <div
-                className="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-28 w-28 ring-4 ring-slate-50 shadow-inner"
-                style={{
-                  backgroundImage:
-                    'url("https://lh3.googleusercontent.com/aida-public/AB6AXuCBcSJd-D4Cc5tbywWVmJ9AqfbmD1pemQmYZqNPacjhL351XxMNJHWIBbL8FfSmj4zbs-0pLJ4uouUUpwb2_2wPPulvFAtJaMT_-r0ydz5OEwOVoFqh-HMPdJthsUI4NJzYhx2cHZvdAIqr2LZGcACIYE52Ao0yhKOQ1ej6ok3wodcL0cEPeFCSZSqh3fD65jGc-Krc88fkJNdla3sIX3L4oi3PWYWFOfkSxm0bTRXZTpDQpfNlE5pQI3GrJ9D6Ia9eRXh_EG8GOhg");',
-                }}
-              ></div>
-              <Button className="absolute bottom-0 right-0 bg-[#137fec] text-white rounded-full p-2 shadow-lg hover:scale-105 transition-transform border-4 border-white">
+              <img
+                className={`bg-center bg-no-repeat aspect-square bg-cover rounded-full h-28 w-28 ring-4 ring-slate-50 shadow-inner ${
+                  uploading ? 'opacity-60' : ''
+                }`}
+                src={preview}
+              />
+              <Button
+                type="button"
+                onClick={handleOpenFilePicker}
+                disabled={uploading}
+                className="absolute bottom-0 right-0 bg-[#137fec] text-white rounded-full p-2 shadow-lg hover:scale-105 transition-transform border-4 border-white">
                 <span className="material-symbols-outlined text-[20px]">
-                  photo_camera
+                  {uploading ? 'hourglass_top' : 'photo_camera'}
                 </span>
               </Button>
+              <Input
+                type="file"
+                ref={fileInputRef}
+                className="hidden"
+                accept="image/*"
+                onChange={handleFileChange}
+              />
             </div>
             <div className="flex flex-col justify-center">
               <h2 className="text-slate-900 text-2xl font-bold leading-tight">
-                João Silva
+                {user.full_name}
               </h2>
               <div className="flex items-center gap-2 mt-2">
                 <span className="material-symbols-outlined text-slate-400 text-sm">
                   mail
                 </span>
-                <p className="text-slate-600 text-base">joao.silva@email.com</p>
+                <p className="text-slate-600 text-base">{user.email}</p>
               </div>
               <div className="flex items-center gap-2 mt-1">
                 <span className="material-symbols-outlined text-slate-400 text-sm">
                   location_on
                 </span>
-                <p className="text-slate-600 text-base">São Paulo, SP</p>
+                <p className="text-slate-600 text-base">{user.localization}</p>
               </div>
             </div>
           </div>
@@ -84,120 +148,7 @@ export function UserInformation() {
           </p>
         </Link>
       </section>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
-        <div className="bg-white border border-border-color rounded-xl p-8 shadow-sm border-gray-900/10">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="p-2 bg-blue-50 rounded-lg">
-              <span className="material-symbols-outlined text-[#137fec]">
-                edit_note
-              </span>
-            </div>
-            <h2 className="text-xl font-bold text-slate-900">
-              Informações Pessoais
-            </h2>
-          </div>
-          <div className="space-y-5">
-            <div className="grid grid-cols-1 gap-1.5">
-              <Label
-                htmlFor="name"
-                className="text-sm font-semibold text-slate-600"
-              >
-                Nome Completo
-              </Label>
-              <Input
-                className="w-full bg-slate-50 border-slate-200 rounded-lg text-slate-900 px-4 py-2.5 focus:border-[#137fec] focus:bg-white transition-all"
-                type="text"
-                value="João Silva de Oliveira"
-              />
-            </div>
-            <div className="grid grid-cols-1 gap-1.5">
-              <Label
-                htmlFor="email"
-                className="text-sm font-semibold text-slate-600"
-              >
-                E-mail
-              </Label>
-              <Input
-                className="w-full bg-slate-50 border-slate-200 rounded-lg text-slate-900 px-4 py-2.5 focus:border-[#137fec] focus:bg-white transition-all"
-                type="email"
-                value="joao.silva@email.com"
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="grid grid-cols-1 gap-1.5">
-                <Label
-                  htmlFor="tel"
-                  className="text-sm font-semibold text-slate-600"
-                >
-                  Telefone
-                </Label>
-                <Input
-                  className="w-full bg-slate-50 border-slate-200 rounded-lg text-slate-900 px-4 py-2.5 focus:border-[#137fec] focus:bg-white transition-all"
-                  type="tel"
-                  value="(+244) 943558106 "
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="bg-white border border-border-color rounded-xl p-8 shadow-sm border-gray-900/10">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="p-2 bg-blue-50 rounded-lg">
-              <span className="material-symbols-outlined text-[#137fec]">
-                lock_reset
-              </span>
-            </div>
-            <h2 className="text-xl font-bold text-slate-900">Segurança</h2>
-          </div>
-          <div className="space-y-5">
-            <div className="grid grid-cols-1 gap-1.5">
-              <Label
-                htmlFor="current-password"
-                className="text-sm font-semibold text-slate-600"
-              >
-                Senha Atual
-              </Label>
-              <div className="relative">
-                <Input
-                  className="w-full bg-slate-50 border-slate-200 rounded-lg text-slate-900 px-4 py-2.5 focus:border-[#137fec] focus:bg-white transition-all"
-                  placeholder="••••••••"
-                  type="password"
-                />
-                <span className="material-symbols-outlined absolute right-3 top-2.5 text-slate-400 cursor-pointer hover:text-[#137fec] transition-colors">
-                  visibility
-                </span>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 gap-1.5">
-              <Label
-                htmlFor="password"
-                className="text-sm font-semibold text-slate-600"
-              >
-                Nova Senha
-              </Label>
-              <Input
-                className="w-full bg-slate-50 border-slate-200 rounded-lg text-slate-900 px-4 py-2.5 focus:border-[#137fec] focus:bg-white transition-all"
-                type="password"
-              />
-            </div>
-            <div className="grid grid-cols-1 gap-1.5">
-              <Label
-                htmlFor="confirm-password"
-                className="text-sm font-semibold text-slate-600"
-              >
-                Confirmar Nova Senha
-              </Label>
-              <Input
-                className="w-full bg-slate-50 border-slate-200 rounded-lg text-slate-900 px-4 py-2.5 focus:border-[#137fec] focus:bg-white transition-all"
-                type="password"
-              />
-            </div>
-            <Button className="w-full mt-2 h-11 border-2 border-[#137fec] text-[#137fec] hover:bg-[#137fec] hover:text-white rounded-lg text-sm font-bold transition-all">
-              Redefinir Senha
-            </Button>
-          </div>
-        </div>
-      </div>
+      <FormsProfile />
     </div>
   );
 }

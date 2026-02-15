@@ -6,12 +6,14 @@ type UserData = {
   client_type: string;
   email: string;
   localization: string;
+  phone: string;
 };
 
 export const user: UserData = {
   photo: User,
   full_name: 'Romeu Cajamba',
   client_type: 'Cliente VIP',
-  email: 'romeucajamba@getMainColorOfGraphicItem.com',
+  email: 'romeucajamba@gmail.com',
   localization: 'Sambizanga',
+  phone: '943558106',
 };
