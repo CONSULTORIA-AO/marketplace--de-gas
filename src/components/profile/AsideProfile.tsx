@@ -1,71 +1,132 @@
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { useMemo } from 'react';
+import { user } from '@/data/user';
 
 export function AsideProfile() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const menuItems = useMemo(
+    () => [
+      {
+        label: 'Meu Perfil',
+        icon: 'person',
+        path: '/perfil',
+      },
+      {
+        label: 'Meus Pedidos',
+        icon: 'package_2',
+        path: '/carrinho',
+      },
+      {
+        label: 'Endereços',
+        icon: 'location_on',
+        path: '/enderecos',
+      },
+      {
+        label: 'Pagamentos',
+        icon: 'credit_card',
+        path: '/checkout',
+      },
+      {
+        label: 'Segurança',
+        icon: 'security',
+        path: '/seguranca',
+      },
+    ],
+    []
+  );
+
+  function handleLogout() {
+    // Aqui você pode limpar token, contexto, etc.
+    localStorage.removeItem('token');
+
+    // Redireciona para login
+    navigate('/login');
+  }
+
   return (
     <aside className="w-64 flex-shrink-0">
-      <div className="flex flex-col h-[calc(100vh-160px)] justify-between bg-white p-6 rounded-xl border border-gray-900/10 shadow-sm">
+      <motion.div
+        initial={{ x: -40, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.4, ease: 'easeOut' }}
+        className="flex flex-col h-[calc(100vh-160px)] justify-between bg-white p-6 rounded-xl border border-gray-900/10 shadow-sm"
+      >
         <div className="flex flex-col gap-6">
-          <div className="flex items-center gap-3 pb-4 border-b border-slate-50">
-            <div
+          {/* PROFILE HEADER */}
+          <div className="flex items-center gap-3 pb-4 border-b border-slate-100">
+            <motion.img
+              whileHover={{ scale: 1.05 }}
               className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12 shadow-sm"
-              style={{
-                backgroundImage:
-                  'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBjicGJhn0kFO_7ejkZiGIF2J5j_AfU1HmpVXdcUM8IRTruKizXfX_Z9BJie87L1NeYc1dlAANvvGlAAiuw9C97EoAlbN3h1sjbMSmevspwNcHAT5PPE8akyzmrdrIBiIK-wKuzqduo9ezop0ja4pUqfjuKvz60TFErNC9F6ZUVqVpXyuzsj_QTW294nUsmTvPB0wyA0hnff5TgabtWboZGauL4VTCJvpjTkRUS7m4xcDfi5B5BNfTxB1jqjQiBD30eJgk2Sv4Sek4");',
-              }}
-            ></div>
+              src={user.photo}
+            />
             <div className="flex flex-col">
               <h1 className="text-slate-900 text-base font-bold leading-none">
-                João Silva
+                {user.full_name}
               </h1>
               <p className="text-[#137fec] text-xs font-semibold mt-1">
-                Cliente VIP
+                {user.client_type}
               </p>
             </div>
           </div>
-          <nav className="flex flex-col gap-1">
-            <Link
-              className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-[#137fec] text-white shadow-md shadow-[#137fec]/10"
-              to="#"
-            >
-              <span className="material-symbols-outlined">person</span>
-              <p className="text-sm font-semibold">Meu Perfil</p>
-            </Link>
-            <Link
-              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-[#137fec] transition-all"
-              to="/carrinho"
-            >
-              <span className="material-symbols-outlined">package_2</span>
-              <p className="text-sm font-medium">Meus Pedidos</p>
-            </Link>
-            <Link
-              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-[#137fec] transition-all"
-              to="/enderecos"
-            >
-              <span className="material-symbols-outlined">location_on</span>
-              <p className="text-sm font-medium">Endereços</p>
-            </Link>
-            <Link
-              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-[#137fec] transition-all"
-              to="/checkout"
-            >
-              <span className="material-symbols-outlined">credit_card</span>
-              <p className="text-sm font-medium">Pagamentos</p>
-            </Link>
-            <Link
-              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-[#137fec] transition-all"
-              to="#"
-            >
-              <span className="material-symbols-outlined">security</span>
-              <p className="text-sm font-medium">Segurança</p>
-            </Link>
+
+          {/* NAVIGATION */}
+          <nav className="flex flex-col gap-1 relative">
+            {menuItems.map((item) => {
+              const isActive = location.pathname === item.path;
+
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`relative flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 ${
+                    isActive
+                      ? 'text-white'
+                      : 'text-slate-600 hover:bg-slate-50 hover:text-[#137fec]'
+                  }`}
+                >
+                  {/* ACTIVE BACKGROUND ANIMADO */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeSidebarItem"
+                      className="absolute inset-0 bg-[#137fec] rounded-lg shadow-md shadow-[#137fec]/20"
+                      transition={{
+                        type: 'spring',
+                        stiffness: 300,
+                        damping: 30,
+                      }}
+                    />
+                  )}
+
+                  <span className="material-symbols-outlined relative z-10">
+                    {item.icon}
+                  </span>
+
+                  <p className="text-sm font-semibold relative z-10">
+                    {item.label}
+                  </p>
+                </Link>
+              );
+            })}
           </nav>
         </div>
-        <Button className="flex w-full items-center justify-center gap-2 rounded-lg h-11 bg-red-500 text-slate-50 text-sm font-bold hover:bg-red-50 hover:text-red-500 transition-all">
-          <span className="material-symbols-outlined text-[20px]">logout</span>
-          <span>Sair da conta</span>
-        </Button>
-      </div>
+
+        {/* LOGOUT BUTTON */}
+        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+          <Button
+            onClick={handleLogout}
+            className="flex w-full items-center justify-center gap-2 rounded-lg h-11 bg-red-500 text-slate-50 text-sm font-bold hover:bg-red-50 hover:text-red-500 transition-all"
+          >
+            <span className="material-symbols-outlined text-[20px]">
+              logout
+            </span>
+            <span>Sair da conta</span>
+          </Button>
+        </motion.div>
+      </motion.div>
     </aside>
   );
 }

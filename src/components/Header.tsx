@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Button } from './ui/button';
 import { Menu, X } from 'lucide-react';
-import User from '@/assets/user.jpg';
+import { user } from '@/data/user';
 
 export function Header() {
   const navigate = useNavigate();
@@ -62,7 +62,7 @@ export function Header() {
               onClick={() => navigate('/perfil')}
             >
               <img
-                src={User}
+                src={user.photo}
                 alt="User profile"
                 className="rounded-full size-9"
               />
