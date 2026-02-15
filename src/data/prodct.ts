@@ -1,8 +1,8 @@
 import type { GasProduct } from '@/types';
-import botijaLaranja from "@/assets/botijas/laranja-1.png";
-import botijaCompridaCinza from "@/assets/botijas/comprida-cinza.jpg";
-import botijaBaixinha from "@/assets/botijas/pequena-cinzenta.png";
-import botijaGrande from "@/assets/botijas/grande-azul.png";
+import botijaLaranja from '@/assets/botijas/laranja-1.png';
+import botijaCompridaCinza from '@/assets/botijas/comprida-cinza.jpg';
+import botijaBaixinha from '@/assets/botijas/pequena-cinzenta.png';
+import botijaGrande from '@/assets/botijas/grande-azul.png';
 
 export const mockProducts: GasProduct[] = [
   {

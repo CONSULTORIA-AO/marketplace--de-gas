@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { CartItem, GasProduct } from '@/types/index';
-import { mockCartItems } from "@/data/gas-products";
-
+import { mockCartItems } from '@/data/gas-products';
 
 interface CartState {
   items: CartItem[];
@@ -29,7 +28,7 @@ export const useCartStore = create<CartState>((set, get) => {
 
   return {
     items: initialCart,
-    
+
     addItem: (product, quantity = 1) => {
       set((state) => {
         const existingItem = state.items.find(
@@ -54,7 +53,7 @@ export const useCartStore = create<CartState>((set, get) => {
         return { items: newItems };
       });
     },
-    
+
     removeItem: (productId) => {
       set((state) => {
         const newItems = state.items.filter(
@@ -64,7 +63,7 @@ export const useCartStore = create<CartState>((set, get) => {
         return { items: newItems };
       });
     },
-    
+
     updateQuantity: (productId, quantity) => {
       set((state) => {
         if (quantity <= 0) {
@@ -82,19 +81,19 @@ export const useCartStore = create<CartState>((set, get) => {
         return { items: newItems };
       });
     },
-    
+
     clearCart: () => {
       localStorage.removeItem('cart');
       set({ items: [] });
     },
-    
+
     getTotal: () => {
       return get().items.reduce(
         (total, item) => total + item.product.price * item.quantity,
         0
       );
     },
-    
+
     getItemCount: () => {
       return get().items.reduce((count, item) => count + item.quantity, 0);
     },

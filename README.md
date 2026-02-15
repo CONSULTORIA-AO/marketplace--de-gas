@@ -19,12 +19,19 @@ Um marketplace moderno e completo para venda de gás, desenvolvido com as melhor
 ## ✨ Funcionalidades Implementadas
 
 ### 🔐 Autenticação
+
 ### 👤 Perfil do Usuário
+
 ### 🛒 Carrinho de Compras
+
 ### 📦 Produtos
+
 ### 💳 Checkout
+
 ### 📋 Pedidos
+
 ### ⭐ Avaliações
+
 ### 📍 Endereços
 
 ## 📁 Estrutura do Projeto
@@ -75,34 +82,41 @@ gas-marketplace/
 O projeto segue as melhores práticas de componentização do React:
 
 ### 1. **Componentes Reutilizáveis**
+
 - Todos os componentes UI são isolados e reutilizáveis
 - Uso do shadcn/ui para componentes base consistentes
 
 ### 2. **Separação de Responsabilidades**
+
 - Componentes de UI em `components/ui/`
 - Componentes de layout em `components/layout/`
 - Páginas em `pages/`
 
 ### 3. **Composição**
+
 - Componentes pequenos e focados
 - Composição de componentes complexos a partir de componentes simples
 
 ### 4. **Props Tipadas**
+
 - Uso extensivo de TypeScript para tipar props
-- Interfaces bem definidas 
+- Interfaces bem definidas
 
 ### 5. ** Validações**
+
 - Uso extensivo de Zod para tipar e validar formulários
-- Interfaces bem definidas 
+- Interfaces bem definidas
 
 ### 6. **Custom Hooks**
+
 - `useToast` para notificações
 - Stores Zustand para estado global
 
 ## 🔧 Como Executar o Projeto
 
 ### Pré-requisitos
-- Node.js 18+ 
+
+- Node.js 18+
 - npm ou yarn
 
 ### Instalação
@@ -110,22 +124,26 @@ O projeto segue as melhores práticas de componentização do React:
 1. Clone o repositório ou extraia o arquivo
 
 2. Instale as dependências:
+
 ```bash
 npm install
 ```
 
 3. Configure as variáveis de ambiente (opcional):
+
 ```bash
 # Crie um arquivo .env na raiz do projeto
 VITE_API_URL=http://localhost:3000/api
 ```
 
 4. Execute o projeto em modo desenvolvimento:
+
 ```bash
 npm run dev
 ```
 
 5. Acesse no navegador:
+
 ```
 http://localhost:8080
 ```
@@ -176,6 +194,7 @@ POST   /reviews             - Criar avaliação
 ## 🛠️ Customização
 
 ### Cores do Tema
+
 Edite o arquivo `tailwind.config.js` e `src/index.css` para customizar as cores:
 
 ```css
@@ -187,6 +206,7 @@ Edite o arquivo `tailwind.config.js` e `src/index.css` para customizar as cores:
 ```
 
 ### Componentes UI
+
 Todos os componentes shadcn/ui podem ser customizados em `src/components/ui/`
 
 ## 📝 Scripts Disponíveis
@@ -214,7 +234,7 @@ Este projeto está sob a licença MIT.
 
 ## 👨‍💻 Desenvolvedor
 
-nome:Romeu Cajamba 
+nome:Romeu Cajamba
 e-mail:romeucajamba@gmail.com
 github:[text](https://github.com/romeucajamba)
 

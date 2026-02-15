@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { Header } from "@/components/Header";
-import { Input } from "@/components/ui/input";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { Header } from '@/components/Header';
+import { Input } from '@/components/ui/input';
 
 // Simulação de backend
 const mockApi = {
@@ -14,25 +14,25 @@ const mockApi = {
           resolve([
             {
               id: 1,
-              street: "Rua das Flores, 123",
-              district: "Centro",
-              city: "São Paulo",
-              state: "SP",
-              zip: "01001-000",
+              street: 'Rua das Flores, 123',
+              district: 'Centro',
+              city: 'São Paulo',
+              state: 'SP',
+              zip: '01001-000',
               isDefault: true,
               mapUrl:
-                "https://lh3.googleusercontent.com/aida-public/AB6AXuDZcSqDHH0LH-esioRmUD-vPF39BmPkFcdIxWqHXcN7XFnqdZfAt7DR4MfR-hqxrUcuBo0qBESPxwWor4EWCvn1LkZkKCojXGfCdbaQn9KKj33Qt5auECOFbQ424EQzQkZPQZridDXsVXJGAtlTP2xLz9g6jcgUNc77uey_dFk5q0D6q86YxA0w8-TwjnpMH-i-TVjaUrD6VaXYnjAB9cA0KLophTMwS07k3PjcqwEa94rMMjrHE84d4aGU_q571j6mF5KepeSBIBE",
+                'https://lh3.googleusercontent.com/aida-public/AB6AXuDZcSqDHH0LH-esioRmUD-vPF39BmPkFcdIxWqHXcN7XFnqdZfAt7DR4MfR-hqxrUcuBo0qBESPxwWor4EWCvn1LkZkKCojXGfCdbaQn9KKj33Qt5auECOFbQ424EQzQkZPQZridDXsVXJGAtlTP2xLz9g6jcgUNc77uey_dFk5q0D6q86YxA0w8-TwjnpMH-i-TVjaUrD6VaXYnjAB9cA0KLophTMwS07k3PjcqwEa94rMMjrHE84d4aGU_q571j6mF5KepeSBIBE',
             },
             {
               id: 2,
-              street: "Avenida Paulista, 1500",
-              district: "Bela Vista",
-              city: "São Paulo",
-              state: "SP",
-              zip: "01310-200",
+              street: 'Avenida Paulista, 1500',
+              district: 'Bela Vista',
+              city: 'São Paulo',
+              state: 'SP',
+              zip: '01310-200',
               isDefault: false,
               mapUrl:
-                "https://lh3.googleusercontent.com/aida-public/AB6AXuDZcSqDHH0LH-esioRmUD-vPF39BmPkFcdIxWqHXcN7XFnqdZfAt7DR4MfR-hqxrUcuBo0qBESPxwWor4EWCvn1LkZkKCojXGfCdbaQn9KKj33Qt5auECOFbQ424EQzQkZPQZridDXsVXJGAtlTP2xLz9g6jcgUNc77uey_dFk5q0D6q86YxA0w8-TwjnpMH-i-TVjaUrD6VaXYnjAB9cA0KLophTMwS07k3PjcqwEa94rMMjrHE84d4aGU_q571j6mF5KepeSBIBE",
+                'https://lh3.googleusercontent.com/aida-public/AB6AXuDZcSqDHH0LH-esioRmUD-vPF39BmPkFcdIxWqHXcN7XFnqdZfAt7DR4MfR-hqxrUcuBo0qBESPxwWor4EWCvn1LkZkKCojXGfCdbaQn9KKj33Qt5auECOFbQ424EQzQkZPQZridDXsVXJGAtlTP2xLz9g6jcgUNc77uey_dFk5q0D6q86YxA0w8-TwjnpMH-i-TVjaUrD6VaXYnjAB9cA0KLophTMwS07k3PjcqwEa94rMMjrHE84d4aGU_q571j6mF5KepeSBIBE',
             },
           ]),
         500
@@ -65,14 +65,14 @@ export function AddressesPage() {
   // Adicionar novo endereço (simulação)
   const handleAdd = async () => {
     const novo = {
-      street: "Novo Endereço",
-      district: "Bairro",
-      city: "Cidade",
-      state: "UF",
-      zip: "00000-000",
+      street: 'Novo Endereço',
+      district: 'Bairro',
+      city: 'Cidade',
+      state: 'UF',
+      zip: '00000-000',
       isDefault: false,
       mapUrl:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuDZcSqDHH0LH-esioRmUD-vPF39BmPkFcdIxWqHXcN7XFnqdZfAt7DR4MfR-hqxrUcuBo0qBESPxwWor4EWCvn1LkZkKCojXGfCdbaQn9KKj33Qt5auECOFbQ424EQzQkZPQZridDXsVXJGAtlTP2xLz9g6jcgUNc77uey_dFk5q0D6q86YxA0w8-TwjnpMH-i-TVjaUrD6VaXYnjAB9cA0KLophTMwS07k3PjcqwEa94rMMjrHE84d4aGU_q571j6mF5KepeSBIBE",
+        'https://lh3.googleusercontent.com/aida-public/AB6AXuDZcSqDHH0LH-esioRmUD-vPF39BmPkFcdIxWqHXcN7XFnqdZfAt7DR4MfR-hqxrUcuBo0qBESPxwWor4EWCvn1LkZkKCojXGfCdbaQn9KKj33Qt5auECOFbQ424EQzQkZPQZridDXsVXJGAtlTP2xLz9g6jcgUNc77uey_dFk5q0D6q86YxA0w8-TwjnpMH-i-TVjaUrD6VaXYnjAB9cA0KLophTMwS07k3PjcqwEa94rMMjrHE84d4aGU_q571j6mF5KepeSBIBE',
     };
     setLoading(true);
     const res = await mockApi.addAddress(novo);
@@ -92,16 +92,14 @@ export function AddressesPage() {
   const handleSetDefault = async (id) => {
     setLoading(true);
     await mockApi.setDefault(id);
-    setAddresses((prev) =>
-      prev.map((a) => ({ ...a, isDefault: a.id === id }))
-    );
+    setAddresses((prev) => prev.map((a) => ({ ...a, isDefault: a.id === id })));
     setLoading(false);
   };
 
   // Editar endereço (simulação simples)
   const handleEdit = async (id) => {
     setLoading(true);
-    const novoNome = prompt("Novo nome da rua:");
+    const novoNome = prompt('Novo nome da rua:');
     if (novoNome) {
       const updated = addresses.map((a) =>
         a.id === id ? { ...a, street: novoNome } : a
@@ -113,7 +111,7 @@ export function AddressesPage() {
   };
 
   return (
-    <main className="font-display bg-background-light dark:bg-background-dark text-text-light-primary dark:text-dark-primary">
+    <main className="font-display bg-background-light dark:bg-background-dark text-text-light-[#137fec] dark:text-dark-[#137fec]">
       <div className="relative flex min-h-screen w-full flex-col">
         <Header />
         <div className="flex-grow container mx-auto px-4 py-8">
@@ -128,7 +126,7 @@ export function AddressesPage() {
                 </p>
               </div>
               <Button
-                className="flex h-10 min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg bg-primary px-5 text-sm font-bold text-white shadow-sm transition-all hover:bg-primary/90"
+                className="flex h-10 min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg bg-[#137fec] px-5 text-sm font-bold text-white shadow-sm transition-all hover:bg-[#137fec]/90"
                 onClick={handleAdd}
                 disabled={loading}
               >
@@ -149,14 +147,19 @@ export function AddressesPage() {
                     Nenhum endereço cadastrado
                   </h3>
                   <p className="max-w-xs text-sm text-text-light-secondary dark:text-dark-secondary">
-                    Você ainda não tem endereços salvos. Adicione um para agilizar suas futuras compras.
+                    Você ainda não tem endereços salvos. Adicione um para
+                    agilizar suas futuras compras.
                   </p>
                   <Button
-                    className="mt-2 flex h-10 min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg bg-primary px-5 text-sm font-bold text-white shadow-sm transition-all hover:bg-primary/90"
+                    className="mt-2 flex h-10 min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg bg-[#137fec] px-5 text-sm font-bold text-white shadow-sm transition-all hover:bg-[#137fec]/90"
                     onClick={handleAdd}
                   >
-                    <span className="material-symbols-outlined text-xl">add</span>
-                    <span className="truncate">Adicionar Primeiro Endereço</span>
+                    <span className="material-symbols-outlined text-xl">
+                      add
+                    </span>
+                    <span className="truncate">
+                      Adicionar Primeiro Endereço
+                    </span>
                   </Button>
                 </div>
               ) : (
@@ -168,9 +171,11 @@ export function AddressesPage() {
                     <div className="flex flex-[2_2_0px] flex-col gap-4">
                       <div className="flex flex-col gap-1">
                         <div className="flex items-center gap-2">
-                          <h3 className="text-base font-bold">{address.street}</h3>
+                          <h3 className="text-base font-bold">
+                            {address.street}
+                          </h3>
                           {address.isDefault && (
-                            <span className="rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
+                            <span className="rounded-full bg-[#137fec]/10 px-2.5 py-0.5 text-xs font-semibold text-[#137fec]">
                               Padrão
                             </span>
                           )}
@@ -188,7 +193,9 @@ export function AddressesPage() {
                           onClick={() => handleEdit(address.id)}
                           disabled={loading}
                         >
-                          <span className="material-symbols-outlined text-base">edit</span>
+                          <span className="material-symbols-outlined text-base">
+                            edit
+                          </span>
                           <span>Editar</span>
                         </Button>
                         <Button
@@ -196,7 +203,9 @@ export function AddressesPage() {
                           onClick={() => handleRemove(address.id)}
                           disabled={loading}
                         >
-                          <span className="material-symbols-outlined text-base">delete</span>
+                          <span className="material-symbols-outlined text-base">
+                            delete
+                          </span>
                           <span>Remover</span>
                         </Button>
                         {!address.isDefault && (

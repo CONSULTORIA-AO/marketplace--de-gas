@@ -1,22 +1,22 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { KeyRound } from "lucide-react";
-import RecoveryMethodStep from "@/components/passwordRecovery/RecoveryMethodStep";
-import ContactInputStep from "@/components/passwordRecovery/ContactInputStep";
-import VerificationCodeStep from "@/components/passwordRecovery/VerificationCodeStep";
-import NewPasswordStep from "@/components/passwordRecovery/NewPasswordStep";
-import SuccessStep from "@/components/passwordRecovery/SuccessStep";
-import { toast } from "sonner";
-import { Link } from "react-router-dom";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { KeyRound } from 'lucide-react';
+import RecoveryMethodStep from '@/components/passwordRecovery/RecoveryMethodStep';
+import ContactInputStep from '@/components/passwordRecovery/ContactInputStep';
+import VerificationCodeStep from '@/components/passwordRecovery/VerificationCodeStep';
+import NewPasswordStep from '@/components/passwordRecovery/NewPasswordStep';
+import SuccessStep from '@/components/passwordRecovery/SuccessStep';
+import { toast } from 'sonner';
+import { Link } from 'react-router-dom';
 
-const steps = ["Método", "Contato", "Código", "Senha", "Sucesso"];
+const steps = ['Método', 'Contato', 'Código', 'Senha', 'Sucesso'];
 
 const PasswordRecoveryFlow = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [method, setMethod] = useState<"email" | "sms" | null>(null);
-  const [contact, setContact] = useState("");
+  const [method, setMethod] = useState<'email' | 'sms' | null>(null);
+  const [contact, setContact] = useState('');
 
-  const handleSelectMethod = (selectedMethod: "email" | "sms") => {
+  const handleSelectMethod = (selectedMethod: 'email' | 'sms') => {
     setMethod(selectedMethod);
     setCurrentStep(2);
   };
@@ -25,18 +25,18 @@ const PasswordRecoveryFlow = () => {
     setContact(contactValue);
     setCurrentStep(3);
     toast.success(
-      `Código enviado para ${method === "email" ? "seu e-mail" : "seu telefone"}!`
+      `Código enviado para ${method === 'email' ? 'seu e-mail' : 'seu telefone'}!`
     );
   };
 
   const handleVerify = (code: string) => {
     // Simulate verification
     setCurrentStep(4);
-    toast.success("Código verificado com sucesso!");
+    toast.success('Código verificado com sucesso!');
   };
 
   const handleResendCode = () => {
-    toast.success("Novo código enviado!");
+    toast.success('Novo código enviado!');
   };
 
   const handlePasswordSubmit = (password: string) => {
@@ -48,8 +48,8 @@ const PasswordRecoveryFlow = () => {
     // Reset and redirect to login
     setCurrentStep(1);
     setMethod(null);
-    setContact("");
-    toast.success("Redirecionando para login...");
+    setContact('');
+    toast.success('Redirecionando para login...');
   };
 
   const goBack = () => {
@@ -95,7 +95,6 @@ const PasswordRecoveryFlow = () => {
           transition={{ delay: 0.2 }}
           className="rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-8 border border-border border-border-light text-white"
         >
-
           <AnimatePresence mode="wait">
             <motion.div
               key={currentStep}
@@ -125,7 +124,10 @@ const PasswordRecoveryFlow = () => {
                 />
               )}
               {currentStep === 4 && (
-                <NewPasswordStep onSubmit={handlePasswordSubmit} onBack={goBack} />
+                <NewPasswordStep
+                  onSubmit={handlePasswordSubmit}
+                  onBack={goBack}
+                />
               )}
               {currentStep === 5 && <SuccessStep onComplete={handleComplete} />}
             </motion.div>
@@ -139,8 +141,11 @@ const PasswordRecoveryFlow = () => {
           transition={{ delay: 0.4 }}
           className="text-center text-xs sm:text-sm text-muted-foreground mt-6"
         >
-          Lembrou sua senha?{" "}
-          <Link to="/login" className="text-[#137fec] hover:underline font-medium">
+          Lembrou sua senha?{' '}
+          <Link
+            to="/login"
+            className="text-[#137fec] hover:underline font-medium"
+          >
             Fazer login
           </Link>
         </motion.p>

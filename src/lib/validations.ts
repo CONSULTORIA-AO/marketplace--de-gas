@@ -7,17 +7,19 @@ export const loginSchema = z.object({
 });
 
 // Schema de registro
-export const registerSchema = z.object({
-  name: z.string().min(3, 'O nome deve ter no mínimo 3 caracteres'),
-  email: z.string().email('Email inválido'),
-  password: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres'),
-  confirmPassword: z.string(),
-  phone: z.string().min(10, 'Telefone inválido'),
-  cpf: z.string().min(11, 'CPF inválido'),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: 'As senhas não coincidem',
-  path: ['confirmPassword'],
-});
+export const registerSchema = z
+  .object({
+    name: z.string().min(3, 'O nome deve ter no mínimo 3 caracteres'),
+    email: z.string().email('Email inválido'),
+    password: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres'),
+    confirmPassword: z.string(),
+    phone: z.string().min(10, 'Telefone inválido'),
+    cpf: z.string().min(11, 'CPF inválido'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'As senhas não coincidem',
+    path: ['confirmPassword'],
+  });
 
 // Schema de recuperação de senha
 export const resetPasswordSchema = z.object({
@@ -35,14 +37,6 @@ export const addressSchema = z.object({
   zipCode: z.string().min(8, 'CEP inválido'),
   isDefault: z.boolean().optional(),
 });
-
-// Schema de perfil
-export const profileSchema = z.object({
-  name: z.string().min(3, 'O nome deve ter no mínimo 3 caracteres'),
-  phone: z.string().min(10, 'Telefone inválido'),
-  email: z.string().email('Email inválido'),
-});
-
 
 // Schema de checkout
 export const checkoutSchema = z.object({
@@ -66,13 +60,12 @@ export const passwordSchema = z
         'A senha deve conter letra maiúscula, minúscula, número e caractere especial'
       ),
 
-    confirmPassword: z.string()
+    confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'As senhas não coincidem',
     path: ['confirmPassword'],
-});
-
+  });
 
 export const recoveryContactSchema = z.object({
   contact: z
@@ -88,19 +81,32 @@ export const recoveryContactSchema = z.object({
 
 // Schema de avaliação
 export const reviewSchema = z.object({
-  productQuality: z
-    .number()
-    .min(1, 'Avalie a qualidade do produto')
-    .max(5),
+  productQuality: z.number().min(1, 'Avalie a qualidade do produto').max(5),
 
-  serviceQuality: z
-    .number()
-    .min(1, 'Avalie o atendimento e entrega')
-    .max(5),
+  serviceQuality: z.number().min(1, 'Avalie o atendimento e entrega').max(5),
 
   comment: z.string().max(500).optional(),
 });
 
+export const profileSchema = z.object({
+  full_name: z.string().min(3, 'Nome muito curto'),
+  email: z.string().email('E-mail inválido'),
+  phone: z.string().min(9, 'Telefone inválido'),
+});
+
+export const passwordProfileSchema = z
+  .object({
+    currentPassword: z.string().min(6, 'Senha obrigatória'),
+    newPassword: z.string().min(6, 'Mínimo 6 caracteres'),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: 'As senhas não coincidem',
+    path: ['confirmPassword'],
+  });
+
+export type PasswordProfileFormData = z.infer<typeof passwordProfileSchema>;
+export type PasswordFormData = z.infer<typeof passwordSchema>;
 export type RecoveryContactFormData = z.infer<typeof recoveryContactSchema>;
 export type LoginFormData = z.infer<typeof loginSchema>;
 export type RegisterFormData = z.infer<typeof registerSchema>;

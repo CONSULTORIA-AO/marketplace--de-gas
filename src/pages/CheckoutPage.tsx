@@ -40,7 +40,7 @@ export function CheckoutPage() {
     mutationFn: async (data: CheckoutFormData) => {
       const response = await api.post<Order>('/orders', {
         ...data,
-        items: items.map(item => ({
+        items: items.map((item) => ({
           productId: item.productId,
           quantity: item.quantity,
           price: item.product.price,
@@ -70,7 +70,9 @@ export function CheckoutPage() {
   };
 
   const selectedAddressId = watch('addressId');
-  const selectedAddress = addresses?.find(addr => addr.id === selectedAddressId);
+  const selectedAddress = addresses?.find(
+    (addr) => addr.id === selectedAddressId
+  );
 
   return (
     <div className="font-display text-slate-700">

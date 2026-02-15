@@ -1,9 +1,9 @@
-import { motion } from "framer-motion";
-import { Mail, Phone, ArrowLeft } from "lucide-react";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { RecoveryPasswordSchema, passwordSchema } from "@/lib/validations";
+import { motion } from 'framer-motion';
+import { Mail, Phone, ArrowLeft } from 'lucide-react';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { RecoveryPasswordSchema, passwordSchema } from '@/lib/validations';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -11,14 +11,17 @@ import {
   type RecoveryContactFormData,
 } from '@/lib/validations';
 
-
 interface ContactInputStepProps {
-  method: "email" | "sms";
+  method: 'email' | 'sms';
   onSubmit: (contact: string) => void;
   onBack: () => void;
 }
 
-const ContactInputStep = ({ method, onSubmit, onBack }: ContactInputStepProps) => {
+const ContactInputStep = ({
+  method,
+  onSubmit,
+  onBack,
+}: ContactInputStepProps) => {
   const {
     register,
     handleSubmit,
@@ -48,27 +51,29 @@ const ContactInputStep = ({ method, onSubmit, onBack }: ContactInputStepProps) =
     >
       <div className="text-center space-y-2">
         <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full gradient-[#137fec] flex items-center justify-center mb-4">
-          {method === "email" ? (
+          {method === 'email' ? (
             <Mail className="w-7 h-7 sm:w-9 sm:h-9 text-[#137fec]" />
           ) : (
             <Phone className="w-7 h-7 sm:w-9 sm:h-9 text-[#137fec]" />
           )}
         </div>
         <h2 className="text-xl sm:text-2xl font-semibold text-foreground">
-          {method === "email" ? "Insira seu E-mail" : "Insira seu Telefone"}
+          {method === 'email' ? 'Insira seu E-mail' : 'Insira seu Telefone'}
         </h2>
         <p className="text-sm sm:text-base text-muted-foreground">
-          {method === "email"
-            ? "Enviaremos um código de verificação para o seu e-mail"
-            : "Enviaremos um código de verificação via SMS"}
+          {method === 'email'
+            ? 'Enviaremos um código de verificação para o seu e-mail'
+            : 'Enviaremos um código de verificação via SMS'}
         </p>
       </div>
 
       <form onSubmit={handleSubmit(submitHandler)} className="space-y-4">
         <div className="space-y-2">
           <Input
-            type={method === "email" ? "email" : "tel"}
-            placeholder={method === "email" ? "seu@email.com" : "+244 943 558 106"}
+            type={method === 'email' ? 'email' : 'tel'}
+            placeholder={
+              method === 'email' ? 'seu@email.com' : '+244 943 558 106'
+            }
             {...register('contact')}
             className="h-12 sm:h-14 text-sm sm:text-base px-4 rounded-xl border focus:border-[#137fec] focus:ring-[#137fec] text-black"
           />

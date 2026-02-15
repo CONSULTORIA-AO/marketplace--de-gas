@@ -1,8 +1,8 @@
-import { motion } from "framer-motion";
-import { Mail, Smartphone } from "lucide-react";
+import { motion } from 'framer-motion';
+import { Mail, Smartphone } from 'lucide-react';
 
 interface RecoveryMethodStepProps {
-  onSelectMethod: (method: "email" | "sms") => void;
+  onSelectMethod: (method: 'email' | 'sms') => void;
 }
 
 const RecoveryMethodStep = ({ onSelectMethod }: RecoveryMethodStepProps) => {
@@ -39,7 +39,7 @@ const RecoveryMethodStep = ({ onSelectMethod }: RecoveryMethodStepProps) => {
 
       <motion.div variants={itemVariants} className="space-y-3 sm:space-y-4">
         <motion.button
-          onClick={() => onSelectMethod("email")}
+          onClick={() => onSelectMethod('email')}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className="w-full p-4 sm:p-5 rounded-xl border-2 border-border bg-card-[#137fec] bg-[#137fec] hover:border-[#137fec] text-white hover:shadow-glow transition-all duration-300 flex items-center gap-4 dark:border-border-dark border-slate-100 dark:border-slate-900 hover:text-white"
@@ -58,7 +58,7 @@ const RecoveryMethodStep = ({ onSelectMethod }: RecoveryMethodStepProps) => {
         </motion.button>
 
         <motion.button
-          onClick={() => onSelectMethod("sms")}
+          onClick={() => onSelectMethod('sms')}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className="w-full p-4 sm:p-5 rounded-xl border-2 border-border hover:border-[#137fec] hover:shadow-glow transition-all duration-300 flex items-center gap-4 text-white bg-card-[#137fec] bg-[#137fec]"

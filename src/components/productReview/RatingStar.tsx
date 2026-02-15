@@ -23,9 +23,7 @@ export function RatingStars({ value, onChange }: RatingStarsProps) {
               type="button"
               variant="ghost"
               size="icon"
-              onClick={() =>
-                onChange(value === star ? 0 : star) 
-              }
+              onClick={() => onChange(value === star ? 0 : star)}
               className="p-2 rounded-full hover:bg-yellow-400/10 group"
             >
               <Star

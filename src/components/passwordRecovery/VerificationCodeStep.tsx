@@ -1,11 +1,11 @@
-import { motion } from "framer-motion";
-import { ArrowLeft, RefreshCw } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
-import { Button } from "@/components/ui/button";
+import { motion } from 'framer-motion';
+import { ArrowLeft, RefreshCw } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
 
 interface VerificationCodeStepProps {
   contact: string;
-  method: "email" | "sms";
+  method: 'email' | 'sms';
   onVerify: (code: string) => void;
   onBack: () => void;
   onResend: () => void;
@@ -18,8 +18,8 @@ const VerificationCodeStep = ({
   onBack,
   onResend,
 }: VerificationCodeStepProps) => {
-  const [code, setCode] = useState(["", "", "", "", "", ""]);
-  const [error, setError] = useState("");
+  const [code, setCode] = useState(['', '', '', '', '', '']);
+  const [error, setError] = useState('');
   const [countdown, setCountdown] = useState(60);
   const [canResend, setCanResend] = useState(false);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -39,36 +39,36 @@ const VerificationCodeStep = ({
     const newCode = [...code];
     newCode[index] = value.slice(-1);
     setCode(newCode);
-    setError("");
+    setError('');
 
     if (value && index < 5) {
       inputRefs.current[index + 1]?.focus();
     }
 
-    if (newCode.every((digit) => digit !== "")) {
-      onVerify(newCode.join(""));
+    if (newCode.every((digit) => digit !== '')) {
+      onVerify(newCode.join(''));
     }
   };
 
   const handleKeyDown = (index: number, e: React.KeyboardEvent) => {
-    if (e.key === "Backspace" && !code[index] && index > 0) {
+    if (e.key === 'Backspace' && !code[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
   };
 
   const handlePaste = (e: React.ClipboardEvent) => {
     e.preventDefault();
-    const pastedData = e.clipboardData.getData("text").slice(0, 6);
+    const pastedData = e.clipboardData.getData('text').slice(0, 6);
     if (!/^\d+$/.test(pastedData)) return;
 
     const newCode = [...code];
-    pastedData.split("").forEach((digit, index) => {
+    pastedData.split('').forEach((digit, index) => {
       if (index < 6) newCode[index] = digit;
     });
     setCode(newCode);
 
-    if (newCode.every((digit) => digit !== "")) {
-      onVerify(newCode.join(""));
+    if (newCode.every((digit) => digit !== '')) {
+      onVerify(newCode.join(''));
     }
   };
 
@@ -85,8 +85,8 @@ const VerificationCodeStep = ({
   };
 
   const maskContact = () => {
-    if (method === "email") {
-      const [user, domain] = contact.split("@");
+    if (method === 'email') {
+      const [user, domain] = contact.split('@');
       return `${user.slice(0, 2)}***@${domain}`;
     }
     return `***${contact.slice(-4)}`;
@@ -105,7 +105,7 @@ const VerificationCodeStep = ({
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+          transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
           className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full gradient-[#137fec] flex items-center justify-center mb-4"
         >
           <span className="text-2xl sm:text-3xl">🔐</span>
@@ -114,7 +114,7 @@ const VerificationCodeStep = ({
           Código de Verificação
         </h2>
         <p className="text-sm sm:text-base text-muted-foreground">
-          Insira o código enviado para{" "}
+          Insira o código enviado para{' '}
           <span className="font-medium text-foreground">{maskContact()}</span>
         </p>
       </div>
@@ -161,8 +161,10 @@ const VerificationCodeStep = ({
             </button>
           ) : (
             <p className="text-muted-foreground text-sm sm:text-base">
-              Reenviar em{" "}
-              <span className="font-semibold text-foreground">{countdown}s</span>
+              Reenviar em{' '}
+              <span className="font-semibold text-foreground">
+                {countdown}s
+              </span>
             </p>
           )}
         </div>

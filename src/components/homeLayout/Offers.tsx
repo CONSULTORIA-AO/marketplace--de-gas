@@ -1,7 +1,7 @@
-import botijaLaranja from "@/assets/botijas/laranja-1.png";
-import botijaCompridaCinza from "@/assets/botijas/comprida-cinza.jpg";
-import botijaBaixinha from "@/assets/botijas/pequena-cinzenta.png";
-import botijaGrande from "@/assets/botijas/grande-azul.png";
+import botijaLaranja from '@/assets/botijas/laranja-1.png';
+import botijaCompridaCinza from '@/assets/botijas/comprida-cinza.jpg';
+import botijaBaixinha from '@/assets/botijas/pequena-cinzenta.png';
+import botijaGrande from '@/assets/botijas/grande-azul.png';
 
 import { api } from '@/lib/axios';
 import { useQuery } from '@tanstack/react-query';
@@ -13,48 +13,59 @@ interface OffersSectionProps {
 }
 
 export function OffersSection({ searchTerm }: OffersSectionProps) {
-    const { data: products, isLoading } = useQuery({
-        queryKey: ['products'],
-        queryFn: async () => {
-            const response = await api.get<GasProduct[]>('/products');
-                return response.data;
-        },
-    });
+  const { data: products, isLoading } = useQuery({
+    queryKey: ['products'],
+    queryFn: async () => {
+      const response = await api.get<GasProduct[]>('/products');
+      return response.data;
+    },
+  });
 
-    const filteredProducts = mockProducts.filter((product) =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.weight.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredProducts = mockProducts.filter(
+    (product) =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.weight.toLowerCase().includes(searchTerm.toLowerCase())
   );
-    if (isLoading) return <p>Carregando...</p>;
+  if (isLoading) return <p>Carregando...</p>;
 
-    return(
-        <section className="mb-16">
-            <h2 className="text-3xl font-bold leading-tight tracking-tight text-center mb-8">Ofertas Imperdíveis da Semana</h2>
+  return (
+    <section className="mb-16">
+      <h2 className="text-3xl font-bold leading-tight tracking-tight text-center mb-8">
+        Ofertas Imperdíveis da Semana
+      </h2>
 
-            {filteredProducts.length === 0 && (
-                <p className="text-center text-gray-500">
-                    Nenhum produto encontrado
-                </p>
-            )}
+      {filteredProducts.length === 0 && (
+        <p className="text-center text-gray-500">Nenhum produto encontrado</p>
+      )}
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {filteredProducts.map((product) => (
-                <div 
-                    className="flex flex-col gap-3 rounded-xl bg-card-light dark:bg-card-dark shadow-md overflow-hidden transition-transform hover:-translate-y-1"
-                    key={product.id}
-                >
-                    <div className="w-full bg-center bg-no-repeat aspect-square bg-cover" data-alt="A standard 13kg LPG gas cylinder" style={{backgroundImage: `url(${product.imageUrl})`}}></div>
-                        <div className="p-4">
-                            <p className="text-lg font-bold">{product.name}</p>
-                            <p className="text-sm text-gray-500 dark:text-gray-400">{product.brand}</p>
-                            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1"><span className="line-through">De R$110,00</span> por</p>
-                            <p className="text-2xl font-bold text-[#137fec]">R${product.price.toFixed(2)}</p>
-                        </div>
-                    </div>
-                ))} 
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {filteredProducts.map((product) => (
+          <div
+            className="flex flex-col gap-3 rounded-xl bg-card-light dark:bg-card-dark shadow-md overflow-hidden transition-transform hover:-translate-y-1"
+            key={product.id}
+          >
+            <div
+              className="w-full bg-center bg-no-repeat aspect-square bg-cover"
+              data-alt="A standard 13kg LPG gas cylinder"
+              style={{ backgroundImage: `url(${product.imageUrl})` }}
+            ></div>
+            <div className="p-4">
+              <p className="text-lg font-bold">{product.name}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {product.brand}
+              </p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                <span className="line-through">De R$110,00</span> por
+              </p>
+              <p className="text-2xl font-bold text-[#137fec]">
+                R${product.price.toFixed(2)}
+              </p>
             </div>
-        </section>
-    )
+          </div>
+        ))}
+      </div>
+    </section>
+  );
 }

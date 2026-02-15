@@ -1,5 +1,13 @@
 import { Link } from 'react-router-dom';
-import { ShoppingCart, User, Menu, Flame, LogOut, Package, MapPin } from 'lucide-react';
+import {
+  ShoppingCart,
+  User,
+  Menu,
+  Flame,
+  LogOut,
+  Package,
+  MapPin,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -34,15 +42,24 @@ export function Header() {
 
           {/* Navegação Desktop */}
           <nav className="hidden md:flex items-center gap-6">
-            <Link to="/" className="text-gray-700 hover:text-primary transition-colors">
+            <Link
+              to="/"
+              className="text-gray-700 hover:text-primary transition-colors"
+            >
               Produtos
             </Link>
             {isAuthenticated && (
               <>
-                <Link to="/pedidos" className="text-gray-700 hover:text-primary transition-colors">
+                <Link
+                  to="/pedidos"
+                  className="text-gray-700 hover:text-primary transition-colors"
+                >
                   Meus Pedidos
                 </Link>
-                <Link to="/enderecos" className="text-gray-700 hover:text-primary transition-colors">
+                <Link
+                  to="/enderecos"
+                  className="text-gray-700 hover:text-primary transition-colors"
+                >
                   Endereços
                 </Link>
               </>
@@ -98,7 +115,10 @@ export function Header() {
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-600">
+                  <DropdownMenuItem
+                    onClick={handleLogout}
+                    className="cursor-pointer text-red-600"
+                  >
                     <LogOut className="w-4 h-4 mr-2" />
                     Sair
                   </DropdownMenuItem>

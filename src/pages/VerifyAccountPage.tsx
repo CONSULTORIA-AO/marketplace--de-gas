@@ -13,7 +13,9 @@ export function VerifyAccountPage() {
   useEffect(() => {
     const handleEmailVerification = async () => {
       try {
-        const hashParams = new URLSearchParams(window.location.hash.substring(1));
+        const hashParams = new URLSearchParams(
+          window.location.hash.substring(1)
+        );
         const accessToken = hashParams.get('access_token');
         const type = hashParams.get('type');
 
@@ -27,7 +29,9 @@ export function VerifyAccountPage() {
           throw new Error('Link de verificação inválido');
         }
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erro ao verificar email');
+        setError(
+          err instanceof Error ? err.message : 'Erro ao verificar email'
+        );
       } finally {
         setVerifying(false);
       }
@@ -35,7 +39,6 @@ export function VerifyAccountPage() {
 
     handleEmailVerification();
   }, []);
-
 
   if (verifying) {
     return (
@@ -71,12 +74,8 @@ export function VerifyAccountPage() {
           <h2 className="text-2xl font-bold text-gray-800 mb-3">
             Erro na Verificação
           </h2>
-          <p className="text-gray-600 mb-6">
-            {error}
-          </p>
-          <Button onClick={() => navigate('/login')}>
-            Voltar para Login
-          </Button>
+          <p className="text-gray-600 mb-6">{error}</p>
+          <Button onClick={() => navigate('/login')}>Voltar para Login</Button>
         </motion.div>
       </div>
     );
@@ -111,7 +110,8 @@ export function VerifyAccountPage() {
           transition={{ delay: 0.4 }}
           className="text-gray-600 mb-8"
         >
-          Sua conta foi ativada com sucesso. Você já pode acessar todos os recursos da plataforma.
+          Sua conta foi ativada com sucesso. Você já pode acessar todos os
+          recursos da plataforma.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
