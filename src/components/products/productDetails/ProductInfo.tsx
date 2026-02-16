@@ -4,12 +4,14 @@ import { useCartStore } from '@/store/cartstore';
 import { GasProduct } from '@/types';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useToast } from '@/components/ui/use-toast';
 
 interface Props {
   product: GasProduct;
 }
 
 export function ProductInfo({ product }: Props) {
+  const { toast } = useToast();
   const navigate = useNavigate();
   const addItem = useCartStore((state) => state.addItem);
 
@@ -130,13 +132,13 @@ export function ProductInfo({ product }: Props) {
             </Label>
             <div className="flex items-center">
               <select
-                className="form-select w-full rounded-xl border-border-soft bg-gray-50 focus:ring-[#137fec] focus:border-[#137fec] h-14 text-lg font-medium"
+                className="form-select w-full rounded-xl border-border-soft bg-gray-50 focus:ring-[#137fec] focus:border-[#137fec] h-14 text-lg font-medium hover:cursor-pointer"
                 id="quantity"
                 value={quantity}
                 onChange={(e) => setQuantity(Number(e.target.value))}
               >
                 {[1, 2, 3, 4].map((q) => (
-                  <option key={q} value={q}>
+                  <option key={q} value={q} className="hover:cursor-pointer">
                     {q} Unidade{q > 1 && 's'}
                   </option>
                 ))}
@@ -156,6 +158,19 @@ export function ProductInfo({ product }: Props) {
             <Button
               onClick={() => {
                 addItem(product, quantity);
+                toast({
+                  variant: 'destructive',
+                  title: 'Produto adicionado ao carrinho 🛒',
+                  description: 'Deseja ir para o carrinho?',
+                  action: (
+                    <Button
+                      variant="secondary"
+                      onClick={() => navigate('/carrinho')}
+                    >
+                      Ver Carrinho
+                    </Button>
+                  ),
+                });
               }}
               className="flex w-full items-center justify-center rounded-xl h-16 px-8 bg-green-700  hover:bg-green-600 text-white text-lg font-extrabold shadow-lg shadow-[#137fec]/25 hover:scale-[1.02] transition-all"
             >
