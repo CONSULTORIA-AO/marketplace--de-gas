@@ -1,21 +1,27 @@
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { ProductInfo } from '@/components/products/productDetails/ProductInfo';
 import { SupplierInfo } from '@/components/products/productDetails/Supplier';
 import { AboutProduct } from '@/components/products/productDetails/AboutProduct';
 import { Reviews } from '@/components/products/productDetails/Reviews';
 
-export function ProductDetailsPage() {
-  const navigate = useNavigate();
+import { useParams } from 'react-router-dom';
+import { mockGasProducts } from '@/data/gas-products';
 
+export function ProductDetailsPage() {
+  const { id } = useParams();
+  const product = mockGasProducts.find((p) => p.id === id);
+
+  if (!product) {
+    return <div>Produto não encontrado</div>;
+  }
   return (
     <div className="font-display">
       <div className="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
         <Header />
         <main className="flex-1">
           <div className="container mx-auto px-8 py-12">
-            <ProductInfo />
+            <ProductInfo product={product} />
             <div className="mt-20">
               <div className="border-b border-border-soft mb-12">
                 <nav className="flex gap-12 overflow-x-auto">

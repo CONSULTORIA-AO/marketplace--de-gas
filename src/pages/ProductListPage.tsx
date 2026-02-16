@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { Header } from '@/components/Header';
 
 import { ProductListAside } from '@/components/products/productList/ProductListAside';
@@ -6,8 +5,6 @@ import { ProductSpolier } from '@/components/products/productList/ProductSpolier
 import { useState } from 'react';
 
 export function ProductListPage() {
-  const navigate = useNavigate();
-
   const [filters, setFilters] = useState({
     gasTypes: ['GLP13'],
     minPrice: 90,

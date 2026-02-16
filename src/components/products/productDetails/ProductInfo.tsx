@@ -1,8 +1,20 @@
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { Link } from 'react-router-dom';
+import { useCartStore } from '@/store/cartstore';
+import { GasProduct } from '@/types';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
-export function ProductInfo() {
+interface Props {
+  product: GasProduct;
+}
+
+export function ProductInfo({ product }: Props) {
+  const navigate = useNavigate();
+  const addItem = useCartStore((state) => state.addItem);
+
+  const [quantity, setQuantity] = useState(1);
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
       <div className="lg:col-span-7 space-y-8">
@@ -11,8 +23,7 @@ export function ProductInfo() {
             className="w-full bg-center bg-no-repeat bg-contain aspect-[4/3] rounded-xl"
             data-alt="Large image"
             style={{
-              backgroundImage:
-                "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCPMfoiNSwjDKSaLZvCb8lcnR4HQdWQduN8xwnvG1N38uKr8j_XCgY6aZooo4zy-J873_yhmZjJEEjc6EBrLsutWON5wgDec-mveRZRzxoppaMib9uWKkVS0K_pPdWD8ILEsT0K9Hd9dNe_Au8DZPAaFwH_zsHzqoCIKsIpyCf-xKnylKP41P_rMgUjXAU6Nq8uumSsAtZ3-2dGivja2lJURFYCClutw8ckP48w9B-FD3uiPUmtdkXhEJ2zLobrtKLbmAFht2gTTsE');",
+              backgroundImage: `url(${product.imageUrl})`,
             }}
           ></div>
         </div>
@@ -21,8 +32,7 @@ export function ProductInfo() {
             <div
               className="w-full h-full bg-center bg-cover"
               style={{
-                backgroundImage:
-                  'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBWfPnZgLGqqXpY_UK7s0FRFq_puxnaIYDJNxf2TgV80kX83AYQdOgmLVUBPlpWmaeljIFgwV42A1bfBwCmE_X2LPOeJs853yRzy25tw_hrtXWJDuKkRRjwaAzjv4t14ysZVwrbO2ktVpHEaDaWvCnK0qYCCeIFatSeabwAgZOXbiJiOUrJnU9XRHTsfV_bwyu3WLdngK04RADqwHazKDAcvpMiXib3cmmePPDMo3uu7yBz7DjC-ZEsL6LqEQplYas8y0g1L4JdTog");',
+                backgroundImage: `url(${product.imageUrl})`,
               }}
             ></div>
           </div>
@@ -30,8 +40,7 @@ export function ProductInfo() {
             <div
               className="w-full h-full bg-center bg-cover"
               style={{
-                backgroundImage:
-                  'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBurdG_1iCCKzF_eCK0BY46eqcwlqidAShNaG1VAVFuo4FQze0uGWMbgoGuD7EuLWrjolSrnE9rDuy6D10lN9jYbwxghry6bamUMZdgadc4Z3KIYZrKljdquJirr1TqoloSXBiIvn1VFbhIucL-p3T7Q3zIbrvEZJKdNU-B6a5TbGwpK_M4WpRTe9TaBdK1qgUcc3bb0S-VyZQ6u3odX2Eqwn5vIG8T0mvWJCjOEhq95pzEBtpEGgW7y5MEjNefVX3coLBUALikehQ");',
+                backgroundImage: `url(${product.imageUrl})`,
               }}
             ></div>
           </div>
@@ -39,8 +48,7 @@ export function ProductInfo() {
             <div
               className="w-full h-full bg-center bg-cover"
               style={{
-                backgroundImage:
-                  'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBhuDXu_66_yKrzrplbJ1qQcuZrKnc0IAjEythlGx-UmJzAJo0gZyJ8ZBvbcNO8OglYo7-ahbpZOKRboJ4LcZMMRgWCifRuD_-AdaBzKGlGrx1pW_FR90p4JkIwcbQ92oPiQnY8EWF40lBCHCdy16Lx73K7GaeFz_sTCfrys7w0MjO32Opk8fsfOEMmx3xjqomh1B2M0sZWxFI_0A8kK8aCU7mPL5yMnSPWtbvALjtbeuBehXJPDWwHyVuZutiMgWWb3yv197PXtTI");',
+                backgroundImage: `url(${product.imageUrl})`,
               }}
             ></div>
           </div>
@@ -48,8 +56,7 @@ export function ProductInfo() {
             <div
               className="w-full h-full bg-center bg-cover"
               style={{
-                backgroundImage:
-                  'url("https://lh3.googleusercontent.com/aida-public/AB6AXuDv6NWpsT7mdhKzl13dYZRT7HLNU75dC4WwRt242twi_RNIjFTyqsGmN30VgPZ01nXadgl5vUPm7Z7H2sIR7dHbFLf5Vq-c9SGPV1n4z0cxBwOyt2p7hdW3pSPEmQ7WHDq39X6d5ZywGti4u94Ca5YpXsBPFsUmgrE-nltn4VKGDrr1akrbr9_QXC8YXpL2WYuWhFhJ9olDcC8ozeacVzLxRsFqyZxg0r8K1P6d3Tm61xjJQu2RxDyaqh0BiyGXgrxl5-d1YpH66lw");',
+                backgroundImage: `url(${product.imageUrl})`,
               }}
             ></div>
           </div>
@@ -58,7 +65,7 @@ export function ProductInfo() {
       <div className="lg:col-span-5 flex flex-col gap-8">
         <div>
           <h1 className="text-4xl font-extrabold text-text-[#137fec] leading-tight mb-4">
-            Botijão de Gás P13 - SuperGás
+            {product.name}
           </h1>
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-1.5">
@@ -79,9 +86,11 @@ export function ProductInfo() {
                   star_half
                 </span>
               </div>
-              <span className="text-sm font-bold text-text-[#137fec]">4.5</span>
+              <span className="text-sm font-bold text-text-[#137fec]">
+                {product.rating}
+              </span>
               <span className="text-sm text-text-secondary">
-                (128 avaliações)
+                ({product.reviewCount} avaliações)
               </span>
             </div>
             <span className="text-border-soft">|</span>
@@ -100,7 +109,7 @@ export function ProductInfo() {
             </p>
             <div className="flex items-baseline gap-2">
               <span className="text-5xl font-black text-text-[#137fec]">
-                R$ 105,00
+                KZ {product.price.toFixed(2)}
               </span>
             </div>
             <div className="flex items-center gap-2 text-green-600 font-bold mt-2">
@@ -123,19 +132,33 @@ export function ProductInfo() {
               <select
                 className="form-select w-full rounded-xl border-border-soft bg-gray-50 focus:ring-[#137fec] focus:border-[#137fec] h-14 text-lg font-medium"
                 id="quantity"
+                value={quantity}
+                onChange={(e) => setQuantity(Number(e.target.value))}
               >
-                <option>1 Unidade</option>
-                <option>2 Unidades</option>
-                <option>3 Unidades</option>
-                <option>4 Unidades</option>
+                {[1, 2, 3, 4].map((q) => (
+                  <option key={q} value={q}>
+                    {q} Unidade{q > 1 && 's'}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
           <div className="flex flex-col gap-4">
-            <Button className="flex w-full items-center justify-center rounded-xl h-16 px-8 bg-[#137fec] text-white text-lg font-extrabold shadow-lg shadow-secondary-action/25 hover:bg-[#137fec]/90 transition-all">
+            <Button
+              onClick={() => {
+                addItem(product, quantity);
+                navigate('/checkout');
+              }}
+              className="flex w-full items-center justify-center rounded-xl h-16 px-8 bg-[#137fec] text-white text-lg font-extrabold shadow-lg shadow-secondary-action/25 hover:bg-[#137fec]/90 transition-all"
+            >
               <span>COMPRAR AGORA</span>
             </Button>
-            <Button className="flex w-full items-center justify-center rounded-xl h-16 px-8 bg-green-700  hover:bg-green-600 text-white text-lg font-extrabold shadow-lg shadow-[#137fec]/25 hover:scale-[1.02] transition-all">
+            <Button
+              onClick={() => {
+                addItem(product, quantity);
+              }}
+              className="flex w-full items-center justify-center rounded-xl h-16 px-8 bg-green-700  hover:bg-green-600 text-white text-lg font-extrabold shadow-lg shadow-[#137fec]/25 hover:scale-[1.02] transition-all"
+            >
               <span>ADICIONAR AO CARRINHO</span>
             </Button>
           </div>
