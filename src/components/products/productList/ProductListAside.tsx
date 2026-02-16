@@ -169,8 +169,8 @@ export function ProductListAside({ filters, setFilters }) {
           </div>
 
           <div className="flex justify-between text-sm text-slate-500 dark:text-slate-400">
-            <span>R$ {filters.minPrice}</span>
-            <span>R$ {filters.maxPrice}</span>
+            <span>KZ {filters.minPrice}</span>
+            <span>KZ {filters.maxPrice}</span>
           </div>
         </div>
 

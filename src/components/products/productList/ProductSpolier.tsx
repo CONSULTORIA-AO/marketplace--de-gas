@@ -209,7 +209,7 @@ export function ProductSpolier({
 
               <div className="mt-4 flex items-end justify-between">
                 <p className="text-xl font-black text-slate-900 dark:text-white">
-                  R$ {product.price.toFixed(2)}
+                  KZ {product.price.toFixed(2)}
                 </p>
 
                 <Button className="flex h-9 items-center justify-center gap-2 rounded-lg bg-[#137fec] px-4 text-sm font-bold text-white transition-opacity hover:opacity-90">
