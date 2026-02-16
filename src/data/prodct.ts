@@ -1,4 +1,4 @@
-import type { GasProduct } from '@/types';
+import type { GasProduct, MockOrder } from '@/types';
 import botijaLaranja from '@/assets/botijas/laranja-1.png';
 import botijaCompridaCinza from '@/assets/botijas/comprida-cinza.jpg';
 import botijaBaixinha from '@/assets/botijas/pequena-cinzenta.png';
@@ -57,4 +57,13 @@ export const mockProducts: GasProduct[] = [
     rating: 4.5,
     reviewCount: 110,
   },
+];
+
+export const mockOrders: MockOrder[] = [
+  { id: '1', status: 'pending', total: 110, createdAt: '2024-01-10' },
+  { id: '2', status: 'processing', total: 450, createdAt: '2024-01-11' },
+  { id: '3', status: 'delivered', total: 99.9, createdAt: '2024-01-12' },
+  { id: '4', status: 'delivered', total: 102.5, createdAt: '2024-01-13' },
+  { id: '5', status: 'cancelled', total: 110, createdAt: '2024-01-14' },
+  { id: '6', status: 'delivered', total: 425, createdAt: '2024-01-15' },
 ];
