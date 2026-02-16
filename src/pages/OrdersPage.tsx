@@ -1,46 +1,26 @@
 import { useQuery } from '@tanstack/react-query';
-import { Package, Clock, CheckCircle, XCircle, Truck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { api } from '@/lib/axios';
-
-import type { Order, OrderStatus } from '@/types';
+import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
+import type { Order } from '@/types';
 import { Header } from '@/components/Header';
 import { ClientOrder } from '@/components/order/ClientOrder';
 import { ClientOrderHistory } from '@/components/order/ClientOrderHistory';
 import { OrderDetails } from '@/components/order/OrderDetails';
-
-const statusConfig: Record<
-  OrderStatus,
-  { label: string; icon: any; color: string }
-> = {
-  pending: {
-    label: 'Pendente',
-    icon: Clock,
-    color: 'text-yellow-600 bg-yellow-50',
-  },
-  processing: {
-    label: 'Em Processamento',
-    icon: Package,
-    color: 'text-blue-600 bg-blue-50',
-  },
-  shipped: {
-    label: 'Em Transporte',
-    icon: Truck,
-    color: 'text-purple-600 bg-purple-50',
-  },
-  delivered: {
-    label: 'Entregue',
-    icon: CheckCircle,
-    color: 'text-green-600 bg-green-50',
-  },
-  cancelled: {
-    label: 'Cancelado',
-    icon: XCircle,
-    color: 'text-red-600 bg-red-50',
-  },
-};
+import { useState } from 'react';
+import { mockOrders } from '@/data/prodct';
 
 export function OrdersPage() {
+  const navigate = useNavigate();
+  const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
+  const [orderss, setOrders] = useState<Order[]>([
+    { id: '34562', createdAt: '03/08/2024', total: 110, status: 'shipped' },
+    { id: '34561', createdAt: '02/08/2024', total: 110, status: 'processing' },
+    { id: '33998', createdAt: '15/07/2024', total: 105, status: 'delivered' },
+    { id: '33124', createdAt: '01/06/2024', total: 105, status: 'cancelled' },
+  ]);
+
   const { data: orders, isLoading } = useQuery({
     queryKey: ['orders'],
     queryFn: async () => {
@@ -49,14 +29,15 @@ export function OrdersPage() {
     },
   });
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
+  // 🔹 Função para “pedir novamente”
+  const handleReorder = (orderToRepeat: Order) => {
+    const newOrder: Order = {
+      ...orderToRepeat,
+      id: uuidv4(), // gera novo id
+      status: 'pending',
+      createdAt: new Date().toLocaleDateString('pt-BR'),
+    };
+    setOrders((prev) => [newOrder, ...prev]);
   };
 
   return (
@@ -75,7 +56,10 @@ export function OrdersPage() {
                     Acompanhe e gerencie seus pedidos de gás.
                   </p>
                 </div>
-                <Button className="flex items-center justify-center gap-2 h-10 px-5 bg-[#137fec] text-white rounded-lg text-sm font-bold shadow-sm hover:bg-[#137fec]/90 transition-colors">
+                <Button
+                  onClick={() => navigate('/produtos')}
+                  className="flex items-center justify-center gap-2 h-10 px-5 bg-[#137fec] text-white rounded-lg text-sm font-bold shadow-sm hover:bg-[#137fec]/90 transition-colors"
+                >
                   <span className="material-symbols-outlined text-xl">
                     add_circle
                   </span>
@@ -84,8 +68,16 @@ export function OrdersPage() {
               </div>
               <ClientOrder />
               <div className="flex flex-col lg:flex-row gap-6 mt-4">
-                <ClientOrderHistory />
-                <OrderDetails />
+                <ClientOrderHistory
+                  orders={mockOrders}
+                  onSelectOrder={(id) => setSelectedOrderId(id)}
+                />
+                {selectedOrderId && (
+                  <OrderDetails
+                    orderId={selectedOrderId}
+                    onReorder={handleReorder}
+                  />
+                )}
               </div>
             </div>
           </main>

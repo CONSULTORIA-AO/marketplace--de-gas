@@ -10,7 +10,7 @@ export function CheckoutFirstStap() {
             Endereço (Rua/Avenida)
           </span>
           <Input
-            className="form-input block w-full rounded-lg border-border-gray bg-white text-slate-900 focus:border-primary focus:ring-primary/20 h-12 px-4 text-base transition-all"
+            className="form-input block w-full rounded-lg border-border-gray bg-white text-slate-900 focus:border-[#137fec] focus:ring-[#137fec]/20 h-12 px-4 text-base transition-all"
             type="text"
             value="Avenida Brasil"
           />
@@ -23,7 +23,7 @@ export function CheckoutFirstStap() {
             Número
           </span>
           <Input
-            className="form-input block w-full rounded-lg border-border-gray bg-white text-slate-900 focus:border-primary focus:ring-primary/20 h-12 px-4 text-base transition-all"
+            className="form-input block w-full rounded-lg border-border-gray bg-white text-slate-900 focus:border-[#137fec] focus:ring-[#137fec]/20 h-12 px-4 text-base transition-all"
             type="text"
             value="123"
           />
@@ -35,7 +35,7 @@ export function CheckoutFirstStap() {
             Complemento (Opcional)
           </span>
           <Input
-            className="form-input block w-full rounded-lg border-border-gray bg-white text-slate-900 focus:border-primary focus:ring-primary/20 h-12 px-4 text-base transition-all"
+            className="form-input block w-full rounded-lg border-border-gray bg-white text-slate-900 focus:border-[#137fec] focus:ring-[#137fec]/20 h-12 px-4 text-base transition-all"
             type="text"
             value="Apto 4B"
           />
@@ -48,7 +48,7 @@ export function CheckoutFirstStap() {
             Bairro
           </span>
           <Input
-            className="form-input block w-full rounded-lg border-border-gray bg-white text-slate-900 focus:border-primary focus:ring-primary/20 h-12 px-4 text-base transition-all"
+            className="form-input block w-full rounded-lg border-border-gray bg-white text-slate-900 focus:border-[#137fec] focus:ring-[#137fec]/20 h-12 px-4 text-base transition-all"
             type="text"
             value="Centro"
           />
@@ -60,7 +60,7 @@ export function CheckoutFirstStap() {
             Cidade
           </span>
           <Input
-            className="form-input block w-full rounded-lg border-border-gray bg-white text-slate-900 focus:border-primary focus:ring-primary/20 h-12 px-4 text-base transition-all"
+            className="form-input block w-full rounded-lg border-border-gray bg-white text-slate-900 focus:border-[#137fec] focus:ring-[#137fec]/20 h-12 px-4 text-base transition-all"
             type="text"
             value="São Paulo"
           />
@@ -71,7 +71,7 @@ export function CheckoutFirstStap() {
           <span className="text-slate-700 text-sm font-semibold mb-2">
             Estado
           </span>
-          <select className="form-select block w-full rounded-lg border-border-gray bg-white text-slate-900 focus:border-primary focus:ring-primary/20 h-12 px-4 text-base transition-all">
+          <select className="form-select block w-full rounded-lg border-border-gray bg-white text-slate-900 focus:border-[#137fec] focus:ring-[#137fec]/20 h-12 px-4 text-base transition-all">
             <option selected={true} value="SP">
               São Paulo (SP)
             </option>

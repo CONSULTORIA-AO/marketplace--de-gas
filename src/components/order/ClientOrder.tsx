@@ -1,4 +1,23 @@
+import type { OrderStatus } from '@/types';
+import { mockOrders } from '@/data/prodct';
+
 export function ClientOrder() {
+  const pedidosEmAndamento = mockOrders.filter(
+    (order) =>
+      order.status === 'pending' ||
+      order.status === 'processing' ||
+      order.status === 'shipped'
+  ).length;
+
+  const totalPedidos = mockOrders.length;
+
+  const pedidosEntregues = mockOrders.filter(
+    (order) => order.status === 'delivered'
+  ).length;
+
+  const pedidosCancelados = mockOrders.filter(
+    (order) => order.status === 'cancelled'
+  ).length;
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 py-4">
       <div className="flex flex-col gap-2 rounded-xl p-6 border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-xl border-slate-100 dark:border-slate-800">
@@ -6,7 +25,7 @@ export function ClientOrder() {
           Pedidos em Andamento
         </p>
         <p className="text-text-light dark:text-text-dark tracking-light text-3xl font-bold leading-tight">
-          2
+          {pedidosEmAndamento}
         </p>
       </div>
       <div className="flex flex-col gap-2 rounded-xl p-6 border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-xl border-slate-100 dark:border-slate-800">
@@ -14,7 +33,7 @@ export function ClientOrder() {
           Total de Pedidos
         </p>
         <p className="text-text-light dark:text-text-dark tracking-light text-3xl font-bold leading-tight">
-          15
+          {totalPedidos}
         </p>
       </div>
       <div className="flex flex-col gap-2 rounded-xl p-6 border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-xl border-slate-100 dark:border-slate-800">
@@ -22,7 +41,7 @@ export function ClientOrder() {
           Pedidos Entregues
         </p>
         <p className="text-text-light dark:text-text-dark tracking-light text-3xl font-bold leading-tight">
-          12
+          {pedidosEntregues}
         </p>
       </div>
       <div className="flex flex-col gap-2 rounded-xl p-6 border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-xl border-slate-100 dark:border-slate-800">
@@ -30,7 +49,7 @@ export function ClientOrder() {
           Cancelados
         </p>
         <p className="text-text-light dark:text-text-dark tracking-light text-3xl font-bold leading-tight">
-          1
+          {pedidosCancelados}
         </p>
       </div>
     </div>

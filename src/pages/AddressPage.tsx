@@ -187,7 +187,7 @@ export function AddressesPage() {
                         </Button>
 
                         <Button
-                          className="flex h-9 cursor-pointer items-center justify-center gap-1.5 overflow-hidden rounded-lg px-3 text-sm font-medium text-danger hover:bg-danger/10"
+                          className="flex h-9 cursor-pointer items-center justify-center gap-1.5 overflow-hidden rounded-lg px-3 text-sm font-medium text-white  bg-red-500 hover:bg-red-700"
                           onClick={() => handleRemove(address.id)}
                           disabled={loading}
                         >
@@ -227,7 +227,7 @@ export function AddressesPage() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="bg-white text-black">
           <DialogHeader>
-            <DialogTitle>Editar Endereço</DialogTitle>
+            <DialogTitle>Atualização de endereço</DialogTitle>
           </DialogHeader>
 
           {editingAddress && (

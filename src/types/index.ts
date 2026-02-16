@@ -123,3 +123,17 @@ export interface CheckoutData {
   paymentMethod: 'credit_card' | 'debit_card' | 'pix' | 'money';
   deliveryTime: 'morning' | 'afternoon' | 'evening';
 }
+
+export type OrderStatusType =
+  | 'pending'
+  | 'processing'
+  | 'shipped'
+  | 'delivered'
+  | 'cancelled';
+
+export type MockOrder = {
+  id: string;
+  status: OrderStatusType;
+  total: number;
+  createdAt: string;
+};

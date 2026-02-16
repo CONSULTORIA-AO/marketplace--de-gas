@@ -18,12 +18,7 @@ export function CheckoutPage() {
   const { items, getTotal, clearCart } = useCartStore();
   const [step, setStep] = useState(1);
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<CheckoutFormData>({
+  const form = useForm<CheckoutFormData>({
     resolver: zodResolver(checkoutSchema),
   });
 
@@ -65,22 +60,33 @@ export function CheckoutPage() {
     },
   });
 
+  const handleNextStep = (data?: CheckoutFormData) => {
+    if (step === 1 && data) {
+      setStep(2);
+    } else if (step === 2) {
+      // Finaliza compra
+      checkoutMutation.mutate(form.getValues());
+    }
+  };
+
+  const handlePrevStep = () => setStep((prev) => Math.max(prev - 1, 1));
+
   const onSubmit = (data: CheckoutFormData) => {
     checkoutMutation.mutate(data);
   };
-
-  const selectedAddressId = watch('addressId');
-  const selectedAddress = addresses?.find(
-    (addr) => addr.id === selectedAddressId
-  );
 
   return (
     <div className="font-display text-slate-700">
       <Header />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="max-w-7xl mx-auto lg:grid lg:grid-cols-3 lg:gap-12">
-          <CheckoutMain />
-          <Aside />
+          <CheckoutMain
+            step={step}
+            form={form}
+            onNext={handleNextStep}
+            onPrev={handlePrevStep}
+          />
+          <Aside step={step} cartItems={items} />
         </div>
       </div>
     </div>
