@@ -13,6 +13,8 @@ import { useAuthStore } from '@/store/authStrore';
 import { api } from '@/lib/axios';
 import type { AuthResponse } from '@/types/index';
 import { AuthHeader } from '@/components/AuthHeader';
+import { AxiosError } from 'axios';
+import { ToastAction } from '@/components/ui/toast';
 
 export function LoginPage() {
   const navigate = useNavigate();
@@ -29,23 +31,57 @@ export function LoginPage() {
 
   const loginMutation = useMutation({
     mutationFn: async (data: LoginFormData) => {
-      const response = await api.post<AuthResponse>('/auth/login', data);
+      console.log('dados credenciais:', data);
+      const response = await api.post<AuthResponse>('/clientes/login', data);
+      console.log('Resposta da api:', response);
       return response.data;
     },
     onSuccess: (data) => {
-      setAuth(data.user, data.token);
+      setAuth(data.info, data.mensagem);
       toast({
-        title: 'Login realizado!',
-        description: `Bem-vindo de volta, ${data.user.name}!`,
+        description: (
+          <div className="flex items-center gap-4 ">
+            <div className="rounded-full w-8 h-8 flex justify-center items-center"></div>
+            <span className="text-[#717F96]">Login realizado com sucesso!</span>
+          </div>
+        ),
+        action: (
+          <ToastAction
+            altText="close"
+            className="shadow-none border-none text-[#717F96] hover:bg-transparent"
+          >
+            X
+          </ToastAction>
+        ),
+        className: 'border-l-4 border-l-[#1FC16B]',
       });
+
       navigate('/produtos');
     },
-    onError: (error: any) => {
-      toast({
-        variant: 'destructive',
-        title: 'Erro no login',
-        description: error.response?.data?.message || 'Credenciais inválidas',
-      });
+    onError: (error: unknown) => {
+      console.log('O erro ao fazer login:', error);
+      if (error instanceof AxiosError) {
+        toast({
+          description: (
+            <div className="flex items-center gap-4 ">
+              <div className="rounded-full w-8 h-8 flex justify-center items-center bg-[fill: rgba(251, 55, 72, 0.16)]"></div>
+
+              <span className="text-[#717F96]">
+                {error?.response?.data.mensagem}
+              </span>
+            </div>
+          ),
+          action: (
+            <ToastAction
+              altText="close"
+              className="shadow-none border-none text-[#717F96] hover:bg-transparent"
+            >
+              X
+            </ToastAction>
+          ),
+          className: 'border-l-4 border-l-[#FB3748]', // Estiliza a borda esquerda
+        });
+      }
     },
   });
 
@@ -116,14 +152,14 @@ export function LoginPage() {
                 </Label>
                 <Input
                   id="email"
-                  {...register('email')}
+                  {...register('emailCliente')}
                   className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-slate-900 dark:text-white focus:outline-0 focus:ring-1 border border-slate-200 dark:border-slate-700 bg-white focus:border-[#137fec] h-14 placeholder:text-slate-500/60 p-[15px] text-base font-normal leading-normal transition-all"
                   placeholder="seu@email.com"
                   type="email"
                 />
-                {errors.email && (
+                {errors.emailCliente && (
                   <p className="text-sm text-destructive">
-                    {errors.email.message}
+                    {errors.emailCliente.message}
                   </p>
                 )}
               </div>
@@ -145,14 +181,14 @@ export function LoginPage() {
                 <div className="relative">
                   <Input
                     id="password"
-                    {...register('password')}
+                    {...register('senhaCliente')}
                     className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-slate-900 dark:text-white focus:outline-0 focus:ring-1 border border-slate-200 dark:border-slate-700 bg-white focus:border-[#137fec] h-14 placeholder:text-slate-500/60 p-[15px] text-base font-normal leading-normal transition-all"
-                    placeholder="••••••••"
+                    placeholder=""
                     type="password"
                   />
-                  {errors.password && (
+                  {errors.senhaCliente && (
                     <p className="text-sm text-destructive">
-                      {errors.password.message}
+                      {errors.senhaCliente.message}
                     </p>
                   )}
                   <Button className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 transition-colors">
@@ -174,7 +210,7 @@ export function LoginPage() {
                   </>
                 ) : (
                   <>
-                    na conta Entrar
+                    Entrar na conta
                     <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">
                       arrow_forward
                     </span>

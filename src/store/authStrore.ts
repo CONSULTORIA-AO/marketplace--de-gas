@@ -1,40 +1,64 @@
 import { create } from 'zustand';
-import { User } from '@/types/index';
+import { AuthSession, AuthInfo, AuthMensagem } from '@/types';
 
 interface AuthState {
-  user: User | null;
-  token: string | null;
+  session: AuthSession | null;
   isAuthenticated: boolean;
-  setAuth: (user: User, token: string) => void;
+
+  setAuth: (info: AuthInfo, mensagem: AuthMensagem) => void;
   logout: () => void;
-  updateUser: (user: User) => void;
+  updateUser: (user: Partial<AuthSession['user']>) => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => {
-  // Carregar dados do localStorage na inicialização
-  const storedToken = localStorage.getItem('token');
-  const storedUser = localStorage.getItem('user');
+  const storedSession = localStorage.getItem('session');
 
   return {
-    user: storedUser ? JSON.parse(storedUser) : null,
-    token: storedToken,
-    isAuthenticated: !!storedToken,
+    session: storedSession ? JSON.parse(storedSession) : null,
+    isAuthenticated: !!storedSession,
 
-    setAuth: (user, token) => {
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
-      set({ user, token, isAuthenticated: true });
+    setAuth: (info, mensagem) => {
+      const session: AuthSession = {
+        token: mensagem.hash,
+        info,
+        user: {
+          id: mensagem.entidade,
+          ultimoLogin: mensagem.ultimo_login,
+          novoCliente: mensagem.novo_cliente === '1',
+        },
+      };
+
+      localStorage.setItem('session', JSON.stringify(session));
+
+      set({
+        session,
+        isAuthenticated: true,
+      });
     },
 
     logout: () => {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      set({ user: null, token: null, isAuthenticated: false });
+      localStorage.removeItem('session');
+      set({
+        session: null,
+        isAuthenticated: false,
+      });
     },
 
-    updateUser: (user) => {
-      localStorage.setItem('user', JSON.stringify(user));
-      set({ user });
-    },
+    updateUser: (updatedUser) =>
+      set((state) => {
+        if (!state.session) return state;
+
+        const newSession = {
+          ...state.session,
+          user: {
+            ...state.session.user,
+            ...updatedUser,
+          },
+        };
+
+        localStorage.setItem('session', JSON.stringify(newSession));
+
+        return { session: newSession };
+      }),
   };
 });

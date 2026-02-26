@@ -1,12 +1,15 @@
 import { Button } from '@/components/ui/button';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useMemo } from 'react';
 import { user } from '@/data/user';
+import { api } from '@/lib/axios';
+import { useAuthStore } from '@/store/authStrore';
 
 export function AsideProfile() {
-  const location = useLocation();
+  const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
+  const session = useAuthStore((state) => state.session);
 
   const menuItems = useMemo(
     () => [
@@ -39,13 +42,21 @@ export function AsideProfile() {
     []
   );
 
-  function handleLogout() {
-    // Aqui você pode limpar token, contexto, etc.
-    localStorage.removeItem('token');
-
+  const handleLogout = async () => {
+    if (!session) return;
+    //Pegamos a entidade
+    const entidade = session.user.id;
+    try {
+      await api.post('/clientes/logout', {
+        entidade,
+      });
+    } catch (error) {
+      console.error('Erro ao invalidar sessão no backend', error);
+    }
+    logout();
     // Redireciona para login
     navigate('/login');
-  }
+  };
 
   return (
     <aside className="w-64 flex-shrink-0">

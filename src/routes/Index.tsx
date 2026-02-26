@@ -29,14 +29,70 @@ const NavLink = () => {
       <Route path="/ativar-conta/:token" element={<VerifyAccountPage />} />
 
       {/* Rotas Privadas */}
-      <Route path="/avaliacao" element={<ProductReviewPage />} />
-      <Route path="/carrinho" element={<CartPage />} />
-      <Route path="/produtos" element={<ProductListPage />} />
-      <Route path="/produto/:id" element={<ProductDetailsPage />} />
-      <Route path="/checkout" element={<CheckoutPage />} />
-      <Route path="/pedidos" element={<OrdersPage />} />
-      <Route path="/perfil" element={<ProfilePage />} />
-      <Route path="/enderecos" element={<AddressesPage />} />
+      <Route
+        path="/avaliacao"
+        element={
+          <ProtectedRoute>
+            <ProductReviewPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/carrinho"
+        element={
+          <ProtectedRoute>
+            <CartPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/produtos"
+        element={
+          <ProtectedRoute>
+            <ProductListPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/produto/:id"
+        element={
+          <ProtectedRoute>
+            <ProductDetailsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/checkout"
+        element={
+          <ProtectedRoute>
+            <CheckoutPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/pedidos"
+        element={
+          <ProtectedRoute>
+            <OrdersPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/perfil"
+        element={
+          <ProtectedRoute>
+            <ProfilePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/enderecos"
+        element={
+          <ProtectedRoute>
+            <AddressesPage />
+          </ProtectedRoute>
+        }
+      />
 
       {/* 404 
       <Route path="*" element={<Navigate to="/" replace />} />*/}

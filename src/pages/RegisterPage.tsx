@@ -25,11 +25,12 @@ export function RegisterPage() {
 
   const registerMutation = useMutation({
     mutationFn: async (data: RegisterFormData) => {
-      const { confirmPassword, ...registerData } = data;
-      const response = await api.post('/auth/register', registerData);
+      const response = await api.post('/clientes', data);
+      console.log('📥 Resposta da API:', response);
       return response.data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log('✅ Cadastro sucesso:', data);
       toast({
         title: 'Cadastro realizado!',
         description: 'Verifique seu email para ativar sua conta.',
@@ -40,12 +41,13 @@ export function RegisterPage() {
       toast({
         variant: 'destructive',
         title: 'Erro no cadastro',
-        description: error.response?.data?.message || 'Erro ao criar conta',
+        description: error.response?.data?.mensagem || 'Erro ao criar conta',
       });
     },
   });
 
   const onSubmit = (data: RegisterFormData) => {
+    console.log('🟢 Form submit:', data);
     registerMutation.mutate(data);
   };
 
@@ -127,15 +129,15 @@ export function RegisterPage() {
                       person
                     </span>
                     <Input
-                      id="name"
-                      {...register('name')}
+                      id="nomeCliente"
+                      {...register('nomeCliente')}
                       className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#137fec] focus:border-transparent transition-all outline-none"
                       placeholder="Como quer ser chamado?"
                       type="text"
                     />
-                    {errors.name && (
+                    {errors.nomeCliente && (
                       <p className="text-sm text-destructive">
-                        {errors.name.message}
+                        {errors.nomeCliente.message}
                       </p>
                     )}
                   </div>
@@ -144,7 +146,7 @@ export function RegisterPage() {
                   {/* E-mail */}
                   <div className="flex flex-col gap-1.5">
                     <Label
-                      htmlFor="email"
+                      htmlFor="emailCliente"
                       className="text-slate-700 dark:text-slate-300 text-sm font-semibold"
                     >
                       E-mail
@@ -154,15 +156,15 @@ export function RegisterPage() {
                         mail
                       </span>
                       <Input
-                        id="email"
-                        {...register('email')}
+                        id="emailCliente"
+                        {...register('emailCliente')}
                         className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#137fec] focus:border-transparent transition-all outline-none"
                         placeholder="seu@email.com"
                         type="email"
                       />
-                      {errors.email && (
+                      {errors.emailCliente && (
                         <p className="text-sm text-destructive">
-                          {errors.email.message}
+                          {errors.emailCliente.message}
                         </p>
                       )}
                     </div>
@@ -173,22 +175,72 @@ export function RegisterPage() {
                       htmlFor="phone"
                       className="text-slate-700 dark:text-slate-300 text-sm font-semibold"
                     >
-                      WhatsApp / Telefone
+                      Telefone
                     </Label>
                     <div className="relative">
                       <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
                         call
                       </span>
                       <Input
-                        id="phone"
-                        {...register('phone')}
+                        id="telefoneCliente"
+                        {...register('telefoneCliente')}
                         className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#137fec] focus:border-transparent transition-all outline-none"
-                        placeholder="(00) 00000-0000"
+                        placeholder="(244) 000000000"
                         type="tel"
                       />
-                      {errors.phone && (
+                      {errors.telefoneCliente && (
                         <p className="text-sm text-destructive">
-                          {errors.phone.message}
+                          {errors.telefoneCliente.message}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <Label
+                      htmlFor="phone"
+                      className="text-slate-700 dark:text-slate-300 text-sm font-semibold"
+                    >
+                      Telefone alternativo
+                    </Label>
+                    <div className="relative">
+                      <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                        call
+                      </span>
+                      <Input
+                        id="telefoneClienteAlt"
+                        {...register('telefoneClienteAlt')}
+                        className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#137fec] focus:border-transparent transition-all outline-none"
+                        placeholder="(244) 000000000"
+                        type="tel"
+                      />
+                      {errors.telefoneClienteAlt && (
+                        <p className="text-sm text-destructive">
+                          {errors.telefoneClienteAlt.message}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <Label
+                      htmlFor="local"
+                      className="text-slate-700 dark:text-slate-300 text-sm font-semibold"
+                    >
+                      Endereço da morada
+                    </Label>
+                    <div className="relative">
+                      <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                        map
+                      </span>
+                      <Input
+                        id="enderecoCliente"
+                        {...register('enderecoCliente')}
+                        className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#137fec] focus:border-transparent transition-all outline-none"
+                        placeholder=""
+                        type="text"
+                      />
+                      {errors.enderecoCliente && (
+                        <p className="text-sm text-destructive">
+                          {errors.enderecoCliente.message}
                         </p>
                       )}
                     </div>
@@ -208,15 +260,15 @@ export function RegisterPage() {
                         lock
                       </span>
                       <Input
-                        id="password"
+                        id="senhaCliente"
                         type="password"
-                        placeholder="••••••••"
-                        {...register('password')}
+                        placeholder=""
+                        {...register('senhaCliente')}
                         className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#137fec] focus:border-transparent transition-all outline-none"
                       />
-                      {errors.password && (
+                      {errors.senhaCliente && (
                         <p className="text-sm text-destructive">
-                          {errors.password.message}
+                          {errors.senhaCliente.message}
                         </p>
                       )}
                     </div>
@@ -234,10 +286,10 @@ export function RegisterPage() {
                         lock
                       </span>
                       <Input
-                        id="confirmPassword"
+                        id="confirmar_senha"
                         type="password"
-                        placeholder="••••••••"
-                        {...register('confirmPassword')}
+                        placeholder=""
+                        {...register('confirmar_senha')}
                         className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#137fec] focus:border-transparent transition-all outline-none"
                       />
                     </div>
