@@ -39,9 +39,23 @@ export function LoginPage() {
     onSuccess: (data) => {
       setAuth(data.info, data.mensagem);
       toast({
-        title: 'Login realizado!',
-        description: `Bem-vindo de volta, ${data.mensagem.text}!`,
+        description: (
+          <div className="flex items-center gap-4 ">
+            <div className="rounded-full w-8 h-8 flex justify-center items-center"></div>
+            <span className="text-[#717F96]">Login realizado com sucesso!</span>
+          </div>
+        ),
+        action: (
+          <ToastAction
+            altText="close"
+            className="shadow-none border-none text-[#717F96] hover:bg-transparent"
+          >
+            X
+          </ToastAction>
+        ),
+        className: 'border-l-4 border-l-[#1FC16B]',
       });
+
       navigate('/produtos');
     },
     onError: (error: unknown) => {
