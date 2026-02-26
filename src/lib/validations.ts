@@ -2,23 +2,26 @@ import { z } from 'zod';
 
 // Schema de login
 export const loginSchema = z.object({
-  email: z.string().email('Email inválido'),
-  password: z.string().min(8, 'A senha deve ter no mínimo 6 caracteres'),
+  emailCliente: z.string().email('Email inválido'),
+  senhaCliente: z.string().min(8, 'A senha deve ter no mínimo 6 caracteres'),
 });
 
 // Schema de registro
 export const registerSchema = z
   .object({
-    name: z.string().min(3, 'O nome deve ter no mínimo 3 caracteres'),
-    email: z.string().email('Email inválido'),
-    password: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres'),
-    confirmPassword: z.string(),
-    phone: z.string().min(10, 'Telefone inválido'),
-    cpf: z.string().min(11, 'CPF inválido'),
+    nomeCliente: z.string().min(3, 'O nome deve ter no mínimo 3 caracteres'),
+    emailCliente: z.string().email('Email inválido'),
+    senhaCliente: z.string().min(8, 'A senha deve ter no mínimo 6 caracteres'),
+    confirmar_senha: z
+      .string()
+      .min(8, 'A senha deve ter no mínimo 6 caracteres'),
+    telefoneCliente: z.string().min(9, 'Telefone inválido'),
+    telefoneClienteAlt: z.string().min(9, 'Telefone inválido'),
+    enderecoCliente: z.string(),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine((data) => data.senhaCliente === data.confirmar_senha, {
     message: 'As senhas não coincidem',
-    path: ['confirmPassword'],
+    path: ['confirmar_senha'],
   });
 
 // Schema de recuperação de senha
