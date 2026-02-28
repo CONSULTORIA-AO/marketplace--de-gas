@@ -38,11 +38,11 @@ export function OffersSection({ searchTerm }: OffersSectionProps) {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {filteredProducts.map((product) => (
           <div
-            className="flex flex-col gap-3 rounded-xl bg-card-light dark:bg-card-dark shadow-md overflow-hidden transition-transform hover:-translate-y-1"
+            className="bg-secondary/50 border border-glow rounded-xl p-8"
             key={product.id}
           >
             <div
-              className="w-full bg-center bg-no-repeat aspect-square bg-cover"
+              className="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-md"
               data-alt="A standard 13kg LPG gas cylinder"
               style={{ backgroundImage: `url(${product.imageUrl})` }}
             ></div>

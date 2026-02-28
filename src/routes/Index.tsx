@@ -16,6 +16,8 @@ import { VerifyAccountPage } from '@/pages/VerifyAccountPage';
 import NotFound from '@/pages/NotFound';
 import { ProductListPage } from '@/pages/ProductListPage';
 import { ProductReviewPage } from '@/pages/PoductReviewPage';
+import About from '@/components/about/about';
+import TermosPrivacidade from '@/pages/TermosPrivacidade';
 
 const NavLink = () => {
   return (
@@ -27,6 +29,8 @@ const NavLink = () => {
 
       <Route path="/recuperar-senha" element={<PasswordRecoveryFlow />} />
       <Route path="/ativar-conta/:token" element={<VerifyAccountPage />} />
+      <Route path="/sobre-nos" element={<About />} />
+      <Route path="/termos&politicas" element={<TermosPrivacidade />} />
 
       {/* Rotas Privadas */}
       <Route

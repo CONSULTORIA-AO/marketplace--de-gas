@@ -338,19 +338,19 @@ export function RegisterPage() {
                     className="text-sm text-slate-600 dark:text-slate-400 leading-tight"
                   >
                     Eu li e concordo com os{' '}
-                    <a
+                    <Link
                       className="text-[#137fec] font-semibold hover:underline"
-                      href="#"
+                      to="/termos&politicas"
                     >
                       Termos de Uso
-                    </a>{' '}
+                    </Link>{' '}
                     e a{' '}
-                    <a
+                    <Link
                       className="text-[#137fec] font-semibold hover:underline"
-                      href="#"
+                      to="/termos&politicas"
                     >
                       Política de Privacidade
-                    </a>
+                    </Link>
                     .
                   </Label>
                 </div>
