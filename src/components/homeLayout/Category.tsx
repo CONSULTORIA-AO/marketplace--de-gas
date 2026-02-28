@@ -1,7 +1,7 @@
 export function CategorySection() {
   return (
     <section className="mb-16">
-      <h2 className="text-3xl font-bold leading-tight tracking-tight text-center mb-8">
+      <h2 className="text-3xl font-bold leading-tight tracking-tight text-center mb-8 text-[#ff8300]">
         Categoria
       </h2>
 

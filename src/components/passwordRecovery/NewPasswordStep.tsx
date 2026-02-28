@@ -3,6 +3,14 @@ import { Eye, EyeOff, ArrowLeft, Check, X } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useToast } from '@/components/ui/use-toast';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { AxiosError } from 'axios';
+import { type RecoveryAccout, recoveryAccount } from '@/lib/validations';
+import { ToastAction } from '../ui/toast';
+import { api } from '@/lib/axios';
+import { useUserStore } from '@/store/userIfo';
 
 interface NewPasswordStepProps {
   onSubmit: (password: string) => void;
@@ -10,11 +18,23 @@ interface NewPasswordStepProps {
 }
 
 const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const {
+    register: registerPassword,
+    handleSubmit: handleSubmitPassword,
+    reset: resetPassword,
+    watch,
+    formState: { errors: passwordErrors },
+  } = useForm<RecoveryAccout>({
+    resolver: zodResolver(recoveryAccount),
+  });
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [error, setError] = useState('');
+  const { toast } = useToast();
+  const entidade = useUserStore((state) => state.cliente.clienteId);
+
+  const password = watch('newPassword') || '';
+  const confirmPassword = watch('confirmPassword') || '';
 
   const requirements = [
     { label: 'Mínimo 8 caracteres', valid: password.length >= 8 },
@@ -29,18 +49,57 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
 
   const allRequirementsMet = requirements.every((req) => req.valid);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!allRequirementsMet) {
-      setError('A senha não atende a todos os requisitos');
-      return;
+  async function onSubmitPassword(data: RecoveryAccout) {
+    try {
+      const response = await api.patch(`clientes/${entidade}/redifinir-senha`, {
+        senhaCliente: data.newPassword,
+        confirmar_senha: data.confirmPassword,
+      });
+      toast({
+        description: (
+          <div className="flex items-center gap-4 ">
+            <div className="rounded-full w-8 h-8 flex justify-center items-center"></div>
+            <span className="text-[#ff8300]">{response.data.mensagem}</span>
+          </div>
+        ),
+        action: (
+          <ToastAction
+            altText="close"
+            className="shadow-none border-none text-[#f2f4f8] hover:bg-transparent"
+          >
+            .
+          </ToastAction>
+        ),
+        className:
+          'border-l-4 border-l-[#ff8300] border-t-0 border-r-0 border-b-0',
+      });
+      resetPassword();
+      onSubmit(data.newPassword);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toast({
+          description: (
+            <div className="flex items-center gap-4 ">
+              <div className="rounded-full w-8 h-8 flex justify-center items-center bg-[fill: rgba(251, 55, 72, 0.16)"></div>
+              <span className="text-[#717F96]">
+                {error?.response?.data.mensagem}
+              </span>
+            </div>
+          ),
+          action: (
+            <ToastAction
+              altText="close"
+              className="shadow-none border-none text-[#717F96] hover:bg-transparent"
+            >
+              .
+            </ToastAction>
+          ),
+          className:
+            'border-l-4 border-l-[#FB3748] border-t-0 border-r-0 border-b-0',
+        });
+      }
     }
-    if (password !== confirmPassword) {
-      setError('As senhas não coincidem');
-      return;
-    }
-    onSubmit(password);
-  };
+  }
 
   const containerVariants = {
     hidden: { opacity: 0, x: 50 },
@@ -74,17 +133,16 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form
+        onSubmit={handleSubmitPassword(onSubmitPassword)}
+        className="space-y-4"
+      >
         <div className="space-y-3">
           <div className="relative">
             <Input
               type={showPassword ? 'text' : 'password'}
               placeholder="Nova senha"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                setError('');
-              }}
+              {...registerPassword('newPassword')}
               className="h-12 sm:h-14 text-black text-sm sm:text-base px-4 pr-12 rounded-xl border-2"
             />
             <button
@@ -104,11 +162,7 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
             <Input
               type={showConfirmPassword ? 'text' : 'password'}
               placeholder="Confirmar senha"
-              value={confirmPassword}
-              onChange={(e) => {
-                setConfirmPassword(e.target.value);
-                setError('');
-              }}
+              {...registerPassword('confirmPassword')}
               className="h-12 sm:h-14 text-black text-sm sm:text-base px-4 pr-12 rounded-xl border-2 focus:border-gray-600 focus:ring-gray-600"
             />
             <button
@@ -155,13 +209,13 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
           </div>
         </div>
 
-        {error && (
+        {passwordErrors.newPassword?.message && (
           <motion.p
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-destructive text-center text-xs sm:text-sm"
           >
-            {error}
+            {passwordErrors.newPassword.message}
           </motion.p>
         )}
 

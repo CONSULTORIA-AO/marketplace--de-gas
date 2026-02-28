@@ -2,11 +2,22 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, RefreshCw } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useToast } from '@/hooks/use-toast';
+import {
+  verificationCodeSchema,
+  VerificationCodeFormData,
+} from '@/lib/validations';
+import { api } from '@/lib/axios';
+import { AxiosError } from 'axios';
+import { ToastAction } from '../ui/toast';
+import { useUserStore } from '@/store/userIfo';
 
 interface VerificationCodeStepProps {
   contact: string;
   method: 'email' | 'sms';
-  onVerify: (code: string) => void;
+  onVerifySuccess: (code: string) => void;
   onBack: () => void;
   onResend: () => void;
 }
@@ -14,15 +25,25 @@ interface VerificationCodeStepProps {
 const VerificationCodeStep = ({
   contact,
   method,
-  onVerify,
+  onVerifySuccess,
   onBack,
   onResend,
 }: VerificationCodeStepProps) => {
+  const { toast } = useToast();
   const [code, setCode] = useState(['', '', '', '', '', '']);
-  const [error, setError] = useState('');
   const [countdown, setCountdown] = useState(60);
   const [canResend, setCanResend] = useState(false);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const entidade = useUserStore((state) => state.cliente.clienteId);
+
+  const {
+    handleSubmit,
+    setValue,
+    formState: { errors, isSubmitting },
+    clearErrors,
+  } = useForm<VerificationCodeFormData>({
+    resolver: zodResolver(verificationCodeSchema),
+  });
 
   useEffect(() => {
     if (countdown > 0) {
@@ -39,15 +60,14 @@ const VerificationCodeStep = ({
     const newCode = [...code];
     newCode[index] = value.slice(-1);
     setCode(newCode);
-    setError('');
+    clearErrors('codigo_seguranca');
 
     if (value && index < 5) {
       inputRefs.current[index + 1]?.focus();
     }
 
-    if (newCode.every((digit) => digit !== '')) {
-      onVerify(newCode.join(''));
-    }
+    const fullCode = newCode.join('');
+    setValue('codigo_seguranca', fullCode);
   };
 
   const handleKeyDown = (index: number, e: React.KeyboardEvent) => {
@@ -65,10 +85,61 @@ const VerificationCodeStep = ({
     pastedData.split('').forEach((digit, index) => {
       if (index < 6) newCode[index] = digit;
     });
-    setCode(newCode);
 
-    if (newCode.every((digit) => digit !== '')) {
-      onVerify(newCode.join(''));
+    setCode(newCode);
+    setValue('codigo_seguranca', newCode.join(''));
+  };
+
+  const onSubmit = async (data: VerificationCodeFormData) => {
+    try {
+      await api.post('/clientes/codigo-seguranca/autenticar', {
+        codigo_seguranca: data.codigo_seguranca,
+        entidade: entidade,
+      });
+
+      toast({
+        description: (
+          <div className="flex items-center gap-4 bg-white">
+            <span className="text-[#717F96]">Enviado com sucesso!</span>
+          </div>
+        ),
+        action: (
+          <ToastAction
+            altText="close"
+            className="shadow-none border-none text-[#717F96] hover:bg-transparent"
+          >
+            .
+          </ToastAction>
+        ),
+        className:
+          'border-l-4 border-l-[#ff8300] border-t-0 border-b-0 border-r-0',
+      });
+
+      onVerifySuccess(data.codigo_seguranca);
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        toast({
+          description: (
+            <div className="flex items-center gap-4 ">
+              <div className="rounded-full w-8 h-8 flex justify-center items-center bg-[fill: rgba(251, 55, 72, 0.16)]"></div>
+
+              <span className="text-[#717F96]">
+                {error?.response?.data.mensagem}
+              </span>
+            </div>
+          ),
+          action: (
+            <ToastAction
+              altText="close"
+              className="shadow-none border-none text-[#717F96] hover:bg-transparent"
+            >
+              .
+            </ToastAction>
+          ),
+          className:
+            'border-l-4 border-l-[#FB3748] border-t-0 border-b-0 border-r-0',
+        });
+      }
     }
   };
 
@@ -91,6 +162,8 @@ const VerificationCodeStep = ({
     }
     return `***${contact.slice(-4)}`;
   };
+
+  const isCodeComplete = code.every((digit) => digit !== '');
 
   return (
     <motion.div
@@ -119,7 +192,7 @@ const VerificationCodeStep = ({
         </p>
       </div>
 
-      <div className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="flex justify-center gap-2 sm:gap-3">
           {code.map((digit, index) => (
             <motion.input
@@ -135,46 +208,52 @@ const VerificationCodeStep = ({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * index }}
-              className="w-10 h-12 sm:w-12 sm:h-14 md:w-14 md:h-16 text-center text-lg sm:text-xl md:text-2xl font-semibold rounded-xl border-2 border-border bg-card bg-white text-black border-blue-600 focus:border-[#137fec] focus:ring-2 focus:ring-[#137fec]/20 outline-none transition-all"
+              className="w-10 h-12 sm:w-12 sm:h-14 md:w-14 md:h-16 text-center text-lg sm:text-xl md:text-2xl font-semibold rounded-xl border-2 border-border border-[#137fec] bg-card bg-white text-black focus:border-[#137fec] focus:ring-2 focus:ring-[#137fec]/20 outline-none transition-all"
             />
           ))}
         </div>
 
-        {error && (
+        {errors.codigo_seguranca && (
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="text-destructive text-center text-xs sm:text-sm"
           >
-            {error}
+            {errors.codigo_seguranca.message}
           </motion.p>
         )}
 
-        <div className="text-center">
-          {canResend ? (
-            <button
-              onClick={handleResend}
-              className="text-[#137fec] hover:underline text-sm sm:text-base inline-flex items-center gap-2"
-            >
-              <RefreshCw className="w-4 h-4" />
-              Reenviar código
-            </button>
-          ) : (
-            <p className="text-muted-foreground text-sm sm:text-base">
-              Reenviar em{' '}
-              <span className="font-semibold text-foreground">
-                {countdown}s
-              </span>
-            </p>
-          )}
-        </div>
+        <Button
+          type="submit"
+          disabled={!isCodeComplete || isSubmitting}
+          className="w-full h-12 rounded-xl bg-green-600 hover:bg-green-700 text-white disabled:opacity-50"
+        >
+          {isSubmitting ? 'Validando...' : 'Validar Código'}
+        </Button>
+      </form>
+
+      <div className="text-center">
+        {canResend ? (
+          <button
+            onClick={handleResend}
+            className="text-[#137fec] hover:underline text-sm sm:text-base inline-flex items-center gap-2"
+          >
+            <RefreshCw className="w-4 h-4" />
+            Reenviar código
+          </button>
+        ) : (
+          <p className="text-muted-foreground text-sm sm:text-base">
+            Reenviar em{' '}
+            <span className="font-semibold text-foreground">{countdown}s</span>
+          </p>
+        )}
       </div>
 
       <Button
         type="button"
         variant="outline"
         onClick={onBack}
-        className="w-full h-12 sm:h-14 rounded-xl text-sm sm:text-base border bg-blue-600 hover:bg-blue-700 text-white"
+        className="w-full h-12 sm:h-14 rounded-xl text-sm sm:text-base border-0 bg-blue-600 hover:bg-blue-700 text-white"
       >
         <ArrowLeft className="w-4 h-4 mr-2" />
         Voltar

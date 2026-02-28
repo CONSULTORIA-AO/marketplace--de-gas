@@ -20,17 +20,17 @@ export function HeaderHome() {
             <Link className="hover:text-[#137fec]" to="/">
               Início
             </Link>
-            <Link className="hover:text-[#137fec]" to="#offers">
+            <Link className="hover:text-[#137fec]" to="/">
               Ofertas
             </Link>
-            <Link className="hover:text-[#137fec]" to="#about">
+            <Link className="hover:text-[#137fec]" to="/">
               Sobre Nós
             </Link>
           </nav>
           <div className="flex items-center gap-2">
             <Button
               onClick={() => navigate('/login')}
-              className="hidden sm:flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#137fec]/20 text-[#137fec] dark:bg-[#137fec]/30 dark:text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/30 dark:hover:bg-[#137fec]/40"
+              className="hidden sm:flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#137fec]/20 text-[#137fec] dark:bg-[#137fec]/30 dark:text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#137fec]/30 dark:hover:bg-[#137fec]/40"
             >
               <span className="truncate">Entrar</span>
             </Button>
@@ -40,12 +40,6 @@ export function HeaderHome() {
               className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#137fec] hover:bg-[#137fec]/90 text-white text-sm font-bold leading-normal tracking-[0.015em]"
             >
               <span className="truncate">Cadastre-se</span>
-            </Button>
-
-            <Button className="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark hover:bg-gray-200 dark:hover:bg-gray-700">
-              <span className="material-symbols-outlined text-xl">
-                shopping_cart
-              </span>
             </Button>
           </div>
         </div>

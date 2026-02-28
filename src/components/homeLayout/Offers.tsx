@@ -1,8 +1,3 @@
-import botijaLaranja from '@/assets/botijas/laranja-1.png';
-import botijaCompridaCinza from '@/assets/botijas/comprida-cinza.jpg';
-import botijaBaixinha from '@/assets/botijas/pequena-cinzenta.png';
-import botijaGrande from '@/assets/botijas/grande-azul.png';
-
 import { api } from '@/lib/axios';
 import { useQuery } from '@tanstack/react-query';
 import type { GasProduct } from '@/types/index';
@@ -32,7 +27,7 @@ export function OffersSection({ searchTerm }: OffersSectionProps) {
 
   return (
     <section className="mb-16">
-      <h2 className="text-3xl font-bold leading-tight tracking-tight text-center mb-8">
+      <h2 className="text-3xl font-bold leading-tight tracking-tight text-center mb-8 text-[#ff8300]">
         Ofertas Imperdíveis da Semana
       </h2>
 
@@ -52,15 +47,15 @@ export function OffersSection({ searchTerm }: OffersSectionProps) {
               style={{ backgroundImage: `url(${product.imageUrl})` }}
             ></div>
             <div className="p-4">
-              <p className="text-lg font-bold">{product.name}</p>
+              <p className="text-lg font-bold text-[#ff8300]">{product.name}</p>
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 {product.brand}
               </p>
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                <span className="line-through">De R$110,00</span> por
+                <span className="line-through">De Kz 75,000</span> por
               </p>
-              <p className="text-2xl font-bold text-[#137fec]">
-                R${product.price.toFixed(2)}
+              <p className="text-2xl font-bold text-[#ff8300]">
+                KZ{product.price.toFixed(2)}
               </p>
             </div>
           </div>

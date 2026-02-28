@@ -118,7 +118,7 @@ const PasswordRecoveryFlow = () => {
                 <VerificationCodeStep
                   contact={contact}
                   method={method}
-                  onVerify={handleVerify}
+                  onVerifySuccess={handleVerify}
                   onBack={goBack}
                   onResend={handleResendCode}
                 />
