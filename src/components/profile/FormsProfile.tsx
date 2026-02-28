@@ -4,19 +4,24 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
-import { user } from '@/data/user';
 import {
   profileSchema,
   type ProfileFormData,
   type PasswordProfileFormData,
   passwordProfileSchema,
 } from '@/lib/validations';
+import { ToastAction } from '../ui/toast';
+import { useAuthStore } from '@/store/authStrore';
+import { api } from '@/lib/axios';
+import { useUserStore } from '@/store/userIfo';
 
 export function FormsProfile() {
   const [loadingProfile, setLoadingProfile] = useState(false);
   const [loadingPassword, setLoadingPassword] = useState(false);
+  const entidade = useAuthStore((state) => state.session.user.id);
+  const cliente = useUserStore((state) => state.cliente);
   const { toast } = useToast();
 
   const {
@@ -25,11 +30,6 @@ export function FormsProfile() {
     formState: { errors: profileErrors },
   } = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
-    defaultValues: {
-      full_name: user.full_name,
-      email: user.email,
-      phone: user.phone || '',
-    },
   });
 
   const {
@@ -45,14 +45,52 @@ export function FormsProfile() {
     try {
       setLoadingProfile(true);
 
-      await axios.put('/api/user/profile', data); // mock endpoint
+      const response = await api.patch(`clientes/${entidade}`, {
+        emailCliente: data.emailCliente,
+        nomeCliente: data.nomeCliente,
+        telefoneCliente: data.telefoneCliente,
+        telefoneClienteAlt: data.telefoneClienteAlt,
+        enderecoCliente: cliente.enderecoCliente,
+      });
 
       toast({
-        description: 'Perfil atualizado com sucesso 🎉',
+        description: (
+          <div className="flex items-center gap-4 ">
+            <div className="rounded-full w-8 h-8 flex justify-center items-center"></div>
+            <span className="text-[#ff8300]">{response.data.mensagem}</span>
+          </div>
+        ),
+        action: (
+          <ToastAction
+            altText="close"
+            className="shadow-none border-none text-[#f2f4f8] hover:bg-transparent"
+          >
+            .
+          </ToastAction>
+        ),
+        className:
+          'border-l-4 border-l-[#ff8300] border-t-0 border-b-0 border-r-0',
       });
     } catch (error) {
       toast({
-        description: 'Erro ao atualizar perfil',
+        description: (
+          <div className="flex items-center gap-4 ">
+            <div className="rounded-full w-8 h-8 flex justify-center items-center bg-[fill: rgba(251, 55, 72, 0.16)"></div>
+            <span className="text-[#717F96]">
+              {error?.response?.data.mensagem}
+            </span>
+          </div>
+        ),
+        action: (
+          <ToastAction
+            altText="close"
+            className="shadow-none border-none text-[#717F96] hover:bg-transparent"
+          >
+            .
+          </ToastAction>
+        ),
+        className:
+          'border-l-4 border-l-[#FB3748] border-t-0 border-r-0 border-b-0',
       });
     } finally {
       setLoadingProfile(false);
@@ -63,23 +101,59 @@ export function FormsProfile() {
     try {
       setLoadingPassword(true);
 
-      await axios.put('/api/user/password', data); // mock endpoint
+      const response = await api.patch(`clientes/${entidade}/alterar-senha`, {
+        senha_actual: data.currentPassword,
+        senha: data.newPassword,
+        confirmar_senha: data.confirmPassword,
+      });
       toast({
-        description: 'Senha atualizada com sucesso 🔐',
+        description: (
+          <div className="flex items-center gap-4 ">
+            <div className="rounded-full w-8 h-8 flex justify-center items-center"></div>
+            <span className="text-[#ff8300]">{response.data.mensagem}</span>
+          </div>
+        ),
+        action: (
+          <ToastAction
+            altText="close"
+            className="shadow-none border-none text-[#f2f4f8] hover:bg-transparent"
+          >
+            .
+          </ToastAction>
+        ),
+        className:
+          'border-l-4 border-l-[#ff8300] border-t-0 border-r-0 border-b-0',
       });
       resetPassword();
     } catch (error) {
-      toast({
-        variant: 'destructive',
-        title: 'Erro ao atualizar senha',
-        description: error.response?.data?.message || 'Erro ao atualizar senha',
-      });
+      if (error instanceof AxiosError) {
+        toast({
+          description: (
+            <div className="flex items-center gap-4 ">
+              <div className="rounded-full w-8 h-8 flex justify-center items-center bg-[fill: rgba(251, 55, 72, 0.16)"></div>
+              <span className="text-[#717F96]">
+                {error?.response?.data.mensagem}
+              </span>
+            </div>
+          ),
+          action: (
+            <ToastAction
+              altText="close"
+              className="shadow-none border-none text-[#717F96] hover:bg-transparent"
+            >
+              .
+            </ToastAction>
+          ),
+          className:
+            'border-l-4 border-l-[#FB3748] border-t-0 border-r-0 border-b-0',
+        });
+      }
     } finally {
       setLoadingPassword(false);
     }
   }
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10 mt-4">
       <form
         onSubmit={handleSubmitProfile(onSubmitProfile)}
         className="bg-white border border-border-color rounded-xl p-8 shadow-sm border-gray-900/10"
@@ -103,14 +177,13 @@ export function FormsProfile() {
               Nome Completo
             </Label>
             <Input
-              {...registerProfile('full_name')}
+              {...registerProfile('nomeCliente')}
               className="w-full bg-slate-50 border-slate-200 rounded-lg text-slate-900 px-4 py-2.5 focus:border-[#137fec] focus:bg-white transition-all"
               type="text"
-              value="João Silva de Oliveira"
             />
-            {profileErrors.full_name && (
+            {profileErrors.nomeCliente && (
               <p className="text-red-500 text-xs mt-1">
-                {profileErrors.full_name.message}
+                {profileErrors.nomeCliente.message}
               </p>
             )}
           </div>
@@ -122,14 +195,13 @@ export function FormsProfile() {
               E-mail
             </Label>
             <Input
-              {...registerProfile('email')}
+              {...registerProfile('emailCliente')}
               className="w-full bg-slate-50 border-slate-200 rounded-lg text-slate-900 px-4 py-2.5 focus:border-[#137fec] focus:bg-white transition-all"
               type="email"
-              value="joao.silva@email.com"
             />
-            {profileErrors.email && (
+            {profileErrors.emailCliente && (
               <p className="text-red-500 text-xs mt-1">
-                {profileErrors.email.message}
+                {profileErrors.emailCliente.message}
               </p>
             )}
           </div>
@@ -142,14 +214,31 @@ export function FormsProfile() {
                 Telefone
               </Label>
               <Input
-                {...registerProfile('phone')}
+                {...registerProfile('telefoneCliente')}
                 className="w-full bg-slate-50 border-slate-200 rounded-lg text-slate-900 px-4 py-2.5 focus:border-[#137fec] focus:bg-white transition-all"
                 type="tel"
-                value="(+244) 943558106 "
               />
-              {profileErrors.phone && (
+              {profileErrors.telefoneCliente && (
                 <p className="text-red-500 text-xs mt-1">
-                  {profileErrors.phone.message}
+                  {profileErrors.telefoneCliente.message}
+                </p>
+              )}
+            </div>
+            <div className="grid grid-cols-1 gap-1.5">
+              <Label
+                htmlFor="tel"
+                className="text-sm font-semibold text-slate-600"
+              >
+                Telefone alternativo
+              </Label>
+              <Input
+                {...registerProfile('telefoneClienteAlt')}
+                className="w-full bg-slate-50 border-slate-200 rounded-lg text-slate-900 px-4 py-2.5 focus:border-[#137fec] focus:bg-white transition-all"
+                type="tel"
+              />
+              {profileErrors.telefoneClienteAlt && (
+                <p className="text-red-500 text-xs mt-1">
+                  {profileErrors.telefoneClienteAlt.message}
                 </p>
               )}
             </div>
@@ -157,7 +246,7 @@ export function FormsProfile() {
           <Button
             type="submit"
             disabled={loadingProfile}
-            className="w-full mt-2 h-11 hover:bg-[#137fec] hover:text-white text-sm font-bold          bg-[#137fec] text-white rounded-full p-2 shadow-lg hover:scale-105 transition-transform border-4 border-white"
+            className="w-full mt-2 h-11 hover:bg-[#137fec] hover:text-white text-sm font-bold          bg-[#137fec] text-white rounded-full p-2 hover:scale-105 transition-transform"
           >
             {loadingProfile ? 'Salvando...' : 'Salvar Alterações'}
           </Button>
@@ -187,12 +276,8 @@ export function FormsProfile() {
               <Input
                 {...registerPassword('currentPassword')}
                 className="w-full bg-slate-50 border-slate-200 rounded-lg text-slate-900 px-4 py-2.5 focus:border-[#137fec] focus:bg-white transition-all"
-                placeholder="••••••••"
                 type="password"
               />
-              <span className="material-symbols-outlined absolute right-3 top-2.5 text-slate-400 cursor-pointer hover:text-[#137fec] transition-colors">
-                visibility
-              </span>
               {passwordErrors.currentPassword && (
                 <p className="text-red-500 text-xs mt-1">
                   {passwordErrors.currentPassword.message}
@@ -239,7 +324,7 @@ export function FormsProfile() {
           <Button
             type="submit"
             disabled={loadingPassword}
-            className="w-full mt-2 h-11 hover:bg-[#137fec] hover:text-white text-sm font-bold          bg-[#137fec] text-white rounded-full p-2 shadow-lg hover:scale-105 transition-transform border-4 border-white"
+            className="w-full mt-2 h-11 hover:bg-[#137fec] hover:text-white text-sm font-bold          bg-[#137fec] text-white rounded-full p-2 shadow-lg hover:scale-105 transition-transform"
           >
             {loadingPassword ? 'Atualizando...' : 'Redefinir Senha'}
           </Button>

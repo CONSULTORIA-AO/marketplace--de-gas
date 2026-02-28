@@ -2,14 +2,15 @@ import { Button } from '@/components/ui/button';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useMemo } from 'react';
-import { user } from '@/data/user';
 import { api } from '@/lib/axios';
 import { useAuthStore } from '@/store/authStrore';
+import { useUserStore } from '@/store/userIfo';
 
 export function AsideProfile() {
   const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
   const session = useAuthStore((state) => state.session);
+  const cliente = useUserStore((state) => state.cliente);
 
   const menuItems = useMemo(
     () => [
@@ -54,7 +55,6 @@ export function AsideProfile() {
       console.error('Erro ao invalidar sessão no backend', error);
     }
     logout();
-    // Redireciona para login
     navigate('/login');
   };
 
@@ -72,14 +72,14 @@ export function AsideProfile() {
             <motion.img
               whileHover={{ scale: 1.05 }}
               className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12 shadow-sm"
-              src={user.photo}
+              src={cliente?.fotoCliente ?? ''}
             />
             <div className="flex flex-col">
               <h1 className="text-slate-900 text-base font-bold leading-none">
-                {user.full_name}
+                {cliente?.nomeCliente ?? ''}
               </h1>
               <p className="text-[#137fec] text-xs font-semibold mt-1">
-                {user.client_type}
+                Cliente VIP
               </p>
             </div>
           </div>

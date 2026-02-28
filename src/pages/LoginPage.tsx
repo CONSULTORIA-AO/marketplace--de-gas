@@ -7,7 +7,7 @@ import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 import { loginSchema, type LoginFormData } from '@/lib/validations';
 import { useAuthStore } from '@/store/authStrore';
 import { api } from '@/lib/axios';
@@ -15,11 +15,13 @@ import type { AuthResponse } from '@/types/index';
 import { AuthHeader } from '@/components/AuthHeader';
 import { AxiosError } from 'axios';
 import { ToastAction } from '@/components/ui/toast';
+import { useState } from 'react';
 
 export function LoginPage() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const setAuth = useAuthStore((state) => state.setAuth);
+  const [mostrarSenha, setMostrarSenha] = useState(false);
 
   const {
     register,
@@ -31,17 +33,14 @@ export function LoginPage() {
 
   const loginMutation = useMutation({
     mutationFn: async (data: LoginFormData) => {
-      console.log('dados credenciais:', data);
       const response = await api.post<AuthResponse>('/clientes/login', data);
-      console.log('Resposta da api:', response);
       return response.data;
     },
     onSuccess: (data) => {
       setAuth(data.info, data.mensagem);
       toast({
         description: (
-          <div className="flex items-center gap-4 ">
-            <div className="rounded-full w-8 h-8 flex justify-center items-center"></div>
+          <div className="flex items-center gap-4 bg-white">
             <span className="text-[#717F96]">Login realizado com sucesso!</span>
           </div>
         ),
@@ -50,16 +49,16 @@ export function LoginPage() {
             altText="close"
             className="shadow-none border-none text-[#717F96] hover:bg-transparent"
           >
-            X
+            .
           </ToastAction>
         ),
-        className: 'border-l-4 border-l-[#1FC16B]',
+        className:
+          'border-l-4 border-l-[#ff8300] border-t-0 border-b-0 border-r-0',
       });
 
       navigate('/produtos');
     },
     onError: (error: unknown) => {
-      console.log('O erro ao fazer login:', error);
       if (error instanceof AxiosError) {
         toast({
           description: (
@@ -76,10 +75,11 @@ export function LoginPage() {
               altText="close"
               className="shadow-none border-none text-[#717F96] hover:bg-transparent"
             >
-              X
+              .
             </ToastAction>
           ),
-          className: 'border-l-4 border-l-[#FB3748]', // Estiliza a borda esquerda
+          className:
+            'border-l-4 border-l-[#FB3748] border-t-0 border-b-0 border-r-0',
         });
       }
     },
@@ -184,16 +184,20 @@ export function LoginPage() {
                     {...register('senhaCliente')}
                     className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-slate-900 dark:text-white focus:outline-0 focus:ring-1 border border-slate-200 dark:border-slate-700 bg-white focus:border-[#137fec] h-14 placeholder:text-slate-500/60 p-[15px] text-base font-normal leading-normal transition-all"
                     placeholder=""
-                    type="password"
+                    type={mostrarSenha ? 'text' : 'password'}
                   />
                   {errors.senhaCliente && (
                     <p className="text-sm text-destructive">
                       {errors.senhaCliente.message}
                     </p>
                   )}
-                  <Button className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 transition-colors">
+                  <Button
+                    type="button"
+                    onClick={() => setMostrarSenha(!mostrarSenha)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 transition-colors"
+                  >
                     <span className="material-symbols-outlined">
-                      visibility
+                      {mostrarSenha ? 'visibility_off' : 'visibility'}
                     </span>
                   </Button>
                 </div>
@@ -224,8 +228,8 @@ export function LoginPage() {
                 </span>
                 <div className="h-px bg-border-light flex-1"></div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <Button className="flex items-center justify-center gap-3 h-14 rounded-xl border border-border-light bg-white text-text-main font-semibold hover:bg-slate-50 transition-all">
+              <div>
+                <Button className="w-full flex items-center justify-center gap-3 h-14 rounded-xl border border-border-light bg-white text-text-main font-semibold hover:bg-slate-50 transition-all">
                   <svg className="w-5 h-5" viewBox="0 0 24 24">
                     <path
                       d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -245,16 +249,6 @@ export function LoginPage() {
                     ></path>
                   </svg>
                   Google
-                </Button>
-                <Button className="flex items-center justify-center gap-3 h-14 rounded-xl border border-border-light bg-white text-text-main font-semibold hover:bg-slate-50 transition-all">
-                  <svg
-                    className="w-5 h-5 text-[#1877F2]"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>
-                  </svg>
-                  Facebook
                 </Button>
               </div>
               <p className="text-center text-text-muted text-sm pt-4">

@@ -2,11 +2,12 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Button } from './ui/button';
 import { Menu, X } from 'lucide-react';
-import { user } from '@/data/user';
+import { useUserStore } from '@/store/userIfo';
 
 export function Header() {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  const cliente = useUserStore((state) => state.cliente);
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     `text-sm font-medium transition-colors ${
@@ -62,7 +63,7 @@ export function Header() {
               onClick={() => navigate('/perfil')}
             >
               <img
-                src={user.photo}
+                src={cliente?.fotoCliente ?? ''}
                 alt="User profile"
                 className="rounded-full size-9"
               />

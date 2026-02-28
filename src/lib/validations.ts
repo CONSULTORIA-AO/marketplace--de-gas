@@ -92,9 +92,11 @@ export const reviewSchema = z.object({
 });
 
 export const profileSchema = z.object({
-  full_name: z.string().min(3, 'Nome muito curto'),
-  email: z.string().email('E-mail inválido'),
-  phone: z.string().min(9, 'Telefone inválido'),
+  emailCliente: z.string().email('E-mail inválido'),
+  nomeCliente: z.string().min(3, 'Nome muito curto'),
+  telefoneCliente: z.string().min(9).max(9),
+  telefoneClienteAlt: z.string().min(9).max(9),
+  enderecoCliente: z.string(),
 });
 
 export const passwordProfileSchema = z
@@ -108,6 +110,14 @@ export const passwordProfileSchema = z
     path: ['confirmPassword'],
   });
 
+export const verificationCodeSchema = z.object({
+  codigo_seguranca: z
+    .string()
+    .length(6, 'O código deve ter 6 dígitos')
+    .regex(/^\d+$/, 'O código deve conter apenas números'),
+});
+
+export type VerificationCodeFormData = z.infer<typeof verificationCodeSchema>;
 export type PasswordProfileFormData = z.infer<typeof passwordProfileSchema>;
 export type PasswordFormData = z.infer<typeof passwordSchema>;
 export type RecoveryContactFormData = z.infer<typeof recoveryContactSchema>;

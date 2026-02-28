@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { Mail, Phone, ArrowLeft } from 'lucide-react';
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { RecoveryPasswordSchema, passwordSchema } from '@/lib/validations';
@@ -10,6 +9,10 @@ import {
   recoveryContactSchema,
   type RecoveryContactFormData,
 } from '@/lib/validations';
+import { api } from '@/lib/axios';
+import { ToastAction } from '../ui/toast';
+import { useToast } from '@/hooks/use-toast';
+import { AxiosError } from 'axios';
 
 interface ContactInputStepProps {
   method: 'email' | 'sms';
@@ -22,6 +25,7 @@ const ContactInputStep = ({
   onSubmit,
   onBack,
 }: ContactInputStepProps) => {
+  const { toast } = useToast();
   const {
     register,
     handleSubmit,
@@ -30,8 +34,61 @@ const ContactInputStep = ({
     resolver: zodResolver(recoveryContactSchema),
   });
 
-  const submitHandler = (data: RecoveryContactFormData) => {
-    onSubmit(data.contact);
+  const submitHandler = async (data: RecoveryContactFormData) => {
+    try {
+      const responde = await api.post('/clientes/codigo-seguranca/pedir', {
+        emailCliente: data.contact,
+        canal: method === 'email' ? 'E-mail' : 'SMS',
+      });
+
+      console.log('a resposta:', responde);
+
+      toast({
+        description: (
+          <div className="flex items-center gap-4 bg-white">
+            <span className="text-[#717F96]">
+              Enviamos o código no contacto fornecido!
+            </span>
+          </div>
+        ),
+        action: (
+          <ToastAction
+            altText="close"
+            className="shadow-none border-none text-[#717F96] hover:bg-transparent"
+          >
+            .
+          </ToastAction>
+        ),
+        className:
+          'border-l-4 border-l-[#ff8300] border-t-0 border-b-0 border-r-0',
+      });
+
+      onSubmit(data.contact);
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        toast({
+          description: (
+            <div className="flex items-center gap-4 ">
+              <div className="rounded-full w-8 h-8 flex justify-center items-center bg-[fill: rgba(251, 55, 72, 0.16)]"></div>
+
+              <span className="text-[#717F96]">
+                {error?.response?.data.mensagem}
+              </span>
+            </div>
+          ),
+          action: (
+            <ToastAction
+              altText="close"
+              className="shadow-none border-none text-[#717F96] hover:bg-transparent"
+            >
+              .
+            </ToastAction>
+          ),
+          className:
+            'border-l-4 border-l-[#FB3748] border-t-0 border-b-0 border-r-0',
+        });
+      }
+    }
   };
 
   const containerVariants = {
@@ -99,7 +156,7 @@ const ContactInputStep = ({
           </Button>
           <Button
             type="submit"
-            className="flex-1 h-12 sm:h-14 rounded-xl gradient-[#137fec] text-[#137fec] text-sm sm:text-base hover:opacity-90 transition-opacity bg-green-500 hover:bg-green-600"
+            className="flex-1 h-12 sm:h-14 rounded-xl gradient-[#137fec] text-white text-sm sm:text-base hover:opacity-90 transition-opacity bg-green-500 hover:bg-green-600"
           >
             Enviar Código
           </Button>

@@ -6,10 +6,12 @@ import { useMutation } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 import { registerSchema, type RegisterFormData } from '@/lib/validations';
 import { api } from '@/lib/axios';
 import { AuthHeader } from '@/components/AuthHeader';
+import { ToastAction } from '@/components/ui/toast';
+import { AxiosError } from 'axios';
 
 export function RegisterPage() {
   const navigate = useNavigate();
@@ -26,23 +28,52 @@ export function RegisterPage() {
   const registerMutation = useMutation({
     mutationFn: async (data: RegisterFormData) => {
       const response = await api.post('/clientes', data);
-      console.log('📥 Resposta da API:', response);
       return response.data;
     },
-    onSuccess: (data) => {
-      console.log('✅ Cadastro sucesso:', data);
+    onSuccess: () => {
       toast({
-        title: 'Cadastro realizado!',
-        description: 'Verifique seu email para ativar sua conta.',
+        description: (
+          <div className="flex items-center gap-4 bg-white">
+            <span className="text-[#717F96]">Conta criada com sucesso!</span>
+          </div>
+        ),
+        action: (
+          <ToastAction
+            altText="close"
+            className="shadow-none border-none text-[#717F96] hover:bg-transparent"
+          >
+            .
+          </ToastAction>
+        ),
+        className:
+          'border-l-4 border-l-[#ff8300] border-t-0 border-b-0 border-r-0',
       });
       navigate('/login');
     },
-    onError: (error: any) => {
-      toast({
-        variant: 'destructive',
-        title: 'Erro no cadastro',
-        description: error.response?.data?.mensagem || 'Erro ao criar conta',
-      });
+    onError: (error: unknown) => {
+      if (error instanceof AxiosError) {
+        toast({
+          description: (
+            <div className="flex items-center gap-4 ">
+              <div className="rounded-full w-8 h-8 flex justify-center items-center bg-[fill: rgba(251, 55, 72, 0.16)]"></div>
+
+              <span className="text-[#717F96]">
+                {error?.response?.data.mensagem}
+              </span>
+            </div>
+          ),
+          action: (
+            <ToastAction
+              altText="close"
+              className="shadow-none border-none text-[#717F96] hover:bg-transparent"
+            >
+              .
+            </ToastAction>
+          ),
+          className:
+            'border-l-4 border-l-[#FB3748] border-t-0 border-b-0 border-r-0',
+        });
+      }
     },
   });
 
@@ -298,7 +329,7 @@ export function RegisterPage() {
                 {/* Checkbox Terms */}
                 <div className="flex items-start gap-3 py-2">
                   <input
-                    className="mt-1 w-5 h-5 rounded border-slate-300 text-[#137fec] focus:ring-[#137fec]"
+                    className="mt-1 w-5 h-5 hover:cursor-pointer rounded border-slate-300 text-[#137fec] focus:ring-[#137fec]"
                     id="terms"
                     type="checkbox"
                   />
