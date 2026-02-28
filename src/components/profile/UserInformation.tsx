@@ -129,7 +129,7 @@ export function UserInformation() {
 
   return (
     <div>
-      <section className="bg-white border border-border-color p-8 rounded-xl shadow-sm border-gray-900/10">
+      <section className="bg-white border border-border-color p-8 rounded-xl shadow-sm border-gray-900/10 mb-2">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 ">
           <div className="flex items-center gap-8 ">
             <div className="relative group">

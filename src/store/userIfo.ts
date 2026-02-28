@@ -36,6 +36,7 @@ interface UserState {
   cliente: Cliente | null;
   setCliente: (cliente: Cliente) => void;
   clearCliente: () => void;
+  setEntidade: (entidade: number) => void;
   setPhoto: (url: string) => void;
 }
 
@@ -45,6 +46,8 @@ export const useUserStore = create<UserState>()(
       cliente: null,
 
       setCliente: (cliente) => set({ cliente }),
+
+      setEntidade: (entidade) => ({ clienteId: entidade }),
 
       clearCliente: () => set({ cliente: null }),
 
@@ -56,7 +59,7 @@ export const useUserStore = create<UserState>()(
         })),
     }),
     {
-      name: 'user-storage', // nome no localStorage
+      name: 'user-storage',
       partialize: (state) => ({
         cliente: state.cliente,
       }),

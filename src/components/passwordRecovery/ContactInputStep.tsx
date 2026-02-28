@@ -2,7 +2,6 @@ import { motion } from 'framer-motion';
 import { Mail, Phone, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { RecoveryPasswordSchema, passwordSchema } from '@/lib/validations';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -13,6 +12,7 @@ import { api } from '@/lib/axios';
 import { ToastAction } from '../ui/toast';
 import { useToast } from '@/hooks/use-toast';
 import { AxiosError } from 'axios';
+import { useUserStore } from '@/store/userIfo';
 
 interface ContactInputStepProps {
   method: 'email' | 'sms';
@@ -26,6 +26,7 @@ const ContactInputStep = ({
   onBack,
 }: ContactInputStepProps) => {
   const { toast } = useToast();
+  const setEntidade = useUserStore((state) => state.setEntidade);
   const {
     register,
     handleSubmit,
@@ -36,19 +37,16 @@ const ContactInputStep = ({
 
   const submitHandler = async (data: RecoveryContactFormData) => {
     try {
-      const responde = await api.post('/clientes/codigo-seguranca/pedir', {
+      const response = await api.post('/clientes/codigo-seguranca/pedir', {
         emailCliente: data.contact,
         canal: method === 'email' ? 'E-mail' : 'SMS',
       });
-
-      console.log('a resposta:', responde);
+      setEntidade(response.data.info.entidade);
 
       toast({
         description: (
           <div className="flex items-center gap-4 bg-white">
-            <span className="text-[#717F96]">
-              Enviamos o código no contacto fornecido!
-            </span>
+            <span className="text-[#717F96]">{response.data.mensagem}</span>
           </div>
         ),
         action: (

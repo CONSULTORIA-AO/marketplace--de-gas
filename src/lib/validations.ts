@@ -101,8 +101,8 @@ export const profileSchema = z.object({
 
 export const passwordProfileSchema = z
   .object({
-    currentPassword: z.string().min(6, 'Senha obrigatória'),
-    newPassword: z.string().min(6, 'Mínimo 6 caracteres'),
+    currentPassword: z.string().min(8, 'Senha obrigatória'),
+    newPassword: z.string().min(8, 'Mínimo 6 caracteres'),
     confirmPassword: z.string(),
   })
   .refine((data) => data.newPassword === data.confirmPassword, {
@@ -117,6 +117,17 @@ export const verificationCodeSchema = z.object({
     .regex(/^\d+$/, 'O código deve conter apenas números'),
 });
 
+export const recoveryAccount = z
+  .object({
+    newPassword: z.string().min(6, 'Mínimo 8 caracteres'),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: 'As senhas não coincidem',
+    path: ['confirmPassword'],
+  });
+
+export type RecoveryAccout = z.infer<typeof recoveryAccount>;
 export type VerificationCodeFormData = z.infer<typeof verificationCodeSchema>;
 export type PasswordProfileFormData = z.infer<typeof passwordProfileSchema>;
 export type PasswordFormData = z.infer<typeof passwordSchema>;

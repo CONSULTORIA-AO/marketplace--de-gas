@@ -12,12 +12,12 @@ import {
 import { api } from '@/lib/axios';
 import { AxiosError } from 'axios';
 import { ToastAction } from '../ui/toast';
+import { useUserStore } from '@/store/userIfo';
 
 interface VerificationCodeStepProps {
   contact: string;
   method: 'email' | 'sms';
-  entidade: number;
-  onVerifySuccess: () => void;
+  onVerifySuccess: (code: string) => void;
   onBack: () => void;
   onResend: () => void;
 }
@@ -34,12 +34,12 @@ const VerificationCodeStep = ({
   const [countdown, setCountdown] = useState(60);
   const [canResend, setCanResend] = useState(false);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const entidade = useUserStore((state) => state.cliente.clienteId);
 
   const {
     handleSubmit,
     setValue,
     formState: { errors, isSubmitting },
-    setError,
     clearErrors,
   } = useForm<VerificationCodeFormData>({
     resolver: zodResolver(verificationCodeSchema),
@@ -94,7 +94,7 @@ const VerificationCodeStep = ({
     try {
       await api.post('/clientes/codigo-seguranca/autenticar', {
         codigo_seguranca: data.codigo_seguranca,
-        entidade: 10,
+        entidade: entidade,
       });
 
       toast({
@@ -115,7 +115,7 @@ const VerificationCodeStep = ({
           'border-l-4 border-l-[#ff8300] border-t-0 border-b-0 border-r-0',
       });
 
-      onVerifySuccess();
+      onVerifySuccess(data.codigo_seguranca);
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         toast({

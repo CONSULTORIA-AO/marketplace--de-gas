@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { useState } from 'react';
 import {
   profileSchema,
@@ -153,7 +153,7 @@ export function FormsProfile() {
     }
   }
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10 mt-4">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10 mt-2">
       <form
         onSubmit={handleSubmitProfile(onSubmitProfile)}
         className="bg-white border border-border-color rounded-xl p-8 shadow-sm border-gray-900/10"
