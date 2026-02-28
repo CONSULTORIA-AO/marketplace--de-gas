@@ -141,7 +141,7 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
           <div className="relative">
             <Input
               type={showPassword ? 'text' : 'password'}
-              placeholder="Nova senha"
+              placeholder=""
               {...registerPassword('newPassword')}
               className="h-12 sm:h-14 text-black text-sm sm:text-base px-4 pr-12 rounded-xl border-2"
             />
