@@ -41,16 +41,75 @@ export const addressSchema = z.object({
   isDefault: z.boolean().optional(),
 });
 
-// Schema de checkout
-export const checkoutSchema = z.object({
-  addressId: z.string().min(1, 'Selecione um endereço'),
-  paymentMethod: z.enum(['credit_card', 'debit_card', 'pix', 'money'], {
+export const paymentMethodEnum = z.enum(
+  [
+    'multicaixa_express',
+    'transferencia_bancaria',
+    'referencia_multicaixa',
+    'tpa_pos',
+    'pagamento_dinheiro',
+    'unitel_money',
+  ],
+  {
     required_error: 'Selecione uma forma de pagamento',
-  }),
-  deliveryTime: z.enum(['morning', 'afternoon', 'evening'], {
-    required_error: 'Selecione um horário de entrega',
-  }),
-});
+    invalid_type_error: 'Método de pagamento inválido',
+  }
+);
+
+// Schema de checkout
+export const checkoutSchema = z
+  .object({
+    // Endereço de entrega
+    street: z
+      .string({ required_error: 'Rua/Avenida é obrigatória' })
+      .min(3, 'Rua/Avenida deve ter pelo menos 3 caracteres'),
+
+    number: z
+      .string({ required_error: 'Número é obrigatório' })
+      .min(1, 'Número é obrigatório'),
+
+    complement: z.string().optional(),
+
+    neighborhood: z
+      .string({ required_error: 'Bairro é obrigatório' })
+      .min(2, 'Bairro deve ter pelo menos 2 caracteres'),
+
+    city: z
+      .string({ required_error: 'Cidade é obrigatória' })
+      .min(2, 'Cidade deve ter pelo menos 2 caracteres'),
+
+    province: z
+      .string({ required_error: 'Província é obrigatória' })
+      .min(2, 'Selecione uma província'),
+
+    reference: z.string().optional(),
+
+    // Pagamento
+    paymentMethod: paymentMethodEnum,
+
+    // Telefone — obrigatório apenas para Multicaixa Express e Unitel Money
+    phone: z
+      .string()
+      .optional()
+      .refine((val) => !val || /^9\d{8}$/.test(val.replace(/\s/g, '')), {
+        message: 'Número de telefone inválido (ex: 9XX XXX XXX)',
+      }),
+  })
+  .superRefine((data, ctx) => {
+    // Valida telefone como obrigatório para métodos que necessitam
+    const requiresPhone: PaymentMethod[] = [
+      'multicaixa_express',
+      'unitel_money',
+    ];
+    if (requiresPhone.includes(data.paymentMethod) && !data.phone?.trim()) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message:
+          'Número de telefone é obrigatório para este método de pagamento',
+        path: ['phone'],
+      });
+    }
+  });
 
 // Schema de password
 export const passwordSchema = z
@@ -140,3 +199,4 @@ export type ProfileFormData = z.infer<typeof profileSchema>;
 export type ReviewFormData = z.infer<typeof reviewSchema>;
 export type CheckoutFormData = z.infer<typeof checkoutSchema>;
 export type RecoveryPasswordSchema = z.infer<typeof passwordSchema>;
+export type PaymentMethod = z.infer<typeof paymentMethodEnum>;

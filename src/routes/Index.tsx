@@ -10,7 +10,6 @@ import { ProductDetailsPage } from '@/pages/ProductDetailsPage';
 import { CheckoutPage } from '@/pages/CheckoutPage';
 import { OrdersPage } from '@/pages/OrdersPage';
 import { ProfilePage } from '@/pages/ProfilePage';
-import { AddressesPage } from '@/pages/AddressPage';
 import PasswordRecoveryFlow from '@/pages/PasswordRecoveryFlow';
 import { VerifyAccountPage } from '@/pages/VerifyAccountPage';
 import NotFound from '@/pages/NotFound';
@@ -18,6 +17,7 @@ import { ProductListPage } from '@/pages/ProductListPage';
 import { ProductReviewPage } from '@/pages/PoductReviewPage';
 import About from '@/components/about/about';
 import TermosPrivacidade from '@/pages/TermosPrivacidade';
+import { FAQ } from '@/pages/Faq';
 
 const NavLink = () => {
   return (
@@ -31,10 +31,11 @@ const NavLink = () => {
       <Route path="/ativar-conta/:token" element={<VerifyAccountPage />} />
       <Route path="/sobre-nos" element={<About />} />
       <Route path="/termos&politicas" element={<TermosPrivacidade />} />
+      <Route path="/perguntas-frequentes" element={<FAQ />} />
 
       {/* Rotas Privadas */}
       <Route
-        path="/avaliacao"
+        path="/avaliacao/:id"
         element={
           <ProtectedRoute>
             <ProductReviewPage />
@@ -86,14 +87,6 @@ const NavLink = () => {
         element={
           <ProtectedRoute>
             <ProfilePage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/enderecos"
-        element={
-          <ProtectedRoute>
-            <AddressesPage />
           </ProtectedRoute>
         }
       />

@@ -13,7 +13,7 @@ export function HeaderHome() {
               local_fire_department
             </span>
             <h2 className="text-xl font-bold leading-tight tracking-[-0.015em]">
-              GásMarket
+              JáGás
             </h2>
           </div>
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium">

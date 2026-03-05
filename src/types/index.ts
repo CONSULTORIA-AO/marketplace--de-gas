@@ -1,14 +1,6 @@
 // Tipos de usuário e autenticação
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  cpf: string;
-  avatar?: string;
-  isActive: boolean;
-  createdAt: string;
-}
+
+import { Dispatch, SetStateAction } from 'react';
 
 export interface AuthResponse {
   status: string;
@@ -72,14 +64,6 @@ export interface LoginCredentials {
   password: string;
 }
 
-export interface RegisterData {
-  name: string;
-  email: string;
-  password: string;
-  phone: string;
-  cpf: string;
-}
-
 export interface ResetPasswordData {
   email: string;
 }
@@ -103,18 +87,38 @@ export interface Address {
 }
 
 // Tipos de produto/gás
+export interface ApiResponse {
+  status: string;
+  statusCode: number;
+  formato: string;
+  registros: {
+    paginas: number;
+    pagina_actual: number;
+    total: number;
+    limite: number;
+    total_apresentados: number;
+    codigoProduto: string;
+    descricao: string;
+    unidadeMedida: string;
+    preco: string;
+    categoria: string;
+    ativo: string;
+    produto_time: string;
+  };
+  url: string;
+  mensagem: GasProduct[];
+}
+
 export interface GasProduct {
-  id: string;
-  name: string;
-  description: string;
-  weight: string; // Ex: "13kg", "20kg", "45kg"
-  price: number;
-  imageUrl: string;
-  stock: number;
-  brand: string;
-  category: string;
-  rating: number;
-  reviewCount: number;
+  produtoId: number;
+  empresaDona: number;
+  imagem_produto: string;
+  descricao: string;
+  unidadeMedida: string;
+  preco: number;
+  ativo: string;
+  produto_time: string;
+  produto_update: string;
 }
 
 // Tipos de carrinho
@@ -189,3 +193,33 @@ export type MockOrder = {
   total: number;
   createdAt: string;
 };
+
+export interface ProductFilters {
+  gasTypes: string[];
+  minPrice: number;
+  maxPrice: number;
+  location: string;
+  minRating: number;
+}
+
+export interface ProductSpolierProps {
+  filters: ProductFilters;
+  sortBy: 'rating' | 'price' | 'relevance';
+  setSortBy: Dispatch<SetStateAction<'rating' | 'price' | 'relevance'>>;
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
+}
+
+export interface ApiProductResponse {
+  status: string;
+  statusCode: number;
+  formato: string;
+  registros: {
+    paginas: number;
+    pagina_actual: number;
+    total: number;
+    limite: number;
+    total_apresentados: number;
+  };
+  mensagem: GasProduct[];
+}

@@ -1,6 +1,3 @@
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,13 +6,128 @@ import { useState } from 'react';
 import {
   profileSchema,
   type ProfileFormData,
-  type PasswordProfileFormData,
   passwordProfileSchema,
+  type PasswordProfileFormData,
 } from '@/lib/validations';
-import { ToastAction } from '../ui/toast';
 import { useAuthStore } from '@/store/authStrore';
 import { api } from '@/lib/axios';
 import { useUserStore } from '@/store/userIfo';
+import { motion } from 'framer-motion';
+
+// ── Shared styles ────────────────────────────────────────────────
+const inputBase: React.CSSProperties = {
+  background: 'rgba(255,255,255,0.04)',
+  border: '1.5px solid rgba(249,115,22,0.2)',
+  borderRadius: 14,
+  color: '#ffffff',
+  height: 48,
+  padding: '0 16px',
+  fontSize: 14,
+  fontWeight: 500,
+  outline: 'none',
+  width: '100%',
+  transition: 'border-color 0.2s, box-shadow 0.2s',
+};
+
+function Field({
+  label,
+  error,
+  children,
+}: {
+  label: string;
+  error?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="space-y-1.5">
+      <label
+        className="text-xs font-bold uppercase tracking-widest block"
+        style={{ color: 'rgba(255,255,255,0.45)' }}
+      >
+        {label}
+      </label>
+      {children}
+      {error && (
+        <p
+          className="text-xs font-semibold flex items-center gap-1"
+          style={{ color: '#f87171' }}
+        >
+          <span className="material-symbols-outlined" style={{ fontSize: 12 }}>
+            error
+          </span>
+          {error}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function StyledInput({
+  type = 'text',
+  ...rest
+}: React.InputHTMLAttributes<HTMLInputElement>) {
+  const [focused, setFocused] = useState(false);
+  return (
+    <input
+      type={type}
+      style={{
+        ...inputBase,
+        borderColor: focused ? '#f97316' : 'rgba(249,115,22,0.2)',
+        boxShadow: focused ? '0 0 0 3px rgba(249,115,22,0.1)' : 'none',
+      }}
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)}
+      {...rest}
+    />
+  );
+}
+
+function SubmitButton({
+  loading,
+  label,
+  loadingLabel,
+}: {
+  loading: boolean;
+  label: string;
+  loadingLabel: string;
+}) {
+  return (
+    <motion.button
+      whileHover={{ scale: loading ? 1 : 1.02 }}
+      whileTap={{ scale: loading ? 1 : 0.97 }}
+      type="submit"
+      disabled={loading}
+      className="w-full h-12 rounded-2xl text-sm font-extrabold flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+      style={{
+        background: loading
+          ? 'rgba(249,115,22,0.4)'
+          : 'linear-gradient(135deg, #f97316, #ea580c)',
+        color: '#ffffff',
+        boxShadow: loading ? 'none' : '0 6px 20px rgba(249,115,22,0.3)',
+        border: 'none',
+      }}
+    >
+      {loading ? (
+        <>
+          <span
+            className="material-symbols-outlined animate-spin"
+            style={{ fontSize: 16 }}
+          >
+            autorenew
+          </span>
+          {loadingLabel}
+        </>
+      ) : (
+        <>
+          <span className="material-symbols-outlined" style={{ fontSize: 16 }}>
+            check_circle
+          </span>
+          {label}
+        </>
+      )}
+    </motion.button>
+  );
+}
 
 export function FormsProfile() {
   const [loadingProfile, setLoadingProfile] = useState(false);
@@ -24,312 +136,287 @@ export function FormsProfile() {
   const cliente = useUserStore((state) => state.cliente);
   const { toast } = useToast();
 
+  // Profile form
   const {
-    register: registerProfile,
-    handleSubmit: handleSubmitProfile,
-    formState: { errors: profileErrors },
+    register: rp,
+    handleSubmit: hsp,
+    formState: { errors: ep },
   } = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
+    defaultValues: {
+      nomeCliente: cliente?.nomeCliente ?? '',
+      emailCliente: cliente?.emailCliente ?? '',
+      telefoneCliente: cliente?.telefoneCliente ?? '',
+      telefoneClienteAlt: cliente?.telefoneClienteAlt ?? '',
+      enderecoCliente: cliente?.enderecoCliente ?? '',
+    },
   });
 
+  // Password form
   const {
-    register: registerPassword,
-    handleSubmit: handleSubmitPassword,
-    reset: resetPassword,
-    formState: { errors: passwordErrors },
+    register: rpw,
+    handleSubmit: hspw,
+    reset: resetPw,
+    formState: { errors: epw },
   } = useForm<PasswordProfileFormData>({
     resolver: zodResolver(passwordProfileSchema),
   });
 
-  async function onSubmitProfile(data: ProfileFormData) {
+  const notify = (msg: string, error = false) =>
+    toast({
+      variant: error ? 'destructive' : 'default',
+      description: msg,
+    });
+
+  const onSubmitProfile = async (data: ProfileFormData) => {
     try {
       setLoadingProfile(true);
-
-      const response = await api.patch(`clientes/${entidade}`, {
+      const res = await api.patch(`clientes/${entidade}`, {
         emailCliente: data.emailCliente,
         nomeCliente: data.nomeCliente,
         telefoneCliente: data.telefoneCliente,
         telefoneClienteAlt: data.telefoneClienteAlt,
-        enderecoCliente: cliente.enderecoCliente,
+        enderecoCliente: data.enderecoCliente,
       });
-
-      toast({
-        description: (
-          <div className="flex items-center gap-4 ">
-            <div className="rounded-full w-8 h-8 flex justify-center items-center"></div>
-            <span className="text-[#ff8300]">{response.data.mensagem}</span>
-          </div>
-        ),
-        action: (
-          <ToastAction
-            altText="close"
-            className="shadow-none border-none text-[#f2f4f8] hover:bg-transparent"
-          >
-            .
-          </ToastAction>
-        ),
-        className:
-          'border-l-4 border-l-[#ff8300] border-t-0 border-b-0 border-r-0',
-      });
-    } catch (error) {
-      toast({
-        description: (
-          <div className="flex items-center gap-4 ">
-            <div className="rounded-full w-8 h-8 flex justify-center items-center bg-[fill: rgba(251, 55, 72, 0.16)"></div>
-            <span className="text-[#717F96]">
-              {error?.response?.data.mensagem}
-            </span>
-          </div>
-        ),
-        action: (
-          <ToastAction
-            altText="close"
-            className="shadow-none border-none text-[#717F96] hover:bg-transparent"
-          >
-            .
-          </ToastAction>
-        ),
-        className:
-          'border-l-4 border-l-[#FB3748] border-t-0 border-r-0 border-b-0',
-      });
+      notify(res.data.mensagem);
+    } catch (err) {
+      notify(
+        err instanceof AxiosError
+          ? err.response?.data?.mensagem
+          : 'Erro ao atualizar',
+        true
+      );
     } finally {
       setLoadingProfile(false);
     }
-  }
+  };
 
-  async function onSubmitPassword(data: PasswordProfileFormData) {
+  const onSubmitPassword = async (data: PasswordProfileFormData) => {
     try {
       setLoadingPassword(true);
-
-      const response = await api.patch(`clientes/${entidade}/alterar-senha`, {
+      const res = await api.patch(`clientes/${entidade}/alterar-senha`, {
         senha_actual: data.currentPassword,
         senha: data.newPassword,
         confirmar_senha: data.confirmPassword,
       });
-      toast({
-        description: (
-          <div className="flex items-center gap-4 ">
-            <div className="rounded-full w-8 h-8 flex justify-center items-center"></div>
-            <span className="text-[#ff8300]">{response.data.mensagem}</span>
-          </div>
-        ),
-        action: (
-          <ToastAction
-            altText="close"
-            className="shadow-none border-none text-[#f2f4f8] hover:bg-transparent"
-          >
-            .
-          </ToastAction>
-        ),
-        className:
-          'border-l-4 border-l-[#ff8300] border-t-0 border-r-0 border-b-0',
-      });
-      resetPassword();
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        toast({
-          description: (
-            <div className="flex items-center gap-4 ">
-              <div className="rounded-full w-8 h-8 flex justify-center items-center bg-[fill: rgba(251, 55, 72, 0.16)"></div>
-              <span className="text-[#717F96]">
-                {error?.response?.data.mensagem}
-              </span>
-            </div>
-          ),
-          action: (
-            <ToastAction
-              altText="close"
-              className="shadow-none border-none text-[#717F96] hover:bg-transparent"
-            >
-              .
-            </ToastAction>
-          ),
-          className:
-            'border-l-4 border-l-[#FB3748] border-t-0 border-r-0 border-b-0',
-        });
-      }
+      notify(res.data.mensagem);
+      resetPw();
+    } catch (err) {
+      notify(
+        err instanceof AxiosError
+          ? err.response?.data?.mensagem
+          : 'Erro ao alterar senha',
+        true
+      );
     } finally {
       setLoadingPassword(false);
     }
-  }
+  };
+
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10 mt-2">
-      <form
-        onSubmit={handleSubmitProfile(onSubmitProfile)}
-        className="bg-white border border-border-color rounded-xl p-8 shadow-sm border-gray-900/10"
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+      {/* ── Personal info form ── */}
+      <motion.form
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.2 }}
+        onSubmit={hsp(onSubmitProfile)}
+        className="rounded-3xl p-7 space-y-6"
+        style={{
+          background: 'rgba(255,255,255,0.03)',
+          border: '1.5px solid rgba(249,115,22,0.25)',
+          boxShadow: '0 8px 40px rgba(0,0,0,0.3)',
+        }}
       >
-        <div className="flex items-center gap-3 mb-8">
-          <div className="p-2 bg-blue-50 rounded-lg">
-            <span className="material-symbols-outlined text-[#137fec]">
+        {/* Form header */}
+        <div className="flex items-center gap-3">
+          <div
+            className="w-9 h-9 rounded-xl flex items-center justify-center"
+            style={{
+              background: 'rgba(249,115,22,0.15)',
+              border: '1px solid rgba(249,115,22,0.35)',
+            }}
+          >
+            <span
+              className="material-symbols-outlined"
+              style={{ color: '#f97316', fontSize: 18 }}
+            >
               edit_note
             </span>
           </div>
-          <h2 className="text-xl font-bold text-slate-900">
-            Informações Pessoais
-          </h2>
-        </div>
-        <div className="space-y-5">
-          <div className="grid grid-cols-1 gap-1.5">
-            <Label
-              htmlFor="name"
-              className="text-sm font-semibold text-slate-600"
-            >
-              Nome Completo
-            </Label>
-            <Input
-              {...registerProfile('nomeCliente')}
-              className="w-full bg-slate-50 border-slate-200 rounded-lg text-slate-900 px-4 py-2.5 focus:border-[#137fec] focus:bg-white transition-all"
-              type="text"
-            />
-            {profileErrors.nomeCliente && (
-              <p className="text-red-500 text-xs mt-1">
-                {profileErrors.nomeCliente.message}
-              </p>
-            )}
+          <div>
+            <h2 className="text-lg font-extrabold" style={{ color: '#ffffff' }}>
+              Informações Pessoais
+            </h2>
+            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>
+              Atualize os seus dados de perfil
+            </p>
           </div>
-          <div className="grid grid-cols-1 gap-1.5">
-            <Label
-              htmlFor="email"
-              className="text-sm font-semibold text-slate-600"
-            >
-              E-mail
-            </Label>
-            <Input
-              {...registerProfile('emailCliente')}
-              className="w-full bg-slate-50 border-slate-200 rounded-lg text-slate-900 px-4 py-2.5 focus:border-[#137fec] focus:bg-white transition-all"
+        </div>
+
+        <div
+          style={{
+            height: 1,
+            background:
+              'linear-gradient(90deg, rgba(249,115,22,0.4), transparent)',
+          }}
+        />
+
+        {/* Fields */}
+        <div className="space-y-4">
+          <Field label="Nome Completo" error={ep.nomeCliente?.message}>
+            <StyledInput {...rp('nomeCliente')} placeholder="O seu nome" />
+          </Field>
+
+          <Field label="E-mail" error={ep.emailCliente?.message}>
+            <StyledInput
+              {...rp('emailCliente')}
               type="email"
+              placeholder="email@exemplo.com"
             />
-            {profileErrors.emailCliente && (
-              <p className="text-red-500 text-xs mt-1">
-                {profileErrors.emailCliente.message}
-              </p>
-            )}
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="grid grid-cols-1 gap-1.5">
-              <Label
-                htmlFor="tel"
-                className="text-sm font-semibold text-slate-600"
-              >
-                Telefone
-              </Label>
-              <Input
-                {...registerProfile('telefoneCliente')}
-                className="w-full bg-slate-50 border-slate-200 rounded-lg text-slate-900 px-4 py-2.5 focus:border-[#137fec] focus:bg-white transition-all"
+          </Field>
+
+          <div className="grid grid-cols-2 gap-3">
+            <Field label="Telefone" error={ep.telefoneCliente?.message}>
+              <StyledInput
+                {...rp('telefoneCliente')}
                 type="tel"
+                placeholder="9XX XXX XXX"
               />
-              {profileErrors.telefoneCliente && (
-                <p className="text-red-500 text-xs mt-1">
-                  {profileErrors.telefoneCliente.message}
-                </p>
-              )}
-            </div>
-            <div className="grid grid-cols-1 gap-1.5">
-              <Label
-                htmlFor="tel"
-                className="text-sm font-semibold text-slate-600"
-              >
-                Telefone alternativo
-              </Label>
-              <Input
-                {...registerProfile('telefoneClienteAlt')}
-                className="w-full bg-slate-50 border-slate-200 rounded-lg text-slate-900 px-4 py-2.5 focus:border-[#137fec] focus:bg-white transition-all"
+            </Field>
+            <Field label="Telefone Alt." error={ep.telefoneClienteAlt?.message}>
+              <StyledInput
+                {...rp('telefoneClienteAlt')}
                 type="tel"
+                placeholder="9XX XXX XXX"
               />
-              {profileErrors.telefoneClienteAlt && (
-                <p className="text-red-500 text-xs mt-1">
-                  {profileErrors.telefoneClienteAlt.message}
-                </p>
-              )}
-            </div>
+            </Field>
           </div>
-          <Button
-            type="submit"
-            disabled={loadingProfile}
-            className="w-full mt-2 h-11 hover:bg-[#137fec] hover:text-white text-sm font-bold          bg-[#137fec] text-white rounded-full p-2 hover:scale-105 transition-transform"
-          >
-            {loadingProfile ? 'Salvando...' : 'Salvar Alterações'}
-          </Button>
+
+          <Field label="Endereço" error={ep.enderecoCliente?.message}>
+            <StyledInput
+              {...rp('enderecoCliente')}
+              placeholder="Rua, Bairro, Cidade"
+            />
+          </Field>
         </div>
-      </form>
-      <form
-        onSubmit={handleSubmitPassword(onSubmitPassword)}
-        className="bg-white border border-border-color rounded-xl p-8 shadow-sm border-gray-900/10"
+
+        <SubmitButton
+          loading={loadingProfile}
+          label="Guardar Alterações"
+          loadingLabel="A guardar…"
+        />
+      </motion.form>
+
+      {/* ── Security / Password form ── */}
+      <motion.form
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.28 }}
+        onSubmit={hspw(onSubmitPassword)}
+        className="rounded-3xl p-7 space-y-6"
+        style={{
+          background: 'rgba(255,255,255,0.03)',
+          border: '1.5px solid rgba(249,115,22,0.25)',
+          boxShadow: '0 8px 40px rgba(0,0,0,0.3)',
+        }}
       >
-        <div className="flex items-center gap-3 mb-8">
-          <div className="p-2 bg-blue-50 rounded-lg">
-            <span className="material-symbols-outlined text-[#137fec]">
+        {/* Form header */}
+        <div className="flex items-center gap-3">
+          <div
+            className="w-9 h-9 rounded-xl flex items-center justify-center"
+            style={{
+              background: 'rgba(249,115,22,0.15)',
+              border: '1px solid rgba(249,115,22,0.35)',
+            }}
+          >
+            <span
+              className="material-symbols-outlined"
+              style={{ color: '#f97316', fontSize: 18 }}
+            >
               lock_reset
             </span>
           </div>
-          <h2 className="text-xl font-bold text-slate-900">Segurança</h2>
+          <div>
+            <h2 className="text-lg font-extrabold" style={{ color: '#ffffff' }}>
+              Segurança
+            </h2>
+            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>
+              Altere a sua palavra-passe
+            </p>
+          </div>
         </div>
-        <div className="space-y-5">
-          <div className="grid grid-cols-1 gap-1.5">
-            <Label
-              htmlFor="current-password"
-              className="text-sm font-semibold text-slate-600"
-            >
-              Senha Atual
-            </Label>
-            <div className="relative">
-              <Input
-                {...registerPassword('currentPassword')}
-                className="w-full bg-slate-50 border-slate-200 rounded-lg text-slate-900 px-4 py-2.5 focus:border-[#137fec] focus:bg-white transition-all"
-                type="password"
-              />
-              {passwordErrors.currentPassword && (
-                <p className="text-red-500 text-xs mt-1">
-                  {passwordErrors.currentPassword.message}
-                </p>
-              )}
-            </div>
-          </div>
-          <div className="grid grid-cols-1 gap-1.5">
-            <Label
-              htmlFor="password"
-              className="text-sm font-semibold text-slate-600"
-            >
-              Nova Senha
-            </Label>
-            <Input
-              className="w-full bg-slate-50 border-slate-200 rounded-lg text-slate-900 px-4 py-2.5 focus:border-[#137fec] focus:bg-white transition-all"
-              type="password"
-              {...registerPassword('newPassword')}
-            />
-            {passwordErrors.newPassword && (
-              <p className="text-red-500 text-xs mt-1">
-                {passwordErrors.newPassword.message}
-              </p>
-            )}
-          </div>
-          <div className="grid grid-cols-1 gap-1.5">
-            <Label
-              htmlFor="confirm-password"
-              className="text-sm font-semibold text-slate-600"
-            >
-              Confirmar Nova Senha
-            </Label>
-            <Input
-              className="w-full bg-slate-50 border-slate-200 rounded-lg text-slate-900 px-4 py-2.5 focus:border-[#137fec] focus:bg-white transition-all"
-              type="password"
-              {...registerPassword('confirmPassword')}
-            />
-            {passwordErrors.confirmPassword && (
-              <p className="text-red-500 text-xs mt-1">
-                {passwordErrors.confirmPassword.message}
-              </p>
-            )}
-          </div>
-          <Button
-            type="submit"
-            disabled={loadingPassword}
-            className="w-full mt-2 h-11 hover:bg-[#137fec] hover:text-white text-sm font-bold          bg-[#137fec] text-white rounded-full p-2 shadow-lg hover:scale-105 transition-transform"
+
+        <div
+          style={{
+            height: 1,
+            background:
+              'linear-gradient(90deg, rgba(249,115,22,0.4), transparent)',
+          }}
+        />
+
+        {/* Warning banner */}
+        <div
+          className="flex items-start gap-3 p-4 rounded-2xl"
+          style={{
+            background: 'rgba(251,191,36,0.06)',
+            border: '1px solid rgba(251,191,36,0.2)',
+          }}
+        >
+          <span
+            className="material-symbols-outlined flex-shrink-0 mt-0.5"
+            style={{ color: '#fbbf24', fontSize: 16 }}
           >
-            {loadingPassword ? 'Atualizando...' : 'Redefinir Senha'}
-          </Button>
+            info
+          </span>
+          <p
+            className="text-xs leading-relaxed"
+            style={{ color: 'rgba(255,255,255,0.45)' }}
+          >
+            Use uma senha com pelo menos{' '}
+            <strong style={{ color: 'rgba(255,255,255,0.8)' }}>
+              8 caracteres
+            </strong>
+            , incluindo letras maiúsculas, números e símbolos.
+          </p>
         </div>
-      </form>
+
+        {/* Fields */}
+        <div className="space-y-4">
+          <Field label="Senha Atual" error={epw.currentPassword?.message}>
+            <StyledInput
+              {...rpw('currentPassword')}
+              type="password"
+              placeholder="••••••••"
+            />
+          </Field>
+
+          <Field label="Nova Senha" error={epw.newPassword?.message}>
+            <StyledInput
+              {...rpw('newPassword')}
+              type="password"
+              placeholder="••••••••"
+            />
+          </Field>
+
+          <Field
+            label="Confirmar Nova Senha"
+            error={epw.confirmPassword?.message}
+          >
+            <StyledInput
+              {...rpw('confirmPassword')}
+              type="password"
+              placeholder="••••••••"
+            />
+          </Field>
+        </div>
+
+        <SubmitButton
+          loading={loadingPassword}
+          label="Redefinir Senha"
+          loadingLabel="A atualizar…"
+        />
+      </motion.form>
     </div>
   );
 }

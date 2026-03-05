@@ -6,10 +6,7 @@ import {
   Banknote,
   QrCode,
   Wallet,
-  ChevronRight,
 } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 
 export type PaymentMethod =
   | 'multicaixa_express'
@@ -24,14 +21,16 @@ interface PaymentOption {
   label: string;
   description: string;
   icon: React.ReactNode;
+  badge?: string;
 }
 
 const paymentOptions: PaymentOption[] = [
   {
     id: 'multicaixa_express',
     label: 'Multicaixa Express',
-    description: 'Pagamento via app Multicaixa Express',
+    description: 'Pagamento via app Multicaixa',
     icon: <QrCode className="h-5 w-5" />,
+    badge: 'Popular',
   },
   {
     id: 'unitel_money',
@@ -54,7 +53,7 @@ const paymentOptions: PaymentOption[] = [
   {
     id: 'tpa_pos',
     label: 'TPA / POS',
-    description: 'Pagamento com cartão na entrega',
+    description: 'Cartão na entrega',
     icon: <Wallet className="h-5 w-5" />,
   },
   {
@@ -65,76 +64,183 @@ const paymentOptions: PaymentOption[] = [
   },
 ];
 
-interface PaymentMethodSelectorProps {
+interface Props {
   selected: PaymentMethod | null;
   onSelect: (method: PaymentMethod) => void;
   phone: string;
   onPhoneChange: (value: string) => void;
 }
 
+const inputStyle: React.CSSProperties = {
+  background: 'rgba(255,255,255,0.04)',
+  border: '1.5px solid rgba(249,115,22,0.25)',
+  borderRadius: 14,
+  color: '#ffffff',
+  height: 48,
+  padding: '0 16px',
+  fontSize: 14,
+  fontWeight: 500,
+  outline: 'none',
+  width: '100%',
+};
+
 export function CheckoutPaymentStep({
   selected,
   onSelect,
   phone,
   onPhoneChange,
-}: PaymentMethodSelectorProps) {
+}: Props) {
   const needsPhone =
     selected === 'multicaixa_express' || selected === 'unitel_money';
   const needsBankInfo = selected === 'transferencia_bancaria';
+  const needsRef = selected === 'referencia_multicaixa';
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.1 }}
-      className="border border-border p-4 sm:p-6 space-y-4 dark:bg-surface-dark rounded-xl border-border-light dark:border-border-dark shadow-xl dark:text-white focus:outline-0 focus:ring-1  border-slate-200 dark:border-slate-700"
+      transition={{ duration: 0.35 }}
+      className="rounded-3xl p-7 sm:p-9 space-y-7"
+      style={{
+        background: 'rgba(255,255,255,0.03)',
+        border: '1.5px solid rgba(249,115,22,0.3)',
+        boxShadow: '0 8px 40px rgba(0,0,0,0.4)',
+      }}
     >
-      <h2 className="text-lg font-semibold text-foreground">
-        Método de Pagamento
-      </h2>
+      {/* Header */}
+      <div className="flex items-center gap-3">
+        <div
+          className="w-10 h-10 rounded-xl flex items-center justify-center"
+          style={{
+            background: 'rgba(249,115,22,0.15)',
+            border: '1px solid rgba(249,115,22,0.35)',
+          }}
+        >
+          <span
+            className="material-symbols-outlined"
+            style={{ color: '#f97316', fontSize: 20 }}
+          >
+            payments
+          </span>
+        </div>
+        <div>
+          <h2 className="text-lg font-extrabold" style={{ color: '#ffffff' }}>
+            Método de Pagamento
+          </h2>
+          <p className="text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>
+            Escolha como pretende pagar
+          </p>
+        </div>
+      </div>
 
+      <div
+        style={{
+          height: 1,
+          background:
+            'linear-gradient(90deg, rgba(249,115,22,0.4), transparent)',
+        }}
+      />
+
+      {/* Payment grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {paymentOptions.map((option) => {
+        {paymentOptions.map((option, i) => {
           const isSelected = selected === option.id;
           return (
             <motion.button
               key={option.id}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.05 }}
               whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              whileTap={{ scale: 0.97 }}
               onClick={() => onSelect(option.id)}
-              className={`flex items-center gap-3 rounded-lg border p-3 text-left transition-colors dark:bg-surface-dark border-border-light dark:border-border-dark shadow-md dark:text-white focus:outline-0 focus:ring-1 border-slate-200 dark:border-slate-700${
-                isSelected
-                  ? 'border-primary bg-primary/5 shadow-sm'
-                  : 'border-border bg-background hover:border-muted-foreground/30'
-              }`}
+              className="flex items-center gap-3 p-4 rounded-2xl text-left relative overflow-hidden transition-all"
+              style={{
+                background: isSelected
+                  ? 'rgba(249,115,22,0.12)'
+                  : 'rgba(255,255,255,0.03)',
+                border: `1.5px solid ${isSelected ? '#f97316' : 'rgba(255,255,255,0.08)'}`,
+                boxShadow: isSelected
+                  ? '0 0 20px rgba(249,115,22,0.15)'
+                  : 'none',
+              }}
             >
+              {/* Glow on select */}
+              {isSelected && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: -10,
+                    right: -10,
+                    width: 60,
+                    height: 60,
+                    borderRadius: '50%',
+                    background:
+                      'radial-gradient(circle, rgba(249,115,22,0.2), transparent 70%)',
+                    pointerEvents: 'none',
+                  }}
+                />
+              )}
+
+              {/* Icon */}
               <div
-                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${
-                  isSelected
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-secondary text-muted-foreground'
-                }`}
+                className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{
+                  background: isSelected ? '#f97316' : 'rgba(255,255,255,0.07)',
+                  color: isSelected ? '#000' : 'rgba(255,255,255,0.5)',
+                  transition: 'all 0.2s',
+                }}
               >
                 {option.icon}
               </div>
+
+              {/* Text */}
               <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <p
+                    className="text-sm font-bold truncate"
+                    style={{
+                      color: isSelected ? '#ffffff' : 'rgba(255,255,255,0.7)',
+                    }}
+                  >
+                    {option.label}
+                  </p>
+                  {option.badge && (
+                    <span
+                      className="text-xs font-bold px-1.5 py-0.5 rounded-lg flex-shrink-0"
+                      style={{
+                        background: 'rgba(249,115,22,0.2)',
+                        color: '#f97316',
+                        fontSize: 10,
+                      }}
+                    >
+                      {option.badge}
+                    </span>
+                  )}
+                </div>
                 <p
-                  className={`text-sm font-medium ${isSelected ? 'text-foreground' : 'text-foreground'}`}
+                  className="text-xs truncate mt-0.5"
+                  style={{ color: 'rgba(255,255,255,0.35)' }}
                 >
-                  {option.label}
-                </p>
-                <p className="text-xs text-muted-foreground truncate">
                   {option.description}
                 </p>
               </div>
+
+              {/* Check */}
               {isSelected && (
-                <ChevronRight className="h-4 w-4 text-primary shrink-0" />
+                <span
+                  className="material-symbols-outlined flex-shrink-0"
+                  style={{ color: '#f97316', fontSize: 18 }}
+                >
+                  check_circle
+                </span>
               )}
             </motion.button>
           );
         })}
       </div>
 
+      {/* Conditional extra info */}
       <AnimatePresence mode="wait">
         {needsPhone && (
           <motion.div
@@ -142,20 +248,36 @@ export function CheckoutPaymentStep({
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="space-y-2 overflow-hidden"
+            className="overflow-hidden space-y-3"
           >
-            <Label htmlFor="phone" className="text-sm text-foreground">
-              Número de telefone
-            </Label>
-            <Input
-              id="phone"
-              type="tel"
-              placeholder="9XX XXX XXX"
-              value={phone}
-              onChange={(e) => onPhoneChange(e.target.value)}
-              className="bg-background dark:bg-surface-dark rounded-xl border-border-light dark:border-border-dark p-4 shadow-md dark:text-white focus:outline-0 focus:ring-1 border border-slate-200 dark:border-slate-700"
-              maxLength={12}
-            />
+            <div
+              className="p-5 rounded-2xl space-y-4"
+              style={{
+                background: 'rgba(249,115,22,0.06)',
+                border: '1px solid rgba(249,115,22,0.2)',
+              }}
+            >
+              <p
+                className="text-xs font-bold uppercase tracking-widest"
+                style={{ color: 'rgba(255,255,255,0.4)' }}
+              >
+                Número de Telefone
+              </p>
+              <input
+                type="tel"
+                placeholder="9XX XXX XXX"
+                value={phone}
+                onChange={(e) => onPhoneChange(e.target.value)}
+                maxLength={12}
+                style={inputStyle}
+              />
+              <p
+                className="text-xs"
+                style={{ color: 'rgba(255,255,255,0.35)' }}
+              >
+                Será enviado um pedido de pagamento para este número.
+              </p>
+            </div>
           </motion.div>
         )}
 
@@ -165,61 +287,104 @@ export function CheckoutPaymentStep({
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="space-y-3 overflow-hidden rounded-lg bg-secondary/50 p-4"
+            className="overflow-hidden"
           >
-            <p className="text-sm font-medium text-foreground">
-              Dados para transferência:
-            </p>
-            <div className="space-y-1 text-sm text-muted-foreground">
-              <p>
-                <span className="font-medium text-foreground">Banco:</span> BAI
-                - Banco Angolano de Investimentos
+            <div
+              className="p-5 rounded-2xl space-y-3"
+              style={{
+                background: 'rgba(249,115,22,0.06)',
+                border: '1px solid rgba(249,115,22,0.2)',
+              }}
+            >
+              <p
+                className="text-xs font-bold uppercase tracking-widest"
+                style={{ color: 'rgba(255,255,255,0.4)' }}
+              >
+                Dados Bancários
               </p>
-              <p>
-                <span className="font-medium text-foreground">IBAN:</span> AO06
-                0040 0000 1234 5678 9012 3
-              </p>
-              <p>
-                <span className="font-medium text-foreground">Titular:</span>{' '}
-                GásExpress Angola, Lda
+              {[
+                {
+                  label: 'Banco',
+                  value: 'BAI — Banco Angolano de Investimentos',
+                },
+                { label: 'IBAN', value: 'AO06 0040 0000 1234 5678 9012 3' },
+                { label: 'Titular', value: 'GásExpress Angola, Lda' },
+              ].map(({ label, value }) => (
+                <div key={label} className="flex justify-between items-center">
+                  <span
+                    className="text-xs font-semibold"
+                    style={{ color: 'rgba(255,255,255,0.4)' }}
+                  >
+                    {label}
+                  </span>
+                  <span
+                    className="text-xs font-bold font-mono"
+                    style={{ color: '#ffffff' }}
+                  >
+                    {value}
+                  </span>
+                </div>
+              ))}
+              <p
+                className="text-xs pt-1"
+                style={{ color: 'rgba(255,255,255,0.3)' }}
+              >
+                Após a transferência, envie o comprovativo para confirmar o
+                pedido.
               </p>
             </div>
-            <p className="text-xs text-muted-foreground">
-              Após a transferência, envie o comprovativo para confirmar o
-              pedido.
-            </p>
           </motion.div>
         )}
 
-        {selected === 'referencia_multicaixa' && (
+        {needsRef && (
           <motion.div
             key="ref"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="space-y-3 overflow-hidden rounded-lg bg-secondary/50 p-4"
+            className="overflow-hidden"
           >
-            <p className="text-sm font-medium text-foreground">
-              Referência de pagamento:
-            </p>
-            <div className="space-y-1 text-sm text-muted-foreground">
-              <p>
-                <span className="font-medium text-foreground">Entidade:</span>{' '}
-                00123
+            <div
+              className="p-5 rounded-2xl space-y-3"
+              style={{
+                background: 'rgba(249,115,22,0.06)',
+                border: '1px solid rgba(249,115,22,0.2)',
+              }}
+            >
+              <p
+                className="text-xs font-bold uppercase tracking-widest"
+                style={{ color: 'rgba(255,255,255,0.4)' }}
+              >
+                Referência de Pagamento
               </p>
-              <p>
-                <span className="font-medium text-foreground">Referência:</span>{' '}
-                456 789 012
-              </p>
-              <p>
-                <span className="font-medium text-foreground">Montante:</span>{' '}
-                Valor total do pedido
+              {[
+                { label: 'Entidade', value: '00123' },
+                { label: 'Referência', value: '456 789 012' },
+                { label: 'Montante', value: 'Valor total do pedido' },
+              ].map(({ label, value }) => (
+                <div key={label} className="flex justify-between items-center">
+                  <span
+                    className="text-xs font-semibold"
+                    style={{ color: 'rgba(255,255,255,0.4)' }}
+                  >
+                    {label}
+                  </span>
+                  <span
+                    className="text-xs font-bold font-mono"
+                    style={{ color: '#ffffff' }}
+                  >
+                    {value}
+                  </span>
+                </div>
+              ))}
+              <p
+                className="text-xs pt-1"
+                style={{ color: 'rgba(255,255,255,0.3)' }}
+              >
+                Dirija-se a qualquer ATM Multicaixa e selecione "Pagamentos por
+                Referência".
               </p>
             </div>
-            <p className="text-xs text-muted-foreground">
-              Dirija-se a qualquer ATM Multicaixa e selecione "Pagamentos por
-              Referência".
-            </p>
           </motion.div>
         )}
       </AnimatePresence>

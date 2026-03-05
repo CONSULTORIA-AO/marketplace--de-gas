@@ -1,6 +1,8 @@
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Star } from 'lucide-react';
 
 export function ProductListAside({ filters, setFilters }) {
   const toggleGasType = (type: string) => {
@@ -41,195 +43,117 @@ export function ProductListAside({ filters, setFilters }) {
     });
   };
 
-  //Filtro range
-  const MIN = 0;
-  const MAX = 400;
-
-  const handleMinPrice = (value: number) => {
-    if (value <= filters.maxPrice) {
-      setFilters((prev) => ({
-        ...prev,
-        minPrice: value,
-      }));
-    }
-  };
-
-  const handleMaxPrice = (value: number) => {
-    if (value >= filters.minPrice) {
-      setFilters((prev) => ({
-        ...prev,
-        maxPrice: value,
-      }));
-    }
-  };
-
   return (
-    <aside className="w-full lg:w-72 xl:w-80 flex-shrink-0">
-      <div className="sticky top-24 space-y-6 rounded-xl bg-white p-6 shadow-sm dark:bg-slate-900">
-        <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+    <motion.div
+      initial={{ opacity: 0, x: -10 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.4 }}
+      className="hidden lg:block"
+    >
+      <div className="sticky top-6 w-72 rounded-2xl border border-border bg-card p-6 shadow-lg shadow-primary/5">
+        <h2 className="mb-6 text-xl font-bold text-foreground font-['Space_Grotesk']">
           Filtros
-        </h3>
+        </h2>
 
-        <div className="space-y-3 border-t border-slate-200 pt-4 dark:border-slate-800">
-          <h4 className="font-semibold text-slate-800 dark:text-slate-200">
+        {/* Tipo de Gás */}
+        <div className="mb-6">
+          <Label className="mb-3 block text-sm font-semibold text-foreground">
             Tipo de Gás
-          </h4>
+          </Label>
           <div className="space-y-2">
-            <Label className="flex items-center gap-2">
-              <Input
-                id="gas-type-1"
+            <label className="flex items-center gap-3 cursor-pointer rounded-lg border border-border p-2.5 transition-colors hover:border-primary/50">
+              <input
                 checked={filters.gasTypes.includes('GLP13')}
                 onChange={() => toggleGasType('GLP13')}
-                className="form-checkbox h-5 w-5 rounded border-slate-300 text-[#137fec] focus:ring-[#137fec]/50 dark:border-slate-700 dark:bg-slate-800"
+                className="h-4 w-4 rounded border-border accent-[hsl(25,95%,53%)]"
                 type="checkbox"
               />
-              <span className="text-slate-600 dark:text-slate-300">
-                GLP (13kg)
-              </span>
-            </Label>
-
-            <Label className="flex items-center gap-2">
-              <Input
-                id="gas-type-2"
-                className="form-checkbox h-5 w-5 rounded border-slate-300 text-[#137fec] focus:ring-[#137fec]/50 dark:border-slate-700 dark:bg-slate-800"
-                type="checkbox"
+              <span className="text-sm text-foreground">GLP (13kg)</span>
+            </label>
+            <label className="flex items-center gap-3 cursor-pointer rounded-lg border border-border p-2.5 transition-colors hover:border-primary/50">
+              <input
                 checked={filters.gasTypes.includes('GLP45')}
                 onChange={() => toggleGasType('GLP45')}
-              />
-              <span className="text-slate-600 dark:text-slate-300">
-                GLP (45kg)
-              </span>
-            </Label>
-
-            <Label className="flex items-center gap-2">
-              <Input
-                id="gas-type-3"
-                className="form-checkbox h-5 w-5 rounded border-slate-300 text-[#137fec] focus:ring-[#137fec]/50 dark:border-slate-700 dark:bg-slate-800"
+                className="h-4 w-4 rounded border-border accent-[hsl(25,95%,53%)]"
                 type="checkbox"
+              />
+              <span className="text-sm text-foreground">GLP (45kg)</span>
+            </label>
+            <label className="flex items-center gap-3 cursor-pointer rounded-lg border border-border p-2.5 transition-colors hover:border-primary/50">
+              <input
                 checked={filters.gasTypes.includes('NATURAL')}
                 onChange={() => toggleGasType('NATURAL')}
+                className="h-4 w-4 rounded border-border accent-[hsl(25,95%,53%)]"
+                type="checkbox"
               />
-              <span className="text-slate-600 dark:text-slate-300">
-                Gás Natural
-              </span>
-            </Label>
+              <span className="text-sm text-foreground">Gás Natural</span>
+            </label>
           </div>
         </div>
 
-        <div className="space-y-3 border-t border-slate-200 pt-4 dark:border-slate-800">
-          <h4 className="font-semibold text-slate-800 dark:text-slate-200">
-            Faixa de Preço
-          </h4>
+        <div className="h-px bg-border mb-6" />
 
-          <div className="relative h-2 rounded-full bg-slate-200 dark:bg-slate-700">
-            {/* Barra azul ativa */}
-            <div
-              className="absolute h-2 rounded-full bg-[#137fec] transition-all"
-              style={{
-                left: `${(filters.minPrice / MAX) * 100}%`,
-                right: `${100 - (filters.maxPrice / MAX) * 100}%`,
-              }}
-            />
-
-            {/* Thumb mínimo */}
-            <div
-              className="absolute -top-1.5 h-5 w-5 rounded-full bg-white border-2 border-[#137fec] shadow transition-all"
-              style={{
-                left: `${(filters.minPrice / MAX) * 100}%`,
-              }}
-            />
-
-            {/* Thumb máximo */}
-            <div
-              className="absolute -top-1.5 h-5 w-5 rounded-full bg-white border-2 border-[#137fec] shadow transition-all"
-              style={{
-                left: `${(filters.maxPrice / MAX) * 100}%`,
-              }}
-            />
-
-            {/* Range invisível MIN */}
-            <input
-              type="range"
-              min={MIN}
-              max={MAX}
-              value={filters.minPrice}
-              onChange={(e) => handleMinPrice(Number(e.target.value))}
-              className="absolute w-full opacity-0 cursor-pointer"
-            />
-
-            {/* Range invisível MAX */}
-            <input
-              type="range"
-              min={MIN}
-              max={MAX}
-              value={filters.maxPrice}
-              onChange={(e) => handleMaxPrice(Number(e.target.value))}
-              className="absolute w-full opacity-0 cursor-pointer"
-            />
-          </div>
-
-          <div className="flex justify-between text-sm text-slate-500 dark:text-slate-400">
-            <span>KZ {filters.minPrice}</span>
-            <span>KZ {filters.maxPrice}</span>
-          </div>
-        </div>
-
-        <div className="space-y-3 border-t border-slate-200 pt-4 dark:border-slate-800">
-          <h4 className="font-semibold text-slate-800 dark:text-slate-200">
+        {/* Localização */}
+        <div className="mb-6">
+          <Label className="mb-3 block text-sm font-semibold text-foreground">
             Localização
-          </h4>
-          <Label className="flex flex-col">
-            <div className="relative flex w-full flex-1 items-stretch rounded-lg">
-              <div className="text-slate-500 dark:text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 transform">
-                <span className="material-symbols-outlined text-xl">
-                  location_on
-                </span>
-              </div>
-              <Input
-                type="text"
-                className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg bg-slate-100 py-2.5 pl-10 pr-4 text-slate-900 placeholder:text-slate-500 focus:outline-0 focus:ring-2 focus:ring-[#137fec]/50 dark:bg-slate-800 dark:text-white dark:placeholder:text-slate-400 border-none h-full text-base font-normal leading-normal"
-                placeholder="Cidade ou bairro"
-                value={filters.location}
-                onChange={handleLocationChange}
-              />
-            </div>
           </Label>
+          <div className="relative">
+            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-lg">
+              location_on
+            </span>
+            <Input
+              placeholder="Buscar localização..."
+              value={filters.location}
+              onChange={handleLocationChange}
+              className="bg-background border-border pl-10 focus:border-primary"
+            />
+          </div>
         </div>
 
-        <div className="space-y-3 border-t border-slate-200 pt-4 dark:border-slate-800">
-          <h4 className="font-semibold text-slate-800 dark:text-slate-200">
+        <div className="h-px bg-border mb-6" />
+
+        {/* Classificação Mínima */}
+        <div className="mb-6">
+          <Label className="mb-3 block text-sm font-semibold text-foreground">
             Classificação Mínima
-          </h4>
-          <div className="flex items-center gap-1 text-slate-300 dark:text-slate-600">
+          </Label>
+          <div className="flex gap-1">
             {[1, 2, 3, 4, 5].map((star) => (
-              <span
+              <motion.button
                 key={star}
+                whileHover={{ scale: 1.15 }}
+                whileTap={{ scale: 0.9 }}
                 onClick={() => handleRatingChange(star)}
-                className={`material-symbols-outlined cursor-pointer rating-star ${
-                  star <= filters.minRating
-                    ? 'text-yellow-400'
-                    : 'text-slate-400'
-                }`}
               >
-                star
-              </span>
+                <Star
+                  className={`h-6 w-6 transition-colors ${
+                    star <= filters.minRating
+                      ? 'fill-primary text-primary'
+                      : 'text-muted-foreground'
+                  }`}
+                />
+              </motion.button>
             ))}
           </div>
         </div>
 
-        <div className="flex flex-col gap-3 border-t border-slate-200 pt-4 dark:border-slate-800">
-          <Button className="flex w-full cursor-pointer items-center justify-center rounded-lg h-10 bg-[#137fec] hover:bg-blue-600 text-white gap-2 text-sm font-bold leading-normal tracking-wide">
+        <div className="h-px bg-border mb-6" />
+
+        {/* Botões */}
+        <div className="space-y-2">
+          <Button className="w-full font-semibold rounded-xl text-white">
             Aplicar Filtros
           </Button>
-
           <Button
+            variant="outline"
             onClick={clearFilters}
-            className="flex w-full cursor-pointer items-center justify-center rounded-lg h-10 bg-transparent text-slate-200 dark:text-slate-300 gap-2 text-sm font-medium leading-normal dark:hover:bg-slate-800 bg-red-500 hover:bg-red-600"
+            className="w-full bg-red-600 rounded-xl border-0 text-white"
           >
             Limpar Filtros
           </Button>
         </div>
       </div>
-    </aside>
+    </motion.div>
   );
 }
