@@ -179,7 +179,7 @@ const VerificationCodeStep = ({
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-          className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full gradient-[#137fec] flex items-center justify-center mb-4"
+          className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full gradient-primary flex items-center justify-center mb-4"
         >
           <span className="text-2xl sm:text-3xl">🔐</span>
         </motion.div>
@@ -208,7 +208,7 @@ const VerificationCodeStep = ({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * index }}
-              className="w-10 h-12 sm:w-12 sm:h-14 md:w-14 md:h-16 text-center text-lg sm:text-xl md:text-2xl font-semibold rounded-xl border-2 border-border border-[#137fec] bg-card bg-white text-black focus:border-[#137fec] focus:ring-2 focus:ring-[#137fec]/20 outline-none transition-all"
+              className="w-10 h-12 sm:w-12 sm:h-14 md:w-14 md:h-16 text-center text-lg sm:text-xl md:text-2xl font-semibold rounded-xl border-2 border-primary bg-card bg-white text-black focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
             />
           ))}
         </div>
@@ -226,7 +226,7 @@ const VerificationCodeStep = ({
         <Button
           type="submit"
           disabled={!isCodeComplete || isSubmitting}
-          className="w-full h-12 rounded-xl bg-green-600 hover:bg-green-700 text-white disabled:opacity-50"
+          className="w-full h-12 rounded-xl bg-orange-600 hover:bg-primary text-white disabled:opacity-50"
         >
           {isSubmitting ? 'Validando...' : 'Validar Código'}
         </Button>
@@ -236,7 +236,7 @@ const VerificationCodeStep = ({
         {canResend ? (
           <button
             onClick={handleResend}
-            className="text-[#137fec] hover:underline text-sm sm:text-base inline-flex items-center gap-2"
+            className="text-primary hover:underline text-sm sm:text-base inline-flex items-center gap-2"
           >
             <RefreshCw className="w-4 h-4" />
             Reenviar código

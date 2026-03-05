@@ -1,28 +1,26 @@
 import { api } from '@/lib/axios';
 import { useQuery } from '@tanstack/react-query';
-import type { GasProduct } from '@/types/index';
-import { mockProducts } from '@/data/prodct';
+import type { ApiResponse } from '@/types/index';
 
 interface OffersSectionProps {
   searchTerm: string;
 }
 
 export function OffersSection({ searchTerm }: OffersSectionProps) {
-  const { data: products, isLoading } = useQuery({
+  const { data: products = [], isLoading } = useQuery({
     queryKey: ['products'],
     queryFn: async () => {
-      const response = await api.get<GasProduct[]>('/products');
-      return response.data;
+      const response = await api.get<ApiResponse>(
+        'produtos?pagina=1&limite=20'
+      );
+      return response.data.mensagem;
     },
   });
 
-  const filteredProducts = mockProducts.filter(
-    (product) =>
-      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.weight.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredProducts = products.filter((product) =>
+    product.descricao.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
   if (isLoading) return <p>Carregando...</p>;
 
   return (
@@ -38,24 +36,23 @@ export function OffersSection({ searchTerm }: OffersSectionProps) {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {filteredProducts.map((product) => (
           <div
-            className="flex flex-col gap-3 rounded-xl bg-card-light dark:bg-card-dark shadow-md overflow-hidden transition-transform hover:-translate-y-1"
-            key={product.id}
+            className="bg-secondary/50 border border-glow rounded-xl p-8"
+            key={product.produtoId}
           >
             <div
-              className="w-full bg-center bg-no-repeat aspect-square bg-cover"
+              className="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-md"
               data-alt="A standard 13kg LPG gas cylinder"
-              style={{ backgroundImage: `url(${product.imageUrl})` }}
+              style={{ backgroundImage: `url(${product.imagem_produto})` }}
             ></div>
             <div className="p-4">
-              <p className="text-lg font-bold text-[#ff8300]">{product.name}</p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                {product.brand}
+              <p className="text-lg font-bold text-[#ff8300]">
+                {product.descricao}
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                <span className="line-through">De Kz 75,000</span> por
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {product.empresaDona}
               </p>
               <p className="text-2xl font-bold text-[#ff8300]">
-                KZ{product.price.toFixed(2)}
+                KZ{product.preco.toFixed(2)}
               </p>
             </div>
           </div>

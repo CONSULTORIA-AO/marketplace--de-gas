@@ -8,7 +8,7 @@ export function AuthHeader() {
   const isSignupPage = location.pathname === '/cadastro';
 
   return (
-    <header className="flex items-center justify-between whitespace-nowrap border-b border-border-light px-10 py-4 bg-white border border-slate-100 dark:border-slate-800">
+    <header className="flex items-center justify-between whitespace-nowrap border-border-light px-10 py-2 dark:border-slate-800 bg-background/70 backdrop-blur-xl border-b border-glow">
       <div className="flex items-center gap-4 text-primary">
         <div className="size-8">
           <svg
@@ -30,19 +30,19 @@ export function AuthHeader() {
           </svg>
         </div>
         <h2 className="text-text-main text-xl font-bold leading-tight tracking-[-0.015em]">
-          GasMarket
+          JáGás
         </h2>
       </div>
       <div className="flex flex-1 justify-end gap-8">
         <div className="flex items-center gap-9">
           <Link
-            className="text-slate-800 text-sm font-medium leading-normal hover:text-[#137fec] transition-colors"
+            className="text-[#ff8300] text-sm font-medium leading-normal hover:text-primary transition-colors"
             to="/"
           >
             Início
           </Link>
           <Link
-            className="text-text-main text-sm font-medium leading-normal hover:text-[#137fec] transition-colors"
+            className="text-text-main text-sm font-medium leading-normal hover:text-primary transition-colors"
             to="/"
           >
             Preços
@@ -51,7 +51,7 @@ export function AuthHeader() {
         {isLoginPage && (
           <Button
             onClick={() => navigate('/cadastro')}
-            className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-6 bg-[#137fec] text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#137fec]/90 transition-all shadow-sm"
+            className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-6 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-all shadow-sm"
           >
             <span className="truncate">Criar uma conta</span>
           </Button>
@@ -59,7 +59,7 @@ export function AuthHeader() {
         {isSignupPage && (
           <Button
             onClick={() => navigate('/login')}
-            className="flex min-w-[84px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-[#137fec] text-white text-sm font-bold tracking-tight hover:bg-[#137fec]/90 transition-all"
+            className="flex min-w-[84px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold tracking-tight hover:bg-primary/90 transition-all"
           >
             <span>Entrar</span>
           </Button>

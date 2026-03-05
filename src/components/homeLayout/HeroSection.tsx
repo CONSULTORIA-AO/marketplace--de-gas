@@ -22,7 +22,7 @@ export function HeroSection({ searchTerm, onSearchChange }: HeroSectionProps) {
           alt="Blue flame from a gas stove burner in a dark kitchen."
           className="w-full h-full object-cover opacity-60"
         />
-        <div className="absolute inset-0 bg-blue-900/40" />
+        <div className="absolute inset-0 bg-primary/40" />
       </div>
       <div className="relative container mx-auto px-4 py-24 sm:py-32 flex flex-col items-center justify-center text-center">
         <div className="flex flex-col gap-4 max-w-3xl">
@@ -48,7 +48,7 @@ export function HeroSection({ searchTerm, onSearchChange }: HeroSectionProps) {
               />
 
               <div className="flex items-center justify-center rounded-r-xl border-y border-r border-border-light bg-card-light pr-2 border border-slate-100 dark:border-slate-800">
-                <Button className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-5 bg-[#137fec] text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#137fec]/90 ">
+                <Button className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-5 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 ">
                   <span className="truncate">Buscar</span>
                 </Button>
               </div>

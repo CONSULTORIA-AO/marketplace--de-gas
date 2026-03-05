@@ -71,7 +71,7 @@ const PasswordRecoveryFlow = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-md rounded-lg border-border-light dark:border-border-dark border border-slate-100 dark:border-slate-900 shadow-xl"
+        className="w-full max-w-md rounded-lg border-border-light dark:border-border-dark border-0 border-slate-100 dark:border-slate-900 "
       >
         {/* Logo/Header */}
         <motion.div
@@ -80,10 +80,10 @@ const PasswordRecoveryFlow = () => {
           transition={{ delay: 0.1 }}
           className="text-center mb-6 sm:mb-8"
         >
-          <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-2xl gradient-[#137fec] shadow-glow mb-3">
-            <KeyRound className="w-7 h-7 sm:w-8 sm:h-8 text-[#137fec]" />
+          <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-2xl gradient-primary shadow-glow mb-3">
+            <KeyRound className="w-7 h-7 sm:w-8 sm:h-8 text-primary" />
           </div>
-          <h1 className="text-lg sm:text-xl font-semibold text-[#137fec]">
+          <h1 className="text-lg sm:text-xl font-semibold text-primary">
             Recuperação de Senha
           </h1>
         </motion.div>
@@ -93,7 +93,7 @@ const PasswordRecoveryFlow = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-8 border border-border border-border-light text-white"
+          className="rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-8 border-0 text-white"
         >
           <AnimatePresence mode="wait">
             <motion.div
@@ -144,7 +144,7 @@ const PasswordRecoveryFlow = () => {
           Lembrou sua senha?{' '}
           <Link
             to="/login"
-            className="text-[#137fec] hover:underline font-medium"
+            className="text-primary hover:underline font-medium"
           >
             Fazer login
           </Link>

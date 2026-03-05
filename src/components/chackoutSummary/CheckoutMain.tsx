@@ -19,18 +19,40 @@ interface CheckoutMainProps {
   form: UseFormReturn<CheckoutFormData>;
   onNext: (data?: CheckoutFormData) => void;
   onPrev: () => void;
+  isSubmitting?: boolean;
+  completedOrderId?: number | null;
 }
+
+const STEP_META = [
+  { label: 'Entrega', icon: 'location_on' },
+  { label: 'Pagamento', icon: 'payments' },
+  { label: 'Confirmação', icon: 'check_circle' },
+];
+
+const NEXT_STEP_PREVIEW = [
+  {
+    icon: 'payments',
+    title: 'Pagamento',
+    desc: 'Disponível após confirmar o endereço',
+  },
+  {
+    icon: 'check_circle',
+    title: 'Confirmação',
+    desc: 'Disponível após selecionar o pagamento',
+  },
+];
 
 export function CheckoutMain({
   step,
   form,
   onNext,
   onPrev,
+  isSubmitting = false,
+  completedOrderId,
 }: CheckoutMainProps) {
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(
     null
   );
-
   const phone = form.watch('phone') || '';
 
   const handleSelectPayment = (method: PaymentMethod) => {
@@ -38,11 +60,13 @@ export function CheckoutMain({
     form.setValue('paymentMethod', method);
   };
 
-  const handlePhoneChange = (value: string) => {
-    form.setValue('phone', value);
-  };
+  const handlePhoneChange = (value: string) => form.setValue('phone', value);
+
   const steps = [
-    { label: 'Entrega', component: <CheckoutFirstStap /> },
+    {
+      label: 'Entrega',
+      component: <CheckoutFirstStap form={form} />,
+    },
     {
       label: 'Pagamento',
       component: (
@@ -54,111 +78,229 @@ export function CheckoutMain({
         />
       ),
     },
-    { label: 'Confirmação', component: <CheckoutConfirmStep /> },
+    {
+      label: 'Confirmação',
+      component: <CheckoutConfirmStep orderId={completedOrderId} />,
+    },
   ];
+
+  const canProceed = () => {
+    if (step === 2 && !selectedMethod) return false;
+    return true;
+  };
 
   return (
     <main className="lg:col-span-2">
-      {/* Nav steps */}
-      <nav className="flex items-center gap-4 mb-10 overflow-x-auto pb-2 scrollbar-hide">
-        {steps.map((s, idx) => {
-          const stepNum = idx + 1;
-          const isActive = step === stepNum;
+      {/* ── Step nav ── */}
+      <nav className="flex items-center gap-2 mb-10 overflow-x-auto pb-2">
+        {STEP_META.map((s, idx) => {
+          const num = idx + 1;
+          const isActive = step === num;
+          const isDone = step > num;
           return (
             <div key={s.label} className="flex items-center gap-2">
               <div
-                className={`flex items-center gap-2 px-4 py-2 rounded-full border ${
-                  isActive
-                    ? 'bg-blue-100 border-blue-200'
-                    : 'bg-gray-200 border-transparent'
-                }`}
-              >
-                <span
-                  className={`flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold ${
+                className="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl transition-all"
+                style={{
+                  background: isActive
+                    ? 'rgba(249,115,22,0.15)'
+                    : isDone
+                      ? 'rgba(74,222,128,0.1)'
+                      : 'rgba(255,255,255,0.04)',
+                  border: `1.5px solid ${
                     isActive
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-300 text-white'
-                  }`}
+                      ? 'rgba(249,115,22,0.5)'
+                      : isDone
+                        ? 'rgba(74,222,128,0.3)'
+                        : 'rgba(255,255,255,0.1)'
+                  }`,
+                }}
+              >
+                <div
+                  className="w-6 h-6 rounded-lg flex items-center justify-center text-xs font-black"
+                  style={{
+                    background: isActive
+                      ? '#f97316'
+                      : isDone
+                        ? '#4ade80'
+                        : 'rgba(255,255,255,0.1)',
+                    color:
+                      isActive || isDone ? '#000' : 'rgba(255,255,255,0.3)',
+                  }}
                 >
-                  {stepNum}
-                </span>
+                  {isDone ? (
+                    <span
+                      className="material-symbols-outlined"
+                      style={{ fontSize: 13 }}
+                    >
+                      check
+                    </span>
+                  ) : (
+                    num
+                  )}
+                </div>
                 <span
-                  className={`font-semibold text-sm whitespace-nowrap ${
-                    isActive ? 'text-blue-600' : 'text-gray-500 font-medium'
-                  }`}
+                  className="text-sm font-bold whitespace-nowrap"
+                  style={{
+                    color: isActive
+                      ? '#f97316'
+                      : isDone
+                        ? '#4ade80'
+                        : 'rgba(255,255,255,0.3)',
+                  }}
                 >
                   {s.label}
                 </span>
               </div>
-              {idx < steps.length - 1 && (
-                <div className="h-px w-8 bg-border-gray"></div>
+              {idx < STEP_META.length - 1 && (
+                <div
+                  className="h-px w-6 flex-shrink-0 rounded-full"
+                  style={{
+                    background:
+                      step > idx + 1 ? '#4ade80' : 'rgba(255,255,255,0.1)',
+                  }}
+                />
               )}
             </div>
           );
         })}
       </nav>
 
-      {/* Step content with animation */}
-      <div className="mb-12">
+      {/* ── Step content ── */}
+      <div className="mb-10">
         <AnimatePresence mode="wait">
           <motion.div
             key={step}
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            transition={{ duration: 0.3 }}
+            exit={{ opacity: 0, x: -40 }}
+            transition={{ duration: 0.28 }}
           >
             {steps[step - 1].component}
           </motion.div>
         </AnimatePresence>
 
-        {/* Próxima etapa / Placeholder */}
+        {/* Next step preview */}
         {step < steps.length && (
-          <div className="opacity-50 grayscale-[0.5] mt-8">
-            <div className="mb-6 flex items-center gap-3">
-              <div className="h-px flex-1 bg-border-gray"></div>
-              <span className="text-slate-900 text-sm font-bold uppercase tracking-widest">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="mt-8 opacity-40"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <div
+                className="h-px flex-1"
+                style={{ background: 'rgba(249,115,22,0.2)' }}
+              />
+              <span
+                className="text-xs font-bold uppercase tracking-widest"
+                style={{ color: 'rgba(255,255,255,0.35)' }}
+              >
                 Próxima Etapa
               </span>
-              <div className="h-px flex-1 bg-border-gray"></div>
+              <div
+                className="h-px flex-1"
+                style={{ background: 'rgba(249,115,22,0.2)' }}
+              />
             </div>
-            <div className="bg-slate-50 border border-dashed border-slate-300 p-8 rounded-xl flex flex-col items-center justify-center text-center">
-              <span className="material-symbols-outlined text-4xl text-slate-300 mb-2">
-                {step === 1 ? 'payments' : step === 2 ? 'check_circle' : ''}
+            <div
+              className="p-6 rounded-2xl flex flex-col items-center justify-center text-center"
+              style={{
+                background: 'rgba(255,255,255,0.02)',
+                border: '1px dashed rgba(249,115,22,0.2)',
+              }}
+            >
+              <span
+                className="material-symbols-outlined text-4xl mb-2"
+                style={{ color: 'rgba(249,115,22,0.3)' }}
+              >
+                {NEXT_STEP_PREVIEW[step - 1]?.icon}
               </span>
-              <h2 className="font-bold text-lg text-black">
-                {step === 1 ? 'Pagamento' : step === 2 ? 'Confirmação' : ''}
+              <h2
+                className="font-bold text-base"
+                style={{ color: 'rgba(255,255,255,0.5)' }}
+              >
+                {NEXT_STEP_PREVIEW[step - 1]?.title}
               </h2>
-              <p className="text-black text-sm">
-                {step === 1
-                  ? 'Disponível após confirmar o endereço'
-                  : step === 2
-                    ? 'Disponível após o pagamento'
-                    : ''}
+              <p
+                className="text-sm mt-1"
+                style={{ color: 'rgba(255,255,255,0.25)' }}
+              >
+                {NEXT_STEP_PREVIEW[step - 1]?.desc}
               </p>
             </div>
-          </div>
+          </motion.div>
         )}
       </div>
 
-      {/* Navegação */}
-      <div className="flex justify-between mt-6">
-        <button
-          type="button"
-          onClick={onPrev}
-          disabled={step === 1}
-          className="px-6 py-2 rounded-lg border border-gray-300 text-gray-600 disabled:opacity-50"
-        >
-          Voltar
-        </button>
-        <button
-          type="button"
-          onClick={() => onNext(form.getValues())}
-          className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
-        >
-          {step === steps.length ? 'Finalizar' : 'Próximo'}
-        </button>
-      </div>
+      {/* ── Navigation buttons ── */}
+      {step < 3 && (
+        <div className="flex justify-between items-center gap-4">
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.97 }}
+            type="button"
+            onClick={onPrev}
+            disabled={step === 1}
+            className="flex items-center gap-2 px-6 h-12 rounded-2xl text-sm font-bold transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+            style={{
+              background: 'transparent',
+              border: '1.5px solid rgba(255,255,255,0.15)',
+              color: 'rgba(255,255,255,0.6)',
+            }}
+          >
+            <span
+              className="material-symbols-outlined"
+              style={{ fontSize: 16 }}
+            >
+              arrow_back
+            </span>
+            Voltar
+          </motion.button>
+
+          <motion.button
+            whileHover={{ scale: canProceed() ? 1.02 : 1 }}
+            whileTap={{ scale: canProceed() ? 0.97 : 1 }}
+            type="button"
+            onClick={() => onNext(form.getValues())}
+            disabled={!canProceed() || isSubmitting}
+            className="flex items-center gap-2 px-8 h-12 rounded-2xl text-sm font-extrabold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            style={{
+              background: canProceed()
+                ? 'linear-gradient(135deg, #f97316, #ea580c)'
+                : 'rgba(255,255,255,0.08)',
+              color: canProceed() ? '#ffffff' : 'rgba(255,255,255,0.3)',
+              boxShadow: canProceed()
+                ? '0 6px 20px rgba(249,115,22,0.3)'
+                : 'none',
+              border: 'none',
+            }}
+          >
+            {isSubmitting ? (
+              <>
+                <span
+                  className="material-symbols-outlined animate-spin"
+                  style={{ fontSize: 16 }}
+                >
+                  autorenew
+                </span>
+                A processar…
+              </>
+            ) : (
+              <>
+                {step === 2 ? 'Finalizar Pedido' : 'Próximo'}
+                <span
+                  className="material-symbols-outlined"
+                  style={{ fontSize: 16 }}
+                >
+                  {step === 2 ? 'check_circle' : 'arrow_forward'}
+                </span>
+              </>
+            )}
+          </motion.button>
+        </div>
+      )}
     </main>
   );
 }

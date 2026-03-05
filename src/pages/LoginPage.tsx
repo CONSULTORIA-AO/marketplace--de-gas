@@ -12,7 +12,7 @@ import { loginSchema, type LoginFormData } from '@/lib/validations';
 import { useAuthStore } from '@/store/authStrore';
 import { api } from '@/lib/axios';
 import type { AuthResponse } from '@/types/index';
-import { AuthHeader } from '@/components/AuthHeader';
+import { AuthHeader } from '@/components/layout/AuthHeader';
 import { AxiosError } from 'axios';
 import { ToastAction } from '@/components/ui/toast';
 import { useState } from 'react';
@@ -146,14 +146,14 @@ export function LoginPage() {
               <div className="flex flex-col gap-2">
                 <Label
                   htmlFor="email"
-                  className="text-slate-700 dark:text-slate-300 text-sm font-semibold leading-normal"
+                  className="text-primary dark:text-slate-300 text-sm font-semibold leading-normal"
                 >
                   E-mail
                 </Label>
                 <Input
                   id="email"
                   {...register('emailCliente')}
-                  className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-slate-900 dark:text-white focus:outline-0 focus:ring-1 border border-slate-200 dark:border-slate-700 bg-white focus:border-[#137fec] h-14 placeholder:text-slate-500/60 p-[15px] text-base font-normal leading-normal transition-all"
+                  className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-slate-900 dark:text-white focus:outline-0 focus:ring-1 border border-slate-200 dark:border-slate-700 bg-white focus:border-primary h-14 placeholder:text-slate-500/60 p-[15px] text-base font-normal leading-normal transition-all"
                   placeholder="seu@email.com"
                   type="email"
                 />
@@ -167,12 +167,12 @@ export function LoginPage() {
                 <div className="flex justify-between items-center">
                   <Label
                     htmlFor="password"
-                    className="text-slate-700 dark:text-slate-300 text-sm font-semibold leading-normal"
+                    className="text-primary dark:text-slate-300 text-sm font-semibold leading-normal"
                   >
                     Senha
                   </Label>
                   <Link
-                    className="text-[#137fec] text-sm font-semibold hover:underline"
+                    className="text-primary text-sm font-semibold hover:underline"
                     to="/recuperar-senha"
                   >
                     Esqueceu a senha?
@@ -182,7 +182,7 @@ export function LoginPage() {
                   <Input
                     id="password"
                     {...register('senhaCliente')}
-                    className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-slate-900 dark:text-white focus:outline-0 focus:ring-1 border border-slate-200 dark:border-slate-700 bg-white focus:border-[#137fec] h-14 placeholder:text-slate-500/60 p-[15px] text-base font-normal leading-normal transition-all"
+                    className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-slate-900 dark:text-white focus:outline-0 focus:ring-1 border border-slate-200 dark:border-slate-700 bg-white focus:border-primary h-14 placeholder:text-slate-500/60 p-[15px] text-base font-normal leading-normal transition-all"
                     placeholder=""
                     type={mostrarSenha ? 'text' : 'password'}
                   />
@@ -194,7 +194,7 @@ export function LoginPage() {
                   <Button
                     type="button"
                     onClick={() => setMostrarSenha(!mostrarSenha)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-primary hover:text-orange-600 transition-colors hover:bg-transparent  bg-transparent"
                   >
                     <span className="material-symbols-outlined">
                       {mostrarSenha ? 'visibility_off' : 'visibility'}
@@ -205,7 +205,7 @@ export function LoginPage() {
               <Button
                 type="submit"
                 disabled={loginMutation.isPending}
-                className="w-full h-14 bg-[#137fec] text-white text-base font-bold rounded-xl hover:bg-[#137fec]/90 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 group"
+                className="w-full h-14 bg-primary text-white text-base font-bold rounded-xl hover:bg-primary/90 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 group"
               >
                 {loginMutation.isPending ? (
                   <>
@@ -223,13 +223,13 @@ export function LoginPage() {
               </Button>
               <div className="flex items-center gap-4 py-2">
                 <div className="h-px bg-border-light flex-1"></div>
-                <span className="text-text-muted text-[10px] font-bold uppercase tracking-[0.1em]">
+                <span className="text-text-muted text-[10px] text-black font-bold uppercase tracking-[0.1em]">
                   ou continue com
                 </span>
                 <div className="h-px bg-border-light flex-1"></div>
               </div>
               <div>
-                <Button className="w-full flex items-center justify-center gap-3 h-14 rounded-xl border border-border-light bg-white text-text-main font-semibold hover:bg-slate-50 transition-all">
+                <Button className="w-full flex items-center justify-center gap-3 h-14 rounded-xl bg-blue-600 border-0 text-text-main font-semibold hover:bg-blue-700 transition-all">
                   <svg className="w-5 h-5" viewBox="0 0 24 24">
                     <path
                       d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -251,11 +251,11 @@ export function LoginPage() {
                   Google
                 </Button>
               </div>
-              <p className="text-center text-text-muted text-sm pt-4">
+              <p className="text-center text-text-muted text-sm pt-4 text-black">
                 Não tem uma conta?{' '}
                 <Link
                   to="/cadastro"
-                  className="text-[#137fec] font-bold hover:underline ml-1"
+                  className="text-primary font-bold hover:underline ml-1"
                 >
                   Crie sua conta agora
                 </Link>

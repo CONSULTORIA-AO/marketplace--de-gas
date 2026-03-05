@@ -1,4 +1,4 @@
-import { Header } from '@/components/Header';
+import { Header } from '@/components/layout/Header';
 
 import { ProductListAside } from '@/components/products/productList/ProductListAside';
 import { ProductSpolier } from '@/components/products/productList/ProductSpolier';

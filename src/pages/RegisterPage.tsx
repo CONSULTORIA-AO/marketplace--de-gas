@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { registerSchema, type RegisterFormData } from '@/lib/validations';
 import { api } from '@/lib/axios';
-import { AuthHeader } from '@/components/AuthHeader';
+import { AuthHeader } from '@/components/layout/AuthHeader';
 import { ToastAction } from '@/components/ui/toast';
 import { AxiosError } from 'axios';
 
@@ -91,15 +91,15 @@ export function RegisterPage() {
           {/* Left Side: Visual Content */}
           <div className="hidden lg:flex flex-col gap-8 pr-12">
             <div className="flex flex-col gap-4">
-              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#137fec]/10 text-[#137fec] text-sm font-semibold w-fit">
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold w-fit">
                 <span className="material-symbols-outlined text-sm">
                   local_shipping
                 </span>
                 Entrega em minutos
               </span>
-              <h1 className="text-slate-900 dark:text-white text-5xl font-extrabold leading-[1.1] tracking-tight">
+              <h1 className="text-primary dark:text-white text-5xl font-extrabold leading-[1.1] tracking-tight">
                 Seu gás na porta de casa{' '}
-                <span className="text-[#137fec]">em poucos cliques</span>
+                <span className="text-primary">em poucos cliques</span>
               </h1>
               <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed max-w-md">
                 Junte-se a milhares de clientes que já economizam tempo e
@@ -117,7 +117,7 @@ export function RegisterPage() {
                 />
                 <div className="absolute bottom-6 left-6 right-6 p-6 bg-white/90 dark:bg-background-dark/90 backdrop-blur-sm rounded-xl z-20 border border-white/20">
                   <div className="flex items-center gap-4">
-                    <div className="bg-[#137fec] p-3 rounded-full text-white">
+                    <div className="bg-primary p-3 rounded-full text-white">
                       <span className="material-symbols-outlined">
                         verified
                       </span>
@@ -126,7 +126,7 @@ export function RegisterPage() {
                       <p className="text-slate-900 dark:text-white font-bold">
                         Revendedores Autorizados
                       </p>
-                      <p className="text-slate-600 dark:text-slate-400 text-sm">
+                      <p className="text-primary dark:text-slate-400 text-sm">
                         Apenas fornecedores certificados pela ANP.
                       </p>
                     </div>
@@ -151,12 +151,12 @@ export function RegisterPage() {
                 <div className="flex flex-col gap-1.5">
                   <Label
                     htmlFor="name"
-                    className="text-slate-700 dark:text-slate-300 text-sm font-semibold"
+                    className="text-primary dark:text-slate-300 text-sm font-semibold"
                   >
                     Nome Completo
                   </Label>
                   <div className="relative">
-                    <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                    <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary">
                       person
                     </span>
                     <Input
@@ -178,12 +178,12 @@ export function RegisterPage() {
                   <div className="flex flex-col gap-1.5">
                     <Label
                       htmlFor="emailCliente"
-                      className="text-slate-700 dark:text-slate-300 text-sm font-semibold"
+                      className="text-primary dark:text-slate-300 text-sm font-semibold"
                     >
                       E-mail
                     </Label>
                     <div className="relative">
-                      <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                      <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary">
                         mail
                       </span>
                       <Input
@@ -204,12 +204,12 @@ export function RegisterPage() {
                   <div className="flex flex-col gap-1.5">
                     <Label
                       htmlFor="phone"
-                      className="text-slate-700 dark:text-slate-300 text-sm font-semibold"
+                      className="text-primary dark:text-slate-300 text-sm font-semibold"
                     >
                       Telefone
                     </Label>
                     <div className="relative">
-                      <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                      <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary">
                         call
                       </span>
                       <Input
@@ -229,12 +229,12 @@ export function RegisterPage() {
                   <div className="flex flex-col gap-1.5">
                     <Label
                       htmlFor="phone"
-                      className="text-slate-700 dark:text-slate-300 text-sm font-semibold"
+                      className="text-primary dark:text-slate-300 text-sm font-semibold"
                     >
                       Telefone alternativo
                     </Label>
                     <div className="relative">
-                      <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                      <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary">
                         call
                       </span>
                       <Input
@@ -254,12 +254,12 @@ export function RegisterPage() {
                   <div className="flex flex-col gap-1.5">
                     <Label
                       htmlFor="local"
-                      className="text-slate-700 dark:text-slate-300 text-sm font-semibold"
+                      className="text-primary dark:text-slate-300 text-sm font-semibold"
                     >
                       Endereço da morada
                     </Label>
                     <div className="relative">
-                      <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                      <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary">
                         map
                       </span>
                       <Input
@@ -282,12 +282,12 @@ export function RegisterPage() {
                   <div className="flex flex-col gap-1.5">
                     <Label
                       htmlFor="password"
-                      className="text-slate-700 dark:text-slate-300 text-sm font-semibold"
+                      className="text-primary dark:text-slate-300 text-sm font-semibold"
                     >
                       Senha
                     </Label>
                     <div className="relative">
-                      <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                      <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary">
                         lock
                       </span>
                       <Input
@@ -308,12 +308,12 @@ export function RegisterPage() {
                   <div className="flex flex-col gap-1.5">
                     <Label
                       htmlFor="confirmPassword"
-                      className="text-slate-700 dark:text-slate-300 text-sm font-semibold"
+                      className="text-primary dark:text-slate-300 text-sm font-semibold"
                     >
                       Confirmar Senha
                     </Label>
                     <div className="relative">
-                      <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                      <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary">
                         lock
                       </span>
                       <Input
@@ -329,7 +329,7 @@ export function RegisterPage() {
                 {/* Checkbox Terms */}
                 <div className="flex items-start gap-3 py-2">
                   <input
-                    className="mt-1 w-5 h-5 hover:cursor-pointer rounded border-slate-300 text-[#137fec] focus:ring-[#137fec]"
+                    className="mt-1 w-5 h-5 hover:cursor-pointer rounded border-slate-300 text-primary focus:ring-primary"
                     id="terms"
                     type="checkbox"
                   />
@@ -338,26 +338,26 @@ export function RegisterPage() {
                     className="text-sm text-slate-600 dark:text-slate-400 leading-tight"
                   >
                     Eu li e concordo com os{' '}
-                    <a
-                      className="text-[#137fec] font-semibold hover:underline"
-                      href="#"
+                    <Link
+                      className="text-primary font-semibold hover:underline"
+                      to="/termos&politicas"
                     >
                       Termos de Uso
-                    </a>{' '}
+                    </Link>{' '}
                     e a{' '}
-                    <a
-                      className="text-[#137fec] font-semibold hover:underline"
-                      href="#"
+                    <Link
+                      className="text-primary font-semibold hover:underline"
+                      to="/termos&politicas"
                     >
                       Política de Privacidade
-                    </a>
+                    </Link>
                     .
                   </Label>
                 </div>
                 {/* Action Button */}
                 <Button
                   type="submit"
-                  className="w-full h-14 bg-[#137fec] text-white text-base font-bold rounded-xl hover:bg-[#137fec]/90 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 group"
+                  className="w-full h-14 bg-primary text-white text-base font-bold rounded-xl hover:bg-primary/90 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 group"
                 >
                   Criar minha conta
                   <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">
@@ -369,7 +369,7 @@ export function RegisterPage() {
                   Já tem uma conta?{' '}
                   <Link
                     to="/login"
-                    className="text-[#137fec]    hover:underline font-medium"
+                    className="text-primary hover:underline font-medium"
                   >
                     Faça login
                   </Link>
