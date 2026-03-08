@@ -13,6 +13,7 @@ import Contact from '@/app/(public)/contact/contact';
 import Product from '@/app/(public)/product/page';
 import NotFoundPage from '@/app/(public)/notfound/page';
 import CartPage from '@/app/cart/page';
+import Customer from "@/app/customer/page";
 
 const NavLink = () => {
   return (
@@ -28,6 +29,7 @@ const NavLink = () => {
       <Route path="/perguntas-frequentes" element={<FAQ />} />
       <Route path="/contacto" element={<Contact />} />
       <Route path="/produto/:id" element={<Product />} />
+      <Route path="/produtos" element={<Customer />} />
       <Route path="/carrinho" element={<CartPage />} />
 
       <Route path="*" element={<NotFoundPage />} />

@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   recoveryContactSchema,
   type RecoveryContactFormData,
-} from '@/schema/validations';
+} from '@/schema/customer.schema';
 import { api } from '@/utils/api';
 import { ToastAction } from '@/components/ui/toast';
 import { useToast } from '@/hooks/use-toast';

@@ -8,7 +8,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AxiosError } from 'axios';
-import { type RecoveryAccout, recoveryAccount } from '@/schema/validations';
+import { type RecoveryAccout, recoveryAccount } from '@/schema/customer.schema';
 import { ToastAction } from '@/components/ui/toast';
 import { api } from '@/utils/api';
 //import { useUserStore } from '@/store/userIfo';

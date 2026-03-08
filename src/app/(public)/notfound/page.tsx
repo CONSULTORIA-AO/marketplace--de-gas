@@ -57,17 +57,17 @@ export default function NotFoundPage() {
         </div>
 
         {/* Mensagem de erro */}
-        <h1 className="text-6xl md:text-8xl lg:text-9xl font-extrabold text-[#a550f5]">
+        <h1 className="text-6xl md:text-8xl lg:text-9xl font-extrabold text-[#FFA500]">
           404
         </h1>
-        <p className="text-lg md:text-xl lg:text-2xl text-gray-300 mt-4">
+        <p className="text-lg md:text-xl text-white lg:text-2xl mt-4">
           Ups! Página não encontrada.
         </p>
 
         {/* Link para voltar */}
         <Link
           to="/"
-          className="mt-6 text-[#171718] cursor-pointer hover:text-blue-500 text-base md:text-lg lg:text-xl"
+          className="mt-6 text-[#FFA500] cursor-pointer hover:text-orange-500 text-base md:text-lg lg:text-xl"
         >
           Voltar para a página inicial
         </Link>

@@ -5,17 +5,85 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { LiaEyeSolid } from 'react-icons/lia';
 import { FaRegEyeSlash } from 'react-icons/fa';
+import { useToast } from '@/hooks/use-toast';
+import { loginSchema, type LoginFormData } from '@/schema/customer.schema';
+import { useAuthStore } from '@/hooks/auth';
+import { AxiosError } from 'axios';
+import { ToastAction } from '@/components/ui/toast';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useAuth } from "@/service/customer/auth";
+import BackegroundImage from "@/assets/wallpaper.jpg";
 
 export default function LoginPage() {
-  const router = useNavigate();
-  const [form, setForm] = useState({ email: '', password: '' });
-  const [focused, setFocused] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const setAuth = useAuthStore((state) => state.setAuth);
   const [showPass, setShowPass] = useState(false);
+  const [focused, setFocused] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.MouseEvent) => {
-    e.preventDefault();
-    router('/customer');
+  const { mutate, isPending } = useAuth({
+    onSuccess: (data) => {
+      setAuth(data.info, data.mensagem);
+      toast({
+        description: (
+          <div className="flex items-center gap-4 bg-white">
+            <span className="text-[#717F96]">Login realizado com sucesso!</span>
+          </div>
+        ),
+        action: (
+          <ToastAction
+            altText="close"
+            className="shadow-none border-none text-[#717F96] hover:bg-transparent"
+          >
+            .
+          </ToastAction>
+        ),
+        className:
+          'border-l-4 border-l-[#ff8300] border-t-0 border-b-0 border-r-0',
+      });
+
+      navigate('/produtos');
+    },
+    onError: (error: unknown) => {
+      if (error instanceof AxiosError) {
+        toast({
+          description: (
+            <div className="flex items-center gap-4 ">
+              <div className="rounded-full w-8 h-8 flex justify-center items-center bg-[fill: rgba(251, 55, 72, 0.16)]"></div>
+
+              <span className="text-[#717F96]">
+                {error?.response?.data.mensagem}
+              </span>
+            </div>
+          ),
+          action: (
+            <ToastAction
+              altText="close"
+              className="shadow-none border-none text-[#717F96] hover:bg-transparent"
+            >
+              .
+            </ToastAction>
+          ),
+          className:
+            'border-l-4 border-l-[#FB3748] border-t-0 border-b-0 border-r-0',
+        });
+      }
+    },
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const onSubmit = (data: LoginFormData) => {
+    mutate(data);
   };
+
 
   return (
     <div
@@ -27,7 +95,8 @@ export default function LoginPage() {
         {/* Top label */}
 
         {/* Form centered */}
-        <div
+        <form
+          onSubmit={handleSubmit(onSubmit)}
           className="flex-1 flex flex-col justify-center px-16 pb-10"
           style={{ maxWidth: 540 }}
         >
@@ -36,9 +105,9 @@ export default function LoginPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-4xl font-black text-[#1259C3] mb-10"
+            className="text-4xl font-black text-[#FFA500] mb-10"
           >
-            Angoverso
+            Jagás
           </motion.h1>
 
           {/* Welcome */}
@@ -48,7 +117,7 @@ export default function LoginPage() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-gray-400 text-lg mb-10"
           >
-            Welcome back to Angoverso
+            bem-vindo/a à JaGás
           </motion.p>
 
           {/* Email field */}
@@ -61,20 +130,16 @@ export default function LoginPage() {
             <input
               type="email"
               placeholder="Email"
-              value={form.email}
-              onChange={(e) =>
-                setForm((p) => ({ ...p, email: e.target.value }))
-              }
+              {...register('emailCliente')}
               onFocus={() => setFocused('email')}
-              onBlur={() => setFocused(null)}
               className="w-full pb-2 pt-1 text-sm text-gray-700 placeholder:text-gray-400 bg-transparent outline-none border-b"
               style={{
-                borderBottomColor: focused === 'email' ? '#1259C3' : '#C0C0C0',
+                borderBottomColor: focused === 'email' ? '#FFA500' : '#C0C0C0',
                 borderBottomWidth: focused === 'email' ? 2 : 1,
               }}
             />
             <motion.div
-              className="absolute bottom-0 left-0 h-0.5 bg-[#1259C3]"
+              className="absolute bottom-0 left-0 h-0.5 bg-[#FFA500]"
               animate={{ width: focused === 'email' ? '100%' : '0%' }}
               transition={{ duration: 0.25 }}
             />
@@ -90,16 +155,12 @@ export default function LoginPage() {
             <input
               type={showPass ? 'text' : 'password'}
               placeholder="Password"
-              value={form.password}
-              onChange={(e) =>
-                setForm((p) => ({ ...p, password: e.target.value }))
-              }
+              {...register('senhaCliente')}
               onFocus={() => setFocused('password')}
-              onBlur={() => setFocused(null)}
               className="w-full pb-2 pt-1 text-sm text-gray-700 placeholder:text-gray-400 bg-transparent outline-none border-b"
               style={{
                 borderBottomColor:
-                  focused === 'password' ? '#1259C3' : '#C0C0C0',
+                  focused === 'password' ? '#1FFA500' : '#C0C0C0',
                 borderBottomWidth: focused === 'password' ? 2 : 1,
               }}
             />
@@ -112,7 +173,7 @@ export default function LoginPage() {
               {showPass ? <LiaEyeSolid /> : <FaRegEyeSlash />}
             </button>
             <motion.div
-              className="absolute bottom-0 left-0 h-0.5 bg-[#1259C3]"
+              className="absolute bottom-0 left-0 h-0.5 bg-[#FFA500]"
               animate={{ width: focused === 'password' ? '100%' : '0%' }}
               transition={{ duration: 0.25 }}
             />
@@ -126,8 +187,8 @@ export default function LoginPage() {
             className="flex justify-end mb-8"
             href="/recoverpassword"
           >
-            <span className="text-sm text-[#1259C3] cursor-pointer hover:underline">
-              Forgot password?
+            <span className="text-sm text-[#FFA500] cursor-pointer hover:underline">
+              Esqueceu a senha?
             </span>
           </motion.a>
 
@@ -136,12 +197,13 @@ export default function LoginPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            whileHover={{ backgroundColor: '#0A4DB8', scale: 1.01 }}
+            whileHover={{ backgroundColor: '#FFA500', scale: 1.01 }}
             whileTap={{ scale: 0.98 }}
-            onClick={handleSubmit}
-            className="w-full py-4 rounded-lg bg-[#1259C3] text-white font-bold text-base shadow-md transition-colors mb-8"
+            type="submit"
+            disabled={isPending}
+            className="w-full py-4 rounded-lg bg-[#FFA500] hover:bg-[#FFA500] text-white font-bold text-base shadow-md transition-colors mb-8"
           >
-            Login
+            {isPending ? 'Acessando...' : 'Iniciar sessão'}
           </motion.button>
 
           {/* Divider "ou" */}
@@ -184,7 +246,7 @@ export default function LoginPage() {
                 d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.35-8.16 2.35-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
               />
             </svg>
-            Sign in with google
+            Acessar com google
           </motion.button>
 
           {/* Register link */}
@@ -194,15 +256,15 @@ export default function LoginPage() {
             transition={{ delay: 0.6 }}
             className="text-center text-sm text-gray-700"
           >
-            New Angoverso?{' '}
+            Novo na JaGás?{' '}
             <span
-              className="text-[#1259C3] font-medium cursor-pointer hover:underline"
-              onClick={() => router('/cadastro')}
+              className="text-[#FFA500] font-medium cursor-pointer hover:underline"
+              onClick={() => navigate('/cadastro')}
             >
-              Create Count
+              Criar conta
             </span>
           </motion.p>
-        </div>
+        </form>
       </div>
 
       {/* ── RIGHT SIDE — photo with blue overlay ─────────────────────────── */}
@@ -212,16 +274,14 @@ export default function LoginPage() {
         transition={{ duration: 0.9 }}
         className="w-[42%] flex-shrink-0 relative overflow-hidden"
       >
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&q=80')`,
-          }}
+        <img
+          className="absolute inset-0 bg-cover bg-center h-full"
+          src={BackegroundImage}
         />
         {/* Blue tint overlay */}
         <div
           className="absolute inset-0"
-          style={{ backgroundColor: 'rgba(30, 80, 200, 0.42)' }}
+          style={{ backgroundColor: 'rgba(200, 146, 30, 0.42)' }}
         />
       </motion.div>
     </div>
