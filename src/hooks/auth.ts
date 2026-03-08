@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { AuthSession, AuthInfo, AuthMensagem } from '@/types';
+import { AuthSession, AuthInfo, AuthMensagem } from '@/types/auth';
 
 interface AuthState {
   session: AuthSession | null;

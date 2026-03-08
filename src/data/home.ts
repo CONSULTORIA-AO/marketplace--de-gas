@@ -1,160 +1,58 @@
-import {
-  FaTshirt,
-  FaBuilding,
-  FaPills,
-  FaShoePrints,
-  FaCar,
-} from "react-icons/fa";
-import {
-  MdToys,
-} from "react-icons/md";
-import { Categorys, Testimonial } from '@/types/home';
-import { Product } from "@/types/product";
-
-export interface Slide {
-  title: string;
-  subtitle: string;
-  cta: string;
-  bg: string;
-  accent: string;
-  emoji: string; 
-}
-
-export interface NavItem {
-  label: string;
-}
-
-export const products: Product[] = [
+export const testimonials = [
   {
-    id: 1,
-    name: "iPhone 15 Pro 256GB",
-    price: "AOA 7.499",
-    img: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&q=80",
+    name: 'Maria dos Santos',
+    avatar: 'M',
+    comment:
+      'A entrega foi super rápida e o gás chegou em perfeitas condições. Recomendo a todos os meus vizinhos! O atendimento pelo WhatsApp também foi excelente.',
+    role: 'Cliente Residencial - Talatona',
+    rating: 5,
   },
   {
-    id: 2,
-    name: "MacBook Air M2 8GB",
-    price: "AOA 9.899",
-    img: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=400&q=80",
+    name: 'João Mendes',
+    avatar: 'J',
+    comment:
+      'Serviço de primeira! O técnico foi pontual, educado e explicou tudo direitinho sobre a segurança do botijão. Já sou cliente há mais de um ano.',
+    role: 'Restaurante Pequeno - Viana',
+    rating: 5,
   },
   {
-    id: 3,
-    name: "Samsung Galaxy S24",
-    price: "AOA 4.299",
-    img: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=400&q=80",
+    name: 'Ana Paula Costa',
+    avatar: 'A',
+    comment:
+      'Comprei pela primeira vez e fiquei impressionada com a qualidade do atendimento e a pontualidade. O preço também é muito competitivo.',
+    role: 'Família Numerosa - Cazenga',
+    rating: 4,
   },
   {
-    id: 4,
-    name: "AirPods Pro 2ª Geração",
-    price: "AOA 1.899",
-    img: "https://images.unsplash.com/photo-1606741965509-717c7e0e57a9?w=400&q=80",
+    name: 'António Ferreira',
+    avatar: 'A',
+    comment:
+      'Já uso há mais de 2 anos e nunca tive problemas. Entrega sempre no prazo combinado e o gás é de ótima qualidade. Continuem assim!',
+    role: 'Pequeno Comércio - Kilamba Kiaxi',
+    rating: 5,
   },
   {
-    id: 5,
-    name: 'Smart TV 65" 4K QLED',
-    price: "AOA 3.799",
-    img: "https://images.unsplash.com/photo-1593640408182-31c228e78b8a?w=400&q=80",
+    name: 'Sofia Ribeiro',
+    avatar: 'S',
+    comment:
+      'O site é fácil de usar, o pagamento por MULTICAIXA funcionou perfeitamente e recebi em menos de 24h. Muito satisfeita!',
+    role: 'Mãe de Família - Samba',
+    rating: 5,
   },
   {
-    id: 6,
-    name: "PlayStation 5 + 2 Controles",
-    price: "AOA 4.599",
-    img: "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=400&q=80",
+    name: 'Carlos Alberto',
+    avatar: 'C',
+    comment:
+      'Precisei de urgência num fim de semana e eles entregaram no mesmo dia. Profissionalismo incrível. Recomendo 100%.',
+    role: 'Indústria Pequena - Cacuaco',
+    rating: 5,
   },
   {
-    id: 7,
-    name: "Tênis Nike Air Max 270",
-    price: "AOA 599",
-    img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80",
+    name: 'Isabel Mendes',
+    avatar: 'I',
+    comment:
+      'O gás dura bastante e o preço é justo. O suporte ao cliente responde rápido quando preciso de alguma informação.',
+    role: 'Cliente Residencial - Maianga',
+    rating: 4,
   },
-  {
-    id: 8,
-    name: "Tênis Nike Air Max 270",
-    price: "AOA 599",
-    img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80",
-  }
-];
-
-export const navItems: NavItem[] = [
-  { label: "Saúde" },
-  { label: "Hospitalidade e Turismo" },
-  { label: "Supermercado" },
-  { label: "Lojas Industriais" },
-  { label: "Stands" },
-  { label: "Prestação de Serviços" },
-];
-
-export const categories: Categorys[] = [
-  {
-    label: "Roupas",
-    emoji: FaTshirt,
-    bg: "#F5E6D3",
-  },
-  {
-    label: "Imobiliária",
-    emoji: FaBuilding,
-    bg: "#E8E8E8",
-  },
-  {
-    label: "Farmácias",
-    emoji: FaPills,
-    bg: "#E8D5F0",
-  },
-  {
-    label: "Sapatos",
-    emoji: FaShoePrints,
-    bg: "#D5C9B8",
-  },
-  {
-    label: "Brinquedos",
-    emoji: MdToys,
-    bg: "#FFF3CD",
-  },
-  {
-    label: "Carros",
-    emoji: FaCar,
-    bg: "#FFE0CC",
-  },
-];
-
-export const footerCategories = [
-  "Imóveis",
-  "Eletrodomésticos",
-  "Filmes e Séries",
-  "Tecnologia",
-  "Telemóveis",
-  "Moda",
-  "Veículos",
-  "Móveis",
-  "Serviços",
-  "Empregos",
-  "Jogos",
-  "Educação"
-];
-
-export const testimonials: Testimonial[] = [
-  {
-    id: 1,
-    name: "Imaculada Tomás",
-    comment: "A plataforma facilitou completamente nossa compra de gás. A comunicação com os pais melhorou drasticamente e conseguimos automatizar processos que antes tomavam horas do nosso tempo. Recomendo fortemente!",
-    avatar: "AS",
-  },
-  {
-    id: 2,
-    name: "Romeu Tomás",
-    comment: "Implementamos a solução há 6 meses e os resultados são impressionantes. A gestão de produtos ficou muito mais organizada e os relatórios automáticos nos poupam muito trabalho. Excelente investimento!",
-    avatar: "CM",
-  },
-  {
-    id: 3,
-    name: "Maria Simas",
-    comment: "Como venddor, posso dizer que esta plataforma facilitou enormemente meu trabalho diário.",
-    avatar: "MS",
-  },
-  {
-    id: 4,
-    name: "Romeu Cajamba",
-    comment: "A inclusão digital que a plataforma proporciona é notável. Conseguimos envolver mais os compradores. Uma solução completa e moderna.",
-    avatar: "JO",
-  }
 ];

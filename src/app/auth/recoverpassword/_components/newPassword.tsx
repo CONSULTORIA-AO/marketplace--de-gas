@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, ArrowLeft, Check, X } from 'lucide-react';
 import { useState } from 'react';
@@ -10,7 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { AxiosError } from 'axios';
 import { type RecoveryAccout, recoveryAccount } from '@/schema/validations';
 import { ToastAction } from '@/components/ui/toast';
-import {api}  from '@/utils/api';
+import { api } from '@/utils/api';
 //import { useUserStore } from '@/store/userIfo';
 
 interface NewPasswordStepProps {

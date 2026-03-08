@@ -1,14 +1,16 @@
+import { CartItem } from './cart';
+
 export type View =
-  | "shop"
-  | "productDetail"
-  | "cart"
-  | "payment"
-  | "favorites"
-  | "orders"
-  | "chat"
-  | "profile"
-  | "settings"
-  | "subs";
+  | 'shop'
+  | 'productDetail'
+  | 'cart'
+  | 'payment'
+  | 'favorites'
+  | 'orders'
+  | 'chat'
+  | 'profile'
+  | 'settings'
+  | 'subs';
 
 export interface Product {
   id: number;
@@ -24,10 +26,6 @@ export interface Product {
   seller: string;
   sellerImg: string;
   stock: number;
-}
-
-export interface CartItem extends Product {
-  qty: number;
 }
 
 export interface Order {
@@ -60,7 +58,7 @@ export interface User {
 }
 
 export interface ChatMessage {
-  from: "seller" | "user";
+  from: 'seller' | 'user';
   text: string;
   time: string;
 }
@@ -96,7 +94,9 @@ export interface IconProps {
   [key: string]: unknown;
 }
 
-export interface BadgeCountProps { n: number; }
+export interface BadgeCountProps {
+  n: number;
+}
 
 export interface StarsProps {
   rating: number;
@@ -162,15 +162,6 @@ export interface ProductDetailProps {
   favorites: Product[];
   onChat: (p: Product) => void;
   onPayNow: (p: Product) => void;
-  onBack: () => void;
-}
-
-export interface CartViewProps {
-  cart: CartItem[];
-  updateQty: (id: number, delta: number) => void;
-  removeFromCart: (id: number) => void;
-  cartTotal: number;
-  onCheckout: () => void;
   onBack: () => void;
 }
 

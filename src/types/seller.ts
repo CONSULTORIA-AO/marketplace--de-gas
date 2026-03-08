@@ -1,21 +1,19 @@
-export type UserRole = 'buyer' | 'seller' | 'admin' | 'both'; 
+export type UserRole = 'buyer' | 'seller' | 'admin' | 'both';
 
-export type AccountStatus = 
-  | 'active' 
-  | 'pending_verification' 
-  | 'suspended' 
-  | 'banned' 
+export type AccountStatus =
+  | 'active'
+  | 'pending_verification'
+  | 'suspended'
+  | 'banned'
   | 'deactivated';
 
-
-export type VerificationLevel = 
-  | 'none' 
-  | 'email' 
-  | 'phone' 
-  | 'document'           
-  | 'address'             
-  | 'full';               
-
+export type VerificationLevel =
+  | 'none'
+  | 'email'
+  | 'phone'
+  | 'document'
+  | 'address'
+  | 'full';
 
 export interface Address {
   id?: string;
@@ -24,9 +22,9 @@ export interface Address {
   complement?: string;
   neighborhood: string;
   city: string;
-  state: string;         
+  state: string;
   postalCode: string;
-  country?: string;       
+  country?: string;
   isDefault?: boolean;
   type?: 'residential' | 'commercial' | 'pickup';
   reference?: string;
@@ -35,46 +33,45 @@ export interface Address {
 export interface PaymentMethod {
   id: string;
   type: 'credit_card' | 'debit_card' | 'pix' | 'boleto' | 'paypal' | 'other';
-  lastFour?: string;     
-  brand?: string;         
-  expiry?: string;        
+  lastFour?: string;
+  brand?: string;
+  expiry?: string;
   isDefault: boolean;
   nameOnCard?: string;
   pixKey?: string;
   createdAt: string;
 }
 
-
 export interface SellerProfile {
-  storeName: string;              
-  storeSlug?: string;             
-  description?: string;           
+  storeName: string;
+  storeSlug?: string;
+  description?: string;
   logoUrl?: string;
   bannerUrl?: string;
-  categoryMain?: string;         
-  rating?: number;                
+  categoryMain?: string;
+  rating?: number;
   totalReviews?: number;
   totalSales?: number;
-  joinedAt: string;             
-  verifiedSeller?: boolean;       
-  responseTime?: number;          
+  joinedAt: string;
+  verifiedSeller?: boolean;
+  responseTime?: number;
   shippingPolicy?: string;
   returnPolicy?: string;
 }
 
 export interface User {
-  id: string;                   
+  id: string;
   email: string;
-  passwordHash?: string;        
+  passwordHash?: string;
   fullName: string;
-  displayName?: string;           
+  displayName?: string;
   phone?: string;
-  cpf?: string;                   
-  cnpj?: string;                  
-  birthDate?: string;             
+  cpf?: string;
+  cnpj?: string;
+  birthDate?: string;
   avatarUrl?: string;
   gender?: 'male' | 'female' | 'other' | 'prefer_not_to_say';
-  
+
   addresses: Address[];
   defaultAddressId?: string;
 
@@ -87,7 +84,7 @@ export interface User {
   verification: VerificationLevel;
 
   sellerProfile?: SellerProfile;
-  
+
   preferredLanguage?: 'pt-BR' | 'en' | 'es';
   notifications: {
     email: boolean;
@@ -97,15 +94,14 @@ export interface User {
     promotions: boolean;
   };
 
-
   createdAt: string;
   lastLogin?: string;
-  totalOrders?: number;           
+  totalOrders?: number;
   totalPurchasesAmount?: number;
   wishlistCount?: number;
 
   // Tokens / autenticação
-  accessToken?: string;          
+  accessToken?: string;
   refreshToken?: string;
 
   // Campos para extensibilidade futura

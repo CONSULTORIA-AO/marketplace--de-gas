@@ -7,10 +7,12 @@ import About from '@/app/(public)/about/info';
 import TermsPrivacity from '@/app/(public)/terms_privacity/page';
 import { FAQ } from '@/app/(public)/faq/page';
 import LoginPage from '@/app/auth/login/page';
-import { SignUp } from "@/app/auth/signup/page"
+import { SignUp } from '@/app/auth/signup/page';
 import PasswordRecoveryFlow from '@/app/auth/recoverpassword/page';
-import VerifyAccountPage from '@/app/auth/verifyaccount/page';
+import Contact from '@/app/(public)/contact/contact';
+import Product from '@/app/(public)/product/page';
 import NotFoundPage from '@/app/(public)/notfound/page';
+import CartPage from '@/app/cart/page';
 
 const NavLink = () => {
   return (
@@ -18,13 +20,15 @@ const NavLink = () => {
       {/* Rotas Públicas */}
       <Route path="/" element={<Home />} />
       <Route path="/iniciar-sessao" element={<LoginPage />} />
-      <Route path="/cadastro" element={<SignUp />} />
+      <Route path="/cadastrar" element={<SignUp />} />
 
       <Route path="/recuperar-senha" element={<PasswordRecoveryFlow />} />
-      <Route path="/ativar-conta/:token" element={<VerifyAccountPage />} />
       <Route path="/sobre-nos" element={<About />} />
-      <Route path="/termos&politicas" element={<TermsPrivacity />} />
+      <Route path="/termos-politicas" element={<TermsPrivacity />} />
       <Route path="/perguntas-frequentes" element={<FAQ />} />
+      <Route path="/contacto" element={<Contact />} />
+      <Route path="/produto/:id" element={<Product />} />
+      <Route path="/carrinho" element={<CartPage />} />
 
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

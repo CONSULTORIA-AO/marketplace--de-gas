@@ -1,10 +1,10 @@
-"use client";
-import { useState } from "react";
-import { motion } from "framer-motion";
+'use client';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 export function SearchBar() {
   const [focused, setFocused] = useState(false);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
 
   return (
     <motion.div
@@ -27,7 +27,7 @@ export function SearchBar() {
         Todas Categorias
       </button>
       <motion.button
-        whileHover={{ backgroundColor: "#0052cc" }}
+        whileHover={{ backgroundColor: '#0052cc' }}
         whileTap={{ scale: 0.97 }}
         className="px-4 py-2 bg-[#1259C3] text-white text-xs font-semibold flex-shrink-0"
       >

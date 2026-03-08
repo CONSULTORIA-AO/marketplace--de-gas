@@ -1,4 +1,4 @@
-import { IconType } from "react-icons";
+import { IconType } from 'react-icons';
 
 export interface Testimonial {
   id: number;
@@ -9,7 +9,7 @@ export interface Testimonial {
 
 export interface Categorys {
   label: string;
-  emoji: IconType; 
+  emoji: IconType;
   bg: string;
 }
 
@@ -21,13 +21,4 @@ export interface Category {
 
 export interface NavItem {
   label: string;
-}
-
-export interface Slide {
-  title: string;
-  subtitle: string;
-  cta: string;
-  bg: string;
-  accent: string;
-  emoji: string;
 }

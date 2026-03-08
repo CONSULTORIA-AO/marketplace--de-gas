@@ -9,6 +9,10 @@ import {
   CreditCard,
   Users,
 } from 'lucide-react';
+import { Header } from '@/components/layout/header';
+import { Footer } from '@/components/layout/footer';
+import { useProducts } from '@/service/product/product';
+import { GasProduct } from '@/types/product';
 
 interface FAQItem {
   id: string;
@@ -85,10 +89,10 @@ const AccordionItem = ({
       className="group"
     >
       <div
-        className={`rounded-xl border transition-all duration-300 overflow-hidden ${
+        className={`rounded-xl border border-[#FFA500] transition-all duration-300 overflow-hidden ${
           isOpen
-            ? 'border-primary/50 bg-card shadow-lg shadow-primary/5'
-            : 'border-border bg-card/50 hover:border-primary/30 hover:bg-card'
+            ? 'border-[#FFA500]/50 bg-card shadow-lg shadow-[#FFA500]/5'
+            : 'border-border bg-card/50 hover:border-[#FFA500]/30 hover:bg-card'
         }`}
       >
         <button
@@ -98,14 +102,14 @@ const AccordionItem = ({
           <div
             className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center transition-colors duration-300 ${
               isOpen
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-secondary text-muted-foreground group-hover:text-primary'
+                ? 'bg-primary text-[#FFA500]'
+                : 'bg-secondary text-[#FFA500] group-hover:text-[#FFA500]'
             }`}
           >
             {item.icon}
           </div>
           <div className="flex-1 min-w-0">
-            <span className="text-xs font-medium uppercase tracking-wider text-primary mb-1 block">
+            <span className="text-xs font-medium uppercase tracking-wider text-[#FFA500] mb-1 block">
               {item.category}
             </span>
             <h3 className="text-foreground font-semibold text-base md:text-lg leading-tight">
@@ -117,11 +121,11 @@ const AccordionItem = ({
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-300 ${
               isOpen
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-secondary text-muted-foreground'
+                ? 'bg-primary text-[#FFA500]'
+                : 'bg-secondary text-[#FFA500]'
             }`}
           >
-            <ChevronDown className="w-4 h-4" />
+            <ChevronDown className="w-4 h-4 text-[#FFA500]" />
           </motion.div>
         </button>
 
@@ -148,6 +152,17 @@ const AccordionItem = ({
 
 export function FAQ() {
   const [openId, setOpenId] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Busca os produtos com React Query
+  const { data, isLoading, isError, error } = useProducts();
+
+  // Filtra localmente (client-side) com base no searchTerm
+  const filteredProducts = (data?.mensagem || []).filter(
+    (product: GasProduct) =>
+      product.descricao.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.unidadeMedida.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const handleToggle = (id: string) => {
     setOpenId(openId === id ? null : id);
@@ -155,23 +170,24 @@ export function FAQ() {
 
   return (
     <div
-      className="min-h-screen bg-background"
+      className="min-h-screen"
       style={{ fontFamily: "'Space Grotesk', sans-serif" }}
     >
+      <Header onSearch={(term) => setSearchTerm(term)} />
       {/* Hero */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/8 via-transparent to-transparent" />
-        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#FFA500]/5 rounded-full blur-3xl" />
 
         <div className="relative max-w-3xl mx-auto px-4 sm:px-6 pt-16 sm:pt-24 pb-12 text-center">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 mb-6"
+            className="inline-flex items-center gap-2 bg-primary/10 border border-[#FFA500]/20 rounded-full px-4 py-2 mb-6"
           >
-            <MessageCircleQuestion className="w-4 h-4 text-primary" />
-            <span className="text-primary text-sm font-medium">
+            <MessageCircleQuestion className="w-4 h-4 text-[#FFA500]" />
+            <span className="text-[#FFA500] text-sm font-medium">
               Central de Ajuda
             </span>
           </motion.div>
@@ -182,14 +198,14 @@ export function FAQ() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 leading-tight"
           >
-            Perguntas <span className="text-primary">Frequentes</span>
+            Perguntas <span className="text-[#FFA500]">Frequentes</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-muted-foreground text-base sm:text-lg max-w-xl mx-auto"
+            className="text-[#FFA500] text-base sm:text-lg max-w-xl mx-auto"
             style={{ fontFamily: "'Inter', sans-serif" }}
           >
             Encontre respostas rápidas para as dúvidas mais comuns sobre nossa
@@ -222,7 +238,7 @@ export function FAQ() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="mt-12 text-center p-8 rounded-2xl border border-border bg-card/50"
+          className="mt-12 text-center p-8 rounded-2xl border border-[#FFA500] bg-card/50"
         >
           <p
             className="text-muted-foreground mb-1"
@@ -230,11 +246,15 @@ export function FAQ() {
           >
             Não encontrou o que procurava?
           </p>
-          <a href="#" className="text-primary font-semibold hover:underline">
+          <a
+            href="/contacto"
+            className="text-[#FFA500] font-semibold hover:underline"
+          >
             Entre em contato com nosso suporte →
           </a>
         </motion.div>
       </div>
+      <Footer />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import { motion } from 'framer-motion';
 import { Mail, Phone, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,7 @@ import {
   recoveryContactSchema,
   type RecoveryContactFormData,
 } from '@/schema/validations';
-import {api} from '@/utils/api';
+import { api } from '@/utils/api';
 import { ToastAction } from '@/components/ui/toast';
 import { useToast } from '@/hooks/use-toast';
 import { AxiosError } from 'axios';

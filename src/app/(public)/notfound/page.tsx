@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { Link } from 'react-router-dom';
 import Particles from 'react-tsparticles';
 
@@ -8,20 +8,25 @@ export default function NotFoundPage() {
       {/* Fundo animado com partículas */}
       <Particles
         options={{
-          background: { color: { value: "#1D1D1D" } },
+          background: { color: { value: '#1D1D1D' } },
           fpsLimit: 60,
           particles: {
             number: { value: 80, density: { enable: true, area: 800 } },
-            color: { value: ["#FF5777", "#171718", "#FFFFFF"] },
-            shape: { type: "circle" },
+            color: { value: ['#FF5777', '#171718', '#FFFFFF'] },
+            shape: { type: 'circle' },
             opacity: { value: 0.5 },
             size: { value: { min: 1, max: 5 } },
-            move: { enable: true, speed: 2, direction: "none", outModes: "out" },
+            move: {
+              enable: true,
+              speed: 2,
+              direction: 'none',
+              outModes: 'out',
+            },
           },
           interactivity: {
             events: {
-              onHover: { enable: true, mode: "repulse" },
-              onClick: { enable: true, mode: "push" },
+              onHover: { enable: true, mode: 'repulse' },
+              onClick: { enable: true, mode: 'push' },
             },
             modes: {
               repulse: { distance: 100, duration: 0.4 },
@@ -56,8 +61,7 @@ export default function NotFoundPage() {
           404
         </h1>
         <p className="text-lg md:text-xl lg:text-2xl text-gray-300 mt-4">
-            Ups!
-          Página não encontrada.
+          Ups! Página não encontrada.
         </p>
 
         {/* Link para voltar */}

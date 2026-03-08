@@ -1,8 +1,8 @@
-"use client"
+'use client';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ContactInputStep from '@/app/auth/recoverpassword/_components/contact';
-import VerificationCodeStep from "@/app/auth/recoverpassword/page";
+import VerificationCodeStep from '@/app/auth/recoverpassword/page';
 import { toast } from 'sonner';
 import RecoveryMethodStep from './_components/method';
 import NewPasswordStep from './_components/newPassword';
@@ -73,7 +73,6 @@ const PasswordRecoveryFlow = () => {
         transition={{ duration: 0.5 }}
         className="w-full max-w-md"
       >
-
         {/* Card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
