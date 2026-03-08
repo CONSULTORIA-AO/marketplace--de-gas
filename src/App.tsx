@@ -1,7 +1,7 @@
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from '@/components/ui/toaster';
-import { queryClient } from '@/lib/query';
+import { queryClient } from '@/service/query';
 
 import NavLink from './routes/Index';
 

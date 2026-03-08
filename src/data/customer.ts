@@ -1,0 +1,36 @@
+import { Order, Product, Sub } from "../types/customer";
+
+export const ALL_PRODUCTS: Product[] = [
+  { id:1,  name:"iPhone 15 Pro 256GB",        category:"Tecnologia",  price:180000, oldPrice:220000, img:"https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&q=80", rating:5, reviews:2847, freeShipping:true,  badge:"OFERTA",  seller:"TechStore AO",  sellerImg:"https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&q=80", stock:12 },
+  { id:2,  name:"MacBook Air M2 8GB",          category:"Tecnologia",  price:280000, oldPrice:320000, img:"https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=400&q=80", rating:5, reviews:1293, freeShipping:true,  badge:"TOP",     seller:"TechStore AO",  sellerImg:"https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&q=80", stock:5 },
+  { id:3,  name:"Samsung Galaxy S24",          category:"Tecnologia",  price:120000, oldPrice:155000, img:"https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=400&q=80", rating:4, reviews:876,  freeShipping:true,  badge:"-22%",    seller:"Galaxy Shop",   sellerImg:"https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80", stock:20 },
+  { id:4,  name:"AirPods Pro 2ª Geração",      category:"Tecnologia",  price:55000,  oldPrice:70000,  img:"https://images.unsplash.com/photo-1606741965509-717c7e0e57a9?w=400&q=80", rating:5, reviews:3412, freeShipping:true,  badge:"NOVO",    seller:"TechStore AO",  sellerImg:"https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&q=80", stock:30 },
+  { id:5,  name:'Smart TV 65" 4K QLED',        category:"Eletros",     price:110000, oldPrice:145000, img:"https://images.unsplash.com/photo-1593640408182-31c228e78b8a?w=400&q=80", rating:4, reviews:654,  freeShipping:true,  badge:"-24%",    seller:"Casa Electro",  sellerImg:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80", stock:8 },
+  { id:6,  name:"PlayStation 5 + 2 Controles", category:"Tecnologia",  price:135000, oldPrice:152000, img:"https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=400&q=80", rating:5, reviews:5621, freeShipping:true,  badge:"HOT",     seller:"GameZone AO",   sellerImg:"https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&q=80", stock:3 },
+  { id:7,  name:"Tênis Nike Air Max 270",       category:"Moda",        price:18000,  oldPrice:24000,  img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80", rating:4, reviews:1089, freeShipping:false, badge:"-25%",    seller:"Fashion AO",    sellerImg:"https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80", stock:50 },
+  { id:8,  name:"Cafeteira Nespresso Vertuo",   category:"Eletros",     price:23000,  oldPrice:29000,  img:"https://images.unsplash.com/photo-1520970014086-2208d157c9e2?w=400&q=80", rating:5, reviews:2103, freeShipping:true,  badge:"OFERTA",  seller:"Casa Electro",  sellerImg:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80", stock:15 },
+  { id:9,  name:"Sofá 3 Lugares Premium",       category:"Casa",        price:95000,  oldPrice:120000, img:"https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&q=80", rating:4, reviews:432,  freeShipping:true,  badge:"DESTAQUE",seller:"Denny House",   sellerImg:"https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=100&q=80", stock:7 },
+  { id:10, name:"Vestido Midi Floral",          category:"Moda",        price:8500,   oldPrice:12000,  img:"https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=80", rating:5, reviews:789,  freeShipping:false, badge:"NOVO",    seller:"Fashion AO",    sellerImg:"https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80", stock:25 },
+  { id:11, name:"Frigorífico Duplex LG",        category:"Eletros",     price:85000,  oldPrice:105000, img:"https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=400&q=80", rating:4, reviews:321,  freeShipping:true,  badge:"-19%",    seller:"Casa Electro",  sellerImg:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80", stock:6 },
+  { id:12, name:"Apartamento T3 Talatona",      category:"Imobiliária", price:180000, oldPrice:null,   img:"https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&q=80", rating:5, reviews:56,   freeShipping:false, badge:"DESTAQUE",seller:"BEM ME QUER",  sellerImg:"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80", stock:1 },
+  { id:13, name:"Blazer Executivo Masculino",   category:"Moda",        price:15000,  oldPrice:22000,  img:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80", rating:4, reviews:203,  freeShipping:false, badge:null,      seller:"Fashion AO",    sellerImg:"https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80", stock:18 },
+  { id:14, name:"Mesa de Jantar 6 Lugares",     category:"Casa",        price:45000,  oldPrice:58000,  img:"https://images.unsplash.com/photo-1549488344-cbb6c34a8756?w=400&q=80", rating:4, reviews:178,  freeShipping:true,  badge:null,      seller:"Denny House",   sellerImg:"https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=100&q=80", stock:4 },
+  { id:15, name:"Bolsa Couro Premium",          category:"Moda",        price:22000,  oldPrice:30000,  img:"https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&q=80", rating:5, reviews:654,  freeShipping:false, badge:"LUX",     seller:"Fashion AO",    sellerImg:"https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80", stock:10 },
+  { id:16, name:"Vivenda Luxo Miramar",         category:"Imobiliária", price:450000, oldPrice:null,   img:"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&q=80", rating:5, reviews:12,   freeShipping:false, badge:"NOVO",    seller:"BEM ME QUER",  sellerImg:"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80", stock:1 },
+];
+
+export const CATEGORIES: string[] = ["Todos", "Tecnologia", "Moda", "Casa", "Eletros", "Imobiliária"];
+
+export const ORDERS: Order[] = [
+  { id:"ORD-001", product:"iPhone 15 Pro 256GB",    date:"2024-12-01", status:"Entregue",    price:180000, img:"https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=100&q=80" },
+  { id:"ORD-002", product:"AirPods Pro 2ª Geração", date:"2024-12-10", status:"Em trânsito", price:55000,  img:"https://images.unsplash.com/photo-1606741965509-717c7e0e57a9?w=100&q=80" },
+  { id:"ORD-003", product:"Tênis Nike Air Max",      date:"2024-12-15", status:"Pendente",    price:18000,  img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=100&q=80" },
+];
+
+export const SUBS: Sub[] = [
+  { id:1, name:"Angoverso Premium", price:"5.000 Kz/mês",  desc:"Frete grátis ilimitado + acesso antecipado a ofertas", color:"#1259C3" },
+  { id:2, name:"Business Pro",      price:"15.000 Kz/mês", desc:"Venda sem comissão + painel avançado de análise",       color:"#0A3D8F" },
+  { id:3, name:"Família Plus",      price:"8.000 Kz/mês",  desc:"Até 5 contas + cupões exclusivos mensais",               color:"#2878F0" },
+];
+
+export const fmt = (n: number): string => `${n.toLocaleString("pt-AO")} Kz`;
