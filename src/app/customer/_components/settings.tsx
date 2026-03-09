@@ -10,13 +10,26 @@ import { Field } from './field';
 import { useState } from 'react';
 import { Icon } from './icon';
 import { Card } from './card';
+import { useAuthStore } from '@/hooks/auth';
+import { useUserStore } from '@/hooks/customer';
+import { useToast } from '@/hooks/use-toast';
+import { useForm } from 'react-hook-form';
+import {
+  type PasswordProfileFormData,
+  passwordProfileSchema,
+} from '@/schema/customer.schema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { api } from '@/utils/api';
+import { AxiosError } from 'axios';
+import { ToastAction } from '@/components/ui/toast';
+import { register } from 'module';
 
 export function SettingsView({ onBack, notify }: SettingsViewProps) {
-  const [passwords, setPasswords] = useState<PasswordForm>({
-    current: '',
-    next: '',
-    confirm: '',
-  });
+  const entidade = useAuthStore((state) => state.session.user.id);
+  const cliente = useUserStore((state) => state.cliente);
+  const { toast } = useToast();
+  {
+    /*
   const [notifs, setNotifs] = useState<NotifSettings>({
     email: true,
     sms: true,
@@ -26,51 +39,71 @@ export function SettingsView({ onBack, notify }: SettingsViewProps) {
   const [privacy, setPrivacy] = useState<PrivacySettings>({
     showProfile: true,
     shareData: false,
+  });*/
+  }
+
+  // Password form
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors: epw },
+  } = useForm<PasswordProfileFormData>({
+    resolver: zodResolver(passwordProfileSchema),
   });
 
-  const changePassword = (): void => {
-    if (!passwords.current || !passwords.next)
-      return notify('Preencha todos os campos');
-    if (passwords.next !== passwords.confirm)
-      return notify('Passwords não coincidem');
-    notify('Password alterada com sucesso ✓');
-    setPasswords({ current: '', next: '', confirm: '' });
-  };
+  const onSubmitPassword = async (data: PasswordProfileFormData) => {
+    try {
+      const res = await api.patch(`clientes/${entidade}/alterar-senha`, {
+        senha_actual: data.currentPassword,
+        senha: data.newPassword,
+        confirmar_senha: data.confirmPassword,
+      });
+      toast({
+        description: (
+          <div className="flex items-center gap-4 bg-white">
+            <span className="text-[#717F96]">{res.data?.mensagem}</span>
+          </div>
+        ),
+        action: (
+          <ToastAction
+            altText="close"
+            className="shadow-none border-none text-[#717F96] hover:bg-transparent"
+          >
+            .
+          </ToastAction>
+        ),
+        className:
+          'border-l-4 border-l-[#ff8300] border-t-0 border-b-0 border-r-0',
+      });
 
-  const Toggle = ({
-    value,
-    onChange,
-  }: {
-    value: boolean;
-    onChange: (v: boolean) => void;
-  }) => (
-    <button
-      onClick={() => onChange(!value)}
-      style={{
-        width: 44,
-        height: 24,
-        borderRadius: 12,
-        background: value ? ORANJE : '#D1D5DB',
-        border: 'none',
-        cursor: 'pointer',
-        position: 'relative',
-        transition: 'background .2s',
-      }}
-    >
-      <div
-        style={{
-          position: 'absolute',
-          top: 2,
-          left: value ? 22 : 2,
-          width: 20,
-          height: 20,
-          borderRadius: '50%',
-          background: 'white',
-          transition: 'left .2s',
-        }}
-      />
-    </button>
-  );
+      reset();
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        toast({
+          description: (
+            <div className="flex items-center gap-4 ">
+              <div className="rounded-full w-8 h-8 flex justify-center items-center bg-[fill: rgba(251, 55, 72, 0.16)]"></div>
+
+              <span className="text-[#717F96]">
+                {error?.response?.data.mensagem}
+              </span>
+            </div>
+          ),
+          action: (
+            <ToastAction
+              altText="close"
+              className="shadow-none border-none text-[#717F96] hover:bg-transparent"
+            >
+              .
+            </ToastAction>
+          ),
+          className:
+            'border-l-4 border-l-[#FB3748] border-t-0 border-b-0 border-r-0',
+        });
+      }
+    }
+  };
 
   return (
     <div
@@ -96,26 +129,27 @@ export function SettingsView({ onBack, notify }: SettingsViewProps) {
       </div>
 
       <Card title="Segurança · Alterar Password" icon="lock">
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          {(
-            [
-              { l: 'Password actual', k: 'current' },
-              { l: 'Nova password', k: 'next' },
-              { l: 'Confirmar nova password', k: 'confirm' },
-            ] as { l: string; k: keyof PasswordForm }[]
-          ).map((f) => (
-            <Field
-              key={f.k}
-              label={f.l}
-              placeholder="••••••••"
-              icon="lock"
-              type="password"
-              value={passwords[f.k]}
-              onChange={(v) => setPasswords((p) => ({ ...p, [f.k]: v }))}
-            />
-          ))}
+        <form 
+          onSubmit={handleSubmit(onSubmitPassword)}
+          style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <input type="password" 
+            placeholder='Senha atual'
+            className='w-full rounded-md h-10'
+            {...register("currentPassword")}
+          />
+          <input type="password" 
+            placeholder='Senha nova'
+            className='w-full rounded-md h-10'
+            {...register("newPassword")}
+          />
+          <input type="password" 
+            placeholder='Confirmar senha nova'
+            className='w-full rounded-md h-10'
+            {...register("confirmPassword")}
+          />
+
           <button
-            onClick={changePassword}
+            type='submit'
             style={{
               padding: '10px 24px',
               borderRadius: 8,
@@ -130,61 +164,7 @@ export function SettingsView({ onBack, notify }: SettingsViewProps) {
           >
             Alterar Password
           </button>
-        </div>
-      </Card>
-
-      <Card title="Notificações" icon="bell">
-        {(
-          Object.entries({
-            email: 'Notificações por email',
-            sms: 'Notificações por SMS',
-            promo: 'Promoções e ofertas',
-            orders: 'Actualizações de pedidos',
-          }) as [keyof NotifSettings, string][]
-        ).map(([k, label]) => (
-          <div
-            key={k}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              padding: '10px 0',
-              borderBottom: '1px solid #F3F4F6',
-            }}
-          >
-            <span style={{ fontSize: 14, color: '#374151' }}>{label}</span>
-            <Toggle
-              value={notifs[k]}
-              onChange={(v) => setNotifs((n) => ({ ...n, [k]: v }))}
-            />
-          </div>
-        ))}
-      </Card>
-
-      <Card title="Privacidade" icon="eye">
-        {(
-          Object.entries({
-            showProfile: 'Perfil público visível',
-            shareData: 'Partilhar dados com parceiros',
-          }) as [keyof PrivacySettings, string][]
-        ).map(([k, label]) => (
-          <div
-            key={k}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              padding: '10px 0',
-              borderBottom: '1px solid #F3F4F6',
-            }}
-          >
-            <span style={{ fontSize: 14, color: '#374151' }}>{label}</span>
-            <Toggle
-              value={privacy[k]}
-              onChange={(v) => setPrivacy((p) => ({ ...p, [k]: v }))}
-            />
-          </div>
-        ))}
+        </form>
       </Card>
     </div>
   );

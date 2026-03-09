@@ -98,8 +98,8 @@ export function Header({
     },
   ]);
 
-  const unreadCount: number = notifications.filter((n) => !n.read).length;
-  const [showNotifications, setShowNotifications] = useState<boolean>(false);
+  //const unreadCount: number = notifications.filter((n) => !n.read).length;
+  //const [showNotifications, setShowNotifications] = useState<boolean>(false);
 
   const markAsRead = (id: number): void => {
     setNotifications((prev) =>
@@ -118,7 +118,7 @@ export function Header({
         notificationRef.current &&
         !notificationRef.current.contains(event.target as Node)
       ) {
-        setShowNotifications(false);
+        //setShowNotifications(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -190,7 +190,7 @@ export function Header({
               letterSpacing: -0.5,
             }}
           >
-            Angoverso.
+            JaGás
           </span>
         </button>
         <div
@@ -262,7 +262,7 @@ export function Header({
             position: 'relative',
           }}
         >
-          <div ref={notificationRef} style={{ position: 'relative' }}>
+          {/*  <div ref={notificationRef} style={{ position: 'relative' }}>
             <button
               onClick={() => setShowNotifications(!showNotifications)}
               style={{
@@ -438,7 +438,7 @@ export function Header({
               size={20}
             />
             {favCount > 0 && <BadgeCount n={favCount} />}
-          </button>
+          </button>*/}
           <button
             onClick={() => goTo('cart')}
             style={{

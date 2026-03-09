@@ -28,9 +28,30 @@ const NavLink = () => {
       <Route path="/termos-politicas" element={<TermsPrivacity />} />
       <Route path="/perguntas-frequentes" element={<FAQ />} />
       <Route path="/contacto" element={<Contact />} />
-      <Route path="/produto/:id" element={<Product />} />
-      <Route path="/produtos" element={<Customer />} />
-      <Route path="/carrinho" element={<CartPage />} />
+      <Route
+        path="/produto/:id"
+        element={
+          <ProtectedRoute>
+            <Product />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/produtos"
+        element={
+          <ProtectedRoute>
+            <Customer />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/carrinho"
+        element={
+          <ProtectedRoute>
+            <CartPage />
+          </ProtectedRoute>
+        }
+      />
 
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

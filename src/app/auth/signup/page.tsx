@@ -38,10 +38,7 @@ export function SignUp() {
   const registerMutation = useMutation({
     mutationFn: async (data: RegisterFormData) => {
       const response = await api.post('/clientes', data);
-      console.log("Os dados:", data);
-      console.log("resposta da api:", response.data)
       return response.data;
-      
     },
     onSuccess: () => {
       toast({
@@ -91,7 +88,6 @@ export function SignUp() {
   });
 
   const onSubmit = (data: RegisterFormData) => {
-    console.log('🟢 Form submit:', data);
     registerMutation.mutate(data);
   };
 
@@ -129,98 +125,98 @@ export function SignUp() {
 
           {/* Fields */}
           <div className="flex flex-col gap-6">
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.18 + 1 * 0.08 }}
-                className="relative"
-              >
-                <input
-                  type="text"
-                  placeholder="Seu completo"
-                  {...register("nomeCliente")}
-                  className="w-full pb-2 pt-1 text-sm text-gray-700 placeholder:text-gray-400 bg-transparent outline-none border-b transition-colors"
-                />
-                {/* Show/hide password toggle */}
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.18 + 2 * 0.08 }}
-                className="relative"
-              >
-                <input
-                  type="email"
-                  placeholder="Seu e-mail"
-                  {...register("emailCliente")}
-                  className="w-full pb-2 pt-1 text-sm text-gray-700 placeholder:text-gray-400 bg-transparent outline-none border-b transition-colors"
-                />
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.18 + 2 * 0.08 }}
-                className="relative"
-              >
-                <input
-                  type="tel"
-                  placeholder="Seu telefone"
-                  {...register("telefoneCliente")}
-                  className="w-full pb-2 pt-1 text-sm text-gray-700 placeholder:text-gray-400 bg-transparent outline-none border-b transition-colors"
-                />
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.18 + 2 * 0.08 }}
-                className="relative"
-              >
-                <input
-                  type="tel"
-                  placeholder="Seu telefone alternativo"
-                  {...register("telefoneClienteAlt")}
-                  className="w-full pb-2 pt-1 text-sm text-gray-700 placeholder:text-gray-400 bg-transparent outline-none border-b transition-colors"
-                />
-              </motion.div>
-                            <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.18 + 2 * 0.08 }}
-                className="relative"
-              >
-                <input
-                  type="text"
-                  placeholder="Seu endereço"
-                  {...register("enderecoCliente")}
-                  className="w-full pb-2 pt-1 text-sm text-gray-700 placeholder:text-gray-400 bg-transparent outline-none border-b transition-colors"
-                />
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.18 + 2 * 0.08 }}
-                className="relative"
-              >
-                <input
-                  type="password"
-                  placeholder="Digite a sua senha"
-                  {...register("senhaCliente")}
-                  className="w-full pb-2 pt-1 text-sm text-gray-700 placeholder:text-gray-400 bg-transparent outline-none border-b transition-colors"
-                />
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.18 + 2 * 0.08 }}
-                className="relative"
-              >
-                <input
-                  type="password"
-                  placeholder="Digite novamente a senha"
-                  {...register("confirmar_senha")}
-                  className="w-full pb-2 pt-1 text-sm text-gray-700 placeholder:text-gray-400 bg-transparent outline-none border-b transition-colors"
-                />
-              </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.18 + 1 * 0.08 }}
+              className="relative"
+            >
+              <input
+                type="text"
+                placeholder="Seu completo"
+                {...register('nomeCliente')}
+                className="w-full pb-2 pt-1 text-sm text-gray-700 placeholder:text-gray-400 bg-transparent outline-none border-b transition-colors"
+              />
+              {/* Show/hide password toggle */}
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.18 + 2 * 0.08 }}
+              className="relative"
+            >
+              <input
+                type="email"
+                placeholder="Seu e-mail"
+                {...register('emailCliente')}
+                className="w-full pb-2 pt-1 text-sm text-gray-700 placeholder:text-gray-400 bg-transparent outline-none border-b transition-colors"
+              />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.18 + 2 * 0.08 }}
+              className="relative"
+            >
+              <input
+                type="tel"
+                placeholder="Seu telefone"
+                {...register('telefoneCliente')}
+                className="w-full pb-2 pt-1 text-sm text-gray-700 placeholder:text-gray-400 bg-transparent outline-none border-b transition-colors"
+              />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.18 + 2 * 0.08 }}
+              className="relative"
+            >
+              <input
+                type="tel"
+                placeholder="Seu telefone alternativo"
+                {...register('telefoneClienteAlt')}
+                className="w-full pb-2 pt-1 text-sm text-gray-700 placeholder:text-gray-400 bg-transparent outline-none border-b transition-colors"
+              />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.18 + 2 * 0.08 }}
+              className="relative"
+            >
+              <input
+                type="text"
+                placeholder="Seu endereço"
+                {...register('enderecoCliente')}
+                className="w-full pb-2 pt-1 text-sm text-gray-700 placeholder:text-gray-400 bg-transparent outline-none border-b transition-colors"
+              />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.18 + 2 * 0.08 }}
+              className="relative"
+            >
+              <input
+                type="password"
+                placeholder="Digite a sua senha"
+                {...register('senhaCliente')}
+                className="w-full pb-2 pt-1 text-sm text-gray-700 placeholder:text-gray-400 bg-transparent outline-none border-b transition-colors"
+              />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.18 + 2 * 0.08 }}
+              className="relative"
+            >
+              <input
+                type="password"
+                placeholder="Digite novamente a senha"
+                {...register('confirmar_senha')}
+                className="w-full pb-2 pt-1 text-sm text-gray-700 placeholder:text-gray-400 bg-transparent outline-none border-b transition-colors"
+              />
+            </motion.div>
           </div>
 
           {/* Submit button */}
@@ -230,7 +226,7 @@ export function SignUp() {
             transition={{ delay: 0.55 }}
             whileHover={{ backgroundColor: '#FFA500', scale: 1.01 }}
             whileTap={{ scale: 0.98 }}
-            type='submit'
+            type="submit"
             className="mt-10 w-full py-4 hover:cursor-pointer rounded-lg bg-[#FFA500] hover:bg-[#FFA500] text-white font-bold text-base shadow-md transition-colors"
           >
             Criar conta

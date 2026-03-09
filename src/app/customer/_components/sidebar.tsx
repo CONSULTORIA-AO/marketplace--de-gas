@@ -3,6 +3,7 @@ import { ORANJE, ORANJE_DARK, WHITE } from '@/constants/costumer';
 import { Icon } from './icon';
 import { SidebarProps, View } from '@/types/customer';
 import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '@/hooks/auth';
 
 export function Sidebar({
   user,
@@ -12,14 +13,21 @@ export function Sidebar({
   close,
   currentView,
 }: SidebarProps) {
-  const router = useNavigate();
+  const navigate = useNavigate();
+  const logout = useAuthStore((state) => state.logout);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/iniciar-sessao');
+  };
+
   const items: { icon: string; label: string; v: View; badge?: number }[] = [
     { icon: 'home', label: 'Início', v: 'shop' },
-    { icon: 'heart', label: 'Favoritos', v: 'favorites', badge: favorites },
+    //{ icon: 'heart', label: 'Favoritos', v: 'favorites', badge: favorites },
     { icon: 'cart', label: 'Carrinho', v: 'cart', badge: cart },
     { icon: 'package', label: 'Meus Pedidos', v: 'orders' },
-    { icon: 'chat', label: 'Chat', v: 'chat' },
-    { icon: 'star', label: 'Subscrições', v: 'subs' },
+    //{ icon: 'chat', label: 'Chat', v: 'chat' },
+    //{ icon: 'star', label: 'Subscrições', v: 'subs' },
     { icon: 'user', label: 'Meu Perfil', v: 'profile' },
     { icon: 'settings', label: 'Configurações', v: 'settings' },
   ];
@@ -52,7 +60,7 @@ export function Sidebar({
           }}
         >
           <span style={{ color: 'white', fontWeight: 900, fontSize: 20 }}>
-            Angoverso.
+            JaGás.
           </span>
           <button
             onClick={close}
@@ -173,7 +181,7 @@ export function Sidebar({
             cursor: 'pointer',
           }}
           className="bg-red-500 hover:bg-red-600"
-          onClick={() => router('/login')}
+          onClick={handleLogout}
         >
           <Icon name="logout" color="#EF4444" size={18} />
           <span style={{ fontSize: 14, color: '#EF4444', fontWeight: 600 }}>
