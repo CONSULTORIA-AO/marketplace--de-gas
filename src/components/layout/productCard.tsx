@@ -25,6 +25,7 @@ export function ProductCard({ product, index }: ProductCardProps) {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
+  
   function handleOrder(data: string) {
     if (!data) {
       toast({

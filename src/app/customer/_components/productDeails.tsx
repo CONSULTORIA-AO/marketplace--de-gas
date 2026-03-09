@@ -7,6 +7,12 @@ import { useState } from 'react';
 import { ProductDetailProps, ReviewItem } from '@/types/customer';
 import { fmt } from '@/data/customer';
 import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '@/hooks/auth';
+import { useCartStore } from '@/hooks/cartstore';
+import { ToastAction } from '@radix-ui/react-toast';
+import { AxiosError } from 'axios';
+import { api } from '@/utils/api';
+import { useToast } from '@/hooks/use-toast';
 
 export function ProductDetail({
   product,
@@ -19,6 +25,9 @@ export function ProductDetail({
 }: ProductDetailProps) {
   const [qty, setQty] = useState<number>(1);
   const navigate = useNavigate();
+  const clienteId = useAuthStore((state) => state.session.user.id);
+  const { items, clearCart } = useCartStore();
+  const { toast } = useToast();
 
   //const isFav: boolean = favorites.some((f) => f.produtoId === product.produtoId);
   const imgs: string[] = [
@@ -38,6 +47,65 @@ export function ProductDetail({
       // action: () => onChat(product),
       //},
     ];
+
+      const handleCheckout = async () => {
+        try {
+          const payload = {
+            clienteIdPedido: clienteId,
+            itens: items.map((item) => ({
+              produto_id: item.product.produtoId,
+              quantidade: item.quantity,
+            })),
+          };
+    
+          const response = await api.post('/pedidos', payload);
+    
+          clearCart();
+    
+          toast({
+            description: (
+              <div className="flex items-center gap-4 bg-white">
+                <span className="text-[#717F96]">{response.data?.mensagem}</span>
+              </div>
+            ),
+            action: (
+              <ToastAction
+                altText="close"
+                className="shadow-none border-none text-[#717F96] hover:bg-transparent"
+              >
+                .
+              </ToastAction>
+            ),
+            className:
+              'border-l-4 border-l-[#ff8300] border-t-0 border-b-0 border-r-0',
+          });
+        } catch (error) {
+          console.error(error);
+          if (error instanceof AxiosError) {
+            toast({
+              description: (
+                <div className="flex items-center gap-4 ">
+                  <div className="rounded-full w-8 h-8 flex justify-center items-center bg-[fill: rgba(251, 55, 72, 0.16)]"></div>
+    
+                  <span className="text-[#717F96]">
+                    {error?.response?.data.mensagem}
+                  </span>
+                </div>
+              ),
+              action: (
+                <ToastAction
+                  altText="close"
+                  className="shadow-none border-none text-[#717F96] hover:bg-transparent"
+                >
+                  .
+                </ToastAction>
+              ),
+              className:
+                'border-l-4 border-l-[#FB3748] border-t-0 border-b-0 border-r-0',
+            });
+          }
+        }
+      };
 
   return (
     <div className="fade-in">
@@ -233,7 +301,11 @@ export function ProductDetail({
                 Adicionar ao Carrinho
               </button>
               <button
-                onClick={() => navigate(`/pagamento/${product.produtoId}`)}
+                onClick={() =>{ 
+                  handleCheckout();
+                  navigate(`/pagamento/${product.produtoId}`);
+                }
+                }
                 style={{
                   padding: '13px',
                   borderRadius: 10,

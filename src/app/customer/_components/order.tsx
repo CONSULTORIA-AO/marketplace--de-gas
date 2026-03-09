@@ -3,13 +3,35 @@ import { fmt } from '@/data/customer';
 import { ORANJE } from '@/constants/costumer';
 import { Icon } from './icon';
 import { OrdersViewProps } from '@/types/customer';
+import { useQuery } from '@tanstack/react-query';
+import { useAuthStore } from '@/hooks/auth';
+import { getOrdersByClient } from '@/service/order/order.schema';
 
 export function OrdersView({ orders, onBack }: OrdersViewProps) {
+  const clienteId = useAuthStore((state) => state.session.user.id);
+  
+  const { data: ordersdata, isLoading, error } = useQuery({
+    queryKey: ['orders', clienteId],
+    queryFn: () => getOrdersByClient(clienteId),
+  });
   const colors: Record<string, string> = {
     Entregue: '#10B981',
     'Em trânsito': '#3B82F6',
     Pendente: '#F59E0B',
   };
+
+  if (isLoading) {
+    return <p>Carregando pedidos...</p>;
+  }
+
+  if (error) {
+    return <p>Erro ao carregar pedidos.</p>;
+  }
+
+  if (!orders || orders.length === 0) {
+    return <p>Você ainda não possui pedidos.</p>;
+  }
+
   return (
     <div className="fade-in">
       <div
@@ -31,9 +53,9 @@ export function OrdersView({ orders, onBack }: OrdersViewProps) {
         </h2>
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        {orders.map((o) => (
+        {ordersdata.map((o) => (
           <div
-            key={o.id}
+            key={o.pedidoCotacaoId}
             style={{
               background: 'white',
               borderRadius: 14,
@@ -46,7 +68,7 @@ export function OrdersView({ orders, onBack }: OrdersViewProps) {
             }}
           >
             <img
-              src={o.img}
+              src={`${import.meta.env.VITE_API_URL}images/products${o.nomeCliente}?${Date.now()}`}
               alt=""
               style={{
                 width: 64,
@@ -57,28 +79,29 @@ export function OrdersView({ orders, onBack }: OrdersViewProps) {
             />
             <div style={{ flex: 1 }}>
               <p style={{ fontWeight: 600, fontSize: 13, margin: '0 0 4px' }}>
-                {o.product}
+                Pedido #{o.numero_cotacao.slice(0, 8)}
               </p>
               <p style={{ fontSize: 12, color: '#6B7280', margin: '0 0 6px' }}>
-                {o.id} · {o.date}
+                {o.pedidoCotacaoId} ·{' '}
+                  {new Date(o.pedido_time).toLocaleDateString('pt-pt')}
               </p>
               <span
                 style={{
                   display: 'inline-block',
                   padding: '3px 10px',
                   borderRadius: 20,
-                  background: (colors[o.status] ?? '#9CA3AF') + '20',
-                  color: colors[o.status] ?? '#9CA3AF',
+                  background: (colors[o.statusPedido] ?? '#9CA3AF') + '20',
+                  color: colors[o.statusPedido] ?? '#9CA3AF',
                   fontSize: 12,
                   fontWeight: 600,
                 }}
               >
-                {o.status}
+                {o.statusPedido}
               </span>
             </div>
-            <span style={{ fontWeight: 800, color: ORANJE, fontSize: 15 }}>
-              {fmt(o.price)}
-            </span>
+                {o.itens.map((item) => (
+  <span key={item.id_itens_pedido}>{item.quantidade}</span>
+))}
           </div>
         ))}
       </div>

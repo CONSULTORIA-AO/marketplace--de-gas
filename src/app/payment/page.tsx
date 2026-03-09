@@ -28,7 +28,7 @@ export function PaymentView() {
             alignItems: 'center',
             gap: 12,
           }}
-          className='flex justify-center items-center'
+          className="flex justify-center items-center"
         >
           <span style={{ fontSize: 22 }}>🛵</span>
           <p

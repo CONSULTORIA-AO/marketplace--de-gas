@@ -43,6 +43,7 @@ export default function Customer() {
   const removeItem = useCartStore((state) => state.removeItem);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
   const total = useCartStore((state) => state.getTotal());
+  const { getTotal } = useCartStore();
 
   // Busca os produtos com React Query
   const { data, isLoading, isError, error } = useProducts();

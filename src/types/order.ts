@@ -154,3 +154,63 @@ export function formatarDataHora(iso: string): string {
     minute: '2-digit',
   });
 }
+
+
+
+
+
+
+
+
+export interface PedidoItem {
+  id_itens_pedido: number;
+  produto_id: number;
+  quantidade: number;
+  preco_unitario: number;
+  preco_total: number;
+}
+
+export interface Pedido {
+  pedidoCotacaoId: number;
+  clienteIdPedido: number;
+  numero_cotacao: string;
+  statusPedido: StatusPedidoAPI;
+  pedido_time: string;
+  pedido_update: string;
+
+  nomeCliente: string;
+  emailCliente: string;
+  fotoCliente: string;
+
+  telefoneCliente: string;
+  telefoneClienteAlt: string;
+
+  criado_em: string;
+  actualizado_em: string;
+
+  itens: PedidoItem[];
+}
+
+export interface PedidoRegistros {
+  paginas: number;
+  pagina_actual: number;
+  total: number;
+  limite: number;
+  total_apresentados: number;
+
+  numero_cotacao: string;
+  statusPedido: string;
+  pedido_time: string;
+}
+
+export interface PedidosResponse {
+  status: string;
+  statusCode: number;
+  formato: string;
+
+  registros: PedidoRegistros;
+
+  url: string;
+
+  mensagem: Pedido[];
+}
