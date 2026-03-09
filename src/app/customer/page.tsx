@@ -19,6 +19,7 @@ import { Sidebar } from './_components/sidebar';
 import { ORANJE } from '@/constants/costumer';
 import { GasProduct } from '@/types/product';
 import { useProducts } from '@/service/product/product';
+import { useCartStore } from '@/hooks/cartstore';
 
 export default function Customer() {
   const [view, setView] = useState<View>('shop');
@@ -29,12 +30,16 @@ export default function Customer() {
   const [chatSeller, setChatSeller] = useState<GasProduct | null>(null);
   const [notification, setNotification] = useState<string | null>(null);
   const [paymentItem, setPaymentItem] = useState<GasProduct | 'cart' | null>(null);
-
+  const items = useCartStore((state) => state.items);
   const [search, setSearch] = useState<string>('');
   const [activeCategory, setCategory] = useState<string>('Todos');
   const [sortBy, setSort] = useState<string>('relevance');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500000]);
   const [filterOpen, setFilterOpen] = useState<boolean>(false);
+  const addItem = useCartStore((state) => state.addItem);
+  const removeItem = useCartStore((state) => state.removeItem);
+  const updateQuantity = useCartStore((state) => state.updateQuantity);
+  const total = useCartStore((state) => state.getTotal());
   
     // Busca os produtos com React Query
     const { data, isLoading, isError, error } = useProducts();
@@ -47,31 +52,20 @@ export default function Customer() {
     );
 
   const addToCart = (product: GasProduct, qty: number = 1): void => {
-    setCart((prev) => {
-      const existing = prev.find((i) => i.produtoId === product.produtoId);
-      if (existing)
-        return prev.map((i) =>
-          i.produtoId === product.produtoId ? { ...i, qty: i.preco + qty } : i
-        );
-      return [...prev, { ...product, qty }];
-    });
+    addItem(product, qty);
     notify(`"${product.descricao}" adicionado ao carrinho ✓`);
   };
 
-  const removeFromCart = (id: number): void =>
-    setCart((prev) => prev.filter((i) => i.produtoId !== id));
+  const removeFromCart = (id: string): void =>
+    removeItem(String(id));
 
-  const updateQty = (id: number, delta: number): void =>
-    setCart((prev) =>
-      prev
-        .map((i) =>
-          i.produtoId === id ? { ...i, qty: Math.max(1, i.preco + delta) } : i
-        )
-        .filter((i) => i.preco > 0)
-    );
+  const updateQty = (productId: string, delta: number) => {
+  const item = items.find((i) => i.productId === productId);
+  if (!item) return;
 
-  const cartTotal: number = cart.reduce((s, i) => s + i.preco * i.preco, 0);
-  const cartCount: number = cart.reduce((s, i) => s + i.preco, 0);
+  const newQty = Math.max(1, item.quantity + delta);
+  updateQuantity(productId, newQty);
+};
 
   const toggleFav = (product: GasProduct): void => {
     setFavorites((prev) =>
@@ -134,7 +128,6 @@ export default function Customer() {
             onClick={() => setSidebar(false)}
           />
           <Sidebar
-            cart={cartCount}
             favorites={favorites.length}
             goTo={goTo}
             close={() => setSidebar(false)}
@@ -146,7 +139,7 @@ export default function Customer() {
       <Header
         search={search}
         setSearch={setSearch}
-        cartCount={cartCount}
+        //cartCount={cartCount}
         favCount={favorites.length}
         onMenu={() => setSidebar(true)}
         goTo={goTo}
@@ -200,10 +193,11 @@ export default function Customer() {
         )}
         {view === 'cart' && (
           <CartView
-            cart={cart}
+            cart={items}
+            cartTotal={total}
             updateQty={updateQty}
-            removeFromCart={removeFromCart}
-            cartTotal={cartTotal}
+            removeItem={removeFromCart}
+            //cartTotal={cartTotal}
             onCheckout={() => {
               setPaymentItem('cart');
               setView('payment');

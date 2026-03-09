@@ -80,7 +80,7 @@ export interface StarsProps {
 export interface HeaderProps {
   search: string;
   setSearch: (v: string) => void;
-  cartCount: number;
+  //cartCount: number;
   favCount: number;
   onMenu: () => void;
   goTo: (v: View) => void;
@@ -88,7 +88,7 @@ export interface HeaderProps {
 }
 
 export interface SidebarProps {
-  cart: number;
+  //cart: number;
   favorites: number;
   goTo: (v: View) => void;
   close: () => void;
@@ -122,7 +122,7 @@ export interface ShopViewProps {
 export interface ProductCardProps {
   product: GasProduct;
   addToCart: (p: GasProduct) => void;
-  toggleFav: (p: GasProduct) => void;
+  //toggleFav: (p: GasProduct) => void;
   isFav: boolean;
   onClick: () => void;
   onPayNow: (p: GasProduct) => void;

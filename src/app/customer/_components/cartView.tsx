@@ -3,6 +3,7 @@ import { fmt } from '@/data/customer';
 import { ORANJE } from '@/constants/costumer';
 import { Icon } from './icon';
 import { CartViewProps } from '@/types/cart';
+import { useCartStore } from '@/hooks/cartstore';
 
 export function CartView({
   cart,

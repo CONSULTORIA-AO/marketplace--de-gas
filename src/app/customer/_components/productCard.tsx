@@ -10,7 +10,7 @@ import { fmt } from '@/data/customer';
 export function ProductCard({
   product,
   addToCart,
-  toggleFav,
+  //toggleFav,
   isFav,
   onClick,
   onPayNow,
@@ -27,7 +27,7 @@ export function ProductCard({
         background: 'white',
         borderRadius: 16,
         overflow: 'hidden',
-        border: `1.5px solid ${hov ? '#1259C3' : '#F3F4F6'}`,
+        border: `1.5px solid ${hov ? '#FFA500' : '#F3F4F6'}`,
         boxShadow: hov
           ? '0 16px 40px rgba(18,89,195,0.14)'
           : '0 2px 8px rgba(0,0,0,0.05)',
@@ -56,7 +56,7 @@ export function ProductCard({
             transform: hov ? 'scale(1.06)' : 'scale(1)',
           }}
         />
-        {product.ativo && (
+        {/*product.ativo && (
           <span
             style={{
               position: 'absolute',
@@ -72,7 +72,7 @@ export function ProductCard({
           >
             {product.ativo}
           </span>
-        )}
+        )*/}
         {discount > 0 && (
           <span
             style={{
@@ -90,28 +90,6 @@ export function ProductCard({
             -{discount}%
           </span>
         )}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleFav(product);
-          }}
-          style={{
-            position: 'absolute',
-            top: 8,
-            right: 8,
-            width: 32,
-            height: 32,
-            borderRadius: '50%',
-            background: 'rgba(255,255,255,0.9)',
-            border: 'none',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Icon name="heart" size={15} color={isFav ? '#EF4444' : '#9CA3AF'} />
-        </button>
       </div>
       <div style={{ padding: 12 }}>
         <p

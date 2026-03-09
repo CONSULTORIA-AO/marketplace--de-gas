@@ -130,7 +130,7 @@ export function ShopView({
               key={p.produtoId}
               product={p}
               addToCart={addToCart}
-              toggleFav={toggleFav}
+              //toggleFav={toggleFav}
               isFav={favorites.some((f) => f.produtoId === p.produtoId)}
               onClick={() => onProductClick(p)}
               onPayNow={onPayNow}

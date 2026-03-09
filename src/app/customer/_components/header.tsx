@@ -9,7 +9,7 @@ import { useUserStore } from '@/hooks/customer';
 export function Header({
   search,
   setSearch,
-  cartCount,
+  //cartCount,
   favCount,
   onMenu,
   goTo,
@@ -463,7 +463,7 @@ export function Header({
             }}
           >
             <Icon name="cart" color="#6B7280" size={20} />
-            {cartCount > 0 && <BadgeCount n={cartCount} />}
+            {/*cartCount > 0 && <BadgeCount n={cartCount} />*/}
           </button>
           <button
             onClick={() => goTo('profile')}
