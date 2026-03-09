@@ -6,8 +6,7 @@ import {
   PrivacySettings,
   SettingsViewProps,
 } from '@/types/customer';
-import { Field } from './field';
-import { useState } from 'react';
+
 import { Icon } from './icon';
 import { Card } from './card';
 import { useAuthStore } from '@/hooks/auth';
@@ -22,11 +21,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { api } from '@/utils/api';
 import { AxiosError } from 'axios';
 import { ToastAction } from '@/components/ui/toast';
-import { register } from 'module';
 
 export function SettingsView({ onBack, notify }: SettingsViewProps) {
   const entidade = useAuthStore((state) => state.session.user.id);
-  const cliente = useUserStore((state) => state.cliente);
   const { toast } = useToast();
   {
     /*
@@ -129,27 +126,31 @@ export function SettingsView({ onBack, notify }: SettingsViewProps) {
       </div>
 
       <Card title="Segurança · Alterar Password" icon="lock">
-        <form 
+        <form
           onSubmit={handleSubmit(onSubmitPassword)}
-          style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <input type="password" 
-            placeholder='Senha atual'
-            className='w-full rounded-md h-10'
-            {...register("currentPassword")}
+          style={{ display: 'flex', flexDirection: 'column', gap: 10 }}
+        >
+          <input
+            type="password"
+            placeholder="Senha atual"
+            className="w-full rounded-md h-10"
+            {...register('currentPassword')}
           />
-          <input type="password" 
-            placeholder='Senha nova'
-            className='w-full rounded-md h-10'
-            {...register("newPassword")}
+          <input
+            type="password"
+            placeholder="Senha nova"
+            className="w-full rounded-md h-10"
+            {...register('newPassword')}
           />
-          <input type="password" 
-            placeholder='Confirmar senha nova'
-            className='w-full rounded-md h-10'
-            {...register("confirmPassword")}
+          <input
+            type="password"
+            placeholder="Confirmar senha nova"
+            className="w-full rounded-md h-10"
+            {...register('confirmPassword')}
           />
 
           <button
-            type='submit'
+            type="submit"
             style={{
               padding: '10px 24px',
               borderRadius: 8,
