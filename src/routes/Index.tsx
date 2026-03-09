@@ -2,43 +2,46 @@ import { Routes, Route } from 'react-router-dom';
 import { ProtectedRoute } from '@/routes/ProtectedRoute';
 
 // Pages
-import { HomePage } from '@/pages/HomePage';
-import { LoginPage } from '@/pages/LoginPage';
-import { RegisterPage } from '@/pages/RegisterPage';
-import { CartPage } from '@/pages/CartPage';
-import { ProductDetailsPage } from '@/pages/ProductDetailsPage';
-import { CheckoutPage } from '@/pages/CheckoutPage';
-import { OrdersPage } from '@/pages/OrdersPage';
-import { ProfilePage } from '@/pages/ProfilePage';
-import PasswordRecoveryFlow from '@/pages/PasswordRecoveryFlow';
-import { VerifyAccountPage } from '@/pages/VerifyAccountPage';
-import NotFound from '@/pages/NotFound';
-import { ProductListPage } from '@/pages/ProductListPage';
-import { ProductReviewPage } from '@/pages/PoductReviewPage';
-import About from '@/components/about/about';
-import TermosPrivacidade from '@/pages/TermosPrivacidade';
-import { FAQ } from '@/pages/Faq';
+import Home from '@/app/home/page';
+import About from '@/app/(public)/about/info';
+import TermsPrivacity from '@/app/(public)/terms_privacity/page';
+import { FAQ } from '@/app/(public)/faq/page';
+import LoginPage from '@/app/auth/login/page';
+import { SignUp } from '@/app/auth/signup/page';
+import PasswordRecoveryFlow from '@/app/auth/recoverpassword/page';
+import Contact from '@/app/(public)/contact/contact';
+import Product from '@/app/(public)/product/page';
+import NotFoundPage from '@/app/(public)/notfound/page';
+import CartPage from '@/app/cart/page';
+import Customer from '@/app/customer/page';
+import { PaymentView } from '@/app/payment/page';
 
 const NavLink = () => {
   return (
     <Routes>
       {/* Rotas Públicas */}
-      <Route path="/" element={<HomePage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/cadastro" element={<RegisterPage />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/iniciar-sessao" element={<LoginPage />} />
+      <Route path="/cadastrar" element={<SignUp />} />
 
       <Route path="/recuperar-senha" element={<PasswordRecoveryFlow />} />
-      <Route path="/ativar-conta/:token" element={<VerifyAccountPage />} />
       <Route path="/sobre-nos" element={<About />} />
-      <Route path="/termos&politicas" element={<TermosPrivacidade />} />
+      <Route path="/termos-politicas" element={<TermsPrivacity />} />
       <Route path="/perguntas-frequentes" element={<FAQ />} />
-
-      {/* Rotas Privadas */}
+      <Route path="/contacto" element={<Contact />} />
       <Route
-        path="/avaliacao/:id"
+        path="/produto/:id"
         element={
           <ProtectedRoute>
-            <ProductReviewPage />
+            <Product />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/produtos"
+        element={
+          <ProtectedRoute>
+            <Customer />
           </ProtectedRoute>
         }
       />
@@ -50,50 +53,17 @@ const NavLink = () => {
           </ProtectedRoute>
         }
       />
+
       <Route
-        path="/produtos"
+        path="/pagamento/:id"
         element={
           <ProtectedRoute>
-            <ProductListPage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/produto/:id"
-        element={
-          <ProtectedRoute>
-            <ProductDetailsPage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/checkout"
-        element={
-          <ProtectedRoute>
-            <CheckoutPage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/pedidos"
-        element={
-          <ProtectedRoute>
-            <OrdersPage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/perfil"
-        element={
-          <ProtectedRoute>
-            <ProfilePage />
+            <PaymentView />
           </ProtectedRoute>
         }
       />
 
-      {/* 404 
-      <Route path="*" element={<Navigate to="/" replace />} />*/}
-      <Route path="*" element={<NotFound />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 };
