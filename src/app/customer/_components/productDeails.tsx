@@ -17,7 +17,6 @@ export function ProductDetail({
   onBack,
 }: ProductDetailProps) {
   const [qty, setQty] = useState<number>(1);
-  const [activeImg, setActiveImg] = useState<number>(0);
  
   //const isFav: boolean = favorites.some((f) => f.produtoId === product.produtoId);
   const imgs: string[] = [product.imagem_produto, product.imagem_produto, product.imagem_produto];
@@ -25,12 +24,12 @@ export function ProductDetail({
   const sellerButtons: { label: string; icon: string; action?: () => void }[] =
     [
       { label: '+244 934 444 555', icon: 'phone' },
-      //{ label: 'WhatsApp', icon: 'chat' },
+      { label: 'WhatsApp', icon: 'chat' },
       { label: 'Enviar mensagem', icon: 'send' },
       //{
         //label: 'Chat com vendedor',
         //icon: 'chat',
-        //action: () => onChat(product),
+       // action: () => onChat(product),
       //},
     ];
 
@@ -81,8 +80,8 @@ export function ProductDetail({
               }}
             >
               <img
-                src={imgs[activeImg]}
-                alt=""
+                src={product.imagem_produto}
+                alt={product.descricao}
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
               {/*<button
@@ -108,33 +107,6 @@ export function ProductDetail({
                   color={isFav ? '#EF4444' : '#9CA3AF'}
                 />
               </button>*/}
-            </div>
-            <div style={{ display: 'flex', gap: 8 }}>
-              {imgs.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActiveImg(i)}
-                  style={{
-                    width: 64,
-                    height: 64,
-                    borderRadius: 8,
-                    overflow: 'hidden',
-                    border: `2px solid ${activeImg === i ? ORANJE : '#E5E7EB'}`,
-                    cursor: 'pointer',
-                    padding: 0,
-                  }}
-                >
-                  <img
-                    src={imgs[i]}
-                    alt=""
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                    }}
-                  />
-                </button>
-              ))}
             </div>
           </div>
 
@@ -223,6 +195,19 @@ export function ProductDetail({
                 >
                   {qty}
                 </span>
+                <button
+                  onClick={() => setQty((q) => Math.max(1, q + 1))}
+                  style={{
+                    padding: '8px 14px',
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    color: '#374151',
+                    fontSize: 18,
+                  }}
+                >
+                  +
+                </button>
               </div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
