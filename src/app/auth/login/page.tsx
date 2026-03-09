@@ -185,7 +185,7 @@ export default function LoginPage() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.34 }}
             className="flex justify-end mb-8"
-            href="/recoverpassword"
+            href="/recuperar-senha"
           >
             <span className="text-sm text-[#FFA500] cursor-pointer hover:underline">
               Esqueceu a senha?
@@ -259,7 +259,7 @@ export default function LoginPage() {
             Novo na JaGás?{' '}
             <span
               className="text-[#FFA500] font-medium cursor-pointer hover:underline"
-              onClick={() => navigate('/cadastro')}
+              onClick={() => navigate('/cadastrar')}
             >
               Criar conta
             </span>

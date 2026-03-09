@@ -86,10 +86,10 @@ const SuccessStep = ({ onComplete }: SuccessStepProps) => {
         transition={{ delay: 0.4 }}
         className="space-y-2"
       >
-        <h2 className="text-xl sm:text-2xl font-semibold text-green-500">
+        <h2 className="text-xl sm:text-2xl font-semibold text-[#FFA500]">
           Senha Redefinida!
         </h2>
-        <p className="text-sm sm:text-base text-black">
+        <p className="text-sm sm:text-base text-[#FFA500]">
           Sua senha foi alterada com sucesso. Agora você pode fazer login com
           sua nova senha.
         </p>
@@ -105,7 +105,7 @@ const SuccessStep = ({ onComplete }: SuccessStepProps) => {
             navigate('/iniciar-sessao');
             onComplete();
           }}
-          className="w-full h-12 sm:h-14 rounded-xl gradient-[#137fec] text-[#137fec]-foreground text-sm sm:text-base hover:opacity-90 transition-opacity bg-blue-500 hover:bg-blue-700 text-white cursor-pointer"
+          className="w-full h-12 sm:h-14 rounded-lg gradient-[#FFA500] text-white text-sm sm:text-base hover:opacity-90 transition-opacity bg-[#FFA500] hover:bg-[#FFA500] text-white cursor-pointer"
         >
           Ir para Login
           <ArrowRight className="w-4 h-4 ml-2" />

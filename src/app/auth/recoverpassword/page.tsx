@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ContactInputStep from '@/app/auth/recoverpassword/_components/contact';
-import VerificationCodeStep from '@/app/auth/recoverpassword/page';
+import VerificationCodeStep from '@/app/auth/recoverpassword/_components/verify';
 import { toast } from 'sonner';
 import RecoveryMethodStep from './_components/method';
 import NewPasswordStep from './_components/newPassword';
@@ -129,7 +129,7 @@ const PasswordRecoveryFlow = () => {
           Lembrou sua senha?{' '}
           <Link
             to="/iniciar-sessao"
-            className="text-blue-500 cursor-pointer hover:underline font-medium"
+            className="text-[#FFA500] cursor-pointer hover:underline font-medium"
           >
             Fazer login
           </Link>

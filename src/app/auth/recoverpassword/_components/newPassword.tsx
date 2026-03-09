@@ -11,7 +11,7 @@ import { AxiosError } from 'axios';
 import { type RecoveryAccout, recoveryAccount } from '@/schema/customer.schema';
 import { ToastAction } from '@/components/ui/toast';
 import { api } from '@/utils/api';
-//import { useUserStore } from '@/store/userIfo';
+import { useUserStore } from '@/hooks/customer';
 
 interface NewPasswordStepProps {
   onSubmit: (password: string) => void;
@@ -32,7 +32,7 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { toast } = useToast();
-  //const entidade = useUserStore((state) => state.cliente.clienteId);
+  const entidade = useUserStore((state) => state.cliente.clienteId);
 
   const password = watch('newPassword') || '';
   const confirmPassword = watch('confirmPassword') || '';
@@ -52,15 +52,20 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
 
   async function onSubmitPassword(data: RecoveryAccout) {
     try {
-      const response = await api.patch(`/recuperar-conta`, {
-        senha: data.newPassword,
+      console.log("Senhas:", data)
+      console.log({
+  senha: data.newPassword,
+  confirmar_senha: data.confirmPassword,
+});
+      const response = await api.patch(`/clientes/${entidade}/redifinir-senha`, {
+        senhaCliente: data.newPassword,
         confirmar_senha: data.confirmPassword,
       });
       toast({
         description: (
           <div className="flex items-center gap-4 ">
             <div className="rounded-full w-8 h-8 flex justify-center items-center"></div>
-            <span className="text-blue-500">{response.data.mensagem}</span>
+            <span className="text-[#FFA500]">{response.data.mensagem}</span>
           </div>
         ),
         action: (
@@ -72,7 +77,7 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
           </ToastAction>
         ),
         className:
-          'border-l-4 border-l-blue-500 border-t-0 border-r-0 border-b-0',
+          'border-l-4 border-l-[#FFA500] border-t-0 border-r-0 border-b-0',
       });
       resetPassword();
       onSubmit(data.newPassword);
@@ -126,10 +131,10 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
         >
           <span className="text-2xl sm:text-3xl">🔒</span>
         </motion.div>
-        <h2 className="text-xl sm:text-2xl font-semibold text-blue-500">
+        <h2 className="text-xl sm:text-2xl font-semibold text-[#FFA500]">
           Nova Senha
         </h2>
-        <p className="text-sm sm:text-base text-blue-500">
+        <p className="text-sm sm:text-base text-[#FFA500]">
           Crie uma senha forte para proteger sua conta
         </p>
       </div>
@@ -144,7 +149,7 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
               type={showPassword ? 'text' : 'password'}
               placeholder="Nova senha"
               {...registerPassword('newPassword')}
-              className="h-12 sm:h-14 text-black text-sm sm:text-base px-4 pr-12 rounded-xl border-2 focus:border-blue-500 focus:ring-blue-500"
+              className="h-12 sm:h-14 text-black text-sm sm:text-base px-4 pr-12 rounded-lg border-2 focus:border-[#FFA500] focus:ring-[#FFA500]"
             />
             <button
               type="button"
@@ -164,7 +169,7 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
               type={showConfirmPassword ? 'text' : 'password'}
               placeholder="Confirmar senha"
               {...registerPassword('confirmPassword')}
-              className="h-12 sm:h-14 text-black text-sm sm:text-base px-4 pr-12 rounded-xl border-2 focus:border-primary focus:ring-blue-500"
+              className="h-12 sm:h-14 text-black text-sm sm:text-base px-4 pr-12 rounded-lg border-2 focus:border-[#FFA500] focus:ring-[#FFA500]"
             />
             <button
               type="button"
@@ -180,8 +185,8 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
           </div>
         </div>
 
-        <div className="bg-card bg-white text-blue-500 rounded-xl p-4 border border-border">
-          <p className="text-xs sm:text-sm font-medium text-foreground mb-3">
+        <div className="bg-card bg-white text-[#FFA500] rounded-xl p-4 border border-border">
+          <p className="text-xs sm:text-sm font-medium text-[#FFA500] mb-3">
             Requisitos da senha:
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -224,7 +229,7 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
           <Button
             type="button"
             onClick={onBack}
-            className="flex-1 h-12 sm:h-14 rounded-xl text-sm sm:text-base bg-green-500 hover:bg-green-700 text-white cursor-pointer"
+            className="flex-1 h-12 sm:h-14 rounded-lg text-sm sm:text-base bg-[#FFA500] hover:bg-[#FFA500] text-white cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Voltar
@@ -232,7 +237,7 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
           <Button
             type="submit"
             disabled={!allRequirementsMet || password !== confirmPassword}
-            className="flex-1 h-12 sm:h-14 rounded-xl gradient-[#137fec] text-[#137fec]-foreground text-sm sm:text-base hover:opacity-90 transition-opacity disabled:opacity-50 bg-blue-500 hover:bg-blue-700 text-white cursor-pointer"
+            className="flex-1 h-12 sm:h-14 rounded-lg gradient-green-700 text-[#fff] text-sm sm:text-base hover:opacity-90 transition-opacity disabled:opacity-50 bg-green-700 hover:bg-green-600 text-white cursor-pointer"
           >
             Redefinir Senha
           </Button>
