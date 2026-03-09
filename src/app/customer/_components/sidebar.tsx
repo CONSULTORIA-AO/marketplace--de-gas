@@ -31,7 +31,7 @@ export function Sidebar({
   const items: { icon: string; label: string; v: View; badge?: number }[] = [
     { icon: 'home', label: 'Início', v: 'shop' },
     //{ icon: 'heart', label: 'Favoritos', v: 'favorites', badge: favorites },
-    { icon: 'cart', label: 'Carrinho', v: 'cart', },
+    { icon: 'cart', label: 'Carrinho', v: 'cart' },
     { icon: 'package', label: 'Meus Pedidos', v: 'orders' },
     //{ icon: 'chat', label: 'Chat', v: 'chat' },
     //{ icon: 'star', label: 'Subscrições', v: 'subs' },

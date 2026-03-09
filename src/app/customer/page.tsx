@@ -1,16 +1,15 @@
 'use client';
 
 import { CATEGORIES, ORDERS, SUBS } from '@/data/customer';
-import {  View } from '@/types/customer';
+import { View } from '@/types/customer';
 import { useState } from 'react';
 //import { BottomNav } from './_components/buttonNav';
-import { SubscriptionsView } from './_components/subscription';
+//import { SubscriptionsView } from './_components/subscription';
 import { SettingsView } from './_components/settings';
 import { ProfileView } from './_components/profile';
-import { MessagesView } from './_components/message';
+//import { MessagesView } from './_components/message';
 import { OrdersView } from './_components/order';
-import { FavoritesView } from './_components/favorites';
-import { PaymentView } from './_components/paymentView';
+//import { FavoritesView } from './_components/favorites';
 import { CartView } from './_components/cartView';
 import { ProductDetail } from './_components/productDeails';
 import { ShopView } from './_components/shopView';
@@ -26,10 +25,14 @@ export default function Customer() {
   const [sidebarOpen, setSidebar] = useState<boolean>(false);
   const [cart, setCart] = useState<GasProduct[]>([]);
   const [favorites, setFavorites] = useState<GasProduct[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState<GasProduct | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<GasProduct | null>(
+    null
+  );
   const [chatSeller, setChatSeller] = useState<GasProduct | null>(null);
   const [notification, setNotification] = useState<string | null>(null);
-  const [paymentItem, setPaymentItem] = useState<GasProduct | 'cart' | null>(null);
+  const [paymentItem, setPaymentItem] = useState<GasProduct | 'cart' | null>(
+    null
+  );
   const items = useCartStore((state) => state.items);
   const [search, setSearch] = useState<string>('');
   const [activeCategory, setCategory] = useState<string>('Todos');
@@ -40,32 +43,31 @@ export default function Customer() {
   const removeItem = useCartStore((state) => state.removeItem);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
   const total = useCartStore((state) => state.getTotal());
-  
-    // Busca os produtos com React Query
-    const { data, isLoading, isError, error } = useProducts();
-  
-    // Filtra localmente (client-side) com base no searchTerm
-    const filtered = (data?.mensagem || []).filter(
-      (product: GasProduct) =>
-        product.descricao.toLowerCase().includes(search.toLowerCase()) ||
-        product.unidadeMedida.toLowerCase().includes(search.toLowerCase())
-    );
+
+  // Busca os produtos com React Query
+  const { data, isLoading, isError, error } = useProducts();
+
+  // Filtra localmente (client-side) com base no searchTerm
+  const filtered = (data?.mensagem || []).filter(
+    (product: GasProduct) =>
+      product.descricao.toLowerCase().includes(search.toLowerCase()) ||
+      product.unidadeMedida.toLowerCase().includes(search.toLowerCase())
+  );
 
   const addToCart = (product: GasProduct, qty: number = 1): void => {
     addItem(product, qty);
     notify(`"${product.descricao}" adicionado ao carrinho ✓`);
   };
 
-  const removeFromCart = (id: string): void =>
-    removeItem(String(id));
+  const removeFromCart = (id: string): void => removeItem(String(id));
 
   const updateQty = (productId: string, delta: number) => {
-  const item = items.find((i) => i.productId === productId);
-  if (!item) return;
+    const item = items.find((i) => i.productId === productId);
+    if (!item) return;
 
-  const newQty = Math.max(1, item.quantity + delta);
-  updateQuantity(productId, newQty);
-};
+    const newQty = Math.max(1, item.quantity + delta);
+    updateQuantity(productId, newQty);
+  };
 
   const toggleFav = (product: GasProduct): void => {
     setFavorites((prev) =>
@@ -239,16 +241,9 @@ export default function Customer() {
           <OrdersView orders={ORDERS} onBack={() => setView('shop')} />
         )}
         {/*view === 'chat' && <MessagesView onBack={() => setView('shop')} />*/}
-        {view === 'profile' && (
-          <ProfileView
-            onBack={() => setView('shop')}
-          />
-        )}
+        {view === 'profile' && <ProfileView onBack={() => setView('shop')} />}
         {view === 'settings' && (
-          <SettingsView
-            onBack={() => setView('shop')}
-            notify={notify}
-          />
+          <SettingsView onBack={() => setView('shop')} notify={notify} />
         )}
         {/*view === 'subs' && (
           <SubscriptionsView

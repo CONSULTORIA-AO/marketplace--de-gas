@@ -2,10 +2,11 @@
 
 import { ProductCardProps } from '@/types/customer';
 import { useState } from 'react';
-import { Icon } from './icon';
+//import { Icon } from './icon';
 import { Stars } from './star';
 import { ORANJE, WHITE } from '@/constants/costumer';
 import { fmt } from '@/data/customer';
+import { useNavigate } from 'react-router-dom';
 
 export function ProductCard({
   product,
@@ -16,8 +17,9 @@ export function ProductCard({
   onPayNow,
 }: ProductCardProps) {
   const [hov, setHov] = useState<boolean>(false);
+  const navigate = useNavigate();
   const discount: number = product.preco
-    ? Math.round((1 - product.preco/ product.preco) * 100)
+    ? Math.round((1 - product.preco / product.preco) * 100)
     : 0;
   return (
     <div
@@ -143,7 +145,7 @@ export function ProductCard({
           <button
             onClick={(e) => {
               e.stopPropagation();
-              onPayNow(product);
+              navigate(`/pagamento/${product.produtoId}`);
             }}
             style={{
               flex: 1,

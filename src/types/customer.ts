@@ -13,7 +13,6 @@ export type View =
   | 'settings'
   | 'subs';
 
-
 export interface Order {
   id: string;
   product: string;
@@ -144,8 +143,6 @@ export interface PaymentItem {
 }
 
 export interface PaymentViewProps {
-  item: PaymentItem;
-  cart: CartItem[] | null;
   onSuccess: () => void;
   onBack: () => void;
 }

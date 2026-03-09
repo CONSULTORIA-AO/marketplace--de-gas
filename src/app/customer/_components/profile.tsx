@@ -209,7 +209,6 @@ export function ProfileView({ onBack }: ProfileViewProps) {
           <Icon name="back" color={ORANJE} />
         </button>
         <h2 style={{ fontSize: 20, fontWeight: 800, margin: 0 }}>Meu Perfil</h2>
-        
       </div>
 
       <div
@@ -529,9 +528,12 @@ export function ProfileView({ onBack }: ProfileViewProps) {
               />
             </div>
           </div>
-          <button type="submit"
+          <button
+            type="submit"
             className={`bg-[${ORANJE}] text-white w-full rounded-xl`}
-          >Atualizar</button>
+          >
+            Atualizar
+          </button>
         </form>
       </div>
     </div>

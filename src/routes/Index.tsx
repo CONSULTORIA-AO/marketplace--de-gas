@@ -14,6 +14,7 @@ import Product from '@/app/(public)/product/page';
 import NotFoundPage from '@/app/(public)/notfound/page';
 import CartPage from '@/app/cart/page';
 import Customer from '@/app/customer/page';
+import { PaymentView } from '@/app/payment/page';
 
 const NavLink = () => {
   return (
@@ -49,6 +50,15 @@ const NavLink = () => {
         element={
           <ProtectedRoute>
             <CartPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/pagamento/:id"
+        element={
+          <ProtectedRoute>
+            <PaymentView />
           </ProtectedRoute>
         }
       />

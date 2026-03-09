@@ -1,5 +1,4 @@
 'use client';
-import { footerCategories } from '@/data/home';
 import { motion } from 'framer-motion';
 import { FaFacebook, FaInstagram, LiaGooglePlay } from '@/constants/icons';
 import { links } from '@/constants/routes';

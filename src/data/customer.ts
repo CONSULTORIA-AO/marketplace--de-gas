@@ -1,8 +1,6 @@
-import { Order,  Sub } from '../types/customer';
+import { Order, Sub } from '../types/customer';
 
-export const CATEGORIES: string[] = [
-  'Todos',
-];
+export const CATEGORIES: string[] = ['Todos'];
 
 export const ORDERS: Order[] = [
   {

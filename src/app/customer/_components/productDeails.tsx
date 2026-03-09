@@ -6,6 +6,7 @@ import { Icon } from './icon';
 import { useState } from 'react';
 import { ProductDetailProps, ReviewItem } from '@/types/customer';
 import { fmt } from '@/data/customer';
+import { useNavigate } from 'react-router-dom';
 
 export function ProductDetail({
   product,
@@ -17,9 +18,14 @@ export function ProductDetail({
   onBack,
 }: ProductDetailProps) {
   const [qty, setQty] = useState<number>(1);
- 
+  const navigate = useNavigate();
+
   //const isFav: boolean = favorites.some((f) => f.produtoId === product.produtoId);
-  const imgs: string[] = [product.imagem_produto, product.imagem_produto, product.imagem_produto];
+  const imgs: string[] = [
+    product.imagem_produto,
+    product.imagem_produto,
+    product.imagem_produto,
+  ];
 
   const sellerButtons: { label: string; icon: string; action?: () => void }[] =
     [
@@ -27,9 +33,9 @@ export function ProductDetail({
       { label: 'WhatsApp', icon: 'chat' },
       { label: 'Enviar mensagem', icon: 'send' },
       //{
-        //label: 'Chat com vendedor',
-        //icon: 'chat',
-       // action: () => onChat(product),
+      //label: 'Chat com vendedor',
+      //icon: 'chat',
+      // action: () => onChat(product),
       //},
     ];
 
@@ -227,7 +233,7 @@ export function ProductDetail({
                 Adicionar ao Carrinho
               </button>
               <button
-                onClick={() => onPayNow(product)}
+                onClick={() => navigate(`/pagamento/${product.produtoId}`)}
                 style={{
                   padding: '13px',
                   borderRadius: 10,
