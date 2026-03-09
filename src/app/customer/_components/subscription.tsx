@@ -8,7 +8,6 @@ import { Field } from './field';
 
 export function SubscriptionsView({
   subs,
-  setUser,
   notify,
   onBack,
 }: SubscriptionsViewProps) {
@@ -22,7 +21,6 @@ export function SubscriptionsView({
 
   const subscribe = (sub: Sub): void => {
     setActiveSub(sub.id);
-    setUser((u) => ({ ...u, plan: sub.name }));
     notify(`Subscrição "${sub.name}" activada! ✓`);
   };
 

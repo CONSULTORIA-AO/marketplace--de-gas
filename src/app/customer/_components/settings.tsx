@@ -10,7 +10,6 @@ import {
 import { Icon } from './icon';
 import { Card } from './card';
 import { useAuthStore } from '@/hooks/auth';
-import { useUserStore } from '@/hooks/customer';
 import { useToast } from '@/hooks/use-toast';
 import { useForm } from 'react-hook-form';
 import {

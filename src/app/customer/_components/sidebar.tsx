@@ -4,9 +4,10 @@ import { Icon } from './icon';
 import { SidebarProps, View } from '@/types/customer';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/hooks/auth';
+import { useUserStore } from '@/hooks/customer';
+import { useState } from 'react';
 
 export function Sidebar({
-  user,
   cart,
   favorites,
   goTo,
@@ -15,6 +16,12 @@ export function Sidebar({
 }: SidebarProps) {
   const navigate = useNavigate();
   const logout = useAuthStore((state) => state.logout);
+  const cliente = useUserStore((state) => state.cliente);
+  const [preview, setPreview] = useState<string | null>(null);
+  const avatarSrc =
+    preview ??
+    cliente?.fotoCliente ??
+    `https://ui-avatars.com/api/?name=${encodeURIComponent(cliente?.nomeCliente ?? 'U')}&background=f97316&color=000&size=128`;
 
   const handleLogout = () => {
     logout();
@@ -86,8 +93,8 @@ export function Sidebar({
             }}
           >
             <img
-              src={user.avatar}
-              alt=""
+              src={avatarSrc}
+              alt={cliente.nomeCliente}
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
           </div>
@@ -100,7 +107,7 @@ export function Sidebar({
                 margin: 0,
               }}
             >
-              {user.name}
+              {cliente?.nomeCliente}
             </p>
             <p
               style={{
@@ -109,7 +116,7 @@ export function Sidebar({
                 margin: 0,
               }}
             >
-              {user.plan}
+              {cliente?.criado_em}
             </p>
           </div>
         </div>

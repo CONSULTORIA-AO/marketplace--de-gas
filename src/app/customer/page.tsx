@@ -1,9 +1,9 @@
 'use client';
 
-import { ALL_PRODUCTS, CATEGORIES, ORDERS, SUBS } from '@/data/customer';
-import { CartItem, Product, User, View } from '@/types/customer';
+import { CATEGORIES, ORDERS, SUBS } from '@/data/customer';
+import {  View } from '@/types/customer';
 import { useState } from 'react';
-import { BottomNav } from './_components/buttonNav';
+//import { BottomNav } from './_components/buttonNav';
 import { SubscriptionsView } from './_components/subscription';
 import { SettingsView } from './_components/settings';
 import { ProfileView } from './_components/profile';
@@ -17,67 +17,66 @@ import { ShopView } from './_components/shopView';
 import { Header } from './_components/header';
 import { Sidebar } from './_components/sidebar';
 import { ORANJE } from '@/constants/costumer';
+import { GasProduct } from '@/types/product';
+import { useProducts } from '@/service/product/product';
 
 export default function Customer() {
   const [view, setView] = useState<View>('shop');
   const [sidebarOpen, setSidebar] = useState<boolean>(false);
-  const [cart, setCart] = useState<CartItem[]>([]);
-  const [favorites, setFavorites] = useState<Product[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [chatSeller, setChatSeller] = useState<Product | null>(null);
+  const [cart, setCart] = useState<GasProduct[]>([]);
+  const [favorites, setFavorites] = useState<GasProduct[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<GasProduct | null>(null);
+  const [chatSeller, setChatSeller] = useState<GasProduct | null>(null);
   const [notification, setNotification] = useState<string | null>(null);
-  const [paymentItem, setPaymentItem] = useState<Product | 'cart' | null>(null);
+  const [paymentItem, setPaymentItem] = useState<GasProduct | 'cart' | null>(null);
 
   const [search, setSearch] = useState<string>('');
   const [activeCategory, setCategory] = useState<string>('Todos');
   const [sortBy, setSort] = useState<string>('relevance');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500000]);
   const [filterOpen, setFilterOpen] = useState<boolean>(false);
+  
+    // Busca os produtos com React Query
+    const { data, isLoading, isError, error } = useProducts();
+  
+    // Filtra localmente (client-side) com base no searchTerm
+    const filtered = (data?.mensagem || []).filter(
+      (product: GasProduct) =>
+        product.descricao.toLowerCase().includes(search.toLowerCase()) ||
+        product.unidadeMedida.toLowerCase().includes(search.toLowerCase())
+    );
 
-  const [user, setUser] = useState<User>({
-    name: 'João Manuel Silva',
-    email: 'joao.silva@gmail.com',
-    phone: '+244 923 456 789',
-    address: 'Rua da Missão, 45, Luanda',
-    city: 'Luanda',
-    country: 'Angola',
-    avatar:
-      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80',
-    memberSince: 'Janeiro 2023',
-    plan: 'Gratuito',
-  });
-
-  const addToCart = (product: Product, qty: number = 1): void => {
+  const addToCart = (product: GasProduct, qty: number = 1): void => {
     setCart((prev) => {
-      const existing = prev.find((i) => i.id === product.id);
+      const existing = prev.find((i) => i.produtoId === product.produtoId);
       if (existing)
         return prev.map((i) =>
-          i.id === product.id ? { ...i, qty: i.qty + qty } : i
+          i.produtoId === product.produtoId ? { ...i, qty: i.preco + qty } : i
         );
       return [...prev, { ...product, qty }];
     });
-    notify(`"${product.name}" adicionado ao carrinho ✓`);
+    notify(`"${product.descricao}" adicionado ao carrinho ✓`);
   };
 
   const removeFromCart = (id: number): void =>
-    setCart((prev) => prev.filter((i) => i.id !== id));
+    setCart((prev) => prev.filter((i) => i.produtoId !== id));
 
   const updateQty = (id: number, delta: number): void =>
     setCart((prev) =>
       prev
         .map((i) =>
-          i.id === id ? { ...i, qty: Math.max(1, i.qty + delta) } : i
+          i.produtoId === id ? { ...i, qty: Math.max(1, i.preco + delta) } : i
         )
-        .filter((i) => i.qty > 0)
+        .filter((i) => i.preco > 0)
     );
 
-  const cartTotal: number = cart.reduce((s, i) => s + i.price * i.qty, 0);
-  const cartCount: number = cart.reduce((s, i) => s + i.qty, 0);
+  const cartTotal: number = cart.reduce((s, i) => s + i.preco * i.preco, 0);
+  const cartCount: number = cart.reduce((s, i) => s + i.preco, 0);
 
-  const toggleFav = (product: Product): void => {
+  const toggleFav = (product: GasProduct): void => {
     setFavorites((prev) =>
-      prev.find((i) => i.id === product.id)
-        ? prev.filter((i) => i.id !== product.id)
+      prev.find((i) => i.produtoId === product.produtoId)
+        ? prev.filter((i) => i.produtoId !== product.produtoId)
         : [...prev, product]
     );
   };
@@ -92,18 +91,6 @@ export default function Customer() {
     if (extra) extra();
     setSidebar(false);
   };
-
-  const filtered: Product[] = ALL_PRODUCTS.filter(
-    (p) => activeCategory === 'Todos' || p.category === activeCategory
-  )
-    .filter((p) => p.name.toLowerCase().includes(search.toLowerCase()))
-    .filter((p) => p.price >= priceRange[0] && p.price <= priceRange[1])
-    .sort((a, b) => {
-      if (sortBy === 'price-asc') return a.price - b.price;
-      if (sortBy === 'price-desc') return b.price - a.price;
-      if (sortBy === 'rating') return b.rating - a.rating;
-      return b.reviews - a.reviews;
-    });
 
   return (
     <div
@@ -147,7 +134,6 @@ export default function Customer() {
             onClick={() => setSidebar(false)}
           />
           <Sidebar
-            user={user}
             cart={cartCount}
             favorites={favorites.length}
             goTo={goTo}
@@ -225,11 +211,11 @@ export default function Customer() {
             onBack={() => setView('shop')}
           />
         )}
-        {view === 'payment' && paymentItem && (
+        {/*view === 'payment' && paymentItem && (
           <PaymentView
             item={
               paymentItem === 'cart'
-                ? { name: `${cartCount} itens no carrinho`, price: cartTotal }
+                ? { descricao: `${cartCount} itens no carrinho`, preco: cartTotal }
                 : paymentItem
             }
             cart={paymentItem === 'cart' ? cart : null}
@@ -254,27 +240,23 @@ export default function Customer() {
             }}
             onBack={() => setView('shop')}
           />
-        )}
+        )*/}
         {view === 'orders' && (
           <OrdersView orders={ORDERS} onBack={() => setView('shop')} />
         )}
-        {view === 'chat' && <MessagesView onBack={() => setView('shop')} />}
+        {/*view === 'chat' && <MessagesView onBack={() => setView('shop')} />*/}
         {view === 'profile' && (
           <ProfileView
-            user={user}
-            setUser={setUser}
             onBack={() => setView('shop')}
           />
         )}
         {view === 'settings' && (
           <SettingsView
-            user={user}
-            setUser={setUser}
             onBack={() => setView('shop')}
             notify={notify}
           />
         )}
-        {view === 'subs' && (
+        {/*view === 'subs' && (
           <SubscriptionsView
             subs={SUBS}
             user={user}
@@ -282,10 +264,10 @@ export default function Customer() {
             notify={notify}
             onBack={() => setView('shop')}
           />
-        )}
+        )*/}
       </div>
 
-      <BottomNav view={view} goTo={goTo} cartCount={cartCount} />
+      {/*<BottomNav view={view} goTo={goTo} cartCount={cartCount} />*/}
 
       <style>{`
         @keyframes slideIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}

@@ -16,8 +16,8 @@ export function ProductCard({
   onPayNow,
 }: ProductCardProps) {
   const [hov, setHov] = useState<boolean>(false);
-  const discount: number = product.oldPrice
-    ? Math.round((1 - product.price / product.oldPrice) * 100)
+  const discount: number = product.preco
+    ? Math.round((1 - product.preco/ product.preco) * 100)
     : 0;
   return (
     <div
@@ -46,8 +46,8 @@ export function ProductCard({
         onClick={onClick}
       >
         <img
-          src={product.img}
-          alt={product.name}
+          src={product.imagem_produto}
+          alt={product.imagem_produto}
           style={{
             width: '100%',
             height: '100%',
@@ -56,7 +56,7 @@ export function ProductCard({
             transform: hov ? 'scale(1.06)' : 'scale(1)',
           }}
         />
-        {product.badge && (
+        {product.ativo && (
           <span
             style={{
               position: 'absolute',
@@ -70,7 +70,7 @@ export function ProductCard({
               fontWeight: 700,
             }}
           >
-            {product.badge}
+            {product.ativo}
           </span>
         )}
         {discount > 0 && (
@@ -112,28 +112,8 @@ export function ProductCard({
         >
           <Icon name="heart" size={15} color={isFav ? '#EF4444' : '#9CA3AF'} />
         </button>
-        {product.freeShipping && (
-          <span
-            style={{
-              position: 'absolute',
-              bottom: 8,
-              left: 8,
-              padding: '2px 7px',
-              borderRadius: 6,
-              background: 'rgba(16,185,129,0.9)',
-              color: 'white',
-              fontSize: 10,
-              fontWeight: 600,
-            }}
-          >
-            Frete grátis
-          </span>
-        )}
       </div>
       <div style={{ padding: 12 }}>
-        <p style={{ fontSize: 12, color: '#6B7280', marginBottom: 2 }}>
-          {product.category}
-        </p>
         <p
           onClick={onClick}
           style={{
@@ -148,11 +128,7 @@ export function ProductCard({
             overflow: 'hidden',
           }}
         >
-          {product.name}
-        </p>
-        <Stars rating={product.rating} small />
-        <p style={{ fontSize: 10, color: '#9CA3AF', marginBottom: 8 }}>
-          ({product.reviews.toLocaleString()} avaliações)
+          {product.descricao}
         </p>
         <div
           style={{
@@ -163,19 +139,8 @@ export function ProductCard({
           }}
         >
           <span style={{ fontSize: 16, fontWeight: 900, color: ORANJE }}>
-            {fmt(product.price)}
+            {fmt(product.preco)}
           </span>
-          {product.oldPrice && (
-            <span
-              style={{
-                fontSize: 11,
-                color: '#9CA3AF',
-                textDecoration: 'line-through',
-              }}
-            >
-              {fmt(product.oldPrice)}
-            </span>
-          )}
         </div>
         <div style={{ display: 'flex', gap: 6 }}>
           <button

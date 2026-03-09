@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Icon } from './icon';
 import { ORANJE, WHITE } from '@/constants/costumer';
 import { BadgeCount } from './badgeCount';
+import { useUserStore } from '@/hooks/customer';
 
 export function Header({
   search,
@@ -14,6 +15,13 @@ export function Header({
   goTo,
 }: HeaderProps) {
   const [searchFocus, setFocus] = useState<boolean>(false);
+  const cliente = useUserStore((state) => state.cliente);
+  const [preview, setPreview] = useState<string | null>(null);
+  const [searchValue, setSearchValue] = useState('');
+  const avatarSrc =
+    preview ??
+    cliente?.fotoCliente ??
+    `https://ui-avatars.com/api/?name=${encodeURIComponent(cliente?.nomeCliente ?? 'U')}&background=f97316&color=000&size=128`;
 
   const [notifications, setNotifications] = useState<Notification[]>([
     {
@@ -97,6 +105,10 @@ export function Header({
       icon: 'bell',
     },
   ]);
+
+  const handleSearch = () => {
+    setSearch(searchValue.trim());
+  };
 
   //const unreadCount: number = notifications.filter((n) => !n.read).length;
   //const [showNotifications, setShowNotifications] = useState<boolean>(false);
@@ -209,8 +221,9 @@ export function Header({
             <Icon name="search" size={16} />
           </div>
           <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
             placeholder="Pesquisar produtos, categorias..."
@@ -226,7 +239,7 @@ export function Header({
           />
           {search && (
             <button
-              onClick={() => setSearch('')}
+              onClick={handleSearch}
               style={{
                 padding: '0 10px',
                 background: 'none',
@@ -471,8 +484,8 @@ export function Header({
               }}
             >
               <img
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80"
-                alt=""
+                src={avatarSrc}
+                alt={cliente?.nomeCliente}
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
             </div>

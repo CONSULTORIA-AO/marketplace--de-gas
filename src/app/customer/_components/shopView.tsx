@@ -107,88 +107,8 @@ export function ShopView({
           <option value="relevance">Relevância</option>
           <option value="price-asc">Preço: menor</option>
           <option value="price-desc">Preço: maior</option>
-          <option value="rating">Melhor avaliação</option>
         </select>
       </div>
-
-      {filterOpen && (
-        <div
-          style={{
-            background: 'white',
-            borderRadius: 12,
-            padding: 20,
-            marginBottom: 16,
-            border: '1px solid #E5E7EB',
-            boxShadow: '0 4px 16px rgba(0,0,0,0.06)',
-          }}
-        >
-          <p
-            style={{
-              fontWeight: 700,
-              fontSize: 14,
-              marginBottom: 12,
-              color: '#111',
-            }}
-          >
-            Intervalo de Preço
-          </p>
-          <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-            <div style={{ flex: 1 }}>
-              <label style={{ fontSize: 12, color: '#6B7280' }}>Mínimo</label>
-              <input
-                type="number"
-                value={priceRange[0]}
-                onChange={(e) =>
-                  setPriceRange([+e.target.value, priceRange[1]])
-                }
-                style={{
-                  width: '100%',
-                  padding: '8px 10px',
-                  border: '1.5px solid #E5E7EB',
-                  borderRadius: 8,
-                  fontSize: 13,
-                  marginTop: 4,
-                }}
-              />
-            </div>
-            <span style={{ color: '#9CA3AF', marginTop: 16 }}>—</span>
-            <div style={{ flex: 1 }}>
-              <label style={{ fontSize: 12, color: '#6B7280' }}>Máximo</label>
-              <input
-                type="number"
-                value={priceRange[1]}
-                onChange={(e) =>
-                  setPriceRange([priceRange[0], +e.target.value])
-                }
-                style={{
-                  width: '100%',
-                  padding: '8px 10px',
-                  border: '1.5px solid #E5E7EB',
-                  borderRadius: 8,
-                  fontSize: 13,
-                  marginTop: 4,
-                }}
-              />
-            </div>
-            <button
-              onClick={() => setPriceRange([0, 500000])}
-              style={{
-                marginTop: 16,
-                padding: '8px 14px',
-                background: WHITE,
-                border: 'none',
-                borderRadius: 8,
-                color: ORANJE,
-                fontSize: 12,
-                fontWeight: 600,
-                cursor: 'pointer',
-              }}
-            >
-              Reset
-            </button>
-          </div>
-        </div>
-      )}
 
       {products.length === 0 ? (
         <div
@@ -207,11 +127,11 @@ export function ShopView({
         >
           {products.map((p) => (
             <ProductCard
-              key={p.id}
+              key={p.produtoId}
               product={p}
               addToCart={addToCart}
               toggleFav={toggleFav}
-              isFav={favorites.some((f) => f.id === p.id)}
+              isFav={favorites.some((f) => f.produtoId === p.produtoId)}
               onClick={() => onProductClick(p)}
               onPayNow={onPayNow}
             />

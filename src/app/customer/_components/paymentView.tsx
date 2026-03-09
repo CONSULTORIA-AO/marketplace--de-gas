@@ -225,11 +225,11 @@ export function PaymentView({ item, onSuccess, onBack }: PaymentViewProps) {
               A pagar por:
             </p>
             <p style={{ fontWeight: 700, fontSize: 14, margin: '2px 0 0' }}>
-              {item.name}
+              {item.descricao}
             </p>
           </div>
           <span style={{ fontSize: 22, fontWeight: 900, color: ORANJE }}>
-            {fmt(item.price)}
+            {fmt(item.prec0)}
           </span>
         </div>
       </div>
@@ -475,14 +475,14 @@ export function PaymentView({ item, onSuccess, onBack }: PaymentViewProps) {
           >
             {(
               [
-                { l: 'Produto', v: item.name },
+                { l: 'Produto', v: item.descricao },
                 {
                   l: 'Método',
                   v: methods.find((m) => m.id === method)?.label ?? '',
                 },
-                { l: 'Valor', v: fmt(item.price) },
+                { l: 'Valor', v: fmt(item.prec0) },
                 { l: 'Taxa', v: '0 Kz' },
-                { l: 'Total', v: fmt(item.price), bold: true },
+                { l: 'Total', v: fmt(item.prec0), bold: true },
               ] as { l: string; v: string; bold?: boolean }[]
             ).map((r) => (
               <div
@@ -521,7 +521,7 @@ export function PaymentView({ item, onSuccess, onBack }: PaymentViewProps) {
               cursor: 'pointer',
             }}
           >
-            Confirmar & Pagar {fmt(item.price)}
+            Confirmar & Pagar {fmt(item.prec0)}
           </button>
           <p
             style={{

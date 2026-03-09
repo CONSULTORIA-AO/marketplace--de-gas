@@ -1,7 +1,7 @@
 'use client';
 
 import { ORANJE, WHITE } from '@/constants/costumer';
-import { ProfileViewProps, User } from '@/types/customer';
+import { ProfileViewProps } from '@/types/customer';
 import { useEffect, useRef, useState } from 'react';
 import { Icon } from './icon';
 import { AxiosError } from 'axios';
@@ -13,9 +13,9 @@ import { ToastAction } from '@radix-ui/react-toast';
 import { useToast } from '@/hooks/use-toast';
 import { useUserStore } from '@/hooks/customer';
 import { useAuthStore } from '@/hooks/auth';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
-export function ProfileView({ user, setUser, onBack }: ProfileViewProps) {
+export function ProfileView({ onBack }: ProfileViewProps) {
   const entidade = useAuthStore((state) => state.session.user.id);
   const cliente = useUserStore((state) => state.cliente);
   const setCliente = useUserStore((state) => state.setCliente);

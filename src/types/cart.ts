@@ -1,4 +1,3 @@
-import { Product } from './customer';
 import { GasProduct } from '@/types/product';
 
 export interface CartItem {

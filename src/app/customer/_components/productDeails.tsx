@@ -18,56 +18,20 @@ export function ProductDetail({
 }: ProductDetailProps) {
   const [qty, setQty] = useState<number>(1);
   const [activeImg, setActiveImg] = useState<number>(0);
-  const [review, setReview] = useState<{ rating: number; comment: string }>({
-    rating: 5,
-    comment: '',
-  });
-  const [reviews, setReviews] = useState<ReviewItem[]>([
-    {
-      name: 'Maria S.',
-      rating: 5,
-      comment: 'Excelente produto! Chegou rápido.',
-      date: '2024-11-20',
-    },
-    {
-      name: 'Pedro A.',
-      rating: 4,
-      comment: 'Muito bom, recomendo!',
-      date: '2024-11-15',
-    },
-  ]);
-  const [showReviewForm, setShowReviewForm] = useState<boolean>(false);
-  const isFav: boolean = favorites.some((f) => f.id === product.id);
-  const imgs: string[] = [product.img, product.img, product.img];
-  const discount: number = product.oldPrice
-    ? Math.round((1 - product.price / product.oldPrice) * 100)
-    : 0;
-
-  const submitReview = (): void => {
-    if (!review.comment.trim()) return;
-    setReviews((prev) => [
-      {
-        name: 'Você',
-        rating: review.rating,
-        comment: review.comment,
-        date: new Date().toLocaleDateString('pt-AO'),
-      },
-      ...prev,
-    ]);
-    setShowReviewForm(false);
-    setReview({ rating: 5, comment: '' });
-  };
+ 
+  //const isFav: boolean = favorites.some((f) => f.produtoId === product.produtoId);
+  const imgs: string[] = [product.imagem_produto, product.imagem_produto, product.imagem_produto];
 
   const sellerButtons: { label: string; icon: string; action?: () => void }[] =
     [
       { label: '+244 934 444 555', icon: 'phone' },
-      { label: 'WhatsApp', icon: 'chat' },
+      //{ label: 'WhatsApp', icon: 'chat' },
       { label: 'Enviar mensagem', icon: 'send' },
-      {
-        label: 'Chat com vendedor',
-        icon: 'chat',
-        action: () => onChat(product),
-      },
+      //{
+        //label: 'Chat com vendedor',
+        //icon: 'chat',
+        //action: () => onChat(product),
+      //},
     ];
 
   return (
@@ -121,24 +85,7 @@ export function ProductDetail({
                 alt=""
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
-              {discount > 0 && (
-                <span
-                  style={{
-                    position: 'absolute',
-                    top: 12,
-                    left: 12,
-                    padding: '4px 10px',
-                    borderRadius: 8,
-                    background: '#EF4444',
-                    color: 'white',
-                    fontSize: 13,
-                    fontWeight: 700,
-                  }}
-                >
-                  -{discount}%
-                </span>
-              )}
-              <button
+              {/*<button
                 onClick={() => toggleFav(product)}
                 style={{
                   position: 'absolute',
@@ -160,7 +107,7 @@ export function ProductDetail({
                   size={18}
                   color={isFav ? '#EF4444' : '#9CA3AF'}
                 />
-              </button>
+              </button>*/}
             </div>
             <div style={{ display: 'flex', gap: 8 }}>
               {imgs.map((_, i) => (
@@ -200,9 +147,6 @@ export function ProductDetail({
               border: '1px solid #F3F4F6',
             }}
           >
-            <span style={{ fontSize: 12, color: ORANJE, fontWeight: 600 }}>
-              {product.category}
-            </span>
             <h1
               style={{
                 fontSize: 20,
@@ -211,21 +155,8 @@ export function ProductDetail({
                 margin: '6px 0 8px',
               }}
             >
-              {product.name}
+              {product.descricao}
             </h1>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 8,
-                marginBottom: 12,
-              }}
-            >
-              <Stars rating={product.rating} />
-              <span style={{ fontSize: 12, color: '#6B7280' }}>
-                ({product.reviews.toLocaleString()} avaliações)
-              </span>
-            </div>
             <div
               style={{
                 display: 'flex',
@@ -235,36 +166,9 @@ export function ProductDetail({
               }}
             >
               <span style={{ fontSize: 28, fontWeight: 900, color: ORANJE }}>
-                {fmt(product.price)}
+                {fmt(product.preco)}
               </span>
-              {product.oldPrice && (
-                <span
-                  style={{
-                    fontSize: 16,
-                    color: '#9CA3AF',
-                    textDecoration: 'line-through',
-                  }}
-                >
-                  {fmt(product.oldPrice)}
-                </span>
-              )}
             </div>
-            {product.freeShipping && (
-              <span
-                style={{
-                  display: 'inline-block',
-                  padding: '3px 10px',
-                  borderRadius: 20,
-                  background: '#D1FAE5',
-                  color: '#065F46',
-                  fontSize: 12,
-                  fontWeight: 600,
-                  marginBottom: 16,
-                }}
-              >
-                Frete grátis
-              </span>
-            )}
             <p
               style={{
                 fontSize: 13,
@@ -273,8 +177,7 @@ export function ProductDetail({
                 marginBottom: 16,
               }}
             >
-              Produto de alta qualidade com garantia de satisfação. Entrega
-              segura em todo Angola. Stock limitado — garanta o seu agora.
+              Produto de qualidade com garantia de satisfação. Entrega
             </p>
             <div
               style={{
@@ -320,23 +223,7 @@ export function ProductDetail({
                 >
                   {qty}
                 </span>
-                <button
-                  onClick={() => setQty((q) => Math.min(product.stock, q + 1))}
-                  style={{
-                    padding: '8px 14px',
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    color: '#374151',
-                    fontSize: 18,
-                  }}
-                >
-                  +
-                </button>
               </div>
-              <span style={{ fontSize: 12, color: '#10B981' }}>
-                ({product.stock} em stock)
-              </span>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <button
@@ -409,20 +296,14 @@ export function ProductDetail({
                 }}
               >
                 <img
-                  src={product.sellerImg}
+                  src={product.imagem_produto}
                   alt=""
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
               </div>
               <div>
                 <p style={{ fontWeight: 700, fontSize: 14, margin: 0 }}>
-                  {product.seller}
-                </p>
-                <Stars rating={5} small />
-                <p
-                  style={{ fontSize: 11, color: '#6B7280', margin: '2px 0 0' }}
-                >
-                  Membro desde 2023
+                  {product.empresaDona}
                 </p>
               </div>
             </div>
@@ -455,184 +336,6 @@ export function ProductDetail({
         </div>
 
         {/* Reviews */}
-        <div
-          style={{
-            background: 'white',
-            borderRadius: 16,
-            padding: 20,
-            border: '1px solid #F3F4F6',
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginBottom: 16,
-            }}
-          >
-            <h3
-              style={{
-                fontSize: 16,
-                fontWeight: 700,
-                color: '#111',
-                margin: 0,
-              }}
-            >
-              Avaliações ({reviews.length})
-            </h3>
-            <button
-              onClick={() => setShowReviewForm(!showReviewForm)}
-              style={{
-                padding: '8px 16px',
-                borderRadius: 8,
-                background: ORANJE,
-                border: 'none',
-                color: 'white',
-                fontSize: 13,
-                fontWeight: 600,
-                cursor: 'pointer',
-              }}
-            >
-              + Avaliar
-            </button>
-          </div>
-
-          {showReviewForm && (
-            <div
-              style={{
-                background: WHITE,
-                borderRadius: 12,
-                padding: 16,
-                marginBottom: 16,
-                border: `1px solid ${ORANJE}20`,
-              }}
-            >
-              <p style={{ fontWeight: 600, fontSize: 14, marginBottom: 10 }}>
-                A sua avaliação
-              </p>
-              <div style={{ display: 'flex', gap: 6, marginBottom: 10 }}>
-                {[1, 2, 3, 4, 5].map((s) => (
-                  <button
-                    key={s}
-                    onClick={() => setReview((r) => ({ ...r, rating: s }))}
-                    style={{
-                      background: 'none',
-                      border: 'none',
-                      cursor: 'pointer',
-                      fontSize: 24,
-                    }}
-                  >
-                    {s <= review.rating ? '⭐' : '☆'}
-                  </button>
-                ))}
-              </div>
-              <textarea
-                value={review.comment}
-                onChange={(e) =>
-                  setReview((r) => ({ ...r, comment: e.target.value }))
-                }
-                placeholder="Partilhe a sua experiência com este produto..."
-                style={{
-                  width: '100%',
-                  minHeight: 80,
-                  padding: 10,
-                  borderRadius: 8,
-                  border: '1.5px solid #E5E7EB',
-                  fontSize: 13,
-                  resize: 'vertical',
-                  boxSizing: 'border-box',
-                }}
-              />
-              <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
-                <button
-                  onClick={submitReview}
-                  style={{
-                    padding: '8px 20px',
-                    borderRadius: 8,
-                    background: ORANJE,
-                    border: 'none',
-                    color: 'white',
-                    fontSize: 13,
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                  }}
-                >
-                  Publicar
-                </button>
-                <button
-                  onClick={() => setShowReviewForm(false)}
-                  style={{
-                    padding: '8px 16px',
-                    borderRadius: 8,
-                    background: 'white',
-                    border: '1px solid #E5E7EB',
-                    fontSize: 13,
-                    cursor: 'pointer',
-                  }}
-                >
-                  Cancelar
-                </button>
-              </div>
-            </div>
-          )}
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            {reviews.map((r, i) => (
-              <div
-                key={i}
-                style={{ borderBottom: '1px solid #F3F4F6', paddingBottom: 12 }}
-              >
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 10,
-                    marginBottom: 4,
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 32,
-                      height: 32,
-                      borderRadius: '50%',
-                      background: ORANJE,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'white',
-                      fontWeight: 700,
-                      fontSize: 12,
-                    }}
-                  >
-                    {r.name[0]}
-                  </div>
-                  <div>
-                    <p style={{ fontWeight: 600, fontSize: 13, margin: 0 }}>
-                      {r.name}
-                    </p>
-                    <p style={{ fontSize: 11, color: '#9CA3AF', margin: 0 }}>
-                      {r.date}
-                    </p>
-                  </div>
-                  <div style={{ marginLeft: 'auto' }}>
-                    <Stars rating={r.rating} small />
-                  </div>
-                </div>
-                <p
-                  style={{
-                    fontSize: 13,
-                    color: '#374151',
-                    marginLeft: 42,
-                    lineHeight: 1.5,
-                  }}
-                >
-                  {r.comment}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </div>
   );
