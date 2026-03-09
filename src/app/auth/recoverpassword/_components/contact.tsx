@@ -42,8 +42,8 @@ const ContactInputStep = ({
         emailCliente: data.contact,
         canal: method === 'email' ? 'E-mail' : 'SMS',
       });
-      console.log("Resposta da api:", response.data?.info.entidade)
-    setEntidade(response.data?.info.entidade);
+      console.log('Resposta da api:', response.data?.info.entidade);
+      setEntidade(response.data?.info.entidade);
 
       toast({
         description: (

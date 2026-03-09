@@ -71,7 +71,11 @@ export function ProductCard({ product, index }: ProductCardProps) {
       <div className="relative h-44 w-full overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center">
         {product.imagem_produto ? (
           <img
-            src={product.imagem_produto ?`${import.meta.env.VITE_API_URL}images/products${product.imagem_produto}?${Date.now()}`: ""}
+            src={
+              product.imagem_produto
+                ? `${import.meta.env.VITE_API_URL}images/products${product.imagem_produto}?${Date.now()}`
+                : ''
+            }
             alt={product.descricao}
             className="object-cover transition-transform duration-300 group-hover:scale-105"
             sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"

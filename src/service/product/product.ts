@@ -24,7 +24,7 @@ export function useProductById(id?: string | number) {
       if (!id) throw new Error('ID do produto não fornecido');
 
       const response = await api.get(`/produtos/${id}`);
-      
+
       const product = response.data.mensagem;
 
       return product;

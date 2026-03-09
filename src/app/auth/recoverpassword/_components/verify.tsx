@@ -34,7 +34,7 @@ const VerificationCodeStep = ({
   const [countdown, setCountdown] = useState(60);
   const [canResend, setCanResend] = useState(false);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
-  const entidade = useUserStore((state) => state.cliente?.clienteId)
+  const entidade = useUserStore((state) => state.cliente?.clienteId);
 
   const {
     handleSubmit,
@@ -91,7 +91,7 @@ const VerificationCodeStep = ({
   };
 
   const onSubmit = async (data: VerificationCodeFormData) => {
-    console.log("a entidade:", entidade)
+    console.log('a entidade:', entidade);
     try {
       await api.post('/clientes/codigo-seguranca/autenticar', {
         codigo_seguranca: data.codigo_seguranca,

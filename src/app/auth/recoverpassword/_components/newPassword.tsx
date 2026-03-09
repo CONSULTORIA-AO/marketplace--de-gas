@@ -52,15 +52,18 @@ const NewPasswordStep = ({ onSubmit, onBack }: NewPasswordStepProps) => {
 
   async function onSubmitPassword(data: RecoveryAccout) {
     try {
-      console.log("Senhas:", data)
+      console.log('Senhas:', data);
       console.log({
-  senha: data.newPassword,
-  confirmar_senha: data.confirmPassword,
-});
-      const response = await api.patch(`/clientes/${entidade}/redifinir-senha`, {
-        senhaCliente: data.newPassword,
+        senha: data.newPassword,
         confirmar_senha: data.confirmPassword,
       });
+      const response = await api.patch(
+        `/clientes/${entidade}/redifinir-senha`,
+        {
+          senhaCliente: data.newPassword,
+          confirmar_senha: data.confirmPassword,
+        }
+      );
       toast({
         description: (
           <div className="flex items-center gap-4 ">

@@ -13,7 +13,7 @@ import Contact from '@/app/(public)/contact/contact';
 import Product from '@/app/(public)/product/page';
 import NotFoundPage from '@/app/(public)/notfound/page';
 import CartPage from '@/app/cart/page';
-import Customer from "@/app/customer/page";
+import Customer from '@/app/customer/page';
 
 const NavLink = () => {
   return (

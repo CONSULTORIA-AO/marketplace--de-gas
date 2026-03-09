@@ -35,7 +35,7 @@ export default function ProductPage() {
     setTimeout(() => setCartDone(false), 2000);
 
     toast({
-      title: "Adicionado!",
+      title: 'Adicionado!',
       description: `${qty}x ${product.descricao} no carrinho`,
       duration: 3000,
     });
@@ -72,7 +72,7 @@ export default function ProductPage() {
         className:
           'border-l-4 border-l-[#FB3748] border-t-0 border-b-0 border-r-0',
       });
-      navigate("/iniciar-sessao?redirect=/carrinho");
+      navigate('/iniciar-sessao?redirect=/carrinho');
       return;
     }
 
@@ -81,11 +81,19 @@ export default function ProductPage() {
   };
 
   if (isLoading) {
-    return <div className="min-h-screen flex items-center justify-center">Carregando...</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Carregando...
+      </div>
+    );
   }
 
   if (isError || !product) {
-    return <div className="min-h-screen flex items-center justify-center text-red-600">Produto não encontrado</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center text-red-600">
+        Produto não encontrado
+      </div>
+    );
   }
 
   return (
@@ -124,12 +132,13 @@ export default function ProductPage() {
                       key={product.produtoId}
                       src={
                         product.imagem_produto
-                        ? `${import.meta.env.VITE_API_URL}/images/products${product.imagem_produto.startsWith('/') ? '' : '/'}${product.imagem_produto}`
-                        : "https://via.placeholder.com/600x600?text=Sem+Imagem"
+                          ? `${import.meta.env.VITE_API_URL}/images/products${product.imagem_produto.startsWith('/') ? '' : '/'}${product.imagem_produto}`
+                          : 'https://via.placeholder.com/600x600?text=Sem+Imagem'
                       }
                       onError={(e) => {
-                      e.currentTarget.src = "https://via.placeholder.com/600x600?text=Imagem+Indisponível";
-                    }}
+                        e.currentTarget.src =
+                          'https://via.placeholder.com/600x600?text=Imagem+Indisponível';
+                      }}
                       alt={product.descricao}
                       initial={{ opacity: 0, scale: 1.04 }}
                       animate={{ opacity: 1, scale: 1 }}
@@ -145,7 +154,7 @@ export default function ProductPage() {
               <div className="mt-7 flex flex-wrap items-center gap-4">
                 <div className="flex items-center border border-gray-200 rounded-xl overflow-hidden">
                   <button
-                    onClick={() => setQty(q => Math.max(1, q - 1))}
+                    onClick={() => setQty((q) => Math.max(1, q - 1))}
                     className="px-4 py-3 text-gray-500 hover:bg-gray-50 font-bold text-lg transition-colors"
                   >
                     −
@@ -154,7 +163,7 @@ export default function ProductPage() {
                     {qty}
                   </span>
                   <button
-                    onClick={() => setQty(q => q + 1)}
+                    onClick={() => setQty((q) => q + 1)}
                     className="px-4 py-3 text-gray-500 hover:bg-gray-50 font-bold text-lg transition-colors"
                   >
                     +

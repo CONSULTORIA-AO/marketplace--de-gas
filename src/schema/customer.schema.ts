@@ -111,7 +111,7 @@ export const recoveryAccount = z
   .refine((data) => data.newPassword === data.confirmPassword, {
     message: 'As senhas não coincidem',
     path: ['confirmPassword'],
-});
+  });
 
 export type RecoveryAccout = z.infer<typeof recoveryAccount>;
 export type VerificationCodeFormData = z.infer<typeof verificationCodeSchema>;

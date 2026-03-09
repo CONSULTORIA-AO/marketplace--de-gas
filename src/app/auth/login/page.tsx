@@ -12,8 +12,8 @@ import { AxiosError } from 'axios';
 import { ToastAction } from '@/components/ui/toast';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useAuth } from "@/service/customer/auth";
-import BackegroundImage from "@/assets/wallpaper.jpg";
+import { useAuth } from '@/service/customer/auth';
+import BackegroundImage from '@/assets/wallpaper.jpg';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -83,7 +83,6 @@ export default function LoginPage() {
   const onSubmit = (data: LoginFormData) => {
     mutate(data);
   };
-
 
   return (
     <div
