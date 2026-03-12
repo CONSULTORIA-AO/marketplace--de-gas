@@ -49,10 +49,10 @@ export function FavoritesView({
         >
           {favorites.map((p) => (
             <ProductCard
-              key={p.id}
+              key={p.produtoId}
               product={p}
               addToCart={addToCart}
-              toggleFav={toggleFav}
+              //toggleFav={toggleFav}
               isFav={true}
               onClick={() => onProductClick(p)}
               onPayNow={() => {}}

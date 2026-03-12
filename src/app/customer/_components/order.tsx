@@ -9,8 +9,12 @@ import { getOrdersByClient } from '@/service/order/order.schema';
 
 export function OrdersView({ orders, onBack }: OrdersViewProps) {
   const clienteId = useAuthStore((state) => state.session.user.id);
-  
-  const { data: ordersdata, isLoading, error } = useQuery({
+
+  const {
+    data: ordersdata,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ['orders', clienteId],
     queryFn: () => getOrdersByClient(clienteId),
   });
@@ -83,7 +87,7 @@ export function OrdersView({ orders, onBack }: OrdersViewProps) {
               </p>
               <p style={{ fontSize: 12, color: '#6B7280', margin: '0 0 6px' }}>
                 {o.pedidoCotacaoId} ·{' '}
-                  {new Date(o.pedido_time).toLocaleDateString('pt-pt')}
+                {new Date(o.pedido_time).toLocaleDateString('pt-pt')}
               </p>
               <span
                 style={{
@@ -99,9 +103,9 @@ export function OrdersView({ orders, onBack }: OrdersViewProps) {
                 {o.statusPedido}
               </span>
             </div>
-                {o.itens.map((item) => (
-  <span key={item.id_itens_pedido}>{item.quantidade}</span>
-))}
+            {o.itens.map((item) => (
+              <span key={item.id_itens_pedido}>{item.quantidade}</span>
+            ))}
           </div>
         ))}
       </div>

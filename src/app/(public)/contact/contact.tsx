@@ -34,21 +34,21 @@ const ContactSection = () => {
 
         <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
           <div>
-            <span className="text-primary font-medium text-sm uppercase tracking-widest">
+            <span className="text-[#FFA500] font-medium text-sm uppercase tracking-widest">
               Fale Conosco
             </span>
             <h2 className="font-display text-4xl md:text-5xl font-bold mt-3 mb-6">
-              Pronto para <span className="text-gradient">começar?</span>
+              Pronto para <span className="text-[#FFA500]">começar?</span>
             </h2>
-            <p className="text-muted-foreground leading-relaxed mb-8">
+            <p className="text-[#FFA500] leading-relaxed mb-8">
               Entre em contato com nossa equipe e descubra a melhor solução em
               gás para sua necessidade.
             </p>
 
             <div className="space-y-5">
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <Phone className="w-5 h-5 text-primary" />
+                <div className="w-10 h-10 rounded-lg bg-[#FFA500]/10 flex items-center justify-center">
+                  <Phone className="w-5 h-5 text-[#FFA500]" />
                 </div>
                 <div>
                   <div className="text-sm text-muted-foreground">Telefone</div>
@@ -56,8 +56,8 @@ const ContactSection = () => {
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <Mail className="w-5 h-5 text-primary" />
+                <div className="w-10 h-10 rounded-lg bg-[#FFA500]/10 flex items-center justify-center">
+                  <Mail className="w-5 h-5 text-[#FFA500]" />
                 </div>
                 <div>
                   <div className="text-sm text-muted-foreground">E-mail</div>
@@ -65,11 +65,11 @@ const ContactSection = () => {
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <MapPin className="w-5 h-5 text-primary" />
+                <div className="w-10 h-10 rounded-lg bg-[#FFA500]/10 flex items-center justify-center">
+                  <MapPin className="w-5 h-5 text-[#FFA500]" />
                 </div>
                 <div>
-                  <div className="text-sm text-muted-foreground">Sede</div>
+                  <div className="text-sm text-[#FFA500]">Sede</div>
                   <div className="font-medium">Luanda/Angola</div>
                 </div>
               </div>

@@ -33,62 +33,8 @@ export function ProductCard({
     : 0;
 
   const handleCheckout = async () => {
-    try {
-      const payload = {
-        clienteIdPedido: clienteId,
-        itens: items.map((item) => ({
-          produto_id: item.product.produtoId,
-          quantidade: item.quantity,
-        })),
-      };
-
-      const response = await api.post('/pedidos', payload);
-
-      clearCart();
-
-      toast({
-        description: (
-          <div className="flex items-center gap-4 bg-white">
-            <span className="text-[#717F96]">{response.data?.mensagem}</span>
-          </div>
-        ),
-        action: (
-          <ToastAction
-            altText="close"
-            className="shadow-none border-none text-[#717F96] hover:bg-transparent"
-          >
-            .
-          </ToastAction>
-        ),
-        className:
-          'border-l-4 border-l-[#ff8300] border-t-0 border-b-0 border-r-0',
-      });
-    } catch (error) {
-      console.error(error);
-      if (error instanceof AxiosError) {
-        toast({
-          description: (
-            <div className="flex items-center gap-4 ">
-              <div className="rounded-full w-8 h-8 flex justify-center items-center bg-[fill: rgba(251, 55, 72, 0.16)]"></div>
-
-              <span className="text-[#717F96]">
-                {error?.response?.data.mensagem}
-              </span>
-            </div>
-          ),
-          action: (
-            <ToastAction
-              altText="close"
-              className="shadow-none border-none text-[#717F96] hover:bg-transparent"
-            >
-              .
-            </ToastAction>
-          ),
-          className:
-            'border-l-4 border-l-[#FB3748] border-t-0 border-b-0 border-r-0',
-        });
-      }
-    }
+    navigate('/checkout');
+    clearCart();
   };
 
   return (
@@ -118,7 +64,7 @@ export function ProductCard({
         onClick={onClick}
       >
         <img
-          src={product.imagem_produto}
+          src={`${import.meta.env.VITE_API_URL}images/products/${product.imagem_produto}`}
           alt={product.imagem_produto}
           style={{
             width: '100%',
@@ -180,6 +126,7 @@ export function ProductCard({
         >
           {product.descricao}
         </p>
+        <span className="text-black">Fornecedor: {product.empresaDona}</span>
         <div
           style={{
             display: 'flex',
@@ -191,6 +138,7 @@ export function ProductCard({
           <span style={{ fontSize: 16, fontWeight: 900, color: ORANJE }}>
             {fmt(product.preco)}
           </span>
+          <span>{product.unidadeMedida}</span>
         </div>
         <div style={{ display: 'flex', gap: 6 }}>
           <button
@@ -216,7 +164,7 @@ export function ProductCard({
             onClick={(e) => {
               e.stopPropagation();
               handleCheckout();
-              navigate(`/pagamento/${product.produtoId}`);
+              addToCart(product);
             }}
             style={{
               flex: 1,

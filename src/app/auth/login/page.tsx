@@ -13,7 +13,7 @@ import { ToastAction } from '@/components/ui/toast';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAuth } from '@/service/customer/auth';
-import BackegroundImage from '@/assets/wallpaper.jpg';
+import BackGroundImage from '@/assets/botja.png';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -49,9 +49,8 @@ export default function LoginPage() {
       if (error instanceof AxiosError) {
         toast({
           description: (
-            <div className="flex items-center gap-4 ">
+            <div className="flex items-center gap-4">
               <div className="rounded-full w-8 h-8 flex justify-center items-center bg-[fill: rgba(251, 55, 72, 0.16)]"></div>
-
               <span className="text-[#717F96]">
                 {error?.response?.data.mensagem}
               </span>
@@ -90,13 +89,35 @@ export default function LoginPage() {
       style={{ fontFamily: "'Segoe UI', system-ui, sans-serif" }}
     >
       {/* ── LEFT SIDE ───────────────────────────────────────────────────── */}
-      <div className="flex-[1.1] bg-white flex flex-col relative">
-        {/* Top label */}
+      <div className="flex-[1.1] bg-white flex flex-col relative w-full">
+        {/* Back button */}
+        <motion.button
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4 }}
+          onClick={() => navigate(-1)}
+          className="absolute top-5 left-5 flex items-center gap-1.5 text-sm text-gray-500 hover:text-[#FFA500] hover:cursor-pointer transition-colors duration-200 group"
+        >
+          <svg
+            className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-0.5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+          <span>Voltar</span>
+        </motion.button>
 
         {/* Form centered */}
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex-1 flex flex-col justify-center px-16 pb-10"
+          className="flex-1 flex flex-col justify-center px-6 sm:px-10 md:px-16 pb-10 pt-16 w-full mx-auto"
           style={{ maxWidth: 540 }}
         >
           {/* Logo */}
@@ -131,12 +152,18 @@ export default function LoginPage() {
               placeholder="Email"
               {...register('emailCliente')}
               onFocus={() => setFocused('email')}
+              onBlur={() => setFocused(null)}
               className="w-full pb-2 pt-1 text-sm text-gray-700 placeholder:text-gray-400 bg-transparent outline-none border-b"
               style={{
                 borderBottomColor: focused === 'email' ? '#FFA500' : '#C0C0C0',
                 borderBottomWidth: focused === 'email' ? 2 : 1,
               }}
             />
+            {errors.emailCliente && (
+              <p className="text-xs text-red-500 mt-1">
+                {errors.emailCliente.message}
+              </p>
+            )}
             <motion.div
               className="absolute bottom-0 left-0 h-0.5 bg-[#FFA500]"
               animate={{ width: focused === 'email' ? '100%' : '0%' }}
@@ -156,17 +183,23 @@ export default function LoginPage() {
               placeholder="Password"
               {...register('senhaCliente')}
               onFocus={() => setFocused('password')}
+              onBlur={() => setFocused(null)}
               className="w-full pb-2 pt-1 text-sm text-gray-700 placeholder:text-gray-400 bg-transparent outline-none border-b"
               style={{
                 borderBottomColor:
-                  focused === 'password' ? '#1FFA500' : '#C0C0C0',
+                  focused === 'password' ? '#FFA500' : '#C0C0C0',
                 borderBottomWidth: focused === 'password' ? 2 : 1,
               }}
             />
+            {errors.senhaCliente && (
+              <p className="text-xs text-red-500 mt-1">
+                {errors.senhaCliente.message}
+              </p>
+            )}
             <button
               type="button"
               onClick={() => setShowPass(!showPass)}
-              className="absolute right-0 bottom-2 text-gray-400 hover:cursor-pointer bg-transparent hover:bg-transparen hover:text-gray-600 text-xs"
+              className="absolute right-0 bottom-2 text-gray-400 hover:cursor-pointer bg-transparent hover:bg-transparent hover:text-gray-600 text-xs"
               tabIndex={-1}
             >
               {showPass ? <LiaEyeSolid /> : <FaRegEyeSlash />}
@@ -202,7 +235,7 @@ export default function LoginPage() {
             disabled={isPending}
             className="w-full py-4 rounded-lg bg-[#FFA500] hover:bg-[#FFA500] text-white font-bold text-base shadow-md transition-colors mb-8"
           >
-            {isPending ? 'Acessando...' : 'Iniciar sessão'}
+            {isPending ? 'Acessando...' : 'Fazer login'}
           </motion.button>
 
           {/* Divider "ou" */}
@@ -226,7 +259,6 @@ export default function LoginPage() {
             whileTap={{ scale: 0.98 }}
             className="flex items-center justify-center gap-3 w-full py-3 rounded-lg border border-gray-200 bg-white text-gray-700 text-sm font-medium transition-colors mb-7 shadow-sm"
           >
-            {/* Google G logo */}
             <svg width="18" height="18" viewBox="0 0 48 48">
               <path
                 fill="#EA4335"
@@ -266,18 +298,19 @@ export default function LoginPage() {
         </form>
       </div>
 
-      {/* ── RIGHT SIDE — photo with blue overlay ─────────────────────────── */}
+      {/* ── RIGHT SIDE — photo with overlay ─────────────────────────── */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.9 }}
-        className="w-[42%] flex-shrink-0 relative overflow-hidden"
+        className="hidden md:block w-[42%] flex-shrink-0 relative overflow-hidden"
       >
         <img
-          className="absolute inset-0 bg-cover bg-center h-full"
-          src={BackegroundImage}
+          src={BackGroundImage}
+          alt="Background"
+          className="absolute inset-0 w-full h-full object-cover"
         />
-        {/* Blue tint overlay */}
+        {/* Tint overlay */}
         <div
           className="absolute inset-0"
           style={{ backgroundColor: 'rgba(200, 146, 30, 0.42)' }}

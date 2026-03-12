@@ -5,6 +5,7 @@ import { Icon } from './icon';
 import { ORANJE, WHITE } from '@/constants/costumer';
 import { BadgeCount } from './badgeCount';
 import { useUserStore } from '@/hooks/customer';
+import { useNavigate } from 'react-router-dom';
 
 export function Header({
   search,
@@ -15,9 +16,11 @@ export function Header({
   goTo,
 }: HeaderProps) {
   const [searchFocus, setFocus] = useState<boolean>(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState<boolean>(false);
   const cliente = useUserStore((state) => state.cliente);
   const [preview, setPreview] = useState<string | null>(null);
   const [searchValue, setSearchValue] = useState('');
+  const navigate = useNavigate();
   const avatarSrc =
     preview ??
     cliente?.fotoCliente ??
@@ -174,6 +177,7 @@ export function Header({
           gap: 12,
         }}
       >
+        {/* Menu button */}
         <button
           onClick={onMenu}
           style={{
@@ -181,10 +185,13 @@ export function Header({
             border: 'none',
             cursor: 'pointer',
             padding: 4,
+            flexShrink: 0,
           }}
         >
           <Icon name="menu" color="#374151" />
         </button>
+
+        {/* Logo */}
         <button
           onClick={() => goTo('shop')}
           style={{
@@ -205,10 +212,12 @@ export function Header({
             JaGás
           </span>
         </button>
+
+        {/* Search bar — hidden on mobile, visible on md+ */}
         <div
+          className="hidden sm:flex"
           style={{
             flex: 1,
-            display: 'flex',
             alignItems: 'center',
             border: `1.5px solid ${searchFocus ? ORANJE : '#E5E7EB'}`,
             borderRadius: 10,
@@ -226,7 +235,7 @@ export function Header({
             onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
-            placeholder="Pesquisar produtos, categorias..."
+            placeholder="Pesquisar produtos"
             style={{
               flex: 1,
               padding: '9px 0',
@@ -252,6 +261,7 @@ export function Header({
             </button>
           )}
           <button
+            onClick={handleSearch}
             style={{
               padding: '8px 16px',
               background: ORANJE,
@@ -267,14 +277,32 @@ export function Header({
           </button>
         </div>
 
+        {/* Right side actions */}
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
             gap: 4,
             position: 'relative',
+            flexShrink: 0,
+            marginLeft: 'auto',
           }}
         >
+          {/* Mobile: search toggle button */}
+          <button
+            className="flex sm:hidden"
+            onClick={() => setMobileSearchOpen((v) => !v)}
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: 8,
+              color: '#6B7280',
+            }}
+          >
+            <Icon name="search" size={20} />
+          </button>
+
           {/*  <div ref={notificationRef} style={{ position: 'relative' }}>
             <button
               onClick={() => setShowNotifications(!showNotifications)}
@@ -452,6 +480,8 @@ export function Header({
             />
             {favCount > 0 && <BadgeCount n={favCount} />}
           </button>*/}
+
+          {/* Cart button */}
           <button
             onClick={() => goTo('cart')}
             style={{
@@ -465,6 +495,58 @@ export function Header({
             <Icon name="cart" color="#6B7280" size={20} />
             {/*cartCount > 0 && <BadgeCount n={cartCount} />*/}
           </button>
+
+          {/* Checkout button */}
+          <button
+            onClick={() => navigate('checkout')}
+            title="Finalizar compra"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+              padding: '7px 14px',
+              background: ORANJE,
+              color: 'white',
+              border: 'none',
+              borderRadius: 8,
+              cursor: 'pointer',
+              fontSize: 13,
+              fontWeight: 700,
+              transition: 'background 0.2s, transform 0.15s',
+              flexShrink: 0,
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.background =
+                '#e08e00';
+              (e.currentTarget as HTMLButtonElement).style.transform =
+                'scale(1.03)';
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.background = ORANJE;
+              (e.currentTarget as HTMLButtonElement).style.transform =
+                'scale(1)';
+            }}
+          >
+            {/* Checkout / bag icon */}
+            <svg
+              width="17"
+              height="17"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <path d="M16 10a4 4 0 0 1-8 0" />
+            </svg>
+            {/* Label hidden on very small screens */}
+            <span className="hidden sm:inline">Finalizar compra</span>
+          </button>
+
+          {/* Avatar / profile */}
           <button
             onClick={() => goTo('profile')}
             style={{
@@ -492,6 +574,68 @@ export function Header({
           </button>
         </div>
       </div>
+
+      {/* Mobile search bar — expands below header when toggled */}
+      {mobileSearchOpen && (
+        <div
+          className="flex sm:hidden"
+          style={{
+            padding: '0 16px 12px',
+            alignItems: 'center',
+            border: `1.5px solid ${searchFocus ? ORANJE : '#E5E7EB'}`,
+            borderRadius: 10,
+            margin: '0 16px 12px',
+            overflow: 'hidden',
+            background: 'white',
+            transition: 'all .2s',
+          }}
+        >
+          <div style={{ padding: '0 10px', color: '#9CA3AF' }}>
+            <Icon name="search" size={16} />
+          </div>
+          <input
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleSearch();
+                setMobileSearchOpen(false);
+              }
+            }}
+            onFocus={() => setFocus(true)}
+            onBlur={() => setFocus(false)}
+            placeholder="Pesquisar produtos"
+            autoFocus
+            style={{
+              flex: 1,
+              padding: '9px 0',
+              border: 'none',
+              outline: 'none',
+              fontSize: 13,
+              color: '#374151',
+              background: 'transparent',
+            }}
+          />
+          <button
+            onClick={() => {
+              handleSearch();
+              setMobileSearchOpen(false);
+            }}
+            style={{
+              padding: '8px 14px',
+              background: ORANJE,
+              color: 'white',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: 13,
+              fontWeight: 700,
+              borderRadius: 8,
+            }}
+          >
+            Procurar
+          </button>
+        </div>
+      )}
     </header>
   );
 }

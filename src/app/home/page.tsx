@@ -19,6 +19,8 @@ export default function Home() {
   // Busca os produtos com React Query
   const { data, isLoading, isError, error } = useProducts();
 
+  console.log('Dados dsos produtos vindo da api:', data);
+
   // Filtra localmente (client-side) com base no searchTerm
   const filteredProducts = (data?.mensagem || []).filter(
     (product: GasProduct) =>
@@ -40,7 +42,7 @@ export default function Home() {
         transition={{ delay: 0.5 }}
         className="bg-white border-b border-gray-100 py-3"
       >
-        <div className="max-w-7xl mx-auto px-4 flex flex-wrap justify-center md:justify-between items-center gap-4 text-sm">
+        <div className="max-w-7xl mx-auto px-4 flex flex-wrap justify-center md:justify-between items-center gap-4 text-lg">
           {[
             { icon: '🛡️', text: 'Compra garantida' },
             { icon: '🚚', text: 'Entrega rápida' },
@@ -61,7 +63,7 @@ export default function Home() {
       </motion.div>
 
       {/* ── PROMO BANNER ─────────────────────────────────── */}
-      <section className="max-w-7xl mx-auto px-4 pb-8">
+      <section className="max-w-7xl mx-auto px-4 pb-8 mt-3">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
             {
@@ -116,7 +118,7 @@ export default function Home() {
       </section>
 
       {/* ── PRODUCTS ─────────────────────────────────────── */}
-      <section className="max-w-7xl mx-auto px-4 py-8">
+      <section id="produtos" className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-6">
           <motion.h2
             initial={{ opacity: 0, x: -20 }}

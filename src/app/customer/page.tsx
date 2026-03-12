@@ -1,6 +1,6 @@
 'use client';
 
-import { CATEGORIES, ORDERS, SUBS } from '@/data/customer';
+import { CATEGORIES, ORDERS } from '@/data/customer';
 import { View } from '@/types/customer';
 import { useState } from 'react';
 //import { BottomNav } from './_components/buttonNav';

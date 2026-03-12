@@ -29,28 +29,4 @@ export const ORDERS: Order[] = [
   },
 ];
 
-export const SUBS: Sub[] = [
-  {
-    id: 1,
-    name: 'Angoverso Premium',
-    price: '5.000 Kz/mês',
-    desc: 'Frete grátis ilimitado + acesso antecipado a ofertas',
-    color: '#c36212',
-  },
-  {
-    id: 2,
-    name: 'Business Pro',
-    price: '15.000 Kz/mês',
-    desc: 'Venda sem comissão + painel avançado de análise',
-    color: '#0A3D8F',
-  },
-  {
-    id: 3,
-    name: 'Família Plus',
-    price: '8.000 Kz/mês',
-    desc: 'Até 5 contas + cupões exclusivos mensais',
-    color: '#2878F0',
-  },
-];
-
 export const fmt = (n: number): string => `${n.toLocaleString('pt-AO')} Kz`;

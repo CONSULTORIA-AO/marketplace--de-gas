@@ -14,7 +14,7 @@ import Product from '@/app/(public)/product/page';
 import NotFoundPage from '@/app/(public)/notfound/page';
 import CartPage from '@/app/cart/page';
 import Customer from '@/app/customer/page';
-import { PaymentView } from '@/app/payment/page';
+import { CheckoutPage } from '@/app/checkout/page';
 
 const NavLink = () => {
   return (
@@ -29,14 +29,7 @@ const NavLink = () => {
       <Route path="/termos-politicas" element={<TermsPrivacity />} />
       <Route path="/perguntas-frequentes" element={<FAQ />} />
       <Route path="/contacto" element={<Contact />} />
-      <Route
-        path="/produto/:id"
-        element={
-          <ProtectedRoute>
-            <Product />
-          </ProtectedRoute>
-        }
-      />
+      <Route path="/produto/:id" element={<Product />} />
       <Route
         path="/produtos"
         element={
@@ -45,20 +38,13 @@ const NavLink = () => {
           </ProtectedRoute>
         }
       />
-      <Route
-        path="/carrinho"
-        element={
-          <ProtectedRoute>
-            <CartPage />
-          </ProtectedRoute>
-        }
-      />
+      <Route path="/carrinho" element={<CartPage />} />
 
       <Route
-        path="/pagamento/:id"
+        path="/checkout"
         element={
           <ProtectedRoute>
-            <PaymentView />
+            <CheckoutPage />
           </ProtectedRoute>
         }
       />

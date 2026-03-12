@@ -155,13 +155,6 @@ export function formatarDataHora(iso: string): string {
   });
 }
 
-
-
-
-
-
-
-
 export interface PedidoItem {
   id_itens_pedido: number;
   produto_id: number;

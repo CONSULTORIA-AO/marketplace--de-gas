@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import RecoveryMethodStep from './_components/method';
 import NewPasswordStep from './_components/newPassword';
 import SuccessStep from './_components/sucess';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const steps = ['Método', 'Contato', 'Código', 'Senha', 'Sucesso'];
 
@@ -15,6 +15,7 @@ const PasswordRecoveryFlow = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [method, setMethod] = useState<'email' | 'sms' | null>(null);
   const [contact, setContact] = useState('');
+  const navigate = useNavigate();
 
   const handleSelectMethod = (selectedMethod: 'email' | 'sms') => {
     setMethod(selectedMethod);
@@ -67,6 +68,28 @@ const PasswordRecoveryFlow = () => {
 
   return (
     <div className="min-h-screen w-ful flex items-center justify-center p-4 sm:p-6 md:p-8">
+      <motion.button
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.4 }}
+        onClick={() => navigate(-1)}
+        className="absolute top-5 left-5 flex items-center gap-1.5 text-sm text-gray-500 hover:text-[#FFA500] hover:cursor-pointer transition-colors duration-200 group z-10"
+      >
+        <svg
+          className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-0.5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+        <span>Voltar</span>
+      </motion.button>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

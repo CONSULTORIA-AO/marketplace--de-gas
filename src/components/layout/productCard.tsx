@@ -25,7 +25,7 @@ export function ProductCard({ product, index }: ProductCardProps) {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
-  
+
   function handleOrder(data: string) {
     if (!data) {
       toast({
@@ -72,11 +72,7 @@ export function ProductCard({ product, index }: ProductCardProps) {
       <div className="relative h-44 w-full overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center">
         {product.imagem_produto ? (
           <img
-            src={
-              product.imagem_produto
-                ? `${import.meta.env.VITE_API_URL}images/products${product.imagem_produto}?${Date.now()}`
-                : ''
-            }
+            src={`${import.meta.env.VITE_API_URL}images/products/${product.imagem_produto}`}
             alt={product.descricao}
             className="object-cover transition-transform duration-300 group-hover:scale-105"
             sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
@@ -92,7 +88,7 @@ export function ProductCard({ product, index }: ProductCardProps) {
         <h3 className="text-gray-800 font-medium text-base leading-snug line-clamp-2 min-h-[2.5rem]">
           {product.descricao}
         </h3>
-
+        <span className="text-black">Fornecedor {product.empresaDona}</span>
         {/* Preço */}
         <div className="flex items-baseline gap-2">
           <span className="text-2xl font-bold text-gray-900">

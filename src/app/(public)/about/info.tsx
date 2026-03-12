@@ -2,10 +2,10 @@ import { Header } from '@/components/layout/header';
 import HeroSection from '@/app/(public)/about/hero';
 import ServicesSection from '@/app/(public)/services/service';
 import AboutSection from '@/app/(public)/about/about';
-import ContactSection from '@/app/(public)/contact/contact';
 import { useState } from 'react';
 import { useProducts } from '@/service/product/product';
 import { GasProduct } from '@/types/product';
+import { Footer } from '@/components/layout/footer';
 
 const About = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -27,7 +27,7 @@ const About = () => {
         <HeroSection />
         <ServicesSection />
         <AboutSection />
-        <ContactSection />
+        <Footer />
       </main>
     </div>
   );
