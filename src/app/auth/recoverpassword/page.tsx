@@ -9,8 +9,6 @@ import NewPasswordStep from './_components/newPassword';
 import SuccessStep from './_components/sucess';
 import { Link, useNavigate } from 'react-router-dom';
 
-const steps = ['Método', 'Contato', 'Código', 'Senha', 'Sucesso'];
-
 const PasswordRecoveryFlow = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [method, setMethod] = useState<'email' | 'sms' | null>(null);

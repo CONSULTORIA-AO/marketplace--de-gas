@@ -3,11 +3,15 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useMutation } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useUserStore } from '@/hooks/customer';
 import { useCartStore, type CartItem } from '@/hooks/cartstore';
 import { api } from '@/utils/api';
 import { useAuthStore } from '@/hooks/auth';
+import { AuthHeader } from '@/components/header';
+import { View } from '@/types/customer';
+import { GasProduct } from '@/types/product';
+import { Sidebar } from '../../components/sidebar';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 const ORANJE = '#FFA500';
@@ -21,25 +25,11 @@ const SHIPPING_OPTIONS = [
     priceLabel: 'KZ 10,00',
   },
   {
-    id: 'intl',
-    label: 'Envio internacional',
-    days: '12 dias',
-    price: 12,
-    priceLabel: 'KZ 12,00',
-  },
-  {
     id: 'sameday',
     label: 'Entrega no mesmo dia',
     days: '1 dia',
     price: 22,
     priceLabel: 'KZ 22,00',
-  },
-  {
-    id: 'express',
-    label: 'Envio expresso',
-    days: '--',
-    price: 15,
-    priceLabel: 'KZ 15,00',
   },
   {
     id: 'pickup',
@@ -1225,6 +1215,7 @@ function ReviewStep({
 
 // ─── Confirmation screen ───────────────────────────────────────────────────────
 function ConfirmationScreen({ onGoHome }: { onGoHome: () => void }) {
+  const navigate = useNavigate();
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.92 }}
@@ -1385,7 +1376,7 @@ function ConfirmationScreen({ onGoHome }: { onGoHome: () => void }) {
           style={{ display: 'flex', flexDirection: 'column', gap: 10 }}
         >
           <button
-            onClick={onGoHome}
+            onClick={() => navigate('/produtos')}
             style={{
               width: '100%',
               padding: '14px 0',
@@ -1430,6 +1421,10 @@ export function CheckoutPage() {
   const navigate = useNavigate();
   const cliente = useUserStore((state) => state.cliente);
   const clienteId = useAuthStore((state) => state.session.user.id);
+  const [view, setView] = useState<View>('produtos');
+  const [favorites, setFavorites] = useState<GasProduct[]>([]);
+  const [search, setSearch] = useState<string>('');
+  const [sidebarOpen, setSidebar] = useState<boolean>(false);
 
   // Cart store — source of truth for step 1
   const { items, updateQuantity, removeItem, getTotal, clearCart } =
@@ -1471,125 +1466,154 @@ export function CheckoutPage() {
           fontFamily: "'Segoe UI', system-ui, sans-serif",
         }}
       >
-        <ConfirmationScreen onGoHome={() => navigate('/shop')} />
+        <ConfirmationScreen onGoHome={() => navigate('/produtos')} />
       </div>
     );
   }
 
   return (
-    <div
-      style={{
-        minHeight: '100vh',
-        background: '#F9FAFB',
-        fontFamily: "'Segoe UI', system-ui, sans-serif",
-      }}
-    >
-      {/* Page header */}
+    <div>
+      {sidebarOpen && (
+        <div
+          style={{ position: 'fixed', inset: 0, zIndex: 400, display: 'flex' }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'rgba(0,0,0,0.4)',
+            }}
+            onClick={() => setSidebar(false)}
+          />
+          <Sidebar
+            favorites={favorites.length}
+            close={() => setSidebar(false)}
+            currentView={view}
+          />
+        </div>
+      )}
+
+      <AuthHeader
+        search={search}
+        setSearch={setSearch}
+        //cartCount={cartCount}
+        favCount={favorites.length}
+        onMenu={() => setSidebar(true)}
+      />
       <div
         style={{
-          background: 'white',
-          borderBottom: '1px solid #E5E7EB',
-          padding: '16px 24px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: 12,
-          position: 'sticky',
-          top: 0,
-          zIndex: 100,
-          boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+          minHeight: '100vh',
+          background: '#F9FAFB',
+          fontFamily: "'Segoe UI', system-ui, sans-serif",
         }}
       >
-        <button
-          onClick={() => (step === 0 ? navigate(-1) : setStep((s) => s - 1))}
+        {/* Page header */}
+        <div
           style={{
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            padding: 4,
+            background: 'white',
+            borderBottom: '1px solid #E5E7EB',
+            padding: '16px 24px',
             display: 'flex',
             alignItems: 'center',
-            gap: 6,
-            color: '#6B7280',
-            fontSize: 14,
+            gap: 12,
+            position: 'sticky',
+            top: 0,
+            zIndex: 100,
+            boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
           }}
         >
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+          <button
+            onClick={() => (step === 0 ? navigate(-1) : setStep((s) => s - 1))}
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: 4,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+              color: '#6B7280',
+              fontSize: 14,
+            }}
           >
-            <polyline points="15 18 9 12 15 6" />
-          </svg>
-          <span className="hidden sm:inline">Voltar</span>
-        </button>
-        <span style={{ fontSize: 18, fontWeight: 900, color: ORANJE }}>
-          JaGás
-        </span>
-        <span
-          style={{
-            fontSize: 16,
-            fontWeight: 700,
-            color: '#111827',
-            marginLeft: 4,
-          }}
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+            <span className="hidden sm:inline">Voltar</span>
+          </button>
+          <span style={{ fontSize: 18, fontWeight: 900, color: ORANJE }}>
+            JaGás
+          </span>
+          <span
+            style={{
+              fontSize: 16,
+              fontWeight: 700,
+              color: '#111827',
+              marginLeft: 4,
+            }}
+          >
+            — Checkout
+          </span>
+        </div>
+
+        {/* Main content */}
+        <div
+          style={{ maxWidth: 640, margin: '0 auto', padding: '32px 16px 60px' }}
         >
-          — Checkout
-        </span>
-      </div>
+          <Stepper current={step} />
 
-      {/* Main content */}
-      <div
-        style={{ maxWidth: 640, margin: '0 auto', padding: '32px 16px 60px' }}
-      >
-        <Stepper current={step} />
-
-        <AnimatePresence mode="wait">
-          {step === 0 && (
-            <CartStep
-              key="cart"
-              items={items}
-              updateQuantity={updateQuantity}
-              removeItem={removeItem}
-              getTotal={getTotal}
-              onNext={() => setStep(1)}
-            />
-          )}
-          {step === 1 && (
-            <ShippingStep
-              key="shipping"
-              selected={selectedShipping}
-              onSelect={setSelectedShipping}
-              onBack={() => setStep(0)}
-              onNext={() => setStep(2)}
-            />
-          )}
-          {step === 2 && (
-            <PaymentStep
-              key="payment"
-              selected={selectedPayment}
-              onSelect={setSelectedPayment}
-              onBack={() => setStep(1)}
-              onNext={() => setStep(3)}
-            />
-          )}
-          {step === 3 && (
-            <ReviewStep
-              key="review"
-              items={items}
-              shippingId={selectedShipping}
-              paymentId={selectedPayment}
-              isSubmitting={isSubmitting}
-              onBack={() => setStep(2)}
-              onEdit={(s) => setStep(s)}
-              onFinish={() => submitOrder()}
-            />
-          )}
-        </AnimatePresence>
+          <AnimatePresence mode="wait">
+            {step === 0 && (
+              <CartStep
+                key="cart"
+                items={items}
+                updateQuantity={updateQuantity}
+                removeItem={removeItem}
+                getTotal={getTotal}
+                onNext={() => setStep(1)}
+              />
+            )}
+            {step === 1 && (
+              <ShippingStep
+                key="shipping"
+                selected={selectedShipping}
+                onSelect={setSelectedShipping}
+                onBack={() => setStep(0)}
+                onNext={() => setStep(2)}
+              />
+            )}
+            {step === 2 && (
+              <PaymentStep
+                key="payment"
+                selected={selectedPayment}
+                onSelect={setSelectedPayment}
+                onBack={() => setStep(1)}
+                onNext={() => setStep(3)}
+              />
+            )}
+            {step === 3 && (
+              <ReviewStep
+                key="review"
+                items={items}
+                shippingId={selectedShipping}
+                paymentId={selectedPayment}
+                isSubmitting={isSubmitting}
+                onBack={() => setStep(2)}
+                onEdit={(s) => setStep(s)}
+                onFinish={() => submitOrder()}
+              />
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );

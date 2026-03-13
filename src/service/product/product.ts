@@ -1,10 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/utils/api';
-import {
-  ApiProductByIdResponse,
-  ApiProductResponse,
-  GasProduct,
-} from '@/types/product';
+import { ApiProductByIdResponse, ApiProductResponse } from '@/types/product';
 
 export function useProductById(id?: string | number) {
   return useQuery<ApiProductByIdResponse>({

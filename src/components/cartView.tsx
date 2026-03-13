@@ -4,12 +4,7 @@ import { ORANJE } from '@/constants/costumer';
 import { Icon } from './icon';
 import { CartViewProps } from '@/types/cart';
 import { useCartStore } from '@/hooks/cartstore';
-import { useAuthStore } from '@/hooks/auth';
-import { useToast } from '@/hooks/use-toast';
-import { ToastAction } from '@radix-ui/react-toast';
-import { AxiosError } from 'axios';
-import { api } from '@/utils/api';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export function CartView({
   cart,
@@ -19,9 +14,7 @@ export function CartView({
   onCheckout,
   onBack,
 }: CartViewProps) {
-  const clienteId = useAuthStore((state) => state.session.user.id);
-  const { items, clearCart } = useCartStore();
-  const { toast } = useToast();
+  const { clearCart } = useCartStore();
   const navigate = useNavigate();
 
   const handleCheckout = async () => {

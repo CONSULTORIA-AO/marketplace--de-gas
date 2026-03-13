@@ -3,7 +3,7 @@
 import { ProductCardProps } from '@/types/customer';
 import { useState } from 'react';
 //import { Icon } from './icon';
-import { Stars } from './star';
+import { Stars } from '../../../components/star';
 import { ORANJE, WHITE } from '@/constants/costumer';
 import { fmt } from '@/data/customer';
 import { useNavigate } from 'react-router-dom';
@@ -20,7 +20,6 @@ export function ProductCard({
   //toggleFav,
   isFav,
   onClick,
-  onPayNow,
 }: ProductCardProps) {
   const clienteId = useAuthStore((state) => state.session.user.id);
   const { items, clearCart } = useCartStore();
@@ -179,6 +178,22 @@ export function ProductCard({
             }}
           >
             Comprar
+          </button>
+          <button
+            onClick={(e) => navigate(`/produto/${product.produtoId}/detalhes}`)}
+            style={{
+              flex: 1,
+              padding: '8px 0',
+              borderRadius: 8,
+              background: ORANJE,
+              border: 'none',
+              color: 'white',
+              fontSize: 12,
+              fontWeight: 700,
+              cursor: 'pointer',
+            }}
+          >
+            Detalhes
           </button>
         </div>
       </div>

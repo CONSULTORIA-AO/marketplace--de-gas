@@ -15,6 +15,11 @@ import NotFoundPage from '@/app/(public)/notfound/page';
 import CartPage from '@/app/cart/page';
 import Customer from '@/app/customer/page';
 import { CheckoutPage } from '@/app/checkout/page';
+import { ProfileView } from '@/app/profile/page';
+import { SettingsView } from '@/app/settings/page';
+import { MessagesView } from '@/app/message/page';
+import { OrdersView } from '@/app/orders/page';
+import { ProductDetail } from '@/app/product/page';
 
 const NavLink = () => {
   return (
@@ -30,6 +35,16 @@ const NavLink = () => {
       <Route path="/perguntas-frequentes" element={<FAQ />} />
       <Route path="/contacto" element={<Contact />} />
       <Route path="/produto/:id" element={<Product />} />
+
+      <Route
+        path="/produto/:id/detalhes"
+        element={
+          <ProtectedRoute>
+            <ProductDetail />
+          </ProtectedRoute>
+        }
+      />
+
       <Route
         path="/produtos"
         element={
@@ -45,6 +60,33 @@ const NavLink = () => {
         element={
           <ProtectedRoute>
             <CheckoutPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/perfil"
+        element={
+          <ProtectedRoute>
+            <ProfileView />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/definicoes"
+        element={
+          <ProtectedRoute>
+            <SettingsView />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/pedidos"
+        element={
+          <ProtectedRoute>
+            <OrdersView />
           </ProtectedRoute>
         }
       />

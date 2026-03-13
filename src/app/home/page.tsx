@@ -10,6 +10,7 @@ import { Footer } from '@/components/layout/footer';
 import { Hero } from '@/components/layout/hero';
 import { useProducts } from '@/service/product/product';
 import { GasProduct } from '@/types/product';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Home() {
   const statsRef = useRef(null);
@@ -132,14 +133,73 @@ export default function Home() {
 
         {isLoading ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            {Array(8)
-              .fill(0)
-              .map((_, i) => (
+            <div style={{ maxWidth: 700, margin: '0 auto' }}>
+              {/* Header */}
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 10,
+                  marginBottom: 20,
+                }}
+              >
+                <Skeleton className="h-7 w-32 rounded-md" />
+              </div>
+
+              {/* Avatar card */}
+              <div
+                style={{
+                  background: 'white',
+                  borderRadius: 16,
+                  padding: 24,
+                  marginBottom: 16,
+                  border: '1px solid #F3F4F6',
+                  textAlign: 'center',
+                }}
+              >
                 <div
-                  key={i}
-                  className="bg-white rounded-2xl overflow-hidden animate-pulse h-80"
-                />
-              ))}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 10,
+                  }}
+                >
+                  <Skeleton className="w-24 h-24 rounded-full" />
+                  <Skeleton className="h-5 w-40 rounded-md" />
+                  <Skeleton className="h-4 w-52 rounded-md" />
+                  <Skeleton className="h-6 w-28 rounded-full" />
+                  <Skeleton className="h-3 w-36 rounded-md" />
+                </div>
+              </div>
+
+              {/* Form card */}
+              <div
+                style={{
+                  background: 'white',
+                  borderRadius: 16,
+                  padding: 24,
+                  border: '1px solid #F3F4F6',
+                }}
+              >
+                <Skeleton className="h-5 w-44 rounded-md mb-5" />
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))',
+                    gap: 14,
+                  }}
+                >
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <div key={i}>
+                      <Skeleton className="h-3 w-28 rounded mb-2" />
+                      <Skeleton className="h-10 w-full rounded-lg" />
+                    </div>
+                  ))}
+                  <Skeleton className="h-10 w-full rounded-xl" />
+                </div>
+              </div>
+            </div>
           </div>
         ) : isError ? (
           <div className="text-center py-12 text-red-600">

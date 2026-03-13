@@ -1,10 +1,13 @@
 'use client';
 import { ORANJE, WHITE } from '@/constants/costumer';
-import { ChatMessage, Conversation, MessagesViewProps } from '@/types/customer';
+import { ChatMessage, Conversation, View } from '@/types/customer';
 import { useEffect, useRef, useState } from 'react';
-import { Icon } from './icon';
+import { Icon } from '@/components/icon';
+import { AuthHeader } from '@/components/header';
+import { GasProduct } from '@/types/product';
+import { Sidebar } from '../../components/sidebar';
 
-export function MessagesView({ onBack }: MessagesViewProps) {
+export function MessagesView() {
   const [conversations, setConversations] = useState<Conversation[]>([
     {
       id: 1,
@@ -73,6 +76,10 @@ export function MessagesView({ onBack }: MessagesViewProps) {
   const [searchChat, setSearchChat] = useState<string>('');
   const [input, setInput] = useState<string>('');
   const bottomRef = useRef<HTMLDivElement>(null);
+  const [view, setView] = useState<View>('produtos');
+  const [favorites, setFavorites] = useState<GasProduct[]>([]);
+  const [search, setSearch] = useState<string>('');
+  const [sidebarOpen, setSidebar] = useState<boolean>(false);
 
   useEffect(() => {
     if (activeConversation) {
@@ -288,187 +295,219 @@ export function MessagesView({ onBack }: MessagesViewProps) {
   }
 
   return (
-    <div className="fade-in" style={{ maxWidth: 640, margin: '0 auto' }}>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 10,
-          marginBottom: 20,
-        }}
-      >
-        <button
-          onClick={onBack}
-          style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+    <div>
+      {sidebarOpen && (
+        <div
+          style={{ position: 'fixed', inset: 0, zIndex: 400, display: 'flex' }}
         >
-          <Icon name="back" color={ORANJE} />
-        </button>
-        <h2 style={{ fontSize: 20, fontWeight: 800, margin: 0, color: '#111' }}>
-          Mensagens
-        </h2>
-      </div>
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'rgba(0,0,0,0.4)',
+            }}
+            onClick={() => setSidebar(false)}
+          />
+          <Sidebar
+            favorites={favorites.length}
+            close={() => setSidebar(false)}
+            currentView={view}
+          />
+        </div>
+      )}
 
-      <div
-        style={{ display: 'flex', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}
-      >
-        <input
-          value={searchChat}
-          onChange={(e) => setSearchChat(e.target.value)}
-          placeholder="Pesquisar conversas..."
-          style={{
-            flex: 1,
-            padding: '10px 14px',
-            borderRadius: 10,
-            border: '1.5px solid #E5E7EB',
-            fontSize: 13,
-            background: 'white',
-          }}
-        />
-        <button
-          onClick={() => setFilter(filter === 'unread' ? 'all' : 'unread')}
-          style={{
-            padding: '8px 16px',
-            borderRadius: 10,
-            background: filter === 'unread' ? ORANJE : WHITE,
-            color: filter === 'unread' ? 'white' : ORANJE,
-            border: 'none',
-            fontWeight: 600,
-            fontSize: 13,
-            cursor: 'pointer',
-            minWidth: 100,
-          }}
-        >
-          {filter === 'unread' ? 'Todas' : 'Não lidas'}
-        </button>
-      </div>
-
-      {filteredConversations.length === 0 ? (
+      <AuthHeader
+        search={search}
+        setSearch={setSearch}
+        //cartCount={cartCount}
+        favCount={favorites.length}
+        onMenu={() => setSidebar(true)}
+      />
+      <div className="fade-in" style={{ maxWidth: 640, margin: '0 auto' }}>
         <div
           style={{
-            textAlign: 'center',
-            padding: '80px 20px',
-            color: '#9CA3AF',
-            fontSize: 15,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            marginBottom: 20,
           }}
         >
-          <Icon name="chat" size={48} color="#D1D5DB" />
-          <p style={{ marginTop: 16 }}>Nenhuma conversa encontrada</p>
+          <h2
+            style={{ fontSize: 20, fontWeight: 800, margin: 0, color: '#111' }}
+          >
+            Mensagens
+          </h2>
         </div>
-      ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          {filteredConversations.map((conv) => (
-            <div
-              key={conv.id}
-              onClick={() => {
-                setActiveConversation(conv);
-                setConversations((prev) =>
-                  prev.map((c) => (c.id === conv.id ? { ...c, unread: 0 } : c))
-                );
-              }}
-              style={{
-                background: 'white',
-                borderRadius: 14,
-                padding: 14,
-                display: 'flex',
-                gap: 12,
-                alignItems: 'center',
-                border: '1px solid #F3F4F6',
-                cursor: 'pointer',
-                transition: 'all 0.15s',
-                boxShadow:
-                  conv.unread > 0 ? '0 2px 12px rgba(18,89,195,0.1)' : 'none',
-              }}
-            >
-              <div style={{ position: 'relative' }}>
-                <div
-                  style={{
-                    width: 52,
-                    height: 52,
-                    borderRadius: '50%',
-                    overflow: 'hidden',
-                    border: `2px solid ${conv.unread > 0 ? ORANJE : '#E5E7EB'}`,
-                  }}
-                >
-                  <img
-                    src={conv.seller.img}
-                    alt=""
+
+        <div
+          style={{
+            display: 'flex',
+            gap: 8,
+            marginBottom: 16,
+            flexWrap: 'wrap',
+          }}
+        >
+          <input
+            value={searchChat}
+            onChange={(e) => setSearchChat(e.target.value)}
+            placeholder="Pesquisar conversas..."
+            style={{
+              flex: 1,
+              padding: '10px 14px',
+              borderRadius: 10,
+              border: '1.5px solid #E5E7EB',
+              fontSize: 13,
+              background: 'white',
+            }}
+          />
+          <button
+            onClick={() => setFilter(filter === 'unread' ? 'all' : 'unread')}
+            style={{
+              padding: '8px 16px',
+              borderRadius: 10,
+              background: filter === 'unread' ? ORANJE : WHITE,
+              color: filter === 'unread' ? 'white' : ORANJE,
+              border: 'none',
+              fontWeight: 600,
+              fontSize: 13,
+              cursor: 'pointer',
+              minWidth: 100,
+            }}
+          >
+            {filter === 'unread' ? 'Todas' : 'Não lidas'}
+          </button>
+        </div>
+
+        {filteredConversations.length === 0 ? (
+          <div
+            style={{
+              textAlign: 'center',
+              padding: '80px 20px',
+              color: '#9CA3AF',
+              fontSize: 15,
+            }}
+          >
+            <Icon name="chat" size={48} color="#D1D5DB" />
+            <p style={{ marginTop: 16 }}>Nenhuma conversa encontrada</p>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {filteredConversations.map((conv) => (
+              <div
+                key={conv.id}
+                onClick={() => {
+                  setActiveConversation(conv);
+                  setConversations((prev) =>
+                    prev.map((c) =>
+                      c.id === conv.id ? { ...c, unread: 0 } : c
+                    )
+                  );
+                }}
+                style={{
+                  background: 'white',
+                  borderRadius: 14,
+                  padding: 14,
+                  display: 'flex',
+                  gap: 12,
+                  alignItems: 'center',
+                  border: '1px solid #F3F4F6',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s',
+                  boxShadow:
+                    conv.unread > 0 ? '0 2px 12px rgba(18,89,195,0.1)' : 'none',
+                }}
+              >
+                <div style={{ position: 'relative' }}>
+                  <div
                     style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                    }}
-                  />
-                </div>
-                {conv.unread > 0 && (
-                  <span
-                    style={{
-                      position: 'absolute',
-                      top: -2,
-                      right: -2,
-                      minWidth: 18,
-                      height: 18,
+                      width: 52,
+                      height: 52,
                       borderRadius: '50%',
-                      background: ORANJE,
-                      color: 'white',
-                      fontSize: 11,
-                      fontWeight: 700,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      padding: '0 4px',
+                      overflow: 'hidden',
+                      border: `2px solid ${conv.unread > 0 ? ORANJE : '#E5E7EB'}`,
                     }}
                   >
-                    {conv.unread}
-                  </span>
-                )}
-              </div>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'baseline',
-                  }}
-                >
+                    <img
+                      src={conv.seller.img}
+                      alt=""
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                      }}
+                    />
+                  </div>
+                  {conv.unread > 0 && (
+                    <span
+                      style={{
+                        position: 'absolute',
+                        top: -2,
+                        right: -2,
+                        minWidth: 18,
+                        height: 18,
+                        borderRadius: '50%',
+                        background: ORANJE,
+                        color: 'white',
+                        fontSize: 11,
+                        fontWeight: 700,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '0 4px',
+                      }}
+                    >
+                      {conv.unread}
+                    </span>
+                  )}
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'baseline',
+                    }}
+                  >
+                    <p
+                      style={{
+                        fontWeight: conv.unread > 0 ? 700 : 600,
+                        fontSize: 14,
+                        margin: 0,
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                      }}
+                    >
+                      {conv.seller.name}
+                    </p>
+                    <span
+                      style={{
+                        fontSize: 11,
+                        color: '#9CA3AF',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {conv.lastTime}
+                    </span>
+                  </div>
                   <p
                     style={{
-                      fontWeight: conv.unread > 0 ? 700 : 600,
-                      fontSize: 14,
-                      margin: 0,
+                      fontSize: 13,
+                      color: conv.unread > 0 ? '#111' : '#6B7280',
+                      margin: '3px 0 0',
                       whiteSpace: 'nowrap',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
                     }}
                   >
-                    {conv.seller.name}
+                    {conv.lastMessage}
                   </p>
-                  <span
-                    style={{
-                      fontSize: 11,
-                      color: '#9CA3AF',
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    {conv.lastTime}
-                  </span>
                 </div>
-                <p
-                  style={{
-                    fontSize: 13,
-                    color: conv.unread > 0 ? '#111' : '#6B7280',
-                    margin: '3px 0 0',
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                  }}
-                >
-                  {conv.lastMessage}
-                </p>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

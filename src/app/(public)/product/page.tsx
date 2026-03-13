@@ -6,7 +6,6 @@ import { FaWhatsapp } from 'react-icons/fa';
 import { LuMessageCircle } from 'react-icons/lu';
 import { Header } from '@/components/layout/header';
 import { useNavigate, useParams } from 'react-router-dom';
-import { IMAGES, RELATED } from '@/data/product';
 import { Footer } from '@/components/layout/footer';
 import { useProductById } from '@/service/product/product';
 import { useToast } from '@/hooks/use-toast';
@@ -14,6 +13,7 @@ import { useCartStore } from '@/hooks/cartstore';
 import { useAuthStore } from '@/hooks/auth';
 import { ToastAction } from '@/components/ui/toast';
 import { format } from 'date-fns';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function ProductPage() {
   const { id } = useParams();
@@ -78,13 +78,77 @@ export default function ProductPage() {
     }
 
     // Se já estiver logado, vai direto para checkout
-    navigate('/carrinho'); // ou '/checkout' se tiveres essa página
+    navigate('/checkout'); // ou '/checkout' se tiveres essa página
   };
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        Carregando...
+      <div style={{ maxWidth: 700, margin: '0 auto' }}>
+        {/* Header */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            marginBottom: 20,
+          }}
+        >
+          <Skeleton className="h-7 w-32 rounded-md" />
+        </div>
+
+        {/* Avatar card */}
+        <div
+          style={{
+            background: 'white',
+            borderRadius: 16,
+            padding: 24,
+            marginBottom: 16,
+            border: '1px solid #F3F4F6',
+            textAlign: 'center',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 10,
+            }}
+          >
+            <Skeleton className="w-24 h-24 rounded-full" />
+            <Skeleton className="h-5 w-40 rounded-md" />
+            <Skeleton className="h-4 w-52 rounded-md" />
+            <Skeleton className="h-6 w-28 rounded-full" />
+            <Skeleton className="h-3 w-36 rounded-md" />
+          </div>
+        </div>
+
+        {/* Form card */}
+        <div
+          style={{
+            background: 'white',
+            borderRadius: 16,
+            padding: 24,
+            border: '1px solid #F3F4F6',
+          }}
+        >
+          <Skeleton className="h-5 w-44 rounded-md mb-5" />
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))',
+              gap: 14,
+            }}
+          >
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div key={i}>
+                <Skeleton className="h-3 w-28 rounded mb-2" />
+                <Skeleton className="h-10 w-full rounded-lg" />
+              </div>
+            ))}
+            <Skeleton className="h-10 w-full rounded-xl" />
+          </div>
+        </div>
       </div>
     );
   }

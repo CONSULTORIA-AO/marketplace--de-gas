@@ -1,7 +1,7 @@
 'use client';
 
 import { ORANJE } from '@/constants/costumer';
-import { Icon } from './icon';
+import { Icon } from '../../../components/icon';
 import { ProductCard } from './productCard';
 import { FavoritesViewProps } from '@/types/customer';
 

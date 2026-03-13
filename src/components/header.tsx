@@ -7,13 +7,12 @@ import { BadgeCount } from './badgeCount';
 import { useUserStore } from '@/hooks/customer';
 import { useNavigate } from 'react-router-dom';
 
-export function Header({
+export function AuthHeader({
   search,
   setSearch,
   //cartCount,
   favCount,
   onMenu,
-  goTo,
 }: HeaderProps) {
   const [searchFocus, setFocus] = useState<boolean>(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState<boolean>(false);
@@ -193,7 +192,7 @@ export function Header({
 
         {/* Logo */}
         <button
-          onClick={() => goTo('shop')}
+          onClick={() => navigate('/produtos')}
           style={{
             background: 'none',
             border: 'none',
@@ -483,7 +482,7 @@ export function Header({
 
           {/* Cart button */}
           <button
-            onClick={() => goTo('cart')}
+            onClick={() => navigate('/carrinho')}
             style={{
               position: 'relative',
               background: 'none',
@@ -498,7 +497,7 @@ export function Header({
 
           {/* Checkout button */}
           <button
-            onClick={() => navigate('checkout')}
+            onClick={() => navigate('/checkout')}
             title="Finalizar compra"
             style={{
               display: 'flex',
@@ -548,7 +547,7 @@ export function Header({
 
           {/* Avatar / profile */}
           <button
-            onClick={() => goTo('profile')}
+            onClick={() => navigate('/perfil')}
             style={{
               background: 'none',
               border: 'none',

@@ -1,6 +1,6 @@
 'use client';
 import { ProductCard } from '@/app/customer/_components/productCard';
-import { Icon } from './icon';
+import { Icon } from '../../../components/icon';
 import { ORANJE, WHITE } from '@/constants/costumer';
 import { ShopViewProps } from '@/types/customer';
 
@@ -19,7 +19,6 @@ export function ShopView({
   toggleFav,
   favorites,
   onProductClick,
-  onPayNow,
 }: ShopViewProps) {
   return (
     <div className="fade-in">
@@ -133,7 +132,6 @@ export function ShopView({
               //toggleFav={toggleFav}
               isFav={favorites.some((f) => f.produtoId === p.produtoId)}
               onClick={() => onProductClick(p)}
-              onPayNow={onPayNow}
             />
           ))}
         </div>

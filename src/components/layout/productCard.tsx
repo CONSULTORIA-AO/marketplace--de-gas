@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { GasProduct } from '@/types/product';
 import { useNavigate } from 'react-router-dom';
 import { useCartStore } from '@/hooks/cartstore';
-import { useAuthStore } from '@/hooks/auth';
 import { ToastAction } from '../ui/toast';
 import { useToast } from '@/hooks/use-toast';
 
@@ -18,7 +17,6 @@ export function ProductCard({ product, index }: ProductCardProps) {
   const [hovered, setHovered] = useState(false);
   const navigate = useNavigate();
   const { addItem } = useCartStore();
-  const token = useAuthStore((state) => state.session?.token);
   const { toast } = useToast();
 
   const formattedPrice = product.preco.toLocaleString('pt-AO', {

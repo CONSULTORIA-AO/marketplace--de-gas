@@ -1,0 +1,210 @@
+'use client';
+import { useQuery } from '@tanstack/react-query';
+import { useAuthStore } from '@/hooks/auth';
+import { getOrdersByClient } from '@/service/order/order.schema';
+import { AuthHeader } from '@/components/header';
+import { useState } from 'react';
+import { View } from '@/types/customer';
+import { GasProduct } from '@/types/product';
+import { Sidebar } from '@/components/sidebar';
+import { Skeleton } from '@/components/ui/skeleton';
+
+export function OrdersView() {
+  const clienteId = useAuthStore((state) => state.session.user.id);
+  const [searchChat, setSearchChat] = useState<string>('');
+  const [view, setView] = useState<View>('produtos');
+  const [favorites, setFavorites] = useState<GasProduct[]>([]);
+  const [search, setSearch] = useState<string>('');
+  const [sidebarOpen, setSidebar] = useState<boolean>(false);
+
+  const {
+    data: ordersdata,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ['orders', clienteId],
+    queryFn: () => getOrdersByClient(clienteId),
+  });
+  const colors: Record<string, string> = {
+    Entregue: '#10B981',
+    'Em trânsito': '#3B82F6',
+    Pendente: '#F59E0B',
+  };
+
+  if (isLoading) {
+    return (
+      <div style={{ maxWidth: 700, margin: '0 auto' }}>
+        {/* Header */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            marginBottom: 20,
+          }}
+        >
+          <Skeleton className="h-7 w-32 rounded-md" />
+        </div>
+
+        {/* Avatar card */}
+        <div
+          style={{
+            background: 'white',
+            borderRadius: 16,
+            padding: 24,
+            marginBottom: 16,
+            border: '1px solid #F3F4F6',
+            textAlign: 'center',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 10,
+            }}
+          >
+            <Skeleton className="w-24 h-24 rounded-full" />
+            <Skeleton className="h-5 w-40 rounded-md" />
+            <Skeleton className="h-4 w-52 rounded-md" />
+            <Skeleton className="h-6 w-28 rounded-full" />
+            <Skeleton className="h-3 w-36 rounded-md" />
+          </div>
+        </div>
+
+        {/* Form card */}
+        <div
+          style={{
+            background: 'white',
+            borderRadius: 16,
+            padding: 24,
+            border: '1px solid #F3F4F6',
+          }}
+        >
+          <Skeleton className="h-5 w-44 rounded-md mb-5" />
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))',
+              gap: 14,
+            }}
+          >
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div key={i}>
+                <Skeleton className="h-3 w-28 rounded mb-2" />
+                <Skeleton className="h-10 w-full rounded-lg" />
+              </div>
+            ))}
+            <Skeleton className="h-10 w-full rounded-xl" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return <p>Erro ao carregar pedidos.</p>;
+  }
+
+  return (
+    <div>
+      {sidebarOpen && (
+        <div
+          style={{ position: 'fixed', inset: 0, zIndex: 400, display: 'flex' }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'rgba(0,0,0,0.4)',
+            }}
+            onClick={() => setSidebar(false)}
+          />
+          <Sidebar
+            favorites={favorites.length}
+            close={() => setSidebar(false)}
+            currentView={view}
+          />
+        </div>
+      )}
+      <AuthHeader
+        search={search}
+        setSearch={setSearch}
+        //cartCount={cartCount}
+        favCount={favorites.length}
+        onMenu={() => setSidebar(true)}
+      />
+
+      <div className="fade-in">
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            marginBottom: 20,
+          }}
+        >
+          <h2 style={{ fontSize: 20, fontWeight: 800, margin: 0 }}>
+            Meus Pedidos
+          </h2>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {ordersdata.map((o) => (
+            <div
+              key={o.pedidoCotacaoId}
+              style={{
+                background: 'white',
+                borderRadius: 14,
+                padding: 16,
+                display: 'flex',
+                gap: 14,
+                alignItems: 'center',
+                border: '1px solid #F3F4F6',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+              }}
+            >
+              <img
+                src={`${import.meta.env.VITE_API_URL}images/products/${o.nomeCliente}`}
+                alt=""
+                style={{
+                  width: 64,
+                  height: 64,
+                  objectFit: 'cover',
+                  borderRadius: 10,
+                }}
+              />
+              <div style={{ flex: 1 }}>
+                <p style={{ fontWeight: 600, fontSize: 13, margin: '0 0 4px' }}>
+                  Pedido #{o.numero_cotacao.slice(0, 8)}
+                </p>
+                <p
+                  style={{ fontSize: 12, color: '#6B7280', margin: '0 0 6px' }}
+                >
+                  {o.pedidoCotacaoId} ·{' '}
+                  {new Date(o.pedido_time).toLocaleDateString('pt-pt')}
+                </p>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    padding: '3px 10px',
+                    borderRadius: 20,
+                    background: (colors[o.statusPedido] ?? '#9CA3AF') + '20',
+                    color: colors[o.statusPedido] ?? '#9CA3AF',
+                    fontSize: 12,
+                    fontWeight: 600,
+                  }}
+                >
+                  {o.statusPedido}
+                </span>
+              </div>
+              {o.itens.map((item) => (
+                <span key={item.id_itens_pedido}>{item.quantidade}</span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
