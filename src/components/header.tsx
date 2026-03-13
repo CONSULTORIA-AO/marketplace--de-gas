@@ -238,18 +238,7 @@ export function AuthHeader({
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
             placeholder="Pesquisar produtos"
-            style={{
-              flex: 1,
-              padding: '0',
-              border: 'none',
-              outline: 'none',
-              fontSize: 13,
-              color: '#374151',
-              background: 'transparent',
-              minWidth: 0,
-              width: '100%',
-              alignSelf: 'stretch',
-            }}
+            className="flex-1 px-3 py-2.5 text-sm text-gray-700 outline-none placeholder:text-gray-400 bg-transparent"
           />
           {search && (
             <button
