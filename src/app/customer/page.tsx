@@ -188,7 +188,6 @@ export default function Customer() {
       <div
         style={{ maxWidth: 1400, margin: '0 auto', padding: '16px 16px 80px' }}
       >
-        {view === 'produtos' && (
           <ShopView
             products={filtered}
             categories={CATEGORIES}
@@ -208,7 +207,6 @@ export default function Customer() {
               setView('detalhes-productos');
             }}
           />
-        )}
       </div>
 
       <style>{`

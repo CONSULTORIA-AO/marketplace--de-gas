@@ -83,6 +83,15 @@ const NavLink = () => {
       />
 
       <Route
+        path="/mensagens"
+        element={
+          <ProtectedRoute>
+            <MessagesView />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
         path="/pedidos"
         element={
           <ProtectedRoute>

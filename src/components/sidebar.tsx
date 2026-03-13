@@ -7,7 +7,7 @@ import { useAuthStore } from '@/hooks/auth';
 import { useUserStore } from '@/hooks/customer';
 import { useState } from 'react';
 import { items } from '@/constants/routes';
-import { formattedDate } from '@/data/customer';
+import { format } from 'date-fns';
 
 export function Sidebar({ favorites, close, currentView }: SidebarProps) {
   const navigate = useNavigate();
@@ -110,7 +110,7 @@ export function Sidebar({ favorites, close, currentView }: SidebarProps) {
                 margin: 0,
               }}
             >
-              {formattedDate}
+              {cliente?.criado_em ? format(new Date(cliente.criado_em), 'dd/MM/yyyy') : ""}
             </p>
           </div>
         </div>

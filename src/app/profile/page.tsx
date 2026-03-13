@@ -18,7 +18,7 @@ import { AuthHeader } from '@/components/header';
 import { View } from '@/types/customer';
 import { GasProduct } from '@/types/product';
 import { Sidebar } from '../../components/sidebar';
-import { formattedDate } from '@/data/customer';
+import { format } from 'date-fns';
 
 export function ProfileView() {
   const entidade = useAuthStore((state) => state.session.user.id);
@@ -391,7 +391,7 @@ export function ProfileView() {
             {cliente?.telefoneCliente ?? ''}
           </span>
           <p style={{ fontSize: 12, color: '#9CA3AF', marginTop: 8 }}>
-            Membro desde {formattedDate}
+            Membro desde {cliente?.criado_em ? format(new Date(cliente.criado_em), 'dd/MM/yyyy') : ""}
           </p>
         </div>
 
