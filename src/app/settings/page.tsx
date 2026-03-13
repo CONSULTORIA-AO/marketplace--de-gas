@@ -17,6 +17,7 @@ import { View } from '@/types/customer';
 import { useState } from 'react';
 import { GasProduct } from '@/types/product';
 import { Sidebar } from '../../components/sidebar';
+import { SmartHeader } from '@/components/layout/smartHeader';
 
 export function SettingsView() {
   const entidade = useAuthStore((state) => state.session.user.id);
@@ -125,12 +126,11 @@ export function SettingsView() {
         </div>
       )}
 
-      <AuthHeader
+      <SmartHeader
         search={search}
         setSearch={setSearch}
-        //cartCount={cartCount}
-        favCount={favorites.length}
         onMenu={() => setSidebar(true)}
+        onSearch={(term) => setSearch(term)}
       />
       <div
         className="fade-in"

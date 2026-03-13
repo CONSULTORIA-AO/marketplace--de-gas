@@ -11,6 +11,7 @@ import { GasProduct } from '@/types/product';
 import { useProducts } from '@/service/product/product';
 import { useCartStore } from '@/hooks/cartstore';
 import { Skeleton } from '@/components/ui/skeleton';
+import { SmartHeader } from '@/components/layout/smartHeader';
 
 export default function Customer() {
   const [view, setView] = useState<View>('produtos');
@@ -205,12 +206,11 @@ export default function Customer() {
         </div>
       )}
 
-      <AuthHeader
+      <SmartHeader
         search={search}
         setSearch={setSearch}
-        //cartCount={cartCount}
-        favCount={favorites.length}
         onMenu={() => setSidebar(true)}
+        onSearch={(term) => setSearch(term)}
       />
 
       <div

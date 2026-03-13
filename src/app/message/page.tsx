@@ -6,6 +6,7 @@ import { Icon } from '@/components/icon';
 import { AuthHeader } from '@/components/header';
 import { GasProduct } from '@/types/product';
 import { Sidebar } from '../../components/sidebar';
+import { SmartHeader } from '@/components/layout/smartHeader';
 
 export function MessagesView() {
   const [conversations, setConversations] = useState<Conversation[]>([
@@ -316,12 +317,11 @@ export function MessagesView() {
         </div>
       )}
 
-      <AuthHeader
+      <SmartHeader
         search={search}
         setSearch={setSearch}
-        //cartCount={cartCount}
-        favCount={favorites.length}
         onMenu={() => setSidebar(true)}
+        onSearch={(term) => setSearch(term)}
       />
       <div className="fade-in" style={{ maxWidth: 640, margin: '0 auto' }}>
         <div

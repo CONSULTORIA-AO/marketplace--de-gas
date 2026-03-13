@@ -112,7 +112,6 @@ export function ProductCard({ product, index }: ProductCardProps) {
             className="flex-1 py-2 sm:py-3 rounded-lg bg-transparent border border-[#FFA500] text-[#FFA500] text-xs sm:text-sm font-semibold hover:bg-[#FFA500]/10 transition-colors"
             onClick={() => {
               addItem(product);
-              navigate('/carrinho');
             }}
           >
             Adicionar +

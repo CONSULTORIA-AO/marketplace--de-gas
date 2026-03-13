@@ -13,6 +13,7 @@ import { Sidebar } from '@/components/sidebar';
 import { AuthHeader } from '@/components/header';
 import { useProductById } from '@/service/product/product';
 import { Skeleton } from '@/components/ui/skeleton';
+import { SmartHeader } from '@/components/layout/smartHeader';
 
 export function ProductDetail() {
   const { id } = useParams();
@@ -169,12 +170,11 @@ export function ProductDetail() {
         </div>
       )}
 
-      <AuthHeader
+      <SmartHeader
         search={search}
         setSearch={setSearch}
-        //cartCount={cartCount}
-        favCount={favorites.length}
         onMenu={() => setSidebar(true)}
+        onSearch={(term) => setSearch(term)}
       />
       <div className="fade-in">
         <button

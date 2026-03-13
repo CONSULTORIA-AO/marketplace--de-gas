@@ -8,6 +8,7 @@ import { View } from '@/types/customer';
 import { GasProduct } from '@/types/product';
 import { Sidebar } from '@/components/sidebar';
 import { Skeleton } from '@/components/ui/skeleton';
+import { SmartHeader } from '@/components/layout/smartHeader';
 
 export function OrdersView() {
   const clienteId = useAuthStore((state) => state.session.user.id);
@@ -156,12 +157,11 @@ export function OrdersView() {
           />
         </div>
       )}
-      <AuthHeader
+      <SmartHeader
         search={search}
         setSearch={setSearch}
-        //cartCount={cartCount}
-        favCount={favorites.length}
         onMenu={() => setSidebar(true)}
+        onSearch={(term) => setSearch(term)}
       />
 
       <div className="fade-in">

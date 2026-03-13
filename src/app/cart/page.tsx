@@ -13,6 +13,7 @@ import { GasProduct } from '@/types/product';
 import { Sidebar } from '@/components/sidebar';
 import { AuthHeader } from '@/components/header';
 import { Skeleton } from '@/components/ui/skeleton';
+import { SmartHeader } from '@/components/layout/smartHeader';
 
 export default function CartPage() {
   const { toast } = useToast();
@@ -82,16 +83,12 @@ export default function CartPage() {
       )}
 
       {/* HEADER */}
-      {token ? (
-        <AuthHeader
-          search={search}
-          setSearch={setSearch}
-          favCount={favorites.length}
-          onMenu={() => setSidebar(true)}
-        />
-      ) : (
-        <Header onSearch={(term) => setSearchTerm(term)} />
-      )}
+      <SmartHeader
+        search={search}
+        setSearch={setSearch}
+        onMenu={() => setSidebar(true)}
+        onSearch={(term) => setSearch(term)}
+      />
       <div className="max-w-5xl mx-auto px-4 py-8">
         <CartView
           cart={items}

@@ -19,6 +19,7 @@ import { View } from '@/types/customer';
 import { GasProduct } from '@/types/product';
 import { Sidebar } from '../../components/sidebar';
 import { format } from 'date-fns';
+import { SmartHeader } from '@/components/layout/smartHeader';
 
 export default function ProfileView() {
   const entidade = useAuthStore((state) => state.session.user.id);
@@ -315,12 +316,11 @@ export default function ProfileView() {
         </div>
       )}
 
-      <AuthHeader
+      <SmartHeader
         search={search}
         setSearch={setSearch}
-        //cartCount={cartCount}
-        favCount={favorites.length}
         onMenu={() => setSidebar(true)}
+        onSearch={(term) => setSearch(term)}
       />
       <div className="fade-in" style={{ maxWidth: 700, margin: '0 auto' }}>
         <div
