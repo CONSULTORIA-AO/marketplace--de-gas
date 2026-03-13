@@ -49,7 +49,7 @@ const ServicesSection = () => {
     <section id="servicos" className="py-24 md:py-32">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <span className="text-primary font-medium text-sm uppercase tracking-widest">
+          <span className="text-[#FFA500] font-medium text-sm uppercase tracking-widest">
             Nossos Serviços
           </span>
           <h2 className="font-display text-4xl md:text-5xl font-bold mt-3 mb-4">
@@ -65,11 +65,11 @@ const ServicesSection = () => {
           {services.map((service, index) => (
             <div
               key={service.title}
-              className="group bg-card-gradient border border-glow rounded-xl p-8 hover:border-primary/40 transition-all duration-500 hover:shadow-[var(--glow-primary)]"
+              className="group bg-card-gradient border border-glow rounded-xl p-8 hover:border-[#FFA500]/40 transition-all duration-500 hover:shadow-[var(--glow-[#FFA500])]"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">
-                <service.icon className="w-6 h-6 text-primary" />
+              <div className="w-12 h-12 rounded-lg bg-[#FFA500]/10 flex items-center justify-center mb-5 group-hover:bg-[#FFA500]/20 transition-colors">
+                <service.icon className="w-6 h-6 text-[#FFA500]" />
               </div>
               <h3 className="font-display text-xl font-semibold mb-3">
                 {service.title}

@@ -3,8 +3,8 @@
 import { ORANJE, WHITE } from '@/constants/costumer';
 import { CustomSub, Sub, SubscriptionsViewProps } from '@/types/customer';
 import { useState } from 'react';
-import { Icon } from './icon';
-import { Field } from './field';
+import { Icon } from '../../../components/icon';
+import { Field } from '../../../components/field';
 
 export function SubscriptionsView({
   subs,

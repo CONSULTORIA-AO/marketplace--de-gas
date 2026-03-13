@@ -14,7 +14,12 @@ import Product from '@/app/(public)/product/page';
 import NotFoundPage from '@/app/(public)/notfound/page';
 import CartPage from '@/app/cart/page';
 import Customer from '@/app/customer/page';
-import { PaymentView } from '@/app/payment/page';
+import { CheckoutPage } from '@/app/checkout/page';
+import { ProfileView } from '@/app/profile/page';
+import { SettingsView } from '@/app/settings/page';
+import { MessagesView } from '@/app/message/page';
+import { OrdersView } from '@/app/orders/page';
+import { ProductDetail } from '@/app/product/page';
 
 const NavLink = () => {
   return (
@@ -29,14 +34,17 @@ const NavLink = () => {
       <Route path="/termos-politicas" element={<TermsPrivacity />} />
       <Route path="/perguntas-frequentes" element={<FAQ />} />
       <Route path="/contacto" element={<Contact />} />
+      <Route path="/produto/:id" element={<Product />} />
+
       <Route
-        path="/produto/:id"
+        path="/produto/:id/detalhes"
         element={
           <ProtectedRoute>
-            <Product />
+            <ProductDetail />
           </ProtectedRoute>
         }
       />
+
       <Route
         path="/produtos"
         element={
@@ -45,20 +53,40 @@ const NavLink = () => {
           </ProtectedRoute>
         }
       />
+      <Route path="/carrinho" element={<CartPage />} />
+
       <Route
-        path="/carrinho"
+        path="/checkout"
         element={
           <ProtectedRoute>
-            <CartPage />
+            <CheckoutPage />
           </ProtectedRoute>
         }
       />
 
       <Route
-        path="/pagamento/:id"
+        path="/perfil"
         element={
           <ProtectedRoute>
-            <PaymentView />
+            <ProfileView />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/definicoes"
+        element={
+          <ProtectedRoute>
+            <SettingsView />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/pedidos"
+        element={
+          <ProtectedRoute>
+            <OrdersView />
           </ProtectedRoute>
         }
       />

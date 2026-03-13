@@ -1,52 +1,107 @@
 'use client';
 
-import { CATEGORIES, ORDERS, SUBS } from '@/data/customer';
+import { CATEGORIES } from '@/data/customer';
 import { View } from '@/types/customer';
 import { useState } from 'react';
-//import { BottomNav } from './_components/buttonNav';
-//import { SubscriptionsView } from './_components/subscription';
-import { SettingsView } from './_components/settings';
-import { ProfileView } from './_components/profile';
-//import { MessagesView } from './_components/message';
-import { OrdersView } from './_components/order';
-//import { FavoritesView } from './_components/favorites';
-import { CartView } from './_components/cartView';
-import { ProductDetail } from './_components/productDeails';
 import { ShopView } from './_components/shopView';
-import { Header } from './_components/header';
-import { Sidebar } from './_components/sidebar';
+import { AuthHeader } from '../../components/header';
+import { Sidebar } from '../../components/sidebar';
 import { ORANJE } from '@/constants/costumer';
 import { GasProduct } from '@/types/product';
 import { useProducts } from '@/service/product/product';
 import { useCartStore } from '@/hooks/cartstore';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Customer() {
-  const [view, setView] = useState<View>('shop');
+  const [view, setView] = useState<View>('produtos');
   const [sidebarOpen, setSidebar] = useState<boolean>(false);
-  const [cart, setCart] = useState<GasProduct[]>([]);
   const [favorites, setFavorites] = useState<GasProduct[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<GasProduct | null>(
     null
   );
-  const [chatSeller, setChatSeller] = useState<GasProduct | null>(null);
   const [notification, setNotification] = useState<string | null>(null);
-  const [paymentItem, setPaymentItem] = useState<GasProduct | 'cart' | null>(
-    null
-  );
-  const items = useCartStore((state) => state.items);
   const [search, setSearch] = useState<string>('');
   const [activeCategory, setCategory] = useState<string>('Todos');
   const [sortBy, setSort] = useState<string>('relevance');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500000]);
   const [filterOpen, setFilterOpen] = useState<boolean>(false);
   const addItem = useCartStore((state) => state.addItem);
-  const removeItem = useCartStore((state) => state.removeItem);
-  const updateQuantity = useCartStore((state) => state.updateQuantity);
   const total = useCartStore((state) => state.getTotal());
-  const { getTotal } = useCartStore();
 
   // Busca os produtos com React Query
   const { data, isLoading, isError, error } = useProducts();
+
+  if (isLoading) {
+    return (
+      <div style={{ maxWidth: 700, margin: '0 auto' }}>
+        {/* Header */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            marginBottom: 20,
+          }}
+        >
+          <Skeleton className="h-7 w-32 rounded-md" />
+        </div>
+
+        {/* Avatar card */}
+        <div
+          style={{
+            background: 'white',
+            borderRadius: 16,
+            padding: 24,
+            marginBottom: 16,
+            border: '1px solid #F3F4F6',
+            textAlign: 'center',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 10,
+            }}
+          >
+            <Skeleton className="w-24 h-24 rounded-full" />
+            <Skeleton className="h-5 w-40 rounded-md" />
+            <Skeleton className="h-4 w-52 rounded-md" />
+            <Skeleton className="h-6 w-28 rounded-full" />
+            <Skeleton className="h-3 w-36 rounded-md" />
+          </div>
+        </div>
+
+        {/* Form card */}
+        <div
+          style={{
+            background: 'white',
+            borderRadius: 16,
+            padding: 24,
+            border: '1px solid #F3F4F6',
+          }}
+        >
+          <Skeleton className="h-5 w-44 rounded-md mb-5" />
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))',
+              gap: 14,
+            }}
+          >
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div key={i}>
+                <Skeleton className="h-3 w-28 rounded mb-2" />
+                <Skeleton className="h-10 w-full rounded-lg" />
+              </div>
+            ))}
+            <Skeleton className="h-10 w-full rounded-xl" />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // Filtra localmente (client-side) com base no searchTerm
   const filtered = (data?.mensagem || []).filter(
@@ -60,16 +115,6 @@ export default function Customer() {
     notify(`"${product.descricao}" adicionado ao carrinho ✓`);
   };
 
-  const removeFromCart = (id: string): void => removeItem(String(id));
-
-  const updateQty = (productId: string, delta: number) => {
-    const item = items.find((i) => i.productId === productId);
-    if (!item) return;
-
-    const newQty = Math.max(1, item.quantity + delta);
-    updateQuantity(productId, newQty);
-  };
-
   const toggleFav = (product: GasProduct): void => {
     setFavorites((prev) =>
       prev.find((i) => i.produtoId === product.produtoId)
@@ -81,12 +126,6 @@ export default function Customer() {
   const notify = (msg: string): void => {
     setNotification(msg);
     setTimeout(() => setNotification(null), 3000);
-  };
-
-  const goTo = (v: View, extra?: () => void): void => {
-    setView(v);
-    if (extra) extra();
-    setSidebar(false);
   };
 
   return (
@@ -132,27 +171,24 @@ export default function Customer() {
           />
           <Sidebar
             favorites={favorites.length}
-            goTo={goTo}
             close={() => setSidebar(false)}
             currentView={view}
           />
         </div>
       )}
 
-      <Header
+      <AuthHeader
         search={search}
         setSearch={setSearch}
         //cartCount={cartCount}
         favCount={favorites.length}
         onMenu={() => setSidebar(true)}
-        goTo={goTo}
-        view={view}
       />
 
       <div
         style={{ maxWidth: 1400, margin: '0 auto', padding: '16px 16px 80px' }}
       >
-        {view === 'shop' && (
+        {view === 'produtos' && (
           <ShopView
             products={filtered}
             categories={CATEGORIES}
@@ -169,95 +205,11 @@ export default function Customer() {
             favorites={favorites}
             onProductClick={(p) => {
               setSelectedProduct(p);
-              setView('productDetail');
-            }}
-            onPayNow={(p) => {
-              setPaymentItem(p);
-              setView('payment');
+              setView('detalhes-productos');
             }}
           />
         )}
-        {view === 'productDetail' && selectedProduct && (
-          <ProductDetail
-            product={selectedProduct}
-            addToCart={addToCart}
-            toggleFav={toggleFav}
-            favorites={favorites}
-            onChat={(p) => {
-              setChatSeller(p);
-              setView('chat');
-            }}
-            onPayNow={(p) => {
-              setPaymentItem(p);
-              setView('payment');
-            }}
-            onBack={() => setView('shop')}
-          />
-        )}
-        {view === 'cart' && (
-          <CartView
-            cart={items}
-            cartTotal={total}
-            updateQty={updateQty}
-            removeItem={removeFromCart}
-            //cartTotal={cartTotal}
-            onCheckout={() => {
-              setPaymentItem('cart');
-              setView('payment');
-            }}
-            onBack={() => setView('shop')}
-          />
-        )}
-        {/*view === 'payment' && paymentItem && (
-          <PaymentView
-            item={
-              paymentItem === 'cart'
-                ? { descricao: `${cartCount} itens no carrinho`, preco: cartTotal }
-                : paymentItem
-            }
-            cart={paymentItem === 'cart' ? cart : null}
-            onSuccess={() => {
-              if (paymentItem === 'cart') setCart([]);
-              notify('Pagamento efectuado com sucesso! ✓');
-              setView('orders');
-            }}
-            onBack={() =>
-              setView(paymentItem === 'cart' ? 'cart' : 'productDetail')
-            }
-          />
-        )}
-        {view === 'favorites' && (
-          <FavoritesView
-            favorites={favorites}
-            addToCart={addToCart}
-            toggleFav={toggleFav}
-            onProductClick={(p) => {
-              setSelectedProduct(p);
-              setView('productDetail');
-            }}
-            onBack={() => setView('shop')}
-          />
-        )*/}
-        {view === 'orders' && (
-          <OrdersView orders={ORDERS} onBack={() => setView('shop')} />
-        )}
-        {/*view === 'chat' && <MessagesView onBack={() => setView('shop')} />*/}
-        {view === 'profile' && <ProfileView onBack={() => setView('shop')} />}
-        {view === 'settings' && (
-          <SettingsView onBack={() => setView('shop')} notify={notify} />
-        )}
-        {/*view === 'subs' && (
-          <SubscriptionsView
-            subs={SUBS}
-            user={user}
-            setUser={setUser}
-            notify={notify}
-            onBack={() => setView('shop')}
-          />
-        )*/}
       </div>
-
-      {/*<BottomNav view={view} goTo={goTo} cartCount={cartCount} />*/}
 
       <style>{`
         @keyframes slideIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}

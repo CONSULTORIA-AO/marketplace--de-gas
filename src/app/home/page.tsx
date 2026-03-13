@@ -10,6 +10,7 @@ import { Footer } from '@/components/layout/footer';
 import { Hero } from '@/components/layout/hero';
 import { useProducts } from '@/service/product/product';
 import { GasProduct } from '@/types/product';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Home() {
   const statsRef = useRef(null);
@@ -18,6 +19,8 @@ export default function Home() {
 
   // Busca os produtos com React Query
   const { data, isLoading, isError, error } = useProducts();
+
+  console.log('Dados dsos produtos vindo da api:', data);
 
   // Filtra localmente (client-side) com base no searchTerm
   const filteredProducts = (data?.mensagem || []).filter(
@@ -40,7 +43,7 @@ export default function Home() {
         transition={{ delay: 0.5 }}
         className="bg-white border-b border-gray-100 py-3"
       >
-        <div className="max-w-7xl mx-auto px-4 flex flex-wrap justify-center md:justify-between items-center gap-4 text-sm">
+        <div className="max-w-7xl mx-auto px-4 flex flex-wrap justify-center md:justify-between items-center gap-4 text-lg">
           {[
             { icon: '🛡️', text: 'Compra garantida' },
             { icon: '🚚', text: 'Entrega rápida' },
@@ -61,7 +64,7 @@ export default function Home() {
       </motion.div>
 
       {/* ── PROMO BANNER ─────────────────────────────────── */}
-      <section className="max-w-7xl mx-auto px-4 pb-8">
+      <section className="max-w-7xl mx-auto px-4 pb-8 mt-3">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
             {
@@ -116,7 +119,7 @@ export default function Home() {
       </section>
 
       {/* ── PRODUCTS ─────────────────────────────────────── */}
-      <section className="max-w-7xl mx-auto px-4 py-8">
+      <section id="produtos" className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-6">
           <motion.h2
             initial={{ opacity: 0, x: -20 }}
@@ -130,14 +133,73 @@ export default function Home() {
 
         {isLoading ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            {Array(8)
-              .fill(0)
-              .map((_, i) => (
+            <div style={{ maxWidth: 700, margin: '0 auto' }}>
+              {/* Header */}
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 10,
+                  marginBottom: 20,
+                }}
+              >
+                <Skeleton className="h-7 w-32 rounded-md" />
+              </div>
+
+              {/* Avatar card */}
+              <div
+                style={{
+                  background: 'white',
+                  borderRadius: 16,
+                  padding: 24,
+                  marginBottom: 16,
+                  border: '1px solid #F3F4F6',
+                  textAlign: 'center',
+                }}
+              >
                 <div
-                  key={i}
-                  className="bg-white rounded-2xl overflow-hidden animate-pulse h-80"
-                />
-              ))}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 10,
+                  }}
+                >
+                  <Skeleton className="w-24 h-24 rounded-full" />
+                  <Skeleton className="h-5 w-40 rounded-md" />
+                  <Skeleton className="h-4 w-52 rounded-md" />
+                  <Skeleton className="h-6 w-28 rounded-full" />
+                  <Skeleton className="h-3 w-36 rounded-md" />
+                </div>
+              </div>
+
+              {/* Form card */}
+              <div
+                style={{
+                  background: 'white',
+                  borderRadius: 16,
+                  padding: 24,
+                  border: '1px solid #F3F4F6',
+                }}
+              >
+                <Skeleton className="h-5 w-44 rounded-md mb-5" />
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))',
+                    gap: 14,
+                  }}
+                >
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <div key={i}>
+                      <Skeleton className="h-3 w-28 rounded mb-2" />
+                      <Skeleton className="h-10 w-full rounded-lg" />
+                    </div>
+                  ))}
+                  <Skeleton className="h-10 w-full rounded-xl" />
+                </div>
+              </div>
+            </div>
           </div>
         ) : isError ? (
           <div className="text-center py-12 text-red-600">

@@ -1,5 +1,5 @@
-import { PedidosResponse } from "@/types/order";
-import { api } from "@/utils/api";
+import { PedidosResponse } from '@/types/order';
+import { api } from '@/utils/api';
 
 export async function getOrdersByClient(clienteId: number) {
   const response = await api.get<PedidosResponse>(

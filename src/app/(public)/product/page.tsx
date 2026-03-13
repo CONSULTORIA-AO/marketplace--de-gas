@@ -6,13 +6,14 @@ import { FaWhatsapp } from 'react-icons/fa';
 import { LuMessageCircle } from 'react-icons/lu';
 import { Header } from '@/components/layout/header';
 import { useNavigate, useParams } from 'react-router-dom';
-import { IMAGES, RELATED } from '@/data/product';
 import { Footer } from '@/components/layout/footer';
 import { useProductById } from '@/service/product/product';
 import { useToast } from '@/hooks/use-toast';
 import { useCartStore } from '@/hooks/cartstore';
 import { useAuthStore } from '@/hooks/auth';
 import { ToastAction } from '@/components/ui/toast';
+import { format } from 'date-fns';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function ProductPage() {
   const { id } = useParams();
@@ -29,14 +30,14 @@ export default function ProductPage() {
   const handleAddToCart = () => {
     if (!product) return;
 
-    addItem(product, qty);
+    addItem(product.mensagem, qty);
 
     setCartDone(true);
     setTimeout(() => setCartDone(false), 2000);
 
     toast({
       title: 'Adicionado!',
-      description: `${qty}x ${product.descricao} no carrinho`,
+      description: `${qty}x ${product?.mensagem?.descricao} no carrinho`,
       duration: 3000,
     });
 
@@ -48,7 +49,7 @@ export default function ProductPage() {
     if (!product) return;
 
     // Adiciona ao carrinho primeiro
-    addItem(product, qty);
+    addItem(product.mensagem, qty);
 
     if (!isAuthenticated) {
       toast({
@@ -77,13 +78,77 @@ export default function ProductPage() {
     }
 
     // Se já estiver logado, vai direto para checkout
-    navigate('/carrinho'); // ou '/checkout' se tiveres essa página
+    navigate('/checkout'); // ou '/checkout' se tiveres essa página
   };
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        Carregando...
+      <div style={{ maxWidth: 700, margin: '0 auto' }}>
+        {/* Header */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            marginBottom: 20,
+          }}
+        >
+          <Skeleton className="h-7 w-32 rounded-md" />
+        </div>
+
+        {/* Avatar card */}
+        <div
+          style={{
+            background: 'white',
+            borderRadius: 16,
+            padding: 24,
+            marginBottom: 16,
+            border: '1px solid #F3F4F6',
+            textAlign: 'center',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 10,
+            }}
+          >
+            <Skeleton className="w-24 h-24 rounded-full" />
+            <Skeleton className="h-5 w-40 rounded-md" />
+            <Skeleton className="h-4 w-52 rounded-md" />
+            <Skeleton className="h-6 w-28 rounded-full" />
+            <Skeleton className="h-3 w-36 rounded-md" />
+          </div>
+        </div>
+
+        {/* Form card */}
+        <div
+          style={{
+            background: 'white',
+            borderRadius: 16,
+            padding: 24,
+            border: '1px solid #F3F4F6',
+          }}
+        >
+          <Skeleton className="h-5 w-44 rounded-md mb-5" />
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))',
+              gap: 14,
+            }}
+          >
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div key={i}>
+                <Skeleton className="h-3 w-28 rounded mb-2" />
+                <Skeleton className="h-10 w-full rounded-lg" />
+              </div>
+            ))}
+            <Skeleton className="h-10 w-full rounded-xl" />
+          </div>
+        </div>
       </div>
     );
   }
@@ -111,12 +176,12 @@ export default function ProductPage() {
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 lg:p-8">
               {/* Title */}
               <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 leading-snug mb-1">
-                {product.descricao}
+                {product?.mensagem?.descricao}
               </h1>
-
+              <span className="text-black">{product.mensagem.empresaDona}</span>
               <div className="flex items-baseline gap-3 mb-2">
                 <span className="text-3xl font-black text-[#FFA500]">
-                  {product.preco.toLocaleString('pt-AO')} Kz
+                  {product?.mensagem?.preco?.toLocaleString('pt-AO')} Kz
                 </span>
               </div>
 
@@ -129,17 +194,9 @@ export default function ProductPage() {
                 >
                   <AnimatePresence mode="wait">
                     <motion.img
-                      key={product.produtoId}
-                      src={
-                        product.imagem_produto
-                          ? `${import.meta.env.VITE_API_URL}/images/products${product.imagem_produto.startsWith('/') ? '' : '/'}${product.imagem_produto}`
-                          : 'https://via.placeholder.com/600x600?text=Sem+Imagem'
-                      }
-                      onError={(e) => {
-                        e.currentTarget.src =
-                          'https://via.placeholder.com/600x600?text=Imagem+Indisponível';
-                      }}
-                      alt={product.descricao}
+                      key={product.mensagem.produtoId}
+                      src={`${import.meta.env.VITE_API_URL}/images/products/${product?.mensagem?.imagem_produto}`}
+                      alt={product?.mensagem?.descricao}
                       initial={{ opacity: 0, scale: 1.04 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0 }}
@@ -203,16 +260,22 @@ export default function ProductPage() {
               <div className="flex flex-col items-center text-center mb-6">
                 <div className="w-20 h-20 rounded-full overflow-hidden bg-gray-100 mb-3 border-4 border-blue-50">
                   <img
-                    src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&q=80"
+                    src={`${import.meta.env.VITE_API_URL}/images/${product?.mensagem?.vendedor?.logoEmpresa}`}
                     alt="Vendedor"
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <p className="font-black text-gray-900 text-base">
-                  BEM ME QUER
+                  {product?.mensagem?.vendedor?.nomeEmpresa}
                 </p>
                 <p className="text-xs text-gray-400 mt-1">
-                  Utilizador desde 22/09/2023
+                  Utilizador desde{' '}
+                  {product?.mensagem?.vendedor?.empresa_time
+                    ? format(
+                        new Date(product.mensagem?.vendedor?.empresa_time),
+                        'dd/MM/yyyy HH:mm:ss'
+                      )
+                    : 'Data não disponível'}
                 </p>
               </div>
 
@@ -220,7 +283,7 @@ export default function ProductPage() {
               <div className="flex flex-col gap-2.5">
                 {[
                   {
-                    label: '+244 934 444 555',
+                    label: product?.mensagem?.vendedor?.telefoneEmpresa,
                     icon: <FcPhone />,
                     primary: true,
                   },

@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import BackGroundImage from '@/assets/hero-gas.jpg';
+import BackGroundImage from '@/assets/botja.png';
 import { useNavigate } from 'react-router-dom';
 
 export function Hero() {

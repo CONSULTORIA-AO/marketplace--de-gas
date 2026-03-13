@@ -15,7 +15,7 @@ export function Footer() {
               className="cursor-pointer mb-3"
             >
               <span className="text-2xl font-black text-white tracking-tight">
-                Jágás.
+                Jagás
               </span>
             </motion.div>
             <p className="text-white/60 text-xs leading-relaxed">

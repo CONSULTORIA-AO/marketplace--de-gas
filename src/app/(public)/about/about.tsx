@@ -9,14 +9,11 @@ const stats = [
 
 const AboutSection = () => {
   return (
-    <section id="sobre" className="py-24 md:py-32 bg-secondary/30">
+    <section id="sobre">
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Text */}
           <div>
-            <span className="text-primary font-medium text-sm uppercase tracking-widest">
-              Sobre Nós
-            </span>
             <h2 className="font-display text-4xl md:text-5xl font-bold mt-3 mb-6">
               Tradição e inovação em{' '}
               <span className="text-gradient">energia</span>
@@ -32,10 +29,6 @@ const AboutSection = () => {
               para oferecer o melhor serviço do setor. Cada agência é equipada
               com infraestrutura moderna e equipe altamente capacitada.
             </p>
-            <div className="inline-flex items-center gap-2 text-primary font-medium">
-              <Flame className="w-5 h-5" />
-              <span>Certificação ISO 9001 e ISO 14001</span>
-            </div>
           </div>
 
           {/* Stats */}
@@ -45,7 +38,7 @@ const AboutSection = () => {
                 key={stat.label}
                 className="bg-card-gradient border border-glow rounded-xl p-8 text-center animate-pulse-glow"
               >
-                <div className="font-display text-4xl md:text-5xl font-bold text-gradient mb-2">
+                <div className="font-display text-4xl md:text-5xl font-bold text-[#FFA500] mb-2">
                   {stat.value}
                 </div>
                 <div className="text-muted-foreground text-sm">

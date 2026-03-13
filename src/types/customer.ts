@@ -2,25 +2,16 @@ import { CartItem } from './cart';
 import { GasProduct } from './product';
 
 export type View =
-  | 'shop'
-  | 'productDetail'
-  | 'cart'
-  | 'payment'
-  | 'favorites'
-  | 'orders'
+  | 'produtos'
+  | 'detalhes-productos'
+  | 'carrinho'
+  | 'checkout'
+  | 'favoritos'
+  | 'pedidos'
   | 'chat'
-  | 'profile'
-  | 'settings'
-  | 'subs';
-
-export interface Order {
-  id: string;
-  product: string;
-  date: string;
-  status: string;
-  price: number;
-  img: string;
-}
+  | 'perfil'
+  | 'definicoes'
+  | 'subscricoes';
 
 export interface Sub {
   id: number;
@@ -82,21 +73,17 @@ export interface HeaderProps {
   //cartCount: number;
   favCount: number;
   onMenu: () => void;
-  goTo: (v: View) => void;
-  view: View;
 }
 
 export interface SidebarProps {
   //cart: number;
   favorites: number;
-  goTo: (v: View) => void;
   close: () => void;
   currentView: View;
 }
 
 export interface BottomNavProps {
   view: View;
-  goTo: (v: View) => void;
   cartCount: number;
 }
 
@@ -115,7 +102,6 @@ export interface ShopViewProps {
   toggleFav: (p: GasProduct) => void;
   favorites: GasProduct[];
   onProductClick: (p: GasProduct) => void;
-  onPayNow: (p: GasProduct) => void;
 }
 
 export interface ProductCardProps {
@@ -124,17 +110,6 @@ export interface ProductCardProps {
   //toggleFav: (p: GasProduct) => void;
   isFav: boolean;
   onClick: () => void;
-  onPayNow: (p: GasProduct) => void;
-}
-
-export interface ProductDetailProps {
-  product: GasProduct;
-  addToCart: (p: GasProduct, qty?: number) => void;
-  toggleFav: (p: GasProduct) => void;
-  favorites: GasProduct[];
-  onChat: (p: GasProduct) => void;
-  onPayNow: (p: GasProduct) => void;
-  onBack: () => void;
 }
 
 export interface PaymentItem {
@@ -180,24 +155,6 @@ export interface FavoritesViewProps {
   toggleFav: (p: GasProduct) => void;
   onProductClick: (p: GasProduct) => void;
   onBack: () => void;
-}
-
-export interface OrdersViewProps {
-  orders: Order[];
-  onBack: () => void;
-}
-
-export interface MessagesViewProps {
-  onBack: () => void;
-}
-
-export interface ProfileViewProps {
-  onBack: () => void;
-}
-
-export interface SettingsViewProps {
-  onBack: () => void;
-  notify: (msg: string) => void;
 }
 
 export interface PasswordForm {

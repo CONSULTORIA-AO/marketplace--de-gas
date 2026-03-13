@@ -1,7 +1,7 @@
 'use client';
 
 import { ORANJE } from '@/constants/costumer';
-import { Icon } from './icon';
+import { Icon } from '../../../components/icon';
 import { ProductCard } from './productCard';
 import { FavoritesViewProps } from '@/types/customer';
 
@@ -49,10 +49,10 @@ export function FavoritesView({
         >
           {favorites.map((p) => (
             <ProductCard
-              key={p.id}
+              key={p.produtoId}
               product={p}
               addToCart={addToCart}
-              toggleFav={toggleFav}
+              //toggleFav={toggleFav}
               isFav={true}
               onClick={() => onProductClick(p)}
               onPayNow={() => {}}
