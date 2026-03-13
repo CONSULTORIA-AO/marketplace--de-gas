@@ -5,6 +5,7 @@ import { Icon } from './icon';
 import { ORANJE, WHITE } from '@/constants/costumer';
 import { BadgeCount } from './badgeCount';
 import { useUserStore } from '@/hooks/customer';
+import { useCartStore } from '@/hooks/cartstore';
 import { useNavigate } from 'react-router-dom';
 
 export function AuthHeader({
@@ -20,6 +21,7 @@ export function AuthHeader({
   const [preview, setPreview] = useState<string | null>(null);
   const [searchValue, setSearchValue] = useState('');
   const navigate = useNavigate();
+  const cartCount = useCartStore((state) => state.getItemCount());
   const avatarSrc =
     preview ??
     cliente?.fotoCliente ??
@@ -508,8 +510,8 @@ export function AuthHeader({
               padding: 8,
             }}
           >
-            <Icon name="cart" color="#6B7280" size={20} />
-            {/*cartCount > 0 && <BadgeCount n={cartCount} />*/}
+            <Icon name="cart" color={cartCount > 0 ? ORANJE : '#6B7280'} size={20} />
+            {cartCount > 0 && <BadgeCount n={cartCount > 99 ? 99 : cartCount} />}
           </button>
 
           {/* Checkout button — label hidden on xs, icon+label on sm+ */}

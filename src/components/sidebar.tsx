@@ -5,6 +5,7 @@ import { SidebarProps } from '@/types/customer';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '@/hooks/auth';
 import { useUserStore } from '@/hooks/customer';
+import { useCartStore } from '@/hooks/cartstore';
 import { useState } from 'react';
 import { items } from '@/constants/routes';
 import { format } from 'date-fns';
@@ -14,6 +15,7 @@ export function Sidebar({ favorites, close, currentView }: SidebarProps) {
   const { pathname } = useLocation();
   const logout = useAuthStore((state) => state.logout);
   const cliente = useUserStore((state) => state.cliente);
+  const cartCount = useCartStore((state) => state.getItemCount());
   const [preview] = useState<string | null>(null);
 
   const avatarSrc =
@@ -164,6 +166,27 @@ export function Sidebar({ favorites, close, currentView }: SidebarProps) {
               >
                 {label}
               </span>
+
+              {path === '/carrinho' && cartCount > 0 && (
+                <span
+                  style={{
+                    minWidth: 20,
+                    height: 20,
+                    borderRadius: 999,
+                    background: ORANJE,
+                    color: 'white',
+                    fontSize: 11,
+                    fontWeight: 700,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '0 5px',
+                    lineHeight: 1,
+                  }}
+                >
+                  {cartCount > 99 ? '99+' : cartCount}
+                </span>
+              )}
             </button>
           );
         })}
