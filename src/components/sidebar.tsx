@@ -2,7 +2,7 @@
 import { ORANJE, ORANJE_DARK, WHITE } from '@/constants/costumer';
 import { Icon } from './icon';
 import { SidebarProps } from '@/types/customer';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '@/hooks/auth';
 import { useUserStore } from '@/hooks/customer';
 import { useState } from 'react';
@@ -11,6 +11,7 @@ import { format } from 'date-fns';
 
 export function Sidebar({ favorites, close, currentView }: SidebarProps) {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const logout = useAuthStore((state) => state.logout);
   const cliente = useUserStore((state) => state.cliente);
   const [preview] = useState<string | null>(null);
@@ -26,6 +27,8 @@ export function Sidebar({ favorites, close, currentView }: SidebarProps) {
     logout();
     navigate('/iniciar-sessao');
   };
+
+  const isActive = (path: string) => pathname === path;
 
   return (
     <div
@@ -120,45 +123,50 @@ export function Sidebar({ favorites, close, currentView }: SidebarProps) {
 
       {/* MENU */}
       <div style={{ flex: 1, padding: '8px 0' }}>
-        {items.map(({ icon, label, path }) => (
-          <button
-            key={path}
-            onClick={() => navigate(path)}
-            style={{
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 12,
-              padding: '13px 20px',
-              background: currentView === path ? WHITE : 'none',
-              border: 'none',
-              cursor: 'pointer',
-              textAlign: 'left',
-              borderLeft:
-                currentView === path
+        {items.map(({ icon, label, path }) => {
+          const active = isActive(path);
+          return (
+            <button
+              key={path}
+              onClick={() => {
+                navigate(path);
+                close?.();
+              }}
+              style={{
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 12,
+                padding: '13px 20px',
+                background: active ? WHITE : 'none',
+                border: 'none',
+                cursor: 'pointer',
+                textAlign: 'left',
+                borderLeft: active
                   ? `3px solid ${ORANJE}`
                   : '3px solid transparent',
-              transition: 'all .15s',
-            }}
-          >
-            <Icon
-              name={icon}
-              color={currentView === path ? ORANJE : '#6B7280'}
-              size={18}
-            />
-
-            <span
-              style={{
-                flex: 1,
-                fontSize: 14,
-                fontWeight: currentView === path ? 700 : 500,
-                color: currentView === path ? ORANJE : '#374151',
+                transition: 'all .15s',
               }}
             >
-              {label}
-            </span>
-          </button>
-        ))}
+              <Icon
+                name={icon}
+                color={active ? ORANJE : '#6B7280'}
+                size={18}
+              />
+
+              <span
+                style={{
+                  flex: 1,
+                  fontSize: 14,
+                  fontWeight: active ? 700 : 500,
+                  color: active ? ORANJE : '#374151',
+                }}
+              >
+                {label}
+              </span>
+            </button>
+          );
+        })}
       </div>
 
       {/* LOGOUT */}
