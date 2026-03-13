@@ -18,7 +18,7 @@ export function CartView({
   const navigate = useNavigate();
 
   const handleCheckout = async () => {
-    navigate('/');
+    navigate('/checkout');
     clearCart();
   };
   return (

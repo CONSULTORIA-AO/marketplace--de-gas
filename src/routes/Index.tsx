@@ -37,7 +37,7 @@ const NavLink = () => {
       <Route path="/produto/:id" element={<Product />} />
 
       <Route
-        path="/produto/:id/detalhes"
+        path="/produto/detalhes/:id"
         element={
           <ProtectedRoute>
             <ProductDetail />
@@ -78,15 +78,6 @@ const NavLink = () => {
         element={
           <ProtectedRoute>
             <SettingsView />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/mensagens"
-        element={
-          <ProtectedRoute>
-            <MessagesView />
           </ProtectedRoute>
         }
       />
