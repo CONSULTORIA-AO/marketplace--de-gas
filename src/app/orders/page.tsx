@@ -35,17 +35,10 @@ export function OrdersView() {
     return (
       <div style={{ maxWidth: 700, margin: '0 auto' }}>
         {/* Header */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 10,
-            marginBottom: 20,
-          }}
-        >
-          <Skeleton className="h-7 w-32 rounded-md" />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+          <Skeleton className="h-[22px] w-32 rounded-md" />
         </div>
-
+  
         {/* Avatar card */}
         <div
           style={{
@@ -57,22 +50,41 @@ export function OrdersView() {
             textAlign: 'center',
           }}
         >
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 10,
-            }}
-          >
-            <Skeleton className="w-24 h-24 rounded-full" />
-            <Skeleton className="h-5 w-40 rounded-md" />
-            <Skeleton className="h-4 w-52 rounded-md" />
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+  
+            {/* Spinner + avatar skeleton */}
+            <div style={{ position: 'relative', width: 96, height: 96 }}>
+              {/* Anel girante */}
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  borderRadius: '50%',
+                  border: '3px solid #f97316',
+                  borderTopColor: 'transparent',
+                  animation: 'spin 0.9s linear infinite',
+                }}
+              />
+              {/* Skeleton do avatar dentro */}
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 10,
+                  borderRadius: '50%',
+                  overflow: 'hidden',
+                }}
+              >
+                <Skeleton className="w-full h-full rounded-full" />
+              </div>
+            </div>
+  
+            <Skeleton className="h-[18px] w-40 rounded-lg" />
+            <Skeleton className="h-[14px] w-52 rounded-lg" />
             <Skeleton className="h-6 w-28 rounded-full" />
-            <Skeleton className="h-3 w-36 rounded-md" />
+            <Skeleton className="h-3 w-36 rounded-lg" />
           </div>
         </div>
-
+  
         {/* Form card */}
         <div
           style={{
@@ -82,7 +94,7 @@ export function OrdersView() {
             border: '1px solid #F3F4F6',
           }}
         >
-          <Skeleton className="h-5 w-44 rounded-md mb-5" />
+          <Skeleton className="h-4 w-44 rounded-md mb-5" />
           <div
             style={{
               display: 'grid',
@@ -92,13 +104,16 @@ export function OrdersView() {
           >
             {Array.from({ length: 5 }).map((_, i) => (
               <div key={i}>
-                <Skeleton className="h-3 w-28 rounded mb-2" />
+                <Skeleton className="h-[11px] w-28 rounded mb-2" />
                 <Skeleton className="h-10 w-full rounded-lg" />
               </div>
             ))}
-            <Skeleton className="h-10 w-full rounded-xl" />
+            <Skeleton className="h-10 w-full rounded-xl self-end" />
           </div>
         </div>
+  
+        {/* Keyframe para o spinner — injeta uma vez */}
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     );
   }

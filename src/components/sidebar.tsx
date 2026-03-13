@@ -110,7 +110,9 @@ export function Sidebar({ favorites, close, currentView }: SidebarProps) {
                 margin: 0,
               }}
             >
-              {cliente?.criado_em ? format(new Date(cliente.criado_em), 'dd/MM/yyyy') : ""}
+              {cliente?.criado_em
+                ? format(new Date(cliente.criado_em), 'dd/MM/yyyy')
+                : ''}
             </p>
           </div>
         </div>

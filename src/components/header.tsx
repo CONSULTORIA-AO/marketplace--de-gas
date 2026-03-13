@@ -212,20 +212,21 @@ export function AuthHeader({
           </span>
         </button>
 
-        {/* Search bar — hidden on mobile, visible on md+ */}
+        {/* Search bar — hidden on mobile, visible on sm+ */}
         <div
           className="hidden sm:flex"
           style={{
             flex: 1,
-            alignItems: 'center',
+            alignItems: 'stretch',
             border: `1.5px solid ${searchFocus ? ORANJE : '#E5E7EB'}`,
             borderRadius: 10,
             overflow: 'hidden',
             background: 'white',
-            transition: 'all .2s',
+            transition: 'border-color .2s',
+            minWidth: 0,
           }}
         >
-          <div style={{ padding: '0 10px', color: '#9CA3AF' }}>
+          <div style={{ padding: '0 10px', color: '#9CA3AF', flexShrink: 0, display: 'flex', alignItems: 'center' }}>
             <Icon name="search" size={16} />
           </div>
           <input
@@ -237,12 +238,15 @@ export function AuthHeader({
             placeholder="Pesquisar produtos"
             style={{
               flex: 1,
-              padding: '9px 0',
+              padding: '0',
               border: 'none',
               outline: 'none',
               fontSize: 13,
               color: '#374151',
               background: 'transparent',
+              minWidth: 0,
+              width: '100%',
+              alignSelf: 'stretch',
             }}
           />
           {search && (
@@ -254,6 +258,9 @@ export function AuthHeader({
                 border: 'none',
                 cursor: 'pointer',
                 color: '#9CA3AF',
+                flexShrink: 0,
+                display: 'flex',
+                alignItems: 'center',
               }}
             >
               <Icon name="close" size={14} />
@@ -262,15 +269,25 @@ export function AuthHeader({
           <button
             onClick={handleSearch}
             style={{
-              padding: '8px 16px',
+              padding: '0 20px',
               background: ORANJE,
               color: 'white',
               border: 'none',
               cursor: 'pointer',
               fontSize: 13,
               fontWeight: 700,
+              flexShrink: 0,
+              whiteSpace: 'nowrap',
+              alignSelf: 'stretch',
+              borderRadius: 0,
+              transition: 'background 0.2s',
             }}
-            className="rounded-lg"
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.background = '#e08e00';
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.background = ORANJE;
+            }}
           >
             Procurar
           </button>
@@ -281,7 +298,7 @@ export function AuthHeader({
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 4,
+            gap: 2,
             position: 'relative',
             flexShrink: 0,
             marginLeft: 'auto',
@@ -495,7 +512,7 @@ export function AuthHeader({
             {/*cartCount > 0 && <BadgeCount n={cartCount} />*/}
           </button>
 
-          {/* Checkout button */}
+          {/* Checkout button — label hidden on xs, icon+label on sm+ */}
           <button
             onClick={() => navigate('/checkout')}
             title="Finalizar compra"
@@ -503,7 +520,7 @@ export function AuthHeader({
               display: 'flex',
               alignItems: 'center',
               gap: 6,
-              padding: '7px 14px',
+              padding: '7px 10px',
               background: ORANJE,
               color: 'white',
               border: 'none',
@@ -513,6 +530,7 @@ export function AuthHeader({
               fontWeight: 700,
               transition: 'background 0.2s, transform 0.15s',
               flexShrink: 0,
+              whiteSpace: 'nowrap',
             }}
             onMouseEnter={(e) => {
               (e.currentTarget as HTMLButtonElement).style.background =
@@ -536,6 +554,7 @@ export function AuthHeader({
               strokeWidth="2.2"
               strokeLinecap="round"
               strokeLinejoin="round"
+              style={{ flexShrink: 0 }}
             >
               <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
               <line x1="3" y1="6" x2="21" y2="6" />
@@ -553,6 +572,7 @@ export function AuthHeader({
               border: 'none',
               cursor: 'pointer',
               padding: 4,
+              flexShrink: 0,
             }}
           >
             <div
@@ -579,17 +599,17 @@ export function AuthHeader({
         <div
           className="flex sm:hidden"
           style={{
-            padding: '0 16px 12px',
-            alignItems: 'center',
+            padding: '0',
+            alignItems: 'stretch',
             border: `1.5px solid ${searchFocus ? ORANJE : '#E5E7EB'}`,
             borderRadius: 10,
             margin: '0 16px 12px',
             overflow: 'hidden',
             background: 'white',
-            transition: 'all .2s',
+            transition: 'border-color .2s',
           }}
         >
-          <div style={{ padding: '0 10px', color: '#9CA3AF' }}>
+          <div style={{ padding: '0 10px', color: '#9CA3AF', flexShrink: 0, display: 'flex', alignItems: 'center' }}>
             <Icon name="search" size={16} />
           </div>
           <input
@@ -607,12 +627,15 @@ export function AuthHeader({
             autoFocus
             style={{
               flex: 1,
-              padding: '9px 0',
+              padding: '12px 0',
               border: 'none',
               outline: 'none',
               fontSize: 13,
               color: '#374151',
               background: 'transparent',
+              minWidth: 0,
+              width: '100%',
+              alignSelf: 'stretch',
             }}
           />
           <button
@@ -621,14 +644,24 @@ export function AuthHeader({
               setMobileSearchOpen(false);
             }}
             style={{
-              padding: '8px 14px',
+              padding: '0 18px',
               background: ORANJE,
               color: 'white',
               border: 'none',
               cursor: 'pointer',
               fontSize: 13,
               fontWeight: 700,
-              borderRadius: 8,
+              borderRadius: 0,
+              flexShrink: 0,
+              whiteSpace: 'nowrap',
+              alignSelf: 'stretch',
+              transition: 'background 0.2s',
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.background = '#e08e00';
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.background = ORANJE;
             }}
           >
             Procurar
