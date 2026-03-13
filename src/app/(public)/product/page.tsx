@@ -24,6 +24,8 @@ export default function ProductPage() {
   const { addItem } = useCartStore();
   const { isAuthenticated } = useAuthStore();
 
+  console.log("pegando dados da api, de ptodutos por id:", product)
+
   const [qty, setQty] = useState(1);
   const [cartDone, setCartDone] = useState(false);
 

@@ -30,7 +30,6 @@ export function ProductCard({ product, index }: ProductCardProps) {
         description: (
           <div className="flex items-center gap-4 ">
             <div className="rounded-full w-8 h-8 flex justify-center items-center bg-[fill: rgba(251, 55, 72, 0.16)]"></div>
-
             <span className="text-[#717F96]">
               Inicie Sessão para fazer a compra
             </span>
@@ -59,7 +58,7 @@ export function ProductCard({ product, index }: ProductCardProps) {
       transition={{ delay: index * 0.07, duration: 0.4 }}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
-      className="relative bg-white rounded-2xl overflow-hidden border border-gray-100 cursor-pointer group"
+      className="relative bg-white rounded-2xl overflow-hidden border border-gray-100 cursor-pointer group flex flex-col"
       style={{
         boxShadow: hovered
           ? '0 20px 60px rgba(18,89,195,0.15)'
@@ -67,44 +66,50 @@ export function ProductCard({ product, index }: ProductCardProps) {
       }}
     >
       {/* Imagem do produto */}
-      <div className="relative h-44 w-full overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center">
+      <div className="relative h-36 sm:h-44 w-full overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center flex-shrink-0">
         {product.imagem_produto ? (
           <img
             src={`${import.meta.env.VITE_API_URL}images/products/${product.imagem_produto}`}
             alt={product.descricao}
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
-            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
           />
         ) : (
-          <span className="text-7xl opacity-30">🛒</span>
+          <span className="text-5xl sm:text-7xl opacity-30">🛒</span>
         )}
       </div>
 
       {/* Conteúdo */}
-      <div className="p-4 space-y-3">
+      <div className="p-3 sm:p-4 flex flex-col flex-1 gap-2">
         {/* Nome/Descrição */}
-        <h3 className="text-gray-800 font-medium text-base leading-snug line-clamp-2 min-h-[2.5rem]">
+        <h3 className="text-gray-800 font-medium text-sm sm:text-base leading-snug line-clamp-2 min-h-[2.5rem]">
           {product.descricao}
         </h3>
-        <span className="text-black">Fornecedor {product.empresaDona}</span>
+
+        {/* Fornecedor */}
+        <span className="text-gray-500 text-xs sm:text-sm truncate">
+          Fornecedor {product.empresaDona}
+        </span>
+
         {/* Preço */}
-        <div className="flex items-baseline gap-2">
-          <span className="text-2xl font-bold text-gray-900">
-            {formattedPrice} <span className="text-lg">Kz</span>
+        <div className="flex items-baseline gap-1 flex-wrap">
+          <span className="text-lg sm:text-2xl font-bold text-gray-900 leading-tight">
+            {formattedPrice}
           </span>
+          <span className="text-sm sm:text-lg font-bold text-gray-900">Kz</span>
           {product.unidadeMedida && (
-            <span className="text-sm text-gray-500">
+            <span className="text-xs sm:text-sm text-gray-500">
               /{product.unidadeMedida}
             </span>
           )}
         </div>
 
-        {/* Botões */}
-        <div className="flex gap-3 mt-4">
+        {/* Botões — empurrados para o fundo do card */}
+        <div className="flex gap-2 mt-auto pt-2">
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.97 }}
-            className="flex-1 py-3 rounded-lg bg-transparent border border-[#FFA500] text-[#FFA500] text-sm font-semibold hover:bg-[#FFA500]/10 transition-colors"
+            className="flex-1 py-2 sm:py-3 rounded-lg bg-transparent border border-[#FFA500] text-[#FFA500] text-xs sm:text-sm font-semibold hover:bg-[#FFA500]/10 transition-colors"
             onClick={() => {
               addItem(product);
               navigate('/carrinho');
@@ -116,7 +121,7 @@ export function ProductCard({ product, index }: ProductCardProps) {
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.97 }}
-            className="flex-1 py-3 rounded-lg bg-[#FFA500] text-white text-sm font-semibold hover:bg-[#e69500] transition-colors"
+            className="flex-1 py-2 sm:py-3 rounded-lg bg-[#FFA500] text-white text-xs sm:text-sm font-semibold hover:bg-[#e69500] transition-colors"
             onClick={() => navigate(`/produto/${product.produtoId}`)}
           >
             Ver

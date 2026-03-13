@@ -7,7 +7,7 @@ export function useProductById(id?: string | number) {
     queryKey: ['product', id],
     queryFn: async () => {
       if (!id) throw new Error('ID do produto não fornecido');
-      const response = await api.get<ApiProductByIdResponse>(`/produtos/${id}`);
+      const response = await api.get(`/produtos/${id}`);
       return response.data;
     },
     enabled: !!id,
