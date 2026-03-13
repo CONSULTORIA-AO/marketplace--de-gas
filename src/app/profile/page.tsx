@@ -20,7 +20,7 @@ import { GasProduct } from '@/types/product';
 import { Sidebar } from '../../components/sidebar';
 import { format } from 'date-fns';
 
-export function ProfileView() {
+export default function ProfileView() {
   const entidade = useAuthStore((state) => state.session.user.id);
   const cliente = useUserStore((state) => state.cliente);
   const setCliente = useUserStore((state) => state.setCliente);
@@ -193,22 +193,14 @@ export function ProfileView() {
     }
   };
 
-  // ── Skeleton ──────────────────────────────────────────────────────────────
   if (loading) {
     return (
       <div style={{ maxWidth: 700, margin: '0 auto' }}>
         {/* Header */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 10,
-            marginBottom: 20,
-          }}
-        >
-          <Skeleton className="h-7 w-32 rounded-md" />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+          <Skeleton className="h-[22px] w-32 rounded-md" />
         </div>
-
+  
         {/* Avatar card */}
         <div
           style={{
@@ -220,22 +212,41 @@ export function ProfileView() {
             textAlign: 'center',
           }}
         >
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 10,
-            }}
-          >
-            <Skeleton className="w-24 h-24 rounded-full" />
-            <Skeleton className="h-5 w-40 rounded-md" />
-            <Skeleton className="h-4 w-52 rounded-md" />
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+  
+            {/* Spinner + avatar skeleton */}
+            <div style={{ position: 'relative', width: 96, height: 96 }}>
+              {/* Anel girante */}
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  borderRadius: '50%',
+                  border: '3px solid #f97316',
+                  borderTopColor: 'transparent',
+                  animation: 'spin 0.9s linear infinite',
+                }}
+              />
+              {/* Skeleton do avatar dentro */}
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 10,
+                  borderRadius: '50%',
+                  overflow: 'hidden',
+                }}
+              >
+                <Skeleton className="w-full h-full rounded-full" />
+              </div>
+            </div>
+  
+            <Skeleton className="h-[18px] w-40 rounded-lg" />
+            <Skeleton className="h-[14px] w-52 rounded-lg" />
             <Skeleton className="h-6 w-28 rounded-full" />
-            <Skeleton className="h-3 w-36 rounded-md" />
+            <Skeleton className="h-3 w-36 rounded-lg" />
           </div>
         </div>
-
+  
         {/* Form card */}
         <div
           style={{
@@ -245,7 +256,7 @@ export function ProfileView() {
             border: '1px solid #F3F4F6',
           }}
         >
-          <Skeleton className="h-5 w-44 rounded-md mb-5" />
+          <Skeleton className="h-4 w-44 rounded-md mb-5" />
           <div
             style={{
               display: 'grid',
@@ -255,18 +266,20 @@ export function ProfileView() {
           >
             {Array.from({ length: 5 }).map((_, i) => (
               <div key={i}>
-                <Skeleton className="h-3 w-28 rounded mb-2" />
+                <Skeleton className="h-[11px] w-28 rounded mb-2" />
                 <Skeleton className="h-10 w-full rounded-lg" />
               </div>
             ))}
-            <Skeleton className="h-10 w-full rounded-xl" />
+            <Skeleton className="h-10 w-full rounded-xl self-end" />
           </div>
         </div>
+  
+        {/* Keyframe para o spinner — injeta uma vez */}
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     );
   }
-  // ─────────────────────────────────────────────────────────────────────────
-
+  
   return (
     <div>
       {sidebarOpen && (
@@ -391,7 +404,10 @@ export function ProfileView() {
             {cliente?.telefoneCliente ?? ''}
           </span>
           <p style={{ fontSize: 12, color: '#9CA3AF', marginTop: 8 }}>
-            Membro desde {cliente?.criado_em ? format(new Date(cliente.criado_em), 'dd/MM/yyyy') : ""}
+            Membro desde{' '}
+            {cliente?.criado_em
+              ? format(new Date(cliente.criado_em), 'dd/MM/yyyy')
+              : ''}
           </p>
         </div>
 
@@ -600,15 +616,15 @@ export function ProfileView() {
                 <input
                   {...register('enderecoCliente')}
                   style={{
-                    width: '100%',
-                    padding: '10px 12px 10px 32px',
-                    border: `1.5px solid #E5E7EB`,
+                    padding: '10px 24px',
                     borderRadius: 8,
-                    fontSize: 13,
-                    background: '#F9FAFB',
-                    boxSizing: 'border-box',
-                    color: '#111',
-                    placeContent: cliente?.enderecoCliente,
+                    background: ORANJE,
+                    border: 'none',
+                    color: 'white',
+                    fontWeight: 700,
+                    fontSize: 14,
+                    cursor: 'pointer',
+                    alignSelf: 'flex-start',
                   }}
                 />
               </div>

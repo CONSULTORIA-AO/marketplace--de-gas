@@ -143,8 +143,8 @@ export function SettingsView() {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <h2 style={{ fontSize: 20, fontWeight: 800, margin: 0 }}>
-            Configurações
+          <h2 style={{ fontSize: 20, fontWeight: 800, margin: 30 }}>
+            Altere a sua senha
           </h2>
         </div>
 
@@ -156,19 +156,19 @@ export function SettingsView() {
             <input
               type="password"
               placeholder="Senha atual"
-              className="w-full rounded-md h-10"
+              className="w-full rounded-md h-10 border-2 border-gray-100 p-2"
               {...register('currentPassword')}
             />
             <input
               type="password"
               placeholder="Senha nova"
-              className="w-full rounded-md h-10"
+              className="w-full rounded-md h-10 border-2 border-gray-100 p-2"
               {...register('newPassword')}
             />
             <input
               type="password"
               placeholder="Confirmar senha nova"
-              className="w-full rounded-md h-10"
+              className="w-full rounded-md h-10 border-2 border-gray-100 p-2"
               {...register('confirmPassword')}
             />
 

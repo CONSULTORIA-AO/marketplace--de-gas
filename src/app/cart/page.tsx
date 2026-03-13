@@ -12,6 +12,7 @@ import { View } from '@/types/customer';
 import { GasProduct } from '@/types/product';
 import { Sidebar } from '@/components/sidebar';
 import { AuthHeader } from '@/components/header';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function CartPage() {
   const { toast } = useToast();

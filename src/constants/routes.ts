@@ -23,5 +23,5 @@ export const items = [
   { icon: 'package', label: 'Meus Pedidos', path: '/pedidos' },
   { icon: 'user', label: 'Meu Perfil', path: '/perfil' },
   { icon: 'settings', label: 'Configurações', path: '/definicoes' },
-  { icon: 'chat', label: 'Mensagens', path: '/mensagens' },
+  //{ icon: 'chat', label: 'Mensagens', path: '/mensagens' },
 ];
