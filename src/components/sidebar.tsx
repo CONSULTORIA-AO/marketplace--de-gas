@@ -150,11 +150,7 @@ export function Sidebar({ favorites, close, currentView }: SidebarProps) {
                 transition: 'all .15s',
               }}
             >
-              <Icon
-                name={icon}
-                color={active ? ORANJE : '#6B7280'}
-                size={18}
-              />
+              <Icon name={icon} color={active ? ORANJE : '#6B7280'} size={18} />
 
               <span
                 style={{

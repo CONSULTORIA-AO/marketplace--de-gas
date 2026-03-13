@@ -197,10 +197,17 @@ export default function ProfileView() {
     return (
       <div style={{ maxWidth: 700, margin: '0 auto' }}>
         {/* Header */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            marginBottom: 20,
+          }}
+        >
           <Skeleton className="h-[22px] w-32 rounded-md" />
         </div>
-  
+
         {/* Avatar card */}
         <div
           style={{
@@ -212,8 +219,14 @@ export default function ProfileView() {
             textAlign: 'center',
           }}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
-  
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 12,
+            }}
+          >
             {/* Spinner + avatar skeleton */}
             <div style={{ position: 'relative', width: 96, height: 96 }}>
               {/* Anel girante */}
@@ -239,14 +252,14 @@ export default function ProfileView() {
                 <Skeleton className="w-full h-full rounded-full" />
               </div>
             </div>
-  
+
             <Skeleton className="h-[18px] w-40 rounded-lg" />
             <Skeleton className="h-[14px] w-52 rounded-lg" />
             <Skeleton className="h-6 w-28 rounded-full" />
             <Skeleton className="h-3 w-36 rounded-lg" />
           </div>
         </div>
-  
+
         {/* Form card */}
         <div
           style={{
@@ -273,13 +286,13 @@ export default function ProfileView() {
             <Skeleton className="h-10 w-full rounded-xl self-end" />
           </div>
         </div>
-  
+
         {/* Keyframe para o spinner — injeta uma vez */}
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     );
   }
-  
+
   return (
     <div>
       {sidebarOpen && (

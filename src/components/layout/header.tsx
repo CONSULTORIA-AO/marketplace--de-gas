@@ -2,11 +2,16 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { BadgeCount } from '../badgeCount';
+import { useCartStore } from '@/hooks/cartstore';
+import { Icon } from '../icon';
+import { ORANJE } from '@/constants/costumer';
 
 export function Header({ onSearch }: { onSearch: (term: string) => void }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const cartCount = useCartStore((state) => state.getItemCount());
   const navigate = useNavigate();
 
   const handleSearch = () => {
@@ -111,21 +116,22 @@ export function Header({ onSearch }: { onSearch: (term: string) => void }) {
 
           <button
             onClick={() => navigate('/carrinho')}
-            className="text-gray-600 hover:cursor-pointer hover:text-[#FFA500]/90 transition-colors"
+            style={{
+              position: 'relative',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: 8,
+            }}
           >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.8}
-                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-8 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"
-              />
-            </svg>
+            <Icon
+              name="cart"
+              color={cartCount > 0 ? ORANJE : '#6B7280'}
+              size={20}
+            />
+            {cartCount > 0 && (
+              <BadgeCount n={cartCount > 99 ? 99 : cartCount} />
+            )}
           </button>
 
           <button

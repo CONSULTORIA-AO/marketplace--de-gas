@@ -228,7 +228,15 @@ export function AuthHeader({
             minWidth: 0,
           }}
         >
-          <div style={{ padding: '0 10px', color: '#9CA3AF', flexShrink: 0, display: 'flex', alignItems: 'center' }}>
+          <div
+            style={{
+              padding: '0 10px',
+              color: '#9CA3AF',
+              flexShrink: 0,
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
             <Icon name="search" size={16} />
           </div>
           <input
@@ -274,7 +282,8 @@ export function AuthHeader({
               transition: 'background 0.2s',
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.background = '#e08e00';
+              (e.currentTarget as HTMLButtonElement).style.background =
+                '#e08e00';
             }}
             onMouseLeave={(e) => {
               (e.currentTarget as HTMLButtonElement).style.background = ORANJE;
@@ -499,8 +508,14 @@ export function AuthHeader({
               padding: 8,
             }}
           >
-            <Icon name="cart" color={cartCount > 0 ? ORANJE : '#6B7280'} size={20} />
-            {cartCount > 0 && <BadgeCount n={cartCount > 99 ? 99 : cartCount} />}
+            <Icon
+              name="cart"
+              color={cartCount > 0 ? ORANJE : '#6B7280'}
+              size={20}
+            />
+            {cartCount > 0 && (
+              <BadgeCount n={cartCount > 99 ? 99 : cartCount} />
+            )}
           </button>
 
           {/* Checkout button — label hidden on xs, icon+label on sm+ */}
@@ -600,7 +615,15 @@ export function AuthHeader({
             transition: 'border-color .2s',
           }}
         >
-          <div style={{ padding: '0 10px', color: '#9CA3AF', flexShrink: 0, display: 'flex', alignItems: 'center' }}>
+          <div
+            style={{
+              padding: '0 10px',
+              color: '#9CA3AF',
+              flexShrink: 0,
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
             <Icon name="search" size={16} />
           </div>
           <input
@@ -649,7 +672,8 @@ export function AuthHeader({
               transition: 'background 0.2s',
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.background = '#e08e00';
+              (e.currentTarget as HTMLButtonElement).style.background =
+                '#e08e00';
             }}
             onMouseLeave={(e) => {
               (e.currentTarget as HTMLButtonElement).style.background = ORANJE;
