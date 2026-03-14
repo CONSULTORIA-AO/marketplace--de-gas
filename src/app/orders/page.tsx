@@ -1,7 +1,7 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
 import { useAuthStore } from '@/hooks/auth';
-import { getOrdersByClient } from '@/service/order/order.schema';
+import { getOrdersByClient } from '@/service/order/order';
 import { AuthHeader } from '@/components/header';
 import { useState } from 'react';
 import { View } from '@/types/customer';
@@ -9,11 +9,10 @@ import { GasProduct } from '@/types/product';
 import { Sidebar } from '@/components/sidebar';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SmartHeader } from '@/components/layout/smartHeader';
-import { useProductById } from '@/service/product/product';
+import { useProductById, useProductsByIds } from '@/service/product/product';
 
 export function OrdersView() {
   const clienteId = useAuthStore((state) => state.session.user.id);
-  const [searchChat, setSearchChat] = useState<string>('');
   const [view, setView] = useState<View>('produtos');
   const [favorites, setFavorites] = useState<GasProduct[]>([]);
   const [search, setSearch] = useState<string>('');
@@ -28,12 +27,26 @@ export function OrdersView() {
     queryFn: () => getOrdersByClient(clienteId),
   });
 
-  console.log("vendo o que o pedido traz:", ordersdata)
+  const productIds = [
+  ...new Set(
+    ordersdata?.flatMap((pedido) =>
+      pedido.itens.map((item) => item.produto_id)
+    ) ?? []
+  )
+]
+  console.log('Buscando id de cada produto:', productIds);
 
-  //const productItem = ordersdata
+  const { data: products } = useProductsByIds(productIds);
 
-  //const { data: product, isError } = useProductById(id);
-  
+  console.log('Produtos:', products);
+
+  const productsMap = new Map<number, GasProduct>(
+    products?.map((p) => [p.produtoId, p]) ?? []
+  );
+
+  console.log('Mapa de produtos:', productsMap);
+
+  console.log('Produto raw:', JSON.stringify(products?.[0], null, 2));
 
   const colors: Record<string, string> = {
     Entregue: '#10B981',
@@ -201,16 +214,26 @@ export function OrdersView() {
                 boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
               }}
             >
-              <img
-                src={`${import.meta.env.VITE_API_URL}images/products/${o.pedidoCotacaoId}`}
-                alt=""
-                style={{
-                  width: 64,
-                  height: 64,
-                  objectFit: 'cover',
-                  borderRadius: 10,
-                }}
-              />
+              <div style={{ display: 'flex', gap: 6 }}>
+                {o.itens.map((item) => {
+                  const product = productsMap.get(item.produto_id);
+
+                  return (
+                    <img
+                      key={item.id_itens_pedido}
+                      src={`${import.meta.env.VITE_API_URL}images/products/${product?.imagem_produto}`}
+                      alt={product?.descricao}
+                      style={{
+                        width: 64,
+                        height: 64,
+                        objectFit: 'cover',
+                        borderRadius: 10,
+                      }}
+                    />
+                  );
+                })}
+              </div>
+
               <div style={{ flex: 1 }}>
                 <p style={{ fontWeight: 600, fontSize: 13, margin: '0 0 4px' }}>
                   Pedido {o.pedidoCotacaoId}

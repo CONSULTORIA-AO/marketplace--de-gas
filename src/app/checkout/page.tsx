@@ -1395,7 +1395,7 @@ function ConfirmationScreen({ onGoHome }: { onGoHome: () => void }) {
             Voltar à loja
           </button>
           <button
-            onClick={() => navigate("/pedidos")}
+            onClick={() => navigate('/pedidos')}
             style={{
               width: '100%',
               padding: '13px 0',
