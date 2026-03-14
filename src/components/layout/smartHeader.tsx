@@ -5,11 +5,7 @@ import { useAuthStore } from '@/hooks/auth';
 import { AuthHeader } from '../header';
 import { Header } from './header';
 
-const NO_HEADER_PATHS = [
-  '/iniciar-sessao',
-  '/cadastrar',
-  '/recuperar-senha',
-];
+const NO_HEADER_PATHS = ['/iniciar-sessao', '/cadastrar', '/recuperar-senha'];
 
 interface SmartHeaderProps {
   search?: string;
@@ -26,7 +22,6 @@ export function SmartHeader({
   onMenu = () => {},
   onSearch = () => {},
 }: SmartHeaderProps) {
-
   const { pathname } = useLocation();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 

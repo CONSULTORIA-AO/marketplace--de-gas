@@ -1507,7 +1507,6 @@ export function CheckoutPage() {
           fontFamily: "'Segoe UI', system-ui, sans-serif",
         }}
       >
-
         {/* Main content */}
         <div
           style={{ maxWidth: 640, margin: '0 auto', padding: '32px 16px 60px' }}

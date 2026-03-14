@@ -33,19 +33,9 @@ const NavLink = () => {
       <Route path="/perguntas-frequentes" element={<FAQ />} />
       <Route path="/contacto" element={<Contact />} />
 
-      <Route
-        path="/produto/:id"
-        element={
-            <ProductDetail />
-        }
-      />
+      <Route path="/produto/:id" element={<ProductDetail />} />
 
-      <Route
-        path="/produtos"
-        element={
-          <Customer />
-        }
-      />
+      <Route path="/produtos" element={<Customer />} />
       <Route path="/carrinho" element={<CartPage />} />
 
       <Route
