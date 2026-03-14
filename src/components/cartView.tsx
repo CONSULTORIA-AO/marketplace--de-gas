@@ -75,7 +75,7 @@ export function CartView({
                 }}
               >
                 <img
-                  src={item.product.imagem_produto}
+                  src={`${import.meta.env.VITE_API_URL}images/products/${item?.product?.imagem_produto}`}
                   alt={item.product.descricao}
                   style={{
                     width: 72,

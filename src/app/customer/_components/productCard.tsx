@@ -3,16 +3,12 @@
 import { ProductCardProps } from '@/types/customer';
 import { useState } from 'react';
 //import { Icon } from './icon';
-import { Stars } from '../../../components/star';
 import { ORANJE, WHITE } from '@/constants/costumer';
 import { fmt } from '@/data/customer';
 import { useNavigate } from 'react-router-dom';
-import { useAuthStore } from '@/hooks/auth';
 import { useCartStore } from '@/hooks/cartstore';
-import { api } from '@/utils/api';
 import { useToast } from '@/hooks/use-toast';
 import { ToastAction } from '@radix-ui/react-toast';
-import { AxiosError } from 'axios';
 
 export function ProductCard({
   product,
@@ -21,8 +17,6 @@ export function ProductCard({
   isFav,
   onClick,
 }: ProductCardProps) {
-  const clienteId = useAuthStore((state) => state.session.user.id);
-  const { items, clearCart } = useCartStore();
   const [hov, setHov] = useState<boolean>(false);
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -33,7 +27,6 @@ export function ProductCard({
 
   const handleCheckout = async () => {
     navigate('/checkout');
-    clearCart();
   };
 
   return (

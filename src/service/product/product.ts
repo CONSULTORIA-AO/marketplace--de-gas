@@ -1,24 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/utils/api';
 import {
-  ApiProductByIdResponse,
   ApiProductResponse,
   GasProduct,
 } from '@/types/product';
-
-export function useProductById(id?: string | number) {
-  return useQuery<ApiProductResponse>({
-    queryKey: ['product', id],
-    queryFn: async () => {
-      if (!id) throw new Error('ID do produto não fornecido');
-      const response = await api.get<ApiProductResponse>(`/produtos/${id}`);
-      return response.data;
-    },
-    enabled: !!id,
-    retry: 1,
-    staleTime: 1000 * 60 * 5,
-  });
-}
 
 export function useProducts(searchTerm?: string) {
   return useQuery<ApiProductResponse>({
@@ -36,21 +21,17 @@ export function useProducts(searchTerm?: string) {
 }
 
 export function useProductsByIds(ids: number[]) {
-  return useQuery({
-    queryKey: ['products-by-ids', ids],
+  const uniqueIds = [...new Set(ids)];
 
+  return useQuery<GasProduct[]>({
+    queryKey: ['products-by-ids', uniqueIds],
     queryFn: async () => {
-      const responses = await Promise.all(
-        ids.map((id) =>
-          api.get(`/produtos/${id}`)
-        )
-      )
-
-      console.log("Os dados da api no useProductsByIds antes da transformação:", responses)
-      return responses.map((res) => res.data.mensagem)
+      // Rota /produtos/:id retorna mensagem:{} vazio — usa a lista completa e filtra
+      const response = await api.get<ApiProductResponse>('/produtos');
+      const allProducts: GasProduct[] = response.data.mensagem;
+      return allProducts.filter((p) => uniqueIds.includes(p.produtoId));
     },
-
-    enabled: ids.length > 0,
+    enabled: uniqueIds.length > 0,
     staleTime: 1000 * 60 * 5,
-  })
+  });
 }

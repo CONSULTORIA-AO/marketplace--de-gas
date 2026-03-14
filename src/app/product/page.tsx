@@ -9,7 +9,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useCartStore } from '@/hooks/cartstore';
 import { GasProduct } from '@/types/product';
 import { Sidebar } from '@/components/sidebar';
-import { useProductById } from '@/service/product/product';
+import { useProductsByIds } from '@/service/product/product';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SmartHeader } from '@/components/layout/smartHeader';
 
@@ -17,16 +17,18 @@ export function ProductDetail() {
   const { id } = useParams();
   const [qty, setQty] = useState<number>(1);
   const navigate = useNavigate();
-  const { addItem, clearCart } = useCartStore();
+  const { addItem } = useCartStore();
   const [view, setView] = useState<View>('produtos');
   const [favorites, setFavorites] = useState<GasProduct[]>([]);
   const [search, setSearch] = useState<string>('');
   const [sidebarOpen, setSidebar] = useState<boolean>(false);
 
-  const { data: product, isLoading, isError, error } = useProductById(id);
+  const productId = Number(id);
+
+  const { data: products, isLoading } = useProductsByIds([productId])
   //const isFav: boolean = favorites.some((f) => f.produtoId === product.produtoId);
 
-  const productItem = product?.mensagem?.[0];
+  const productItem = products?.[0];
 
   const sellerButtons: { label: string; icon: string; action?: () => void }[] =
     [
