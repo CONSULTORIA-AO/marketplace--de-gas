@@ -9,6 +9,7 @@ import { GasProduct } from '@/types/product';
 import { Sidebar } from '@/components/sidebar';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SmartHeader } from '@/components/layout/smartHeader';
+import { useProductById } from '@/service/product/product';
 
 export function OrdersView() {
   const clienteId = useAuthStore((state) => state.session.user.id);
@@ -26,6 +27,14 @@ export function OrdersView() {
     queryKey: ['orders', clienteId],
     queryFn: () => getOrdersByClient(clienteId),
   });
+
+  console.log("vendo o que o pedido traz:", ordersdata)
+
+  //const productItem = ordersdata
+
+  //const { data: product, isError } = useProductById(id);
+  
+
   const colors: Record<string, string> = {
     Entregue: '#10B981',
     'Em trânsito': '#3B82F6',
@@ -193,7 +202,7 @@ export function OrdersView() {
               }}
             >
               <img
-                src={`${import.meta.env.VITE_API_URL}images/products/${o.nomeCliente}`}
+                src={`${import.meta.env.VITE_API_URL}images/products/${o.pedidoCotacaoId}`}
                 alt=""
                 style={{
                   width: 64,
@@ -204,12 +213,11 @@ export function OrdersView() {
               />
               <div style={{ flex: 1 }}>
                 <p style={{ fontWeight: 600, fontSize: 13, margin: '0 0 4px' }}>
-                  Pedido #{o.numero_cotacao.slice(0, 8)}
+                  Pedido {o.pedidoCotacaoId}
                 </p>
                 <p
                   style={{ fontSize: 12, color: '#6B7280', margin: '0 0 6px' }}
                 >
-                  {o.pedidoCotacaoId} ·{' '}
                   {new Date(o.pedido_time).toLocaleDateString('pt-pt')}
                 </p>
                 <span
