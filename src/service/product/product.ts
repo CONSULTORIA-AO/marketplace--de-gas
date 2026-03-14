@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/utils/api';
 import {
+  ApiProductByIdResponse,
   ApiProductResponse,
   GasProduct,
 } from '@/types/product';
@@ -32,6 +33,18 @@ export function useProductsByIds(ids: number[]) {
       return allProducts.filter((p) => uniqueIds.includes(p.produtoId));
     },
     enabled: uniqueIds.length > 0,
+    staleTime: 1000 * 60 * 5,
+  });
+}
+
+export function useProductById(id?: number) {
+  return useQuery<GasProduct>({
+    queryKey: ['product-by-id', id],
+    queryFn: async () => {
+      const response = await api.get<ApiProductByIdResponse>(`/produtos/${id}`);
+      return response.data.mensagem;
+    },
+    enabled: !!id,
     staleTime: 1000 * 60 * 5,
   });
 }

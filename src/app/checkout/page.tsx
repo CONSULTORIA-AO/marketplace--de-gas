@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { useUserStore } from '@/hooks/customer';
 import { useCartStore, type CartItem } from '@/hooks/cartstore';
 import { api } from '@/utils/api';
 import { useAuthStore } from '@/hooks/auth';
@@ -12,57 +11,31 @@ import { View } from '@/types/customer';
 import { GasProduct } from '@/types/product';
 import { Sidebar } from '../../components/sidebar';
 import { SmartHeader } from '@/components/layout/smartHeader';
+import { ORANJE } from '@/constants/costumer';
+import { SHIPPING_OPTIONS } from "@/constants/checkout";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
-const ORANJE = '#FFA500';
-
-const SHIPPING_OPTIONS = [
-  {
-    id: 'fixed',
-    label: 'Taxa fixa',
-    days: '2 dias',
-    price: 10,
-    priceLabel: 'KZ 10,00',
-  },
-  {
-    id: 'sameday',
-    label: 'Entrega no mesmo dia',
-    days: '1 dia',
-    price: 22,
-    priceLabel: 'KZ 22,00',
-  },
-  {
-    id: 'pickup',
-    label: 'Retirada no local',
-    days: '--',
-    price: 0,
-    priceLabel: 'KZ 0,00',
-  },
-  {
-    id: 'ups',
-    label: 'UPS Ground',
-    days: '2 a 5 dias',
-    price: 16,
-    priceLabel: 'Kz 16,00',
-  },
-];
 
 const PAYMENT_METHODS = [
   {
+    id: 'entrega',
+    label: 'Pagamento na entrega',
+    desc: 'Pague em dinheiro no momento da entrega',
+    available: true,
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={ORANJE} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="5" width="20" height="14" rx="2" />
+        <line x1="2" y1="10" x2="22" y2="10" />
+      </svg>
+    ),
+  },
+  {
     id: 'multicaixa',
     label: 'Multicaixa Express',
-    desc: 'Pague pelo telemóvel via Multicaixa Express',
+    desc: 'Brevemente disponível',
+    available: false,
     icon: (
-      <svg
-        width="28"
-        height="28"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke={ORANJE}
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <rect x="5" y="2" width="14" height="20" rx="2" />
         <line x1="12" y1="18" x2="12.01" y2="18" />
       </svg>
@@ -71,18 +44,10 @@ const PAYMENT_METHODS = [
   {
     id: 'referencia',
     label: 'Pagar por Referência',
-    desc: 'Gere uma referência e pague em qualquer caixa',
+    desc: 'Brevemente disponível',
+    available: false,
     icon: (
-      <svg
-        width="28"
-        height="28"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke={ORANJE}
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <rect x="2" y="5" width="20" height="14" rx="2" />
         <line x1="2" y1="10" x2="22" y2="10" />
       </svg>
@@ -91,18 +56,10 @@ const PAYMENT_METHODS = [
   {
     id: 'iban',
     label: 'Transferência por IBAN',
-    desc: 'Transfira diretamente da sua conta bancária',
+    desc: 'Brevemente disponível',
+    available: false,
     icon: (
-      <svg
-        width="28"
-        height="28"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke={ORANJE}
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <rect x="3" y="3" width="18" height="18" rx="2" />
         <path d="M3 9h18M9 21V9" />
       </svg>
@@ -115,13 +72,13 @@ const STEPS = ['Carrinho', 'Envio', 'Pagamento', 'Revisão'];
 
 function Stepper({ current }: { current: number }) {
   return (
-    <div className="flex items-center justify-center gap-0 mb-8 px-2">
+    <div className="flex items-center justify-center gap-2 sm:gap-4 mb-8 px-2">
       {STEPS.map((label, i) => {
         const done = i < current;
         const active = i === current;
         return (
           <div key={label} className="flex items-center">
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center" style={{ minWidth: 56 }}>
               <div
                 style={{
                   width: 36,
@@ -136,26 +93,11 @@ function Stepper({ current }: { current: number }) {
                 }}
               >
                 {done ? (
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="white"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
                 ) : (
-                  <span
-                    style={{
-                      fontSize: 13,
-                      fontWeight: 700,
-                      color: active ? 'white' : '#9CA3AF',
-                    }}
-                  >
+                  <span style={{ fontSize: 13, fontWeight: 700, color: active ? 'white' : '#9CA3AF' }}>
                     {i + 1}
                   </span>
                 )}
@@ -167,6 +109,7 @@ function Stepper({ current }: { current: number }) {
                   fontWeight: active ? 700 : 400,
                   color: active ? ORANJE : done ? '#374151' : '#9CA3AF',
                   whiteSpace: 'nowrap',
+                  textAlign: 'center',
                 }}
               >
                 {label}
@@ -175,7 +118,7 @@ function Stepper({ current }: { current: number }) {
             {i < STEPS.length - 1 && (
               <div
                 style={{
-                  width: 40,
+                  width: 24,
                   height: 2,
                   background: done ? ORANJE : '#E5E7EB',
                   margin: '0 4px',
@@ -183,7 +126,7 @@ function Stepper({ current }: { current: number }) {
                   transition: 'background 0.3s',
                   flexShrink: 0,
                 }}
-                className="hidden xs:block sm:w-16 md:w-24"
+                className="sm:w-12 md:w-20"
               />
             )}
           </div>
@@ -320,7 +263,7 @@ function CartStep({
                     <img
                       src={`${import.meta.env.VITE_API_URL}images/products/${item.product.imagem_produto}`}
                       alt={item.product.descricao}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                     />
                   ) : (
                     <svg
@@ -486,15 +429,40 @@ function PaymentStep({ selected, onSelect, onBack, onNext }: {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           {PAYMENT_METHODS.map((method, i) => {
             const isSelected = selected === method.id;
+            const disabled = !method.available;
             return (
-              <motion.button key={method.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.07 }}
-                onClick={() => onSelect(method.id)}
-                style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '16px 18px', borderRadius: 12, border: `2px solid ${isSelected ? ORANJE : '#E5E7EB'}`, background: isSelected ? '#FFF8EE' : 'white', cursor: 'pointer', transition: 'all 0.2s', width: '100%', textAlign: 'left' }}
+              <motion.button
+                key={method.id}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.07 }}
+                disabled={disabled}
+                onClick={() => !disabled && onSelect(method.id)}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 16,
+                  padding: '16px 18px', borderRadius: 12, width: '100%', textAlign: 'left',
+                  transition: 'all 0.2s',
+                  border: `2px solid ${isSelected ? ORANJE : '#E5E7EB'}`,
+                  background: disabled ? '#F9FAFB' : isSelected ? '#FFF8EE' : 'white',
+                  cursor: disabled ? 'not-allowed' : 'pointer',
+                  opacity: disabled ? 0.55 : 1,
+                }}
               >
-                <div style={{ width: 48, height: 48, borderRadius: 12, background: isSelected ? '#FFF3E0' : '#F9FAFB', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{method.icon}</div>
+                <div style={{ width: 48, height: 48, borderRadius: 12, background: isSelected ? '#FFF3E0' : '#F9FAFB', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  {method.icon}
+                </div>
                 <div style={{ flex: 1 }}>
-                  <p style={{ margin: 0, fontWeight: 700, fontSize: 14, color: '#111827' }}>{method.label}</p>
-                  <p style={{ margin: '3px 0 0', fontSize: 12, color: '#6B7280' }}>{method.desc}</p>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <p style={{ margin: 0, fontWeight: 700, fontSize: 14, color: disabled ? '#9CA3AF' : '#111827' }}>
+                      {method.label}
+                    </p>
+                    {disabled && (
+                      <span style={{ fontSize: 10, fontWeight: 600, padding: '2px 7px', borderRadius: 20, background: '#F3F4F6', color: '#9CA3AF' }}>
+                        Em breve
+                      </span>
+                    )}
+                  </div>
+                  <p style={{ margin: '3px 0 0', fontSize: 12, color: '#9CA3AF' }}>{method.desc}</p>
                 </div>
                 <div style={{ width: 22, height: 22, borderRadius: '50%', border: `2px solid ${isSelected ? ORANJE : '#D1D5DB'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   {isSelected && <div style={{ width: 11, height: 11, borderRadius: '50%', background: ORANJE }} />}
@@ -504,12 +472,16 @@ function PaymentStep({ selected, onSelect, onBack, onNext }: {
           })}
         </div>
         <div style={{ display: 'flex', gap: 12, marginTop: 24 }}>
-          <button onClick={onBack} style={{ flex: 1, padding: '13px 0', background: 'white', color: '#374151', border: '2px solid #E5E7EB', borderRadius: 10, fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>← Voltar</button>
+          <button onClick={onBack} style={{ flex: 1, padding: '13px 0', background: 'white', color: '#374151', border: '2px solid #E5E7EB', borderRadius: 10, fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>
+            ← Voltar
+          </button>
           <button onClick={onNext} disabled={!selected}
             style={{ flex: 2, padding: '13px 0', background: selected ? ORANJE : '#E5E7EB', color: selected ? 'white' : '#9CA3AF', border: 'none', borderRadius: 10, fontSize: 15, fontWeight: 800, cursor: selected ? 'pointer' : 'not-allowed', transition: 'background 0.2s' }}
             onMouseEnter={(e) => { if (selected) e.currentTarget.style.background = '#e08e00'; }}
             onMouseLeave={(e) => { if (selected) e.currentTarget.style.background = ORANJE; }}
-          >Prosseguir →</button>
+          >
+            Prosseguir →
+          </button>
         </div>
       </Card>
     </motion.div>

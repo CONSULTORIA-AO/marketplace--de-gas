@@ -95,7 +95,7 @@ export default function LoginPage() {
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.4 }}
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/")}
           className="absolute top-5 left-5 flex items-center gap-1.5 text-sm text-gray-500 hover:text-[#FFA500] hover:cursor-pointer transition-colors duration-200 group"
         >
           <svg

@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCartStore } from '@/hooks/cartstore';
 import { ToastAction } from '../ui/toast';
 import { useToast } from '@/hooks/use-toast';
+import { useProductById } from '@/service/product/product';
 
 interface ProductCardProps {
   product: GasProduct;
@@ -17,38 +18,12 @@ export function ProductCard({ product, index }: ProductCardProps) {
   const [hovered, setHovered] = useState(false);
   const navigate = useNavigate();
   const { addItem } = useCartStore();
-  const { toast } = useToast();
+  const { data: productItem, isLoading } = useProductById(product.produtoId);
 
   const formattedPrice = product.preco.toLocaleString('pt-AO', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
-
-  function handleOrder(data: string) {
-    if (!data) {
-      toast({
-        description: (
-          <div className="flex items-center gap-4 ">
-            <div className="rounded-full w-8 h-8 flex justify-center items-center bg-[fill: rgba(251, 55, 72, 0.16)]"></div>
-            <span className="text-[#717F96]">
-              Inicie Sessão para fazer a compra
-            </span>
-          </div>
-        ),
-        action: (
-          <ToastAction
-            altText="close"
-            className="shadow-none border-none text-[#717F96] hover:bg-transparent"
-          >
-            .
-          </ToastAction>
-        ),
-        className:
-          'border-l-4 border-l-[#FB3748] border-t-0 border-b-0 border-r-0',
-      });
-      navigate('/iniciar-sessao?redirect=/carrinho');
-    }
-  }
 
   return (
     <motion.div
@@ -71,7 +46,7 @@ export function ProductCard({ product, index }: ProductCardProps) {
           <img
             src={`${import.meta.env.VITE_API_URL}images/products/${product.imagem_produto}`}
             alt={product.descricao}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
             sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
           />
         ) : (
@@ -82,14 +57,17 @@ export function ProductCard({ product, index }: ProductCardProps) {
       {/* Conteúdo */}
       <div className="p-3 sm:p-4 flex flex-col flex-1 gap-2">
         {/* Nome/Descrição */}
-        <h3 className="text-gray-800 font-medium text-sm sm:text-base leading-snug line-clamp-2 min-h-[2.5rem]">
+        <div>
+            <h3 className="text-gray-800 font-medium text-sm sm:text-base leading-snug line-clamp-2 min-h-[2.5rem]">
           {product.descricao}
         </h3>
 
         {/* Fornecedor */}
         <span className="text-gray-500 text-xs sm:text-sm truncate">
-          Fornecedor {product.empresaDona}
+          {productItem?.vendedor?.nomeEmpresa}
         </span>
+        </div>
+        
 
         {/* Preço */}
         <div className="flex items-baseline gap-1 flex-wrap">
@@ -97,11 +75,6 @@ export function ProductCard({ product, index }: ProductCardProps) {
             {formattedPrice}
           </span>
           <span className="text-sm sm:text-lg font-bold text-gray-900">Kz</span>
-          {product.unidadeMedida && (
-            <span className="text-xs sm:text-sm text-gray-500">
-              /{product.unidadeMedida}
-            </span>
-          )}
         </div>
 
         {/* Botões — empurrados para o fundo do card */}
