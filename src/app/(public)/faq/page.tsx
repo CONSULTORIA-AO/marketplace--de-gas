@@ -171,7 +171,6 @@ export function FAQ() {
   return (
     <div
       className="min-h-screen"
-      style={{ fontFamily: "'Space Grotesk', sans-serif" }}
     >
       <Header onSearch={(term) => setSearchTerm(term)} />
       {/* Hero */}

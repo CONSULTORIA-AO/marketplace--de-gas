@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCartStore } from '@/hooks/cartstore';
 import { useToast } from '@/hooks/use-toast';
 import { ToastAction } from '@radix-ui/react-toast';
+import { useProductById } from '@/service/product/product';
 
 export function ProductCard({
   product,
@@ -20,6 +21,7 @@ export function ProductCard({
   const [hov, setHov] = useState<boolean>(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { data: productItem, isLoading } = useProductById(product.produtoId);
 
   const discount: number = product.preco
     ? Math.round((1 - product.preco / product.preco) * 100)
@@ -61,7 +63,7 @@ export function ProductCard({
           style={{
             width: '100%',
             height: '100%',
-            objectFit: 'cover',
+            objectFit: 'contain',
             transition: 'transform .4s',
             transform: hov ? 'scale(1.06)' : 'scale(1)',
           }}
@@ -117,8 +119,8 @@ export function ProductCard({
           }}
         >
           {product.descricao}
+          Fornecedor: {productItem?.vendedor?.nomeEmpresa}
         </p>
-        <span className="text-black">Fornecedor: {product.empresaDona}</span>
         <div
           style={{
             display: 'flex',

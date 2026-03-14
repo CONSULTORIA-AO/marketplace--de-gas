@@ -9,7 +9,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useCartStore } from '@/hooks/cartstore';
 import { GasProduct } from '@/types/product';
 import { Sidebar } from '@/components/sidebar';
-import { useProductsByIds } from '@/service/product/product';
+import { useProductById, useProductsByIds } from '@/service/product/product';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SmartHeader } from '@/components/layout/smartHeader';
 
@@ -24,16 +24,17 @@ export function ProductDetail() {
   const [sidebarOpen, setSidebar] = useState<boolean>(false);
 
   const productId = Number(id);
-
-  const { data: products, isLoading } = useProductsByIds([productId])
   //const isFav: boolean = favorites.some((f) => f.produtoId === product.produtoId);
 
-  const productItem = products?.[0];
+
+  const { data: productItem, isLoading } = useProductById(productId);
+
+// Acesso directo — sem [0] nem map
 
   const sellerButtons: { label: string; icon: string; action?: () => void }[] =
     [
       { label: productItem?.vendedor?.telefoneEmpresa, icon: 'phone' },
-      { label: 'WhatsApp', icon: 'chat' },
+      { label: productItem?.vendedor?.telefoneEmpresa, icon: 'chat' },
       { label: 'Enviar mensagem', icon: 'send' },
       //{
       //label: 'Chat com vendedor',
@@ -50,8 +51,6 @@ export function ProductDetail() {
     addItem(productItem, qty);
     handleCheckout();
   };
-
-  const handleBack = () => navigate(-1);
 
   if (isLoading) {
     return (
@@ -211,7 +210,7 @@ export function ProductDetail() {
                 <img
                   src={`${import.meta.env.VITE_API_URL}images/products/${productItem?.imagem_produto}`}
                   alt={productItem?.descricao}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                 />
                 {/*<button
                 onClick={() => toggleFav(product)}
@@ -421,8 +420,8 @@ export function ProductDetail() {
                   }}
                 >
                   <img
-                    src={`${import.meta.env.VITE_API_URL}images/products/${productItem?.imagem_produto}`}
-                    alt={productItem?.descricao}
+                    src={`${import.meta.env.VITE_API_URL}images/${productItem?.vendedor?.logoEmpresa}`}
+                    alt={productItem?.vendedor?.nomeEmpresa}
                     style={{
                       width: '100%',
                       height: '100%',
@@ -432,7 +431,7 @@ export function ProductDetail() {
                 </div>
                 <div>
                   <p style={{ fontWeight: 700, fontSize: 14, margin: 0 }}>
-                    {productItem?.empresaDona}
+                    {productItem?.vendedor?.nomeEmpresa}
                   </p>
                 </div>
               </div>

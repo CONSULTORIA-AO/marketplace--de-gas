@@ -14,7 +14,7 @@ export function CartView({
   onCheckout,
   onBack,
 }: CartViewProps) {
-  const { clearCart } = useCartStore();
+  //const { clearCart } = useCartStore();
   const navigate = useNavigate();
 
   const handleCheckout = async () => {
@@ -87,7 +87,7 @@ export function CartView({
                     style={{
                       width: 64,
                       height: 64,
-                      objectFit: 'cover',
+                      objectFit: 'contain',
                       borderRadius: 10,
                       flexShrink: 0,
                     }}
