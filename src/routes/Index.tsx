@@ -10,7 +10,6 @@ import LoginPage from '@/app/auth/login/page';
 import { SignUp } from '@/app/auth/signup/page';
 import PasswordRecoveryFlow from '@/app/auth/recoverpassword/page';
 import Contact from '@/app/(public)/contact/contact';
-import Product from '@/app/(public)/product/page';
 import NotFoundPage from '@/app/(public)/notfound/page';
 import CartPage from '@/app/cart/page';
 import Customer from '@/app/customer/page';
@@ -33,23 +32,18 @@ const NavLink = () => {
       <Route path="/termos-politicas" element={<TermsPrivacity />} />
       <Route path="/perguntas-frequentes" element={<FAQ />} />
       <Route path="/contacto" element={<Contact />} />
-      <Route path="/produto/:id" element={<Product />} />
 
       <Route
-        path="/produto/detalhes/:id"
+        path="/produto/:id"
         element={
-          <ProtectedRoute>
             <ProductDetail />
-          </ProtectedRoute>
         }
       />
 
       <Route
         path="/produtos"
         element={
-          <ProtectedRoute>
-            <Customer />
-          </ProtectedRoute>
+          <Customer />
         }
       />
       <Route path="/carrinho" element={<CartPage />} />

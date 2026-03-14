@@ -30,7 +30,7 @@ export interface GasProduct {
   ativo: string;
   produto_time: string;
   produto_update: string;
-  vendedor?: Seller; // ✅ vendedor pode não vir no array de listagem
+  vendedor?: Seller;
 }
 
 // Resposta da lista de produtos

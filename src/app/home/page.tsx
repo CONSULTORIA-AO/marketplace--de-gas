@@ -20,8 +20,6 @@ export default function Home() {
   // Busca os produtos com React Query
   const { data, isLoading, isError, error } = useProducts();
 
-  console.log('Dados dsos produtos vindo da api:', data);
-
   // Filtra localmente (client-side) com base no searchTerm
   const filteredProducts = (data?.mensagem || []).filter(
     (product: GasProduct) =>
@@ -119,7 +117,7 @@ export default function Home() {
       </section>
 
       {/* ── PRODUCTS ─────────────────────────────────────── */}
-      <section id="produtos" className="max-w-7xl mx-auto px-4 py-8">
+      <section className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-6">
           <motion.h2
             initial={{ opacity: 0, x: -20 }}
@@ -196,34 +194,6 @@ export default function Home() {
                 <Skeleton className="h-3 w-36 rounded-lg" />
               </div>
             </div>
-
-            {/* Form card */}
-            <div
-              style={{
-                background: 'white',
-                borderRadius: 16,
-                padding: 24,
-                border: '1px solid #F3F4F6',
-              }}
-            >
-              <Skeleton className="h-4 w-44 rounded-md mb-5" />
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))',
-                  gap: 14,
-                }}
-              >
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <div key={i}>
-                    <Skeleton className="h-[11px] w-28 rounded mb-2" />
-                    <Skeleton className="h-10 w-full rounded-lg" />
-                  </div>
-                ))}
-                <Skeleton className="h-10 w-full rounded-xl self-end" />
-              </div>
-            </div>
-
             {/* Keyframe para o spinner — injeta uma vez */}
             <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
           </div>

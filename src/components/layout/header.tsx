@@ -88,6 +88,7 @@ export function Header({ onSearch }: { onSearch: (term: string) => void }) {
           {[
             { to: '/', label: 'Início', end: true },
             { to: '/sobre-nos', label: 'Sobre', end: false },
+            { to: '/produtos', label: 'Produtos', end: false },
             { to: '/contacto', label: 'Contactos', end: false },
           ].map(({ to, label, end }) => (
             <NavLink key={to} to={to} end={end} className={desktopNavClass}>
@@ -105,14 +106,14 @@ export function Header({ onSearch }: { onSearch: (term: string) => void }) {
             </NavLink>
           ))}
 
-          {/* Produtos is an anchor link */}
+          {/* Produtos is an anchor link 
           <a
             href="/#produtos"
             className="relative text-sm font-medium text-gray-700 hover:text-[#FFA500] transition-colors duration-200 group"
           >
             <span>Produtos</span>
             <span className="absolute -bottom-0.5 left-0 h-[2px] bg-[#FFA500] rounded-full w-0 group-hover:w-full transition-all duration-300" />
-          </a>
+          </a>*/}
 
           <button
             onClick={() => navigate('/carrinho')}

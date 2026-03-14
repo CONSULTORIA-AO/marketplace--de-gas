@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/utils/api';
-import { ApiProductByIdResponse, ApiProductResponse } from '@/types/product';
+import { ApiProductResponse } from '@/types/product';
 
 export function useProductById(id?: string | number) {
-  return useQuery<ApiProductByIdResponse>({
+  return useQuery<ApiProductResponse>({
     queryKey: ['product', id],
     queryFn: async () => {
       if (!id) throw new Error('ID do produto não fornecido');
-      const response = await api.get(`/produtos/${id}`);
+      const response = await api.get<ApiProductResponse>(`/produtos/${id}`);
       return response.data;
     },
     enabled: !!id,
