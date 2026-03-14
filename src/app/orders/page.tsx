@@ -9,7 +9,7 @@ import { GasProduct } from '@/types/product';
 import { Sidebar } from '@/components/sidebar';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SmartHeader } from '@/components/layout/smartHeader';
-import { useProductById, useProductsByIds } from '@/service/product/product';
+import { useProductsByIds } from '@/service/product/product';
 
 export function OrdersView() {
   const clienteId = useAuthStore((state) => state.session.user.id);
@@ -186,7 +186,7 @@ export function OrdersView() {
         onSearch={(term) => setSearch(term)}
       />
 
-      <div className="fade-in">
+      <div className="fade-in p-10">
         <div
           style={{
             display: 'flex',

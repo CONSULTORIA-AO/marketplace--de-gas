@@ -20,8 +20,10 @@ export function CartView({
   const handleCheckout = async () => {
     navigate('/checkout');
   };
+
   return (
     <div className="fade-in">
+      {/* Header da página */}
       <div
         style={{
           display: 'flex',
@@ -51,201 +53,232 @@ export function CartView({
           </p>
         </div>
       ) : (
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr auto',
-            gap: 20,
-            alignItems: 'start',
-          }}
-        >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            {cart.map((item) => (
-              <div
-                key={item.productId}
-                style={{
-                  background: 'white',
-                  borderRadius: 14,
-                  padding: 14,
-                  display: 'flex',
-                  gap: 12,
-                  alignItems: 'center',
-                  border: '1px solid #F3F4F6',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-                }}
-              >
-                <img
-                  src={`${import.meta.env.VITE_API_URL}images/products/${item?.product?.imagem_produto}`}
-                  alt={item.product.descricao}
+        <>
+          {/* Layout: lista de itens + resumo lado a lado em md+, empilhados em mobile */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: 20,
+              alignItems: 'start',
+            }}
+          >
+            {/* Lista de itens */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {cart.map((item) => (
+                <div
+                  key={item.productId}
                   style={{
-                    width: 72,
-                    height: 72,
-                    objectFit: 'cover',
-                    borderRadius: 10,
+                    background: 'white',
+                    borderRadius: 14,
+                    padding: 14,
+                    display: 'flex',
+                    gap: 12,
+                    alignItems: 'center',
+                    border: '1px solid #F3F4F6',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+                    flexWrap: 'wrap',
                   }}
-                />
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <p
+                >
+                  {/* Imagem */}
+                  <img
+                    src={`${import.meta.env.VITE_API_URL}images/products/${item?.product?.imagem_produto}`}
+                    alt={item.product.descricao}
                     style={{
-                      fontWeight: 600,
-                      fontSize: 13,
-                      marginBottom: 4,
+                      width: 64,
+                      height: 64,
+                      objectFit: 'cover',
+                      borderRadius: 10,
+                      flexShrink: 0,
+                    }}
+                  />
+
+                  {/* Info — cresce e trunca */}
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <p
+                      style={{
+                        fontWeight: 600,
+                        fontSize: 13,
+                        marginBottom: 4,
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {item.product.descricao}
+                    </p>
+                    <p
+                      style={{
+                        color: '#FFA500',
+                        fontWeight: 700,
+                        fontSize: 15,
+                        margin: 0,
+                      }}
+                    >
+                      {fmt(item.product.preco)}
+                    </p>
+                  </div>
+
+                  {/* Quantidade + remover */}
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 8,
+                      flexShrink: 0,
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        border: '1.5px solid #E5E7EB',
+                        borderRadius: 8,
+                        overflow: 'hidden',
+                      }}
+                    >
+                      <button
+                        onClick={() => updateQty(item.productId, -1)}
+                        style={{
+                          padding: '6px 10px',
+                          background: 'none',
+                          border: 'none',
+                          cursor: 'pointer',
+                          fontSize: 16,
+                        }}
+                      >
+                        −
+                      </button>
+                      <span
+                        style={{
+                          padding: '6px 12px',
+                          fontWeight: 700,
+                          fontSize: 14,
+                          borderLeft: '1px solid #E5E7EB',
+                          borderRight: '1px solid #E5E7EB',
+                        }}
+                      >
+                        {item.quantity}
+                      </span>
+                      <button
+                        onClick={() => updateQty(item.productId, +1)}
+                        style={{
+                          padding: '6px 10px',
+                          background: 'none',
+                          border: 'none',
+                          cursor: 'pointer',
+                          fontSize: 16,
+                        }}
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    <button
+                      onClick={() => removeItem(item.productId)}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        cursor: 'pointer',
+                        padding: 4,
+                      }}
+                    >
+                      <Icon name="close" size={16} color="#EF4444" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Resumo — sticky em desktop, normal em mobile */}
+            <div
+              style={{
+                background: 'white',
+                borderRadius: 14,
+                padding: 20,
+                border: '1px solid #F3F4F6',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+                position: 'sticky',
+                top: 80,
+              }}
+            >
+              <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 14 }}>
+                Resumo
+              </h3>
+
+              {cart.map((i) => (
+                <div
+                  key={i.productId}
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    fontSize: 12,
+                    color: '#6B7280',
+                    marginBottom: 6,
+                    gap: 8,
+                  }}
+                >
+                  <span
+                    style={{
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
                       whiteSpace: 'nowrap',
+                      flex: 1,
                     }}
                   >
-                    {item.product.descricao}
-                  </p>
-                  <p
-                    style={{
-                      color: '#FFA500',
-                      fontWeight: 700,
-                      fontSize: 15,
-                      margin: 0,
-                    }}
-                  >
-                    {fmt(item.product.preco)}
-                  </p>
-                </div>
-
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    border: '1.5px solid #E5E7EB',
-                    borderRadius: 8,
-                    overflow: 'hidden',
-                  }}
-                >
-                  <button
-                    onClick={() => updateQty(item.productId, -1)}
-                    style={{
-                      padding: '6px 10px',
-                      background: 'none',
-                      border: 'none',
-                      cursor: 'pointer',
-                      fontSize: 16,
-                    }}
-                  >
-                    −
-                  </button>
-                  <span
-                    style={{
-                      padding: '6px 12px',
-                      fontWeight: 700,
-                      fontSize: 14,
-                      borderLeft: '1px solid #E5E7EB',
-                      borderRight: '1px solid #E5E7EB',
-                    }}
-                  >
-                    {item.quantity}
+                    {i.product.descricao} x{i.quantity}
                   </span>
-                  <button
-                    onClick={() => updateQty(item.productId, +1)}
-                    style={{
-                      padding: '6px 10px',
-                      background: 'none',
-                      border: 'none',
-                      cursor: 'pointer',
-                      fontSize: 16,
-                    }}
-                  >
-                    +
-                  </button>
+                  <span style={{ fontWeight: 600, flexShrink: 0 }}>
+                    {fmt(i.product.preco * i.quantity)}
+                  </span>
                 </div>
+              ))}
 
-                <button
-                  onClick={() => removeItem(item.productId)}
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    padding: 4,
-                  }}
-                >
-                  <Icon name="close" size={16} color="#EF4444" />
-                </button>
-              </div>
-            ))}
-          </div>
-
-          {/* Resumo */}
-          <div
-            style={{
-              background: 'white',
-              borderRadius: 14,
-              padding: 20,
-              border: '1px solid #F3F4F6',
-              minWidth: 220,
-              boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-            }}
-          >
-            <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 14 }}>
-              Resumo
-            </h3>
-            {cart.map((i) => (
               <div
-                key={i.productId}
                 style={{
+                  borderTop: '1px solid #E5E7EB',
+                  marginTop: 12,
+                  paddingTop: 12,
                   display: 'flex',
                   justifyContent: 'space-between',
-                  fontSize: 12,
-                  color: '#6B7280',
-                  marginBottom: 6,
+                  fontWeight: 800,
+                  fontSize: 16,
                 }}
               >
-                <span
-                  style={{
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                    maxWidth: 130,
-                  }}
-                >
-                  {i.product.descricao} x{i.quantity}
-                </span>
-                <span style={{ fontWeight: 600, flexShrink: 0 }}>
-                  {fmt(i.product.preco * i.quantity)}
-                </span>
+                <span>Total</span>
+                <span style={{ color: '#FFA500' }}>{fmt(cartTotal)}</span>
               </div>
-            ))}
-            <div
-              style={{
-                borderTop: '1px solid #E5E7EB',
-                marginTop: 12,
-                paddingTop: 12,
-                display: 'flex',
-                justifyContent: 'space-between',
-                fontWeight: 800,
-                fontSize: 16,
-              }}
-            >
-              <span>Total</span>
-              <span style={{ color: '#FFA500' }}>{fmt(cartTotal)}</span>
+
+              <button
+                onClick={() => {
+                  handleCheckout();
+                  onCheckout;
+                }}
+                style={{
+                  width: '100%',
+                  marginTop: 16,
+                  padding: '13px',
+                  borderRadius: 10,
+                  background: '#FFA500',
+                  border: 'none',
+                  color: 'white',
+                  fontWeight: 700,
+                  fontSize: 15,
+                  cursor: 'pointer',
+                  transition: 'background 0.2s',
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.background = '#e08e00')
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.background = '#FFA500')
+                }
+              >
+                Finalizar Compra
+              </button>
             </div>
-            <button
-              onClick={() => {
-                handleCheckout();
-                onCheckout;
-              }}
-              style={{
-                width: '100%',
-                marginTop: 16,
-                padding: '13px',
-                borderRadius: 10,
-                background: '#FFA500',
-                border: 'none',
-                color: 'white',
-                fontWeight: 700,
-                fontSize: 15,
-                cursor: 'pointer',
-              }}
-            >
-              Finalizar Compra
-            </button>
           </div>
-        </div>
+        </>
       )}
     </div>
   );
