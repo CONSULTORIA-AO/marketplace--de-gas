@@ -10,12 +10,11 @@ import LoginPage from '@/app/auth/login/page';
 import { SignUp } from '@/app/auth/signup/page';
 import PasswordRecoveryFlow from '@/app/auth/recoverpassword/page';
 import Contact from '@/app/(public)/contact/contact';
-import Product from '@/app/(public)/product/page';
 import NotFoundPage from '@/app/(public)/notfound/page';
 import CartPage from '@/app/cart/page';
 import Customer from '@/app/customer/page';
 import { CheckoutPage } from '@/app/checkout/page';
-import ProfileView  from '@/app/profile/page';
+import ProfileView from '@/app/profile/page';
 import { SettingsView } from '@/app/settings/page';
 import { OrdersView } from '@/app/orders/page';
 import { ProductDetail } from '@/app/product/page';
@@ -33,25 +32,10 @@ const NavLink = () => {
       <Route path="/termos-politicas" element={<TermsPrivacity />} />
       <Route path="/perguntas-frequentes" element={<FAQ />} />
       <Route path="/contacto" element={<Contact />} />
-      <Route path="/produto/:id" element={<Product />} />
 
-      <Route
-        path="/produto/detalhes/:id"
-        element={
-          <ProtectedRoute>
-            <ProductDetail />
-          </ProtectedRoute>
-        }
-      />
+      <Route path="/produto/:id" element={<ProductDetail />} />
 
-      <Route
-        path="/produtos"
-        element={
-          <ProtectedRoute>
-            <Customer />
-          </ProtectedRoute>
-        }
-      />
+      <Route path="/produtos" element={<Customer />} />
       <Route path="/carrinho" element={<CartPage />} />
 
       <Route

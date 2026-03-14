@@ -10,12 +10,47 @@ interface AuthState {
   updateUser: (user: Partial<AuthSession['user']>) => void;
 }
 
+/* =========================
+   Helpers para Cookies
+========================= */
+
+const COOKIE_NAME = 'session';
+
+const setCookie = (name: string, value: string, days = 7) => {
+  const date = new Date();
+  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+
+  const expires = `expires=${date.toUTCString()}`;
+  document.cookie = `${name}=${value}; ${expires}; path=/; SameSite=Lax`;
+};
+
+const getCookie = (name: string) => {
+  if (typeof document === 'undefined') return null;
+
+  const cookies = document.cookie.split('; ');
+  const cookie = cookies.find((row) => row.startsWith(`${name}=`));
+
+  return cookie ? cookie.split('=')[1] : null;
+};
+
+const deleteCookie = (name: string) => {
+  document.cookie = `${name}=; Max-Age=0; path=/`;
+};
+
+/* =========================
+   Zustand Store
+========================= */
+
 export const useAuthStore = create<AuthState>((set) => {
-  const storedSession = localStorage.getItem('session');
+  const storedSession = getCookie(COOKIE_NAME);
+
+  const parsedSession: AuthSession | null = storedSession
+    ? JSON.parse(decodeURIComponent(storedSession))
+    : null;
 
   return {
-    session: storedSession ? JSON.parse(storedSession) : null,
-    isAuthenticated: !!storedSession,
+    session: parsedSession,
+    isAuthenticated: !!parsedSession,
 
     setAuth: (info, mensagem) => {
       const session: AuthSession = {
@@ -28,7 +63,7 @@ export const useAuthStore = create<AuthState>((set) => {
         },
       };
 
-      localStorage.setItem('session', JSON.stringify(session));
+      setCookie(COOKIE_NAME, encodeURIComponent(JSON.stringify(session)));
 
       set({
         session,
@@ -37,7 +72,8 @@ export const useAuthStore = create<AuthState>((set) => {
     },
 
     logout: () => {
-      localStorage.removeItem('session');
+      deleteCookie(COOKIE_NAME);
+
       set({
         session: null,
         isAuthenticated: false,
@@ -48,7 +84,7 @@ export const useAuthStore = create<AuthState>((set) => {
       set((state) => {
         if (!state.session) return state;
 
-        const newSession = {
+        const newSession: AuthSession = {
           ...state.session,
           user: {
             ...state.session.user,
@@ -56,9 +92,11 @@ export const useAuthStore = create<AuthState>((set) => {
           },
         };
 
-        localStorage.setItem('session', JSON.stringify(newSession));
+        setCookie(COOKIE_NAME, encodeURIComponent(JSON.stringify(newSession)));
 
-        return { session: newSession };
+        return {
+          session: newSession,
+        };
       }),
   };
 });

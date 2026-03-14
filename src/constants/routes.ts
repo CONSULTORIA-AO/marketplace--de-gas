@@ -18,7 +18,7 @@ export const links = [
 ];
 
 export const items = [
-  { icon: 'home', label: 'Início', path: '/produtos' },
+  { icon: 'home', label: 'Produtos', path: '/produtos' },
   { icon: 'cart', label: 'Carrinho', path: '/carrinho' },
   { icon: 'package', label: 'Meus Pedidos', path: '/pedidos' },
   { icon: 'user', label: 'Meu Perfil', path: '/perfil' },

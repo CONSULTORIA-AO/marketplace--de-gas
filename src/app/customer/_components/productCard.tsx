@@ -180,7 +180,7 @@ export function ProductCard({
             Comprar
           </button>
           <button
-            onClick={(e) => navigate(`/produto/detalhes/${product.produtoId}`)}
+            onClick={(e) => navigate(`/produto/${product.produtoId}`)}
             style={{
               flex: 1,
               padding: '8px 0',

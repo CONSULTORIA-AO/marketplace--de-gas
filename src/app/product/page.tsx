@@ -7,12 +7,11 @@ import { View } from '@/types/customer';
 import { fmt } from '@/data/customer';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useCartStore } from '@/hooks/cartstore';
-import { useToast } from '@/hooks/use-toast';
 import { GasProduct } from '@/types/product';
 import { Sidebar } from '@/components/sidebar';
-import { AuthHeader } from '@/components/header';
 import { useProductById } from '@/service/product/product';
 import { Skeleton } from '@/components/ui/skeleton';
+import { SmartHeader } from '@/components/layout/smartHeader';
 
 export function ProductDetail() {
   const { id } = useParams();
@@ -26,11 +25,12 @@ export function ProductDetail() {
 
   const { data: product, isLoading, isError, error } = useProductById(id);
   //const isFav: boolean = favorites.some((f) => f.produtoId === product.produtoId);
-  addItem(product.mensagem, qty);
+
+  const productItem = product?.mensagem?.[0];
 
   const sellerButtons: { label: string; icon: string; action?: () => void }[] =
     [
-      { label: product?.mensagem.vendedor?.telefoneEmpresa, icon: 'phone' },
+      { label: productItem?.vendedor?.telefoneEmpresa, icon: 'phone' },
       { label: 'WhatsApp', icon: 'chat' },
       { label: 'Enviar mensagem', icon: 'send' },
       //{
@@ -42,7 +42,11 @@ export function ProductDetail() {
 
   const handleCheckout = async () => {
     navigate('/checkout');
-    clearCart();
+  };
+
+  const handlecartChekout = async () => {
+    addItem(productItem, qty);
+    handleCheckout();
   };
 
   const handleBack = () => navigate(-1);
@@ -51,10 +55,17 @@ export function ProductDetail() {
     return (
       <div style={{ maxWidth: 700, margin: '0 auto' }}>
         {/* Header */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            marginBottom: 20,
+          }}
+        >
           <Skeleton className="h-[22px] w-32 rounded-md" />
         </div>
-  
+
         {/* Avatar card */}
         <div
           style={{
@@ -66,8 +77,14 @@ export function ProductDetail() {
             textAlign: 'center',
           }}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
-  
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 12,
+            }}
+          >
             {/* Spinner + avatar skeleton */}
             <div style={{ position: 'relative', width: 96, height: 96 }}>
               {/* Anel girante */}
@@ -93,14 +110,14 @@ export function ProductDetail() {
                 <Skeleton className="w-full h-full rounded-full" />
               </div>
             </div>
-  
+
             <Skeleton className="h-[18px] w-40 rounded-lg" />
             <Skeleton className="h-[14px] w-52 rounded-lg" />
             <Skeleton className="h-6 w-28 rounded-full" />
             <Skeleton className="h-3 w-36 rounded-lg" />
           </div>
         </div>
-  
+
         {/* Form card */}
         <div
           style={{
@@ -127,7 +144,7 @@ export function ProductDetail() {
             <Skeleton className="h-10 w-full rounded-xl self-end" />
           </div>
         </div>
-  
+
         {/* Keyframe para o spinner — injeta uma vez */}
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
@@ -156,32 +173,13 @@ export function ProductDetail() {
         </div>
       )}
 
-      <AuthHeader
+      <SmartHeader
         search={search}
         setSearch={setSearch}
-        //cartCount={cartCount}
-        favCount={favorites.length}
         onMenu={() => setSidebar(true)}
+        onSearch={(term) => setSearch(term)}
       />
-      <div className="fade-in">
-        <button
-          onClick={handleBack}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 6,
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            color: ORANJE,
-            fontWeight: 600,
-            fontSize: 14,
-            marginBottom: 16,
-          }}
-        >
-          <Icon name="back" size={16} color={ORANJE} /> Voltar
-        </button>
-
+      <div className="fade-in py-10">
         <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 20 }}>
           <div
             style={{
@@ -209,8 +207,8 @@ export function ProductDetail() {
                 }}
               >
                 <img
-                  src={`${import.meta.env.VITE_API_URL}images/products/${product?.mensagem?.imagem_produto}`}
-                  alt={product?.mensagem?.descricao}
+                  src={`${import.meta.env.VITE_API_URL}images/products/${productItem?.imagem_produto}`}
+                  alt={productItem?.descricao}
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
                 {/*<button
@@ -256,7 +254,7 @@ export function ProductDetail() {
                   margin: '6px 0 8px',
                 }}
               >
-                {product?.mensagem?.descricao}
+                {productItem?.descricao}
               </h1>
               <div
                 style={{
@@ -267,7 +265,7 @@ export function ProductDetail() {
                 }}
               >
                 <span style={{ fontSize: 28, fontWeight: 900, color: ORANJE }}>
-                  {fmt(product?.mensagem?.preco)}
+                  {fmt(productItem?.preco)}
                 </span>
               </div>
               <p
@@ -328,7 +326,9 @@ export function ProductDetail() {
                     {qty}
                   </span>
                   <button
-                    onClick={() => setQty((q) => Math.max(1, q + 1))}
+                    onClick={() => {
+                      setQty((q) => Math.max(1, q + 1));
+                    }}
                     style={{
                       padding: '8px 14px',
                       background: 'none',
@@ -347,8 +347,8 @@ export function ProductDetail() {
               >
                 <button
                   onClick={() => {
-                    if (product?.mensagem) {
-                      addItem(product.mensagem, qty);
+                    if (productItem) {
+                      addItem(productItem, qty);
                     }
                   }}
                   style={{
@@ -365,12 +365,7 @@ export function ProductDetail() {
                   Adicionar ao Carrinho
                 </button>
                 <button
-                  onClick={() => {
-                    if (product?.mensagem) {
-                      addItem(product.mensagem, qty);
-                      handleCheckout();
-                    }
-                  }}
+                  onClick={() => handlecartChekout()}
                   style={{
                     padding: '13px',
                     borderRadius: 10,
@@ -424,8 +419,8 @@ export function ProductDetail() {
                   }}
                 >
                   <img
-                    src={product.mensagem?.imagem_produto}
-                    alt=""
+                    src={`${import.meta.env.VITE_API_URL}images/products/${productItem?.imagem_produto}`}
+                    alt={productItem?.descricao}
                     style={{
                       width: '100%',
                       height: '100%',
@@ -435,7 +430,7 @@ export function ProductDetail() {
                 </div>
                 <div>
                   <p style={{ fontWeight: 700, fontSize: 14, margin: 0 }}>
-                    {product?.mensagem?.empresaDona}
+                    {productItem?.empresaDona}
                   </p>
                 </div>
               </div>

@@ -1,17 +1,18 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
 import { useAuthStore } from '@/hooks/auth';
-import { getOrdersByClient } from '@/service/order/order.schema';
+import { getOrdersByClient } from '@/service/order/order';
 import { AuthHeader } from '@/components/header';
 import { useState } from 'react';
 import { View } from '@/types/customer';
 import { GasProduct } from '@/types/product';
 import { Sidebar } from '@/components/sidebar';
 import { Skeleton } from '@/components/ui/skeleton';
+import { SmartHeader } from '@/components/layout/smartHeader';
+import { useProductById, useProductsByIds } from '@/service/product/product';
 
 export function OrdersView() {
   const clienteId = useAuthStore((state) => state.session.user.id);
-  const [searchChat, setSearchChat] = useState<string>('');
   const [view, setView] = useState<View>('produtos');
   const [favorites, setFavorites] = useState<GasProduct[]>([]);
   const [search, setSearch] = useState<string>('');
@@ -25,6 +26,28 @@ export function OrdersView() {
     queryKey: ['orders', clienteId],
     queryFn: () => getOrdersByClient(clienteId),
   });
+
+  const productIds = [
+  ...new Set(
+    ordersdata?.flatMap((pedido) =>
+      pedido.itens.map((item) => item.produto_id)
+    ) ?? []
+  )
+]
+  console.log('Buscando id de cada produto:', productIds);
+
+  const { data: products } = useProductsByIds(productIds);
+
+  console.log('Produtos:', products);
+
+  const productsMap = new Map<number, GasProduct>(
+    products?.map((p) => [p.produtoId, p]) ?? []
+  );
+
+  console.log('Mapa de produtos:', productsMap);
+
+  console.log('Produto raw:', JSON.stringify(products?.[0], null, 2));
+
   const colors: Record<string, string> = {
     Entregue: '#10B981',
     'Em trânsito': '#3B82F6',
@@ -35,10 +58,17 @@ export function OrdersView() {
     return (
       <div style={{ maxWidth: 700, margin: '0 auto' }}>
         {/* Header */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            marginBottom: 20,
+          }}
+        >
           <Skeleton className="h-[22px] w-32 rounded-md" />
         </div>
-  
+
         {/* Avatar card */}
         <div
           style={{
@@ -50,8 +80,14 @@ export function OrdersView() {
             textAlign: 'center',
           }}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
-  
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 12,
+            }}
+          >
             {/* Spinner + avatar skeleton */}
             <div style={{ position: 'relative', width: 96, height: 96 }}>
               {/* Anel girante */}
@@ -77,14 +113,14 @@ export function OrdersView() {
                 <Skeleton className="w-full h-full rounded-full" />
               </div>
             </div>
-  
+
             <Skeleton className="h-[18px] w-40 rounded-lg" />
             <Skeleton className="h-[14px] w-52 rounded-lg" />
             <Skeleton className="h-6 w-28 rounded-full" />
             <Skeleton className="h-3 w-36 rounded-lg" />
           </div>
         </div>
-  
+
         {/* Form card */}
         <div
           style={{
@@ -111,7 +147,7 @@ export function OrdersView() {
             <Skeleton className="h-10 w-full rounded-xl self-end" />
           </div>
         </div>
-  
+
         {/* Keyframe para o spinner — injeta uma vez */}
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
@@ -143,12 +179,11 @@ export function OrdersView() {
           />
         </div>
       )}
-      <AuthHeader
+      <SmartHeader
         search={search}
         setSearch={setSearch}
-        //cartCount={cartCount}
-        favCount={favorites.length}
         onMenu={() => setSidebar(true)}
+        onSearch={(term) => setSearch(term)}
       />
 
       <div className="fade-in">
@@ -179,24 +214,33 @@ export function OrdersView() {
                 boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
               }}
             >
-              <img
-                src={`${import.meta.env.VITE_API_URL}images/products/${o.nomeCliente}`}
-                alt=""
-                style={{
-                  width: 64,
-                  height: 64,
-                  objectFit: 'cover',
-                  borderRadius: 10,
-                }}
-              />
+              <div style={{ display: 'flex', gap: 6 }}>
+                {o.itens.map((item) => {
+                  const product = productsMap.get(item.produto_id);
+
+                  return (
+                    <img
+                      key={item.id_itens_pedido}
+                      src={`${import.meta.env.VITE_API_URL}images/products/${product?.imagem_produto}`}
+                      alt={product?.descricao}
+                      style={{
+                        width: 64,
+                        height: 64,
+                        objectFit: 'cover',
+                        borderRadius: 10,
+                      }}
+                    />
+                  );
+                })}
+              </div>
+
               <div style={{ flex: 1 }}>
                 <p style={{ fontWeight: 600, fontSize: 13, margin: '0 0 4px' }}>
-                  Pedido #{o.numero_cotacao.slice(0, 8)}
+                  Pedido {o.pedidoCotacaoId}
                 </p>
                 <p
                   style={{ fontSize: 12, color: '#6B7280', margin: '0 0 6px' }}
                 >
-                  {o.pedidoCotacaoId} ·{' '}
                   {new Date(o.pedido_time).toLocaleDateString('pt-pt')}
                 </p>
                 <span

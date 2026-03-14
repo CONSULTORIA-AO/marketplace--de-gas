@@ -19,7 +19,6 @@ export function CartView({
 
   const handleCheckout = async () => {
     navigate('/checkout');
-    clearCart();
   };
   return (
     <div className="fade-in">

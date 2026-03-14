@@ -3,15 +3,15 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useMutation } from '@tanstack/react-query';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '@/hooks/customer';
 import { useCartStore, type CartItem } from '@/hooks/cartstore';
 import { api } from '@/utils/api';
 import { useAuthStore } from '@/hooks/auth';
-import { AuthHeader } from '@/components/header';
 import { View } from '@/types/customer';
 import { GasProduct } from '@/types/product';
 import { Sidebar } from '../../components/sidebar';
+import { SmartHeader } from '@/components/layout/smartHeader';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 const ORANJE = '#FFA500';
@@ -319,7 +319,7 @@ function CartStep({
                 >
                   {item.product.imagem_produto ? (
                     <img
-                      src={item.product.imagem_produto}
+                      src={`${import.meta.env.VITE_API_URL}images/products/${item.product.imagem_produto}`}
                       alt={item.product.descricao}
                       style={{
                         width: '100%',
@@ -1395,7 +1395,7 @@ function ConfirmationScreen({ onGoHome }: { onGoHome: () => void }) {
             Voltar à loja
           </button>
           <button
-            onClick={() => {}}
+            onClick={() => navigate('/pedidos')}
             style={{
               width: '100%',
               padding: '13px 0',
@@ -1493,12 +1493,11 @@ export function CheckoutPage() {
         </div>
       )}
 
-      <AuthHeader
+      <SmartHeader
         search={search}
         setSearch={setSearch}
-        //cartCount={cartCount}
-        favCount={favorites.length}
         onMenu={() => setSidebar(true)}
+        onSearch={(term) => setSearch(term)}
       />
       <div
         style={{
@@ -1507,64 +1506,6 @@ export function CheckoutPage() {
           fontFamily: "'Segoe UI', system-ui, sans-serif",
         }}
       >
-        {/* Page header */}
-        <div
-          style={{
-            background: 'white',
-            borderBottom: '1px solid #E5E7EB',
-            padding: '16px 24px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 12,
-            position: 'sticky',
-            top: 0,
-            zIndex: 100,
-            boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-          }}
-        >
-          <button
-            onClick={() => (step === 0 ? navigate(-1) : setStep((s) => s - 1))}
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: 4,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 6,
-              color: '#6B7280',
-              fontSize: 14,
-            }}
-          >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-            <span className="hidden sm:inline">Voltar</span>
-          </button>
-          <span style={{ fontSize: 18, fontWeight: 900, color: ORANJE }}>
-            JaGás
-          </span>
-          <span
-            style={{
-              fontSize: 16,
-              fontWeight: 700,
-              color: '#111827',
-              marginLeft: 4,
-            }}
-          >
-            — Checkout
-          </span>
-        </div>
-
         {/* Main content */}
         <div
           style={{ maxWidth: 640, margin: '0 auto', padding: '32px 16px 60px' }}
