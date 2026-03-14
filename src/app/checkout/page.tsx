@@ -3,12 +3,11 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useMutation } from '@tanstack/react-query';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '@/hooks/customer';
 import { useCartStore, type CartItem } from '@/hooks/cartstore';
 import { api } from '@/utils/api';
 import { useAuthStore } from '@/hooks/auth';
-import { AuthHeader } from '@/components/header';
 import { View } from '@/types/customer';
 import { GasProduct } from '@/types/product';
 import { Sidebar } from '../../components/sidebar';
@@ -320,7 +319,7 @@ function CartStep({
                 >
                   {item.product.imagem_produto ? (
                     <img
-                      src={item.product.imagem_produto}
+                      src={`${import.meta.env.VITE_API_URL}images/products/${item.product.imagem_produto}`}
                       alt={item.product.descricao}
                       style={{
                         width: '100%',
@@ -1396,7 +1395,7 @@ function ConfirmationScreen({ onGoHome }: { onGoHome: () => void }) {
             Voltar à loja
           </button>
           <button
-            onClick={() => {}}
+            onClick={() => navigate("/pedidos")}
             style={{
               width: '100%',
               padding: '13px 0',
