@@ -247,6 +247,7 @@ export function Header({ onSearch }: { onSearch: (term: string) => void }) {
                 {[
                   { to: '/', label: 'Início', end: true },
                   { to: '/sobre-nos', label: 'Sobre', end: false },
+                  { to: '/produtos', label: 'Produtos', end: false },
                   { to: '/contacto', label: 'Contactos', end: false },
                 ].map(({ to, label, end }) => (
                   <NavLink
@@ -260,13 +261,13 @@ export function Header({ onSearch }: { onSearch: (term: string) => void }) {
                   </NavLink>
                 ))}
 
-                <a
+                {/*<a
                   href="/#produtos"
                   onClick={() => setMenuOpen(false)}
                   className="block px-5 py-3 text-white text-sm font-medium border-b border-white/10 hover:text-[#FFA500] hover:bg-white/95 transition-colors duration-200"
                 >
                   Produtos
-                </a>
+                </a>*/}
 
                 <div className="flex gap-3 px-5 py-4">
                   <button

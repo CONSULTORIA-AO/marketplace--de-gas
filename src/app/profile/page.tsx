@@ -14,7 +14,6 @@ import { useUserStore } from '@/hooks/customer';
 import { useAuthStore } from '@/hooks/auth';
 import { motion } from 'framer-motion';
 import { Skeleton } from '@/components/ui/skeleton';
-import { AuthHeader } from '@/components/header';
 import { View } from '@/types/customer';
 import { GasProduct } from '@/types/product';
 import { Sidebar } from '../../components/sidebar';
@@ -629,15 +628,14 @@ export default function ProfileView() {
                 <input
                   {...register('enderecoCliente')}
                   style={{
-                    padding: '10px 24px',
+                    width: '100%',
+                    padding: '10px 12px 10px 32px',
+                    border: `1.5px solid #E5E7EB`,
                     borderRadius: 8,
-                    background: ORANJE,
-                    border: 'none',
-                    color: 'white',
-                    fontWeight: 700,
-                    fontSize: 14,
-                    cursor: 'pointer',
-                    alignSelf: 'flex-start',
+                    fontSize: 13,
+                    background: '#F9FAFB',
+                    boxSizing: 'border-box',
+                    color: '#111',
                   }}
                 />
               </div>
