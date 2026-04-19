@@ -54,7 +54,11 @@ export default function CartPage() {
           style={{ position: 'fixed', inset: 0, zIndex: 400, display: 'flex' }}
         >
           <div
-            style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.4)' }}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'rgba(0,0,0,0.4)',
+            }}
             onClick={() => setSidebar(false)}
           />
           <Sidebar
