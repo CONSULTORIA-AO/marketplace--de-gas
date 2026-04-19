@@ -27,105 +27,12 @@ export function AuthHeader({
     cliente?.fotoCliente ??
     `https://ui-avatars.com/api/?name=${encodeURIComponent(cliente?.nomeCliente ?? 'U')}&background=f97316&color=000&size=128`;
 
-  const [notifications, setNotifications] = useState<Notification[]>([
-    {
-      id: 1,
-      type: 'new_item',
-      message: 'Novo iPhone 16 chegou à plataforma!',
-      time: 'há 12 min',
-      read: false,
-      icon: 'plus',
-    },
-    {
-      id: 2,
-      type: 'payment_success',
-      message: 'Pagamento de AirPods Pro confirmado ✓',
-      time: 'há 47 min',
-      read: true,
-      icon: 'check',
-    },
-    {
-      id: 3,
-      type: 'subscription_active',
-      message: 'Angoverso Premium activado com sucesso!',
-      time: 'ontem',
-      read: false,
-      icon: 'star',
-    },
-    {
-      id: 4,
-      type: 'subscription_expired',
-      message: 'A sua subscrição Family Plus expirou',
-      time: '2 dias atrás',
-      read: true,
-      icon: 'bell',
-    },
-    {
-      id: 5,
-      type: 'new_message',
-      message: 'TechStore AO respondeu no chat',
-      time: 'há 3 h',
-      read: false,
-      icon: 'chat',
-    },
-    {
-      id: 6,
-      type: 'profile_updated',
-      message: 'Os seus dados foram actualizados com sucesso',
-      time: 'semana passada',
-      read: true,
-      icon: 'user',
-    },
-    {
-      id: 7,
-      type: 'added_favorite',
-      message: 'Samsung Galaxy S24 adicionado aos favoritos',
-      time: 'há 1 dia',
-      read: true,
-      icon: 'heart',
-    },
-    {
-      id: 8,
-      type: 'added_cart',
-      message: 'MacBook Air M2 adicionado ao carrinho',
-      time: 'há 2 h',
-      read: false,
-      icon: 'cart',
-    },
-    {
-      id: 9,
-      type: 'order_status',
-      message: 'O seu pedido ORD-003 está em trânsito',
-      time: 'há 5 h',
-      read: false,
-      icon: 'package',
-    },
-    {
-      id: 10,
-      type: 'low_stock',
-      message: 'Apenas 2 unidades restantes: PlayStation 5',
-      time: 'há 30 min',
-      read: false,
-      icon: 'bell',
-    },
-  ]);
-
   const handleSearch = () => {
     setSearch(searchValue.trim());
   };
 
   //const unreadCount: number = notifications.filter((n) => !n.read).length;
   //const [showNotifications, setShowNotifications] = useState<boolean>(false);
-
-  const markAsRead = (id: number): void => {
-    setNotifications((prev) =>
-      prev.map((n) => (n.id === id ? { ...n, read: true } : n))
-    );
-  };
-
-  const markAllAsRead = (): void => {
-    setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
-  };
 
   const notificationRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -140,22 +47,6 @@ export function AuthHeader({
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-
-  const getNotificationIcon = (type: string): string => {
-    const icons: Record<string, string> = {
-      new_item: 'plus',
-      payment_success: 'check',
-      subscription_active: 'star',
-      subscription_expired: 'bell',
-      new_message: 'chat',
-      profile_updated: 'user',
-      added_favorite: 'heart',
-      added_cart: 'cart',
-      order_status: 'package',
-      low_stock: 'bell',
-    };
-    return icons[type] || 'bell';
-  };
 
   return (
     <header
@@ -194,7 +85,7 @@ export function AuthHeader({
 
         {/* Logo */}
         <button
-          onClick={() => navigate('/produtos')}
+          onClick={() => navigate('/')}
           style={{
             background: 'none',
             border: 'none',

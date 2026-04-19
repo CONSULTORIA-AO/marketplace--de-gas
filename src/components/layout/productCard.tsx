@@ -5,8 +5,6 @@ import { motion } from 'framer-motion';
 import { GasProduct } from '@/types/product';
 import { useNavigate } from 'react-router-dom';
 import { useCartStore } from '@/hooks/cartstore';
-import { ToastAction } from '../ui/toast';
-import { useToast } from '@/hooks/use-toast';
 import { useProductById } from '@/service/product/product';
 
 interface ProductCardProps {
@@ -67,7 +65,6 @@ export function ProductCard({ product, index }: ProductCardProps) {
           {productItem?.vendedor?.nomeEmpresa}
         </span>
         </div>
-        
 
         {/* Preço */}
         <div className="flex items-baseline gap-1 flex-wrap">
