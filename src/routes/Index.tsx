@@ -36,17 +36,12 @@ const NavLink = () => {
       <Route path="/produto/:id" element={<ProductDetail />} />
 
       <Route path="/produtos" element={<Customer />} />
-      
+
       <Route path="/carrinho" element={<CartPage />} />
 
-      <Route
-        path="/checkout"
-        element={
-          <CheckoutPage />
-        }
-      />
+      <Route path="/checkout" element={<CheckoutPage />} />
 
-        {/* Rotas Privadas */}
+      {/* Rotas Privadas */}
       <Route
         path="/perfil"
         element={

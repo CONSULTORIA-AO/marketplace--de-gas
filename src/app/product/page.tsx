@@ -26,10 +26,9 @@ export function ProductDetail() {
   const productId = Number(id);
   //const isFav: boolean = favorites.some((f) => f.produtoId === product.produtoId);
 
-
   const { data: productItem, isLoading } = useProductById(productId);
 
-// Acesso directo — sem [0] nem map
+  // Acesso directo — sem [0] nem map
 
   const sellerButtons: { label: string; icon: string; action?: () => void }[] =
     [
@@ -210,7 +209,11 @@ export function ProductDetail() {
                 <img
                   src={`${import.meta.env.VITE_API_URL}images/products/${productItem?.imagem_produto}`}
                   alt={productItem?.descricao}
-                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                  }}
                 />
                 {/*<button
                 onClick={() => toggleFav(product)}

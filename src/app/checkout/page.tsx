@@ -12,7 +12,7 @@ import { GasProduct } from '@/types/product';
 import { Sidebar } from '../../components/sidebar';
 import { SmartHeader } from '@/components/layout/smartHeader';
 import { ORANJE } from '@/constants/costumer';
-import { SHIPPING_OPTIONS } from "@/constants/checkout";
+import { SHIPPING_OPTIONS } from '@/constants/checkout';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -23,7 +23,16 @@ const PAYMENT_METHODS = [
     desc: 'Pague em dinheiro no momento da entrega',
     available: true,
     icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={ORANJE} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="28"
+        height="28"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={ORANJE}
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <rect x="2" y="5" width="20" height="14" rx="2" />
         <line x1="2" y1="10" x2="22" y2="10" />
       </svg>
@@ -35,7 +44,16 @@ const PAYMENT_METHODS = [
     desc: 'Brevemente disponível',
     available: false,
     icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="28"
+        height="28"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#D1D5DB"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <rect x="5" y="2" width="14" height="20" rx="2" />
         <line x1="12" y1="18" x2="12.01" y2="18" />
       </svg>
@@ -47,7 +65,16 @@ const PAYMENT_METHODS = [
     desc: 'Brevemente disponível',
     available: false,
     icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="28"
+        height="28"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#D1D5DB"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <rect x="2" y="5" width="20" height="14" rx="2" />
         <line x1="2" y1="10" x2="22" y2="10" />
       </svg>
@@ -59,7 +86,16 @@ const PAYMENT_METHODS = [
     desc: 'Brevemente disponível',
     available: false,
     icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="28"
+        height="28"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#D1D5DB"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <rect x="3" y="3" width="18" height="18" rx="2" />
         <path d="M3 9h18M9 21V9" />
       </svg>
@@ -78,7 +114,10 @@ function Stepper({ current }: { current: number }) {
         const active = i === current;
         return (
           <div key={label} className="flex items-center">
-            <div className="flex flex-col items-center" style={{ minWidth: 56 }}>
+            <div
+              className="flex flex-col items-center"
+              style={{ minWidth: 56 }}
+            >
               <div
                 style={{
                   width: 36,
@@ -93,11 +132,26 @@ function Stepper({ current }: { current: number }) {
                 }}
               >
                 {done ? (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
                 ) : (
-                  <span style={{ fontSize: 13, fontWeight: 700, color: active ? 'white' : '#9CA3AF' }}>
+                  <span
+                    style={{
+                      fontSize: 13,
+                      fontWeight: 700,
+                      color: active ? 'white' : '#9CA3AF',
+                    }}
+                  >
                     {i + 1}
                   </span>
                 )}
@@ -263,7 +317,11 @@ function CartStep({
                     <img
                       src={`${import.meta.env.VITE_API_URL}images/products/${item.product.imagem_produto}`}
                       alt={item.product.descricao}
-                      style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'contain',
+                      }}
                     />
                   ) : (
                     <svg
@@ -297,49 +355,125 @@ function CartStep({
                   >
                     {item.product.descricao}
                   </p>
-                  <p style={{ margin: '3px 0 0', fontSize: 12, color: '#6B7280' }}>
+                  <p
+                    style={{
+                      margin: '3px 0 0',
+                      fontSize: 12,
+                      color: '#6B7280',
+                    }}
+                  >
                     KZ{' '}
-                    {item.product.preco.toLocaleString('pt-AO', { minimumFractionDigits: 2 })}{' '}
+                    {item.product.preco.toLocaleString('pt-AO', {
+                      minimumFractionDigits: 2,
+                    })}{' '}
                     / {item.product.unidadeMedida}
                   </p>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 8 }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 8,
+                      marginTop: 8,
+                    }}
+                  >
                     <button
-                      onClick={() => updateQuantity(item.productId, item.quantity - 1)}
+                      onClick={() =>
+                        updateQuantity(item.productId, item.quantity - 1)
+                      }
                       style={{
-                        width: 26, height: 26, borderRadius: 6,
-                        border: '1.5px solid #E5E7EB', background: 'white',
-                        cursor: 'pointer', display: 'flex', alignItems: 'center',
-                        justifyContent: 'center', fontSize: 14, fontWeight: 700, color: '#374151',
+                        width: 26,
+                        height: 26,
+                        borderRadius: 6,
+                        border: '1.5px solid #E5E7EB',
+                        background: 'white',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: 14,
+                        fontWeight: 700,
+                        color: '#374151',
                       }}
-                    >−</button>
-                    <span style={{ minWidth: 20, textAlign: 'center', fontWeight: 700, fontSize: 13, color: '#111827' }}>
+                    >
+                      −
+                    </button>
+                    <span
+                      style={{
+                        minWidth: 20,
+                        textAlign: 'center',
+                        fontWeight: 700,
+                        fontSize: 13,
+                        color: '#111827',
+                      }}
+                    >
                       {item.quantity}
                     </span>
                     <button
-                      onClick={() => updateQuantity(item.productId, item.quantity + 1)}
+                      onClick={() =>
+                        updateQuantity(item.productId, item.quantity + 1)
+                      }
                       style={{
-                        width: 26, height: 26, borderRadius: 6,
-                        border: '1.5px solid #E5E7EB', background: 'white',
-                        cursor: 'pointer', display: 'flex', alignItems: 'center',
-                        justifyContent: 'center', fontSize: 14, fontWeight: 700, color: '#374151',
+                        width: 26,
+                        height: 26,
+                        borderRadius: 6,
+                        border: '1.5px solid #E5E7EB',
+                        background: 'white',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: 14,
+                        fontWeight: 700,
+                        color: '#374151',
                       }}
-                    >+</button>
+                    >
+                      +
+                    </button>
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8, flexShrink: 0 }}>
-                  <span style={{ fontWeight: 800, fontSize: 14, color: ORANJE }}>
-                    KZ {subtotal.toLocaleString('pt-AO', { minimumFractionDigits: 2 })}
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-end',
+                    gap: 8,
+                    flexShrink: 0,
+                  }}
+                >
+                  <span
+                    style={{ fontWeight: 800, fontSize: 14, color: ORANJE }}
+                  >
+                    KZ{' '}
+                    {subtotal.toLocaleString('pt-AO', {
+                      minimumFractionDigits: 2,
+                    })}
                   </span>
                   <button
                     onClick={() => removeItem(item.productId)}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#EF4444', padding: 0 }}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      color: '#EF4444',
+                      padding: 0,
+                    }}
                     title="Remover"
                   >
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
                       <polyline points="3 6 5 6 21 6" />
                       <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
-                      <path d="M10 11v6M14 11v6" /><path d="M9 6V4h6v2" />
+                      <path d="M10 11v6M14 11v6" />
+                      <path d="M9 6V4h6v2" />
                     </svg>
                   </button>
                 </div>
@@ -348,8 +482,19 @@ function CartStep({
           })}
         </div>
 
-        <div style={{ marginTop: 20, paddingTop: 16, borderTop: '2px dashed #F3F4F6', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ fontSize: 15, fontWeight: 600, color: '#374151' }}>Total do carrinho</span>
+        <div
+          style={{
+            marginTop: 20,
+            paddingTop: 16,
+            borderTop: '2px dashed #F3F4F6',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <span style={{ fontSize: 15, fontWeight: 600, color: '#374151' }}>
+            Total do carrinho
+          </span>
           <span style={{ fontSize: 20, fontWeight: 900, color: ORANJE }}>
             KZ {total.toLocaleString('pt-AO', { minimumFractionDigits: 2 })}
           </span>
@@ -359,14 +504,24 @@ function CartStep({
           onClick={onNext}
           disabled={items.length === 0}
           style={{
-            marginTop: 24, width: '100%', padding: '14px 0',
+            marginTop: 24,
+            width: '100%',
+            padding: '14px 0',
             background: items.length > 0 ? ORANJE : '#E5E7EB',
             color: items.length > 0 ? 'white' : '#9CA3AF',
-            border: 'none', borderRadius: 10, fontSize: 15, fontWeight: 800,
-            cursor: items.length > 0 ? 'pointer' : 'not-allowed', transition: 'background 0.2s',
+            border: 'none',
+            borderRadius: 10,
+            fontSize: 15,
+            fontWeight: 800,
+            cursor: items.length > 0 ? 'pointer' : 'not-allowed',
+            transition: 'background 0.2s',
           }}
-          onMouseEnter={(e) => { if (items.length > 0) e.currentTarget.style.background = '#e08e00'; }}
-          onMouseLeave={(e) => { if (items.length > 0) e.currentTarget.style.background = ORANJE; }}
+          onMouseEnter={(e) => {
+            if (items.length > 0) e.currentTarget.style.background = '#e08e00';
+          }}
+          onMouseLeave={(e) => {
+            if (items.length > 0) e.currentTarget.style.background = ORANJE;
+          }}
         >
           Fazer compra →
         </button>
@@ -376,42 +531,151 @@ function CartStep({
 }
 
 // ─── Step 2: Shipping ──────────────────────────────────────────────────────────
-function ShippingStep({ selected, onSelect, onBack, onNext }: {
-  selected: string; onSelect: (id: string) => void; onBack: () => void; onNext: () => void;
+function ShippingStep({
+  selected,
+  onSelect,
+  onBack,
+  onNext,
+}: {
+  selected: string;
+  onSelect: (id: string) => void;
+  onBack: () => void;
+  onNext: () => void;
 }) {
   return (
-    <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.25 }}>
+    <motion.div
+      initial={{ opacity: 0, x: 30 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -30 }}
+      transition={{ duration: 0.25 }}
+    >
       <Card>
         <SectionTitle>Método de envio</SectionTitle>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {SHIPPING_OPTIONS.map((opt, i) => {
             const isSelected = selected === opt.id;
             return (
-              <motion.button key={opt.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
+              <motion.button
+                key={opt.id}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.05 }}
                 onClick={() => onSelect(opt.id)}
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px', borderRadius: 12, border: `2px solid ${isSelected ? ORANJE : '#E5E7EB'}`, background: isSelected ? '#FFF8EE' : 'white', cursor: 'pointer', transition: 'all 0.2s', width: '100%', textAlign: 'left' }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '14px 18px',
+                  borderRadius: 12,
+                  border: `2px solid ${isSelected ? ORANJE : '#E5E7EB'}`,
+                  background: isSelected ? '#FFF8EE' : 'white',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  width: '100%',
+                  textAlign: 'left',
+                }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                  <div style={{ width: 20, height: 20, borderRadius: '50%', border: `2px solid ${isSelected ? ORANJE : '#D1D5DB'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    {isSelected && <div style={{ width: 10, height: 10, borderRadius: '50%', background: ORANJE }} />}
+                  <div
+                    style={{
+                      width: 20,
+                      height: 20,
+                      borderRadius: '50%',
+                      border: `2px solid ${isSelected ? ORANJE : '#D1D5DB'}`,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0,
+                    }}
+                  >
+                    {isSelected && (
+                      <div
+                        style={{
+                          width: 10,
+                          height: 10,
+                          borderRadius: '50%',
+                          background: ORANJE,
+                        }}
+                      />
+                    )}
                   </div>
                   <div>
-                    <p style={{ margin: 0, fontWeight: 700, fontSize: 14, color: '#111827' }}>{opt.label}</p>
-                    <p style={{ margin: '2px 0 0', fontSize: 12, color: '#6B7280' }}>Prazo: {opt.days}</p>
+                    <p
+                      style={{
+                        margin: 0,
+                        fontWeight: 700,
+                        fontSize: 14,
+                        color: '#111827',
+                      }}
+                    >
+                      {opt.label}
+                    </p>
+                    <p
+                      style={{
+                        margin: '2px 0 0',
+                        fontSize: 12,
+                        color: '#6B7280',
+                      }}
+                    >
+                      Prazo: {opt.days}
+                    </p>
                   </div>
                 </div>
-                <span style={{ fontWeight: 800, fontSize: 15, color: isSelected ? ORANJE : '#374151', flexShrink: 0 }}>{opt.priceLabel}</span>
+                <span
+                  style={{
+                    fontWeight: 800,
+                    fontSize: 15,
+                    color: isSelected ? ORANJE : '#374151',
+                    flexShrink: 0,
+                  }}
+                >
+                  {opt.priceLabel}
+                </span>
               </motion.button>
             );
           })}
         </div>
         <div style={{ display: 'flex', gap: 12, marginTop: 24 }}>
-          <button onClick={onBack} style={{ flex: 1, padding: '13px 0', background: 'white', color: '#374151', border: '2px solid #E5E7EB', borderRadius: 10, fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>← Voltar</button>
-          <button onClick={onNext} disabled={!selected}
-            style={{ flex: 2, padding: '13px 0', background: selected ? ORANJE : '#E5E7EB', color: selected ? 'white' : '#9CA3AF', border: 'none', borderRadius: 10, fontSize: 15, fontWeight: 800, cursor: selected ? 'pointer' : 'not-allowed', transition: 'background 0.2s' }}
-            onMouseEnter={(e) => { if (selected) e.currentTarget.style.background = '#e08e00'; }}
-            onMouseLeave={(e) => { if (selected) e.currentTarget.style.background = ORANJE; }}
-          >Prosseguir →</button>
+          <button
+            onClick={onBack}
+            style={{
+              flex: 1,
+              padding: '13px 0',
+              background: 'white',
+              color: '#374151',
+              border: '2px solid #E5E7EB',
+              borderRadius: 10,
+              fontSize: 14,
+              fontWeight: 700,
+              cursor: 'pointer',
+            }}
+          >
+            ← Voltar
+          </button>
+          <button
+            onClick={onNext}
+            disabled={!selected}
+            style={{
+              flex: 2,
+              padding: '13px 0',
+              background: selected ? ORANJE : '#E5E7EB',
+              color: selected ? 'white' : '#9CA3AF',
+              border: 'none',
+              borderRadius: 10,
+              fontSize: 15,
+              fontWeight: 800,
+              cursor: selected ? 'pointer' : 'not-allowed',
+              transition: 'background 0.2s',
+            }}
+            onMouseEnter={(e) => {
+              if (selected) e.currentTarget.style.background = '#e08e00';
+            }}
+            onMouseLeave={(e) => {
+              if (selected) e.currentTarget.style.background = ORANJE;
+            }}
+          >
+            Prosseguir →
+          </button>
         </div>
       </Card>
     </motion.div>
@@ -419,11 +683,24 @@ function ShippingStep({ selected, onSelect, onBack, onNext }: {
 }
 
 // ─── Step 3: Payment ───────────────────────────────────────────────────────────
-function PaymentStep({ selected, onSelect, onBack, onNext }: {
-  selected: string; onSelect: (id: string) => void; onBack: () => void; onNext: () => void;
+function PaymentStep({
+  selected,
+  onSelect,
+  onBack,
+  onNext,
+}: {
+  selected: string;
+  onSelect: (id: string) => void;
+  onBack: () => void;
+  onNext: () => void;
 }) {
   return (
-    <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.25 }}>
+    <motion.div
+      initial={{ opacity: 0, x: 30 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -30 }}
+      transition={{ duration: 0.25 }}
+    >
       <Card>
         <SectionTitle>Método de pagamento</SectionTitle>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -439,46 +716,142 @@ function PaymentStep({ selected, onSelect, onBack, onNext }: {
                 disabled={disabled}
                 onClick={() => !disabled && onSelect(method.id)}
                 style={{
-                  display: 'flex', alignItems: 'center', gap: 16,
-                  padding: '16px 18px', borderRadius: 12, width: '100%', textAlign: 'left',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 16,
+                  padding: '16px 18px',
+                  borderRadius: 12,
+                  width: '100%',
+                  textAlign: 'left',
                   transition: 'all 0.2s',
                   border: `2px solid ${isSelected ? ORANJE : '#E5E7EB'}`,
-                  background: disabled ? '#F9FAFB' : isSelected ? '#FFF8EE' : 'white',
+                  background: disabled
+                    ? '#F9FAFB'
+                    : isSelected
+                      ? '#FFF8EE'
+                      : 'white',
                   cursor: disabled ? 'not-allowed' : 'pointer',
                   opacity: disabled ? 0.55 : 1,
                 }}
               >
-                <div style={{ width: 48, height: 48, borderRadius: 12, background: isSelected ? '#FFF3E0' : '#F9FAFB', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <div
+                  style={{
+                    width: 48,
+                    height: 48,
+                    borderRadius: 12,
+                    background: isSelected ? '#FFF3E0' : '#F9FAFB',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}
+                >
                   {method.icon}
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <p style={{ margin: 0, fontWeight: 700, fontSize: 14, color: disabled ? '#9CA3AF' : '#111827' }}>
+                  <div
+                    style={{ display: 'flex', alignItems: 'center', gap: 8 }}
+                  >
+                    <p
+                      style={{
+                        margin: 0,
+                        fontWeight: 700,
+                        fontSize: 14,
+                        color: disabled ? '#9CA3AF' : '#111827',
+                      }}
+                    >
                       {method.label}
                     </p>
                     {disabled && (
-                      <span style={{ fontSize: 10, fontWeight: 600, padding: '2px 7px', borderRadius: 20, background: '#F3F4F6', color: '#9CA3AF' }}>
+                      <span
+                        style={{
+                          fontSize: 10,
+                          fontWeight: 600,
+                          padding: '2px 7px',
+                          borderRadius: 20,
+                          background: '#F3F4F6',
+                          color: '#9CA3AF',
+                        }}
+                      >
                         Em breve
                       </span>
                     )}
                   </div>
-                  <p style={{ margin: '3px 0 0', fontSize: 12, color: '#9CA3AF' }}>{method.desc}</p>
+                  <p
+                    style={{
+                      margin: '3px 0 0',
+                      fontSize: 12,
+                      color: '#9CA3AF',
+                    }}
+                  >
+                    {method.desc}
+                  </p>
                 </div>
-                <div style={{ width: 22, height: 22, borderRadius: '50%', border: `2px solid ${isSelected ? ORANJE : '#D1D5DB'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  {isSelected && <div style={{ width: 11, height: 11, borderRadius: '50%', background: ORANJE }} />}
+                <div
+                  style={{
+                    width: 22,
+                    height: 22,
+                    borderRadius: '50%',
+                    border: `2px solid ${isSelected ? ORANJE : '#D1D5DB'}`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}
+                >
+                  {isSelected && (
+                    <div
+                      style={{
+                        width: 11,
+                        height: 11,
+                        borderRadius: '50%',
+                        background: ORANJE,
+                      }}
+                    />
+                  )}
                 </div>
               </motion.button>
             );
           })}
         </div>
         <div style={{ display: 'flex', gap: 12, marginTop: 24 }}>
-          <button onClick={onBack} style={{ flex: 1, padding: '13px 0', background: 'white', color: '#374151', border: '2px solid #E5E7EB', borderRadius: 10, fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>
+          <button
+            onClick={onBack}
+            style={{
+              flex: 1,
+              padding: '13px 0',
+              background: 'white',
+              color: '#374151',
+              border: '2px solid #E5E7EB',
+              borderRadius: 10,
+              fontSize: 14,
+              fontWeight: 700,
+              cursor: 'pointer',
+            }}
+          >
             ← Voltar
           </button>
-          <button onClick={onNext} disabled={!selected}
-            style={{ flex: 2, padding: '13px 0', background: selected ? ORANJE : '#E5E7EB', color: selected ? 'white' : '#9CA3AF', border: 'none', borderRadius: 10, fontSize: 15, fontWeight: 800, cursor: selected ? 'pointer' : 'not-allowed', transition: 'background 0.2s' }}
-            onMouseEnter={(e) => { if (selected) e.currentTarget.style.background = '#e08e00'; }}
-            onMouseLeave={(e) => { if (selected) e.currentTarget.style.background = ORANJE; }}
+          <button
+            onClick={onNext}
+            disabled={!selected}
+            style={{
+              flex: 2,
+              padding: '13px 0',
+              background: selected ? ORANJE : '#E5E7EB',
+              color: selected ? 'white' : '#9CA3AF',
+              border: 'none',
+              borderRadius: 10,
+              fontSize: 15,
+              fontWeight: 800,
+              cursor: selected ? 'pointer' : 'not-allowed',
+              transition: 'background 0.2s',
+            }}
+            onMouseEnter={(e) => {
+              if (selected) e.currentTarget.style.background = '#e08e00';
+            }}
+            onMouseLeave={(e) => {
+              if (selected) e.currentTarget.style.background = ORANJE;
+            }}
           >
             Prosseguir →
           </button>
@@ -490,38 +863,114 @@ function PaymentStep({ selected, onSelect, onBack, onNext }: {
 
 // ─── Step 4: Review ────────────────────────────────────────────────────────────
 function ReviewStep({
-  items, shippingId, paymentId, isSubmitting, isAuthenticated, onBack, onEdit, onFinish,
+  items,
+  shippingId,
+  paymentId,
+  isSubmitting,
+  isAuthenticated,
+  onBack,
+  onEdit,
+  onFinish,
 }: {
-  items: CartItem[]; shippingId: string; paymentId: string; isSubmitting: boolean;
-  isAuthenticated: boolean; onBack: () => void; onEdit: (step: number) => void; onFinish: () => void;
+  items: CartItem[];
+  shippingId: string;
+  paymentId: string;
+  isSubmitting: boolean;
+  isAuthenticated: boolean;
+  onBack: () => void;
+  onEdit: (step: number) => void;
+  onFinish: () => void;
 }) {
   const navigate = useNavigate();
   const shipping = SHIPPING_OPTIONS.find((s) => s.id === shippingId);
   const payment = PAYMENT_METHODS.find((p) => p.id === paymentId);
-  const cartTotal = items.reduce((sum, i) => sum + i.product.preco * i.quantity, 0);
+  const cartTotal = items.reduce(
+    (sum, i) => sum + i.product.preco * i.quantity,
+    0
+  );
   const grandTotal = cartTotal + (shipping?.price ?? 0);
 
   return (
-    <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.25 }}>
+    <motion.div
+      initial={{ opacity: 0, x: 30 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -30 }}
+      transition={{ duration: 0.25 }}
+    >
       <Card>
         <SectionTitle>Revisão do pedido</SectionTitle>
 
         {/* ── Banner de autenticação — só para não autenticados ── */}
         {!isAuthenticated && (
-          <div style={{ background: '#FFF7ED', border: '1.5px solid #FED7AA', borderRadius: 10, padding: '12px 16px', marginBottom: 20, display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 1 }}>
+          <div
+            style={{
+              background: '#FFF7ED',
+              border: '1.5px solid #FED7AA',
+              borderRadius: 10,
+              padding: '12px 16px',
+              marginBottom: 20,
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: 10,
+            }}
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#F97316"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{ flexShrink: 0, marginTop: 1 }}
+            >
               <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-              <line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
             </svg>
             <div style={{ flex: 1 }}>
-              <p style={{ margin: 0, fontSize: 13, fontWeight: 700, color: '#92400E' }}>
+              <p
+                style={{
+                  margin: 0,
+                  fontSize: 13,
+                  fontWeight: 700,
+                  color: '#92400E',
+                }}
+              >
                 Precisas de estar autenticado para finalizar a compra
               </p>
               <p style={{ margin: '4px 0 0', fontSize: 12, color: '#B45309' }}>
-                <button onClick={() => navigate('/iniciar-sessao?redirect=/checkout')} style={{ color: '#F97316', fontWeight: 700, background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 12 }}>Iniciar sessão</button>
-                {' '}ou{' '}
-                <button onClick={() => navigate('/cadastrar?redirect=/checkout')} style={{ color: '#F97316', fontWeight: 700, background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 12 }}>criar conta</button>
-                {' '}para confirmar o pedido.
+                <button
+                  onClick={() => navigate('/iniciar-sessao?redirect=/checkout')}
+                  style={{
+                    color: '#F97316',
+                    fontWeight: 700,
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: 0,
+                    fontSize: 12,
+                  }}
+                >
+                  Iniciar sessão
+                </button>{' '}
+                ou{' '}
+                <button
+                  onClick={() => navigate('/cadastrar?redirect=/checkout')}
+                  style={{
+                    color: '#F97316',
+                    fontWeight: 700,
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: 0,
+                    fontSize: 12,
+                  }}
+                >
+                  criar conta
+                </button>{' '}
+                para confirmar o pedido.
               </p>
             </div>
           </div>
@@ -529,75 +978,319 @@ function ReviewStep({
 
         {/* Cart items summary */}
         <div style={{ marginBottom: 20 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-            <span style={{ fontSize: 13, fontWeight: 700, color: '#6B7280', textTransform: 'uppercase', letterSpacing: 0.5 }}>Produtos</span>
-            <button onClick={() => onEdit(0)} style={{ fontSize: 12, color: ORANJE, background: 'none', border: 'none', cursor: 'pointer', fontWeight: 700 }}>Editar</button>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: 10,
+            }}
+          >
+            <span
+              style={{
+                fontSize: 13,
+                fontWeight: 700,
+                color: '#6B7280',
+                textTransform: 'uppercase',
+                letterSpacing: 0.5,
+              }}
+            >
+              Produtos
+            </span>
+            <button
+              onClick={() => onEdit(0)}
+              style={{
+                fontSize: 12,
+                color: ORANJE,
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                fontWeight: 700,
+              }}
+            >
+              Editar
+            </button>
           </div>
           {items.map((item) => (
-            <div key={item.productId} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderBottom: '1px solid #F9FAFB' }}>
-              <span style={{ fontSize: 13, color: '#374151', flex: 1, marginRight: 12, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            <div
+              key={item.productId}
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: '8px 0',
+                borderBottom: '1px solid #F9FAFB',
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 13,
+                  color: '#374151',
+                  flex: 1,
+                  marginRight: 12,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }}
+              >
                 {item.product.descricao} × {item.quantity}
               </span>
-              <span style={{ fontSize: 13, fontWeight: 700, color: '#111827', flexShrink: 0 }}>
-                KZ {(item.product.preco * item.quantity).toLocaleString('pt-AO', { minimumFractionDigits: 2 })}
+              <span
+                style={{
+                  fontSize: 13,
+                  fontWeight: 700,
+                  color: '#111827',
+                  flexShrink: 0,
+                }}
+              >
+                KZ{' '}
+                {(item.product.preco * item.quantity).toLocaleString('pt-AO', {
+                  minimumFractionDigits: 2,
+                })}
               </span>
             </div>
           ))}
         </div>
 
         {/* Shipping summary */}
-        <div style={{ marginBottom: 20, padding: '14px 16px', background: '#FAFAFA', borderRadius: 10 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
-            <span style={{ fontSize: 13, fontWeight: 700, color: '#6B7280', textTransform: 'uppercase', letterSpacing: 0.5 }}>Envio</span>
-            <button onClick={() => onEdit(1)} style={{ fontSize: 12, color: ORANJE, background: 'none', border: 'none', cursor: 'pointer', fontWeight: 700 }}>Editar</button>
+        <div
+          style={{
+            marginBottom: 20,
+            padding: '14px 16px',
+            background: '#FAFAFA',
+            borderRadius: 10,
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: 4,
+            }}
+          >
+            <span
+              style={{
+                fontSize: 13,
+                fontWeight: 700,
+                color: '#6B7280',
+                textTransform: 'uppercase',
+                letterSpacing: 0.5,
+              }}
+            >
+              Envio
+            </span>
+            <button
+              onClick={() => onEdit(1)}
+              style={{
+                fontSize: 12,
+                color: ORANJE,
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                fontWeight: 700,
+              }}
+            >
+              Editar
+            </button>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
             <div>
-              <p style={{ margin: 0, fontSize: 14, fontWeight: 600, color: '#111827' }}>{shipping?.label}</p>
-              <p style={{ margin: '2px 0 0', fontSize: 12, color: '#6B7280' }}>Prazo: {shipping?.days}</p>
+              <p
+                style={{
+                  margin: 0,
+                  fontSize: 14,
+                  fontWeight: 600,
+                  color: '#111827',
+                }}
+              >
+                {shipping?.label}
+              </p>
+              <p style={{ margin: '2px 0 0', fontSize: 12, color: '#6B7280' }}>
+                Prazo: {shipping?.days}
+              </p>
             </div>
-            <span style={{ fontWeight: 800, fontSize: 15, color: ORANJE }}>{shipping?.priceLabel}</span>
+            <span style={{ fontWeight: 800, fontSize: 15, color: ORANJE }}>
+              {shipping?.priceLabel}
+            </span>
           </div>
         </div>
 
         {/* Payment summary */}
-        <div style={{ marginBottom: 24, padding: '14px 16px', background: '#FAFAFA', borderRadius: 10 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
-            <span style={{ fontSize: 13, fontWeight: 700, color: '#6B7280', textTransform: 'uppercase', letterSpacing: 0.5 }}>Pagamento</span>
-            <button onClick={() => onEdit(2)} style={{ fontSize: 12, color: ORANJE, background: 'none', border: 'none', cursor: 'pointer', fontWeight: 700 }}>Editar</button>
+        <div
+          style={{
+            marginBottom: 24,
+            padding: '14px 16px',
+            background: '#FAFAFA',
+            borderRadius: 10,
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: 4,
+            }}
+          >
+            <span
+              style={{
+                fontSize: 13,
+                fontWeight: 700,
+                color: '#6B7280',
+                textTransform: 'uppercase',
+                letterSpacing: 0.5,
+              }}
+            >
+              Pagamento
+            </span>
+            <button
+              onClick={() => onEdit(2)}
+              style={{
+                fontSize: 12,
+                color: ORANJE,
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                fontWeight: 700,
+              }}
+            >
+              Editar
+            </button>
           </div>
-          <p style={{ margin: 0, fontSize: 14, fontWeight: 600, color: '#111827' }}>{payment?.label}</p>
-          <p style={{ margin: '2px 0 0', fontSize: 12, color: '#6B7280' }}>{payment?.desc}</p>
+          <p
+            style={{
+              margin: 0,
+              fontSize: 14,
+              fontWeight: 600,
+              color: '#111827',
+            }}
+          >
+            {payment?.label}
+          </p>
+          <p style={{ margin: '2px 0 0', fontSize: 12, color: '#6B7280' }}>
+            {payment?.desc}
+          </p>
         </div>
 
         {/* Grand total */}
-        <div style={{ padding: '16px 20px', background: '#FFF8EE', borderRadius: 12, border: `1.5px solid ${ORANJE}20`, marginBottom: 24 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+        <div
+          style={{
+            padding: '16px 20px',
+            background: '#FFF8EE',
+            borderRadius: 12,
+            border: `1.5px solid ${ORANJE}20`,
+            marginBottom: 24,
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginBottom: 6,
+            }}
+          >
             <span style={{ fontSize: 13, color: '#6B7280' }}>Subtotal</span>
-            <span style={{ fontSize: 13, color: '#374151', fontWeight: 600 }}>KZ {cartTotal.toLocaleString('pt-AO', { minimumFractionDigits: 2 })}</span>
+            <span style={{ fontSize: 13, color: '#374151', fontWeight: 600 }}>
+              KZ{' '}
+              {cartTotal.toLocaleString('pt-AO', { minimumFractionDigits: 2 })}
+            </span>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginBottom: 12,
+            }}
+          >
             <span style={{ fontSize: 13, color: '#6B7280' }}>Envio</span>
-            <span style={{ fontSize: 13, color: '#374151', fontWeight: 600 }}>{shipping?.priceLabel}</span>
+            <span style={{ fontSize: 13, color: '#374151', fontWeight: 600 }}>
+              {shipping?.priceLabel}
+            </span>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 12, borderTop: '1.5px dashed #FFA50040' }}>
-            <span style={{ fontSize: 16, fontWeight: 800, color: '#111827' }}>Total</span>
-            <span style={{ fontSize: 22, fontWeight: 900, color: ORANJE }}>KZ {grandTotal.toLocaleString('pt-AO', { minimumFractionDigits: 2 })}</span>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              paddingTop: 12,
+              borderTop: '1.5px dashed #FFA50040',
+            }}
+          >
+            <span style={{ fontSize: 16, fontWeight: 800, color: '#111827' }}>
+              Total
+            </span>
+            <span style={{ fontSize: 22, fontWeight: 900, color: ORANJE }}>
+              KZ{' '}
+              {grandTotal.toLocaleString('pt-AO', { minimumFractionDigits: 2 })}
+            </span>
           </div>
         </div>
 
         <div style={{ display: 'flex', gap: 12 }}>
-          <button onClick={onBack} disabled={isSubmitting}
-            style={{ flex: 1, padding: '13px 0', background: 'white', color: '#374151', border: '2px solid #E5E7EB', borderRadius: 10, fontSize: 14, fontWeight: 700, cursor: isSubmitting ? 'not-allowed' : 'pointer', opacity: isSubmitting ? 0.6 : 1 }}
-          >← Voltar</button>
-          <button onClick={onFinish} disabled={isSubmitting}
-            style={{ flex: 2, padding: '13px 0', background: ORANJE, color: 'white', border: 'none', borderRadius: 10, fontSize: 15, fontWeight: 800, cursor: isSubmitting ? 'not-allowed' : 'pointer', transition: 'background 0.2s', opacity: isSubmitting ? 0.75 : 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
-            onMouseEnter={(e) => { if (!isSubmitting) e.currentTarget.style.background = '#e08e00'; }}
-            onMouseLeave={(e) => { if (!isSubmitting) e.currentTarget.style.background = ORANJE; }}
+          <button
+            onClick={onBack}
+            disabled={isSubmitting}
+            style={{
+              flex: 1,
+              padding: '13px 0',
+              background: 'white',
+              color: '#374151',
+              border: '2px solid #E5E7EB',
+              borderRadius: 10,
+              fontSize: 14,
+              fontWeight: 700,
+              cursor: isSubmitting ? 'not-allowed' : 'pointer',
+              opacity: isSubmitting ? 0.6 : 1,
+            }}
+          >
+            ← Voltar
+          </button>
+          <button
+            onClick={onFinish}
+            disabled={isSubmitting}
+            style={{
+              flex: 2,
+              padding: '13px 0',
+              background: ORANJE,
+              color: 'white',
+              border: 'none',
+              borderRadius: 10,
+              fontSize: 15,
+              fontWeight: 800,
+              cursor: isSubmitting ? 'not-allowed' : 'pointer',
+              transition: 'background 0.2s',
+              opacity: isSubmitting ? 0.75 : 1,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 8,
+            }}
+            onMouseEnter={(e) => {
+              if (!isSubmitting) e.currentTarget.style.background = '#e08e00';
+            }}
+            onMouseLeave={(e) => {
+              if (!isSubmitting) e.currentTarget.style.background = ORANJE;
+            }}
           >
             {isSubmitting ? (
               <>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ animation: 'spin 1s linear infinite' }}>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{ animation: 'spin 1s linear infinite' }}
+                >
                   <path d="M21 12a9 9 0 1 1-6.219-8.56" />
                 </svg>
                 A processar...
@@ -619,47 +1312,194 @@ function ReviewStep({
 function ConfirmationScreen({ onGoHome }: { onGoHome: () => void }) {
   const navigate = useNavigate();
   return (
-    <motion.div initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, ease: 'easeOut' }}
-      style={{ minHeight: '82vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px 16px' }}
+    <motion.div
+      initial={{ opacity: 0, scale: 0.92 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.4, ease: 'easeOut' }}
+      style={{
+        minHeight: '82vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '24px 16px',
+      }}
     >
-      <div style={{ background: 'white', borderRadius: 24, boxShadow: '0 8px 48px rgba(255,165,0,0.15)', border: `2px solid ${ORANJE}20`, padding: '56px 40px', maxWidth: 560, width: '100%', textAlign: 'center' }}>
-        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-          style={{ width: 90, height: 90, borderRadius: '50%', background: '#FFF8EE', border: `3px solid ${ORANJE}`, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 28px' }}
+      <div
+        style={{
+          background: 'white',
+          borderRadius: 24,
+          boxShadow: '0 8px 48px rgba(255,165,0,0.15)',
+          border: `2px solid ${ORANJE}20`,
+          padding: '56px 40px',
+          maxWidth: 560,
+          width: '100%',
+          textAlign: 'center',
+        }}
+      >
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+          style={{
+            width: 90,
+            height: 90,
+            borderRadius: '50%',
+            background: '#FFF8EE',
+            border: `3px solid ${ORANJE}`,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '0 auto 28px',
+          }}
         >
-          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke={ORANJE} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <svg
+            width="44"
+            height="44"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke={ORANJE}
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             <polyline points="20 6 9 17 4 12" />
           </svg>
         </motion.div>
-        <motion.h1 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }} style={{ fontSize: 26, fontWeight: 900, color: '#111827', marginBottom: 12 }}>
+        <motion.h1
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35 }}
+          style={{
+            fontSize: 26,
+            fontWeight: 900,
+            color: '#111827',
+            marginBottom: 12,
+          }}
+        >
           Pedido confirmado!
         </motion.h1>
-        <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }} style={{ fontSize: 15, color: '#6B7280', lineHeight: 1.6, marginBottom: 32 }}>
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.45 }}
+          style={{
+            fontSize: 15,
+            color: '#6B7280',
+            lineHeight: 1.6,
+            marginBottom: 32,
+          }}
+        >
           O seu pedido foi registado com sucesso e está a aguardar aprovação.
         </motion.p>
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.55 }}
-          style={{ background: '#FFF8EE', border: `1.5px solid ${ORANJE}40`, borderRadius: 14, padding: '22px 24px', marginBottom: 32, display: 'flex', alignItems: 'flex-start', gap: 16, textAlign: 'left' }}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.55 }}
+          style={{
+            background: '#FFF8EE',
+            border: `1.5px solid ${ORANJE}40`,
+            borderRadius: 14,
+            padding: '22px 24px',
+            marginBottom: 32,
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: 16,
+            textAlign: 'left',
+          }}
         >
-          <div style={{ width: 42, height: 42, borderRadius: 12, background: '#FFF3E0', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2 }}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={ORANJE} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="2" y="5" width="20" height="14" rx="2" /><line x1="2" y1="10" x2="22" y2="10" />
+          <div
+            style={{
+              width: 42,
+              height: 42,
+              borderRadius: 12,
+              background: '#FFF3E0',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
+              marginTop: 2,
+            }}
+          >
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke={ORANJE}
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <rect x="2" y="5" width="20" height="14" rx="2" />
+              <line x1="2" y1="10" x2="22" y2="10" />
             </svg>
           </div>
           <div>
-            <p style={{ margin: 0, fontWeight: 800, fontSize: 15, color: '#111827' }}>Pagamento na entrega</p>
-            <p style={{ margin: '6px 0 0', fontSize: 13, color: '#6B7280', lineHeight: 1.55 }}>
-              O pagamento será efectuado no momento da entrega do produto. Certifique-se de ter o valor exacto disponível quando o entregador chegar.
+            <p
+              style={{
+                margin: 0,
+                fontWeight: 800,
+                fontSize: 15,
+                color: '#111827',
+              }}
+            >
+              Pagamento na entrega
+            </p>
+            <p
+              style={{
+                margin: '6px 0 0',
+                fontSize: 13,
+                color: '#6B7280',
+                lineHeight: 1.55,
+              }}
+            >
+              O pagamento será efectuado no momento da entrega do produto.
+              Certifique-se de ter o valor exacto disponível quando o entregador
+              chegar.
             </p>
           </div>
         </motion.div>
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.65 }} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <button onClick={() => navigate('/produtos')}
-            style={{ width: '100%', padding: '14px 0', background: ORANJE, color: 'white', border: 'none', borderRadius: 10, fontSize: 15, fontWeight: 800, cursor: 'pointer', transition: 'background 0.2s' }}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.65 }}
+          style={{ display: 'flex', flexDirection: 'column', gap: 10 }}
+        >
+          <button
+            onClick={() => navigate('/produtos')}
+            style={{
+              width: '100%',
+              padding: '14px 0',
+              background: ORANJE,
+              color: 'white',
+              border: 'none',
+              borderRadius: 10,
+              fontSize: 15,
+              fontWeight: 800,
+              cursor: 'pointer',
+              transition: 'background 0.2s',
+            }}
             onMouseEnter={(e) => (e.currentTarget.style.background = '#e08e00')}
             onMouseLeave={(e) => (e.currentTarget.style.background = ORANJE)}
-          >Voltar à loja</button>
-          <button onClick={() => navigate('/pedidos')}
-            style={{ width: '100%', padding: '13px 0', background: 'white', color: '#374151', border: '2px solid #E5E7EB', borderRadius: 10, fontSize: 14, fontWeight: 700, cursor: 'pointer' }}
-          >Ver os meus pedidos</button>
+          >
+            Voltar à loja
+          </button>
+          <button
+            onClick={() => navigate('/pedidos')}
+            style={{
+              width: '100%',
+              padding: '13px 0',
+              background: 'white',
+              color: '#374151',
+              border: '2px solid #E5E7EB',
+              borderRadius: 10,
+              fontSize: 14,
+              fontWeight: 700,
+              cursor: 'pointer',
+            }}
+          >
+            Ver os meus pedidos
+          </button>
         </motion.div>
       </div>
     </motion.div>
@@ -679,7 +1519,8 @@ export function CheckoutPage() {
   const [search, setSearch] = useState<string>('');
   const [sidebarOpen, setSidebar] = useState<boolean>(false);
 
-  const { items, updateQuantity, removeItem, getTotal, clearCart } = useCartStore();
+  const { items, updateQuantity, removeItem, getTotal, clearCart } =
+    useCartStore();
 
   const [step, setStep] = useState(0);
   const [done, setDone] = useState(false);
@@ -718,7 +1559,13 @@ export function CheckoutPage() {
 
   if (done) {
     return (
-      <div style={{ minHeight: '100vh', background: '#F9FAFB', fontFamily: "'Segoe UI', system-ui, sans-serif" }}>
+      <div
+        style={{
+          minHeight: '100vh',
+          background: '#F9FAFB',
+          fontFamily: "'Segoe UI', system-ui, sans-serif",
+        }}
+      >
         <ConfirmationScreen onGoHome={() => navigate('/produtos')} />
       </div>
     );
@@ -727,22 +1574,73 @@ export function CheckoutPage() {
   return (
     <div>
       {sidebarOpen && (
-        <div style={{ position: 'fixed', inset: 0, zIndex: 400, display: 'flex' }}>
-          <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.4)' }} onClick={() => setSidebar(false)} />
-          <Sidebar favorites={favorites.length} close={() => setSidebar(false)} currentView={view} />
+        <div
+          style={{ position: 'fixed', inset: 0, zIndex: 400, display: 'flex' }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'rgba(0,0,0,0.4)',
+            }}
+            onClick={() => setSidebar(false)}
+          />
+          <Sidebar
+            favorites={favorites.length}
+            close={() => setSidebar(false)}
+            currentView={view}
+          />
         </div>
       )}
 
-      <SmartHeader search={search} setSearch={setSearch} onMenu={() => setSidebar(true)} onSearch={(term) => setSearch(term)} />
+      <SmartHeader
+        search={search}
+        setSearch={setSearch}
+        onMenu={() => setSidebar(true)}
+        onSearch={(term) => setSearch(term)}
+      />
 
-      <div style={{ minHeight: '100vh', background: '#F9FAFB', fontFamily: "'Segoe UI', system-ui, sans-serif" }}>
-        <div style={{ maxWidth: 640, margin: '0 auto', padding: '32px 16px 60px' }}>
+      <div
+        style={{
+          minHeight: '100vh',
+          background: '#F9FAFB',
+          fontFamily: "'Segoe UI', system-ui, sans-serif",
+        }}
+      >
+        <div
+          style={{ maxWidth: 640, margin: '0 auto', padding: '32px 16px 60px' }}
+        >
           <Stepper current={step} />
 
           <AnimatePresence mode="wait">
-            {step === 0 && <CartStep key="cart" items={items} updateQuantity={updateQuantity} removeItem={removeItem} getTotal={getTotal} onNext={() => setStep(1)} />}
-            {step === 1 && <ShippingStep key="shipping" selected={selectedShipping} onSelect={setSelectedShipping} onBack={() => setStep(0)} onNext={() => setStep(2)} />}
-            {step === 2 && <PaymentStep key="payment" selected={selectedPayment} onSelect={setSelectedPayment} onBack={() => setStep(1)} onNext={() => setStep(3)} />}
+            {step === 0 && (
+              <CartStep
+                key="cart"
+                items={items}
+                updateQuantity={updateQuantity}
+                removeItem={removeItem}
+                getTotal={getTotal}
+                onNext={() => setStep(1)}
+              />
+            )}
+            {step === 1 && (
+              <ShippingStep
+                key="shipping"
+                selected={selectedShipping}
+                onSelect={setSelectedShipping}
+                onBack={() => setStep(0)}
+                onNext={() => setStep(2)}
+              />
+            )}
+            {step === 2 && (
+              <PaymentStep
+                key="payment"
+                selected={selectedPayment}
+                onSelect={setSelectedPayment}
+                onBack={() => setStep(1)}
+                onNext={() => setStep(3)}
+              />
+            )}
             {step === 3 && (
               <ReviewStep
                 key="review"

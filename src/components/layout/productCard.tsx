@@ -56,14 +56,14 @@ export function ProductCard({ product, index }: ProductCardProps) {
       <div className="p-3 sm:p-4 flex flex-col flex-1 gap-2">
         {/* Nome/Descrição */}
         <div>
-            <h3 className="text-gray-800 font-medium text-sm sm:text-base leading-snug line-clamp-2 min-h-[2.5rem]">
-          {product.descricao}
-        </h3>
+          <h3 className="text-gray-800 font-medium text-sm sm:text-base leading-snug line-clamp-2 min-h-[2.5rem]">
+            {product.descricao}
+          </h3>
 
-        {/* Fornecedor */}
-        <span className="text-gray-500 text-xs sm:text-sm truncate">
-          {productItem?.vendedor?.nomeEmpresa}
-        </span>
+          {/* Fornecedor */}
+          <span className="text-gray-500 text-xs sm:text-sm truncate">
+            {productItem?.vendedor?.nomeEmpresa}
+          </span>
         </div>
 
         {/* Preço */}

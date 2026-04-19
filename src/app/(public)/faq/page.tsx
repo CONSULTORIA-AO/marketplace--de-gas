@@ -169,9 +169,7 @@ export function FAQ() {
   };
 
   return (
-    <div
-      className="min-h-screen"
-    >
+    <div className="min-h-screen">
       <Header onSearch={(term) => setSearchTerm(term)} />
       {/* Hero */}
       <div className="relative overflow-hidden">

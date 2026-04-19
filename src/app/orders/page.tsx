@@ -28,12 +28,12 @@ export function OrdersView() {
   });
 
   const productIds = [
-  ...new Set(
-    ordersdata?.flatMap((pedido) =>
-      pedido.itens.map((item) => item.produto_id)
-    ) ?? []
-  )
-]
+    ...new Set(
+      ordersdata?.flatMap((pedido) =>
+        pedido.itens.map((item) => item.produto_id)
+      ) ?? []
+    ),
+  ];
   console.log('Buscando id de cada produto:', productIds);
 
   const { data: products } = useProductsByIds(productIds);
