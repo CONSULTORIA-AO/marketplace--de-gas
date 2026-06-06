@@ -13,7 +13,7 @@ import { ToastAction } from '@/components/ui/toast';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAuth } from '@/service/customer/auth';
-import BackGroundImage from '@/assets/botja.png';
+import BackGroundImage from '@/assets/botja.webp';
 
 export default function LoginPage() {
   const navigate = useNavigate();

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import BackGroundImage from '@/assets/botja.png';
+import BackGroundImage from '@/assets/botja.webp';
 import { useToast } from '@/hooks/use-toast';
 import {
   registerSchema,

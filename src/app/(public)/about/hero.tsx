@@ -1,5 +1,5 @@
 import { Flame, ArrowDown } from 'lucide-react';
-import BackGroundImage from '@/assets/botja.png';
+import BackGroundImage from '@/assets/botja.webp';
 
 const HeroSection = () => {
   return (
